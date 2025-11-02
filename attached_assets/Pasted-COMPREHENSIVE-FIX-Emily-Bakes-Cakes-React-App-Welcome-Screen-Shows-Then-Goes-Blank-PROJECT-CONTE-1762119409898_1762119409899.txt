@@ -1,0 +1,214 @@
+COMPREHENSIVE FIX: Emily Bakes Cakes React App - Welcome Screen Shows Then Goes Blank
+
+PROJECT CONTEXT:
+- Tech stack: React 18 + Vite + TypeScript + Tailwind CSS + Framer Motion
+- Issue: Welcome animation plays correctly, then screen goes blank (only cream #F8EBD7 background shows)
+- Expected: After 2.5s welcome screen, should show PublicLayout with Home page content
+- Deployment: Must work in Replit preview and external tab
+
+AUTOMATED DIAGNOSTIC & FIX SEQUENCE:
+
+=== PHASE 1: FILE STRUCTURE VERIFICATION ===
+1. Check if ALL files imported in src/App.tsx actually exist:
+   - src/components/WelcomeScreen.tsx
+   - src/components/PublicLayout.tsx
+   - src/components/AdminLayout.tsx
+   - src/components/ToastContext.tsx
+   - src/pages/public/Home.tsx
+   - src/pages/public/Shop.tsx
+   - src/pages/public/Builder.tsx
+   - src/pages/public/Gallery.tsx
+   - src/pages/public/About.tsx
+   - src/pages/public/Contact.tsx
+   - src/pages/admin/Login.tsx
+   - src/pages/Dashboard.tsx
+   - src/pages/Orders.tsx
+   - src/pages/Customers.tsx
+   - src/pages/Products.tsx
+   - src/pages/Reports.tsx
+   - src/pages/Settings.tsx
+
+2. For ANY missing files, create them with proper TypeScript exports and minimal working content using brand colors:
+   - Raspberry Pink: #C44569
+   - Cream Vanilla: #F8EBD7
+   - Chocolate Brown: #5A3825
+   - Mint Green: #A9E5BB
+
+=== PHASE 2: IMPORT ERROR RESOLUTION ===
+3. Scan all files for:
+   - Versioned imports (e.g., '@radix-ui/react-slot@1.1.2') - remove version numbers
+   - Incorrect paths (e.g., './components' when file is in './src/components')
+   - Missing 'motion/react' imports - ensure Framer Motion is properly imported
+   - Circular dependencies
+
+4. Fix all import statements to use correct relative paths
+
+=== PHASE 3: COMPONENT FUNCTIONALITY CHECKS ===
+5. Verify App.tsx logic:
+   - useEffect timer for welcome screen (2500ms)
+   - State management for showWelcome, appMode, activePage
+   - AnimatePresence is properly configured
+   - Conditional rendering logic for public/login/admin modes
+
+6. Ensure WelcomeScreen.tsx:
+   - Has proper exit animation
+   - Doesn't block rendering after unmount
+   - Uses AnimatePresence correctly
+
+7. Verify PublicLayout.tsx:
+   - Accepts and renders {children} prop
+   - Has navigation bar with brand colors
+   - Has proper TypeScript prop types
+   - Renders without errors
+
+8. Check PublicHome component:
+   - Exports properly as named export
+   - Has visible content (not empty div)
+   - Uses brand styling
+
+=== PHASE 4: CSS & STYLING FIXES ===
+9. Check index.css or global.css for issues:
+   - Ensure body and #root have min-height: 100vh
+   - No hidden overflow causing content to disappear
+   - Background colors are applied correctly
+   - No conflicting z-index issues
+
+10. Verify Tailwind CSS is configured and building properly:
+    - Check tailwind.config.js/ts
+    - Ensure @tailwind directives are in main CSS file
+    - Verify content paths include all component files
+
+=== PHASE 5: RUNTIME ERROR DETECTION ===
+11. Identify and fix common React errors:
+    - Missing dependencies in useEffect
+    - Undefined variables or props
+    - Type mismatches in TypeScript
+    - Event handler errors
+
+12. Check for console errors:
+    - Module not found errors
+    - Failed prop type validations
+    - React hydration mismatches
+    - Network request failures
+
+=== PHASE 6: CREATE MISSING PLACEHOLDERS ===
+If any page components are missing, create them with this template structure:
+
+For Public Pages (Home, Shop, Gallery, etc.):
+```typescript
+export function [PageName]() {
+  return (
+    <div style={{ padding: '40px', minHeight: '100vh' }}>
+      <h1 style={{ color: '#C44569', fontSize: '36px', marginBottom: '20px' }}>
+        🍰 [Page Title]
+      </h1>
+      <p style={{ color: '#5A3825', fontSize: '18px' }}>
+        [Page description - coming soon]
+      </p>
+    </div>
+  );
+}
+```
+
+For Admin Pages (Dashboard, Orders, etc.):
+```typescript
+export function [PageName]() {
+  return (
+    <div style={{ padding: '40px', background: '#F5F5F5', minHeight: '100vh' }}>
+      <h2 style={{ color: '#2B2B2B', fontSize: '28px', marginBottom: '20px' }}>
+        [Admin Page Title]
+      </h2>
+      <p>Admin content coming soon...</p>
+    </div>
+  );
+}
+```
+
+For PublicLayout if missing:
+```typescript
+import { ReactNode } from 'react';
+
+interface PublicLayoutProps {
+  children: ReactNode;
+  activePage: string;
+  onNavigate: (page: string) => void;
+  onAdminAccess: () => void;
+}
+
+export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }: PublicLayoutProps) {
+  return (
+    <div style={{ minHeight: '100vh', background: '#F8EBD7' }}>
+      <nav style={{ 
+        background: '#C44569', 
+        padding: '20px', 
+        color: 'white',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000
+      }}>
+        <h2 style={{ margin: 0 }}>🍰 Emily Bakes Cakes</h2>
+        <div style={{ display: 'flex', gap: '20px', marginTop: '10px' }}>
+          <button onClick={() => onNavigate('home')} style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer' }}>Home</button>
+          <button onClick={() => onNavigate('shop')} style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer' }}>Shop</button>
+          <button onClick={() => onNavigate('gallery')} style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer' }}>Gallery</button>
+          <button onClick={onAdminAccess} style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer' }}>Admin</button>
+        </div>
+      </nav>
+      <main>{children}</main>
+    </div>
+  );
+}
+```
+
+For ToastContext if missing:
+```typescript
+import { createContext, ReactNode } from 'react';
+
+export const ToastContext = createContext(null);
+
+export function ToastProvider({ children }: { children: ReactNode }) {
+  return <ToastContext.Provider value={null}>{children}</ToastContext.Provider>;
+}
+```
+
+=== PHASE 7: TESTING & VERIFICATION ===
+13. After all fixes:
+    - Run the dev server
+    - Check browser console for any remaining errors
+    - Verify welcome screen plays and dismisses
+    - Confirm main content renders after welcome screen
+    - Test navigation between pages
+    - Verify all imports resolve successfully
+
+14. Test in both:
+    - Replit preview panel
+    - External new tab/window
+    - Mobile responsive view (375px width)
+
+=== PHASE 8: FINAL OPTIMIZATIONS ===
+15. Ensure package.json has all required dependencies:
+    - react, react-dom (^18.0.0)
+    - framer-motion or motion (latest)
+    - lucide-react
+    - All @radix-ui packages used
+    - tailwindcss, autoprefixer, postcss
+
+16. Verify vite.config.ts has Replit-specific settings:
+    - server.host: '0.0.0.0'
+    - server.allowedHosts: ['.replit.dev', '.repl.co', 'localhost']
+    - server.hmr.clientPort: 443
+
+=== DELIVERABLES ===
+After completing all phases, provide:
+1. Summary of files created/fixed
+2. List of any remaining warnings (non-blocking)
+3. Confirmation that site loads and navigates properly
+4. Browser console status (clean or minor warnings only)
+5. Screenshot or description of working homepage
+
+EXECUTE ALL PHASES AUTOMATICALLY. Fix issues as you find them. Create missing files. Test thoroughly. Report final status.
+
+START NOW.
+```
+
+---
