@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emily Bakes Cakes - Network Diagnostics</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(135deg, #F8EBD7 0%, #FFE8D6 100%);
+      padding: 40px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #C44569;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+    }
+    h2 {
+      color: #2B2B2B;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+    .status-good { color: #28a745; font-weight: bold; }
+    .status-bad { color: #dc3545; font-weight: bold; }
+    .info-box {
+      background: #F8EBD7;
+      border-left: 4px solid #C44569;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 5px;
+    }
+    .info-item {
+      margin: 8px 0;
+      display: flex;
+      gap: 10px;
+    }
+    .label {
+      font-weight: bold;
+      min-width: 150px;
+      color: #2B2B2B;
+    }
+    .value {
+      color: #555;
+      word-break: break-all;
+    }
+    button {
+      background: #C44569;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 10px 10px 0;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background: #A03555;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(196, 69, 105, 0.3);
+    }
+    .color-swatch {
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+      border-radius: 5px;
+      border: 2px solid #ddd;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    #console-output {
+      background: #2B2B2B;
+      color: #00ff00;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      max-height: 400px;
+      overflow-y: auto;
+      margin-top: 20px;
+    }
+    .timestamp {
+      color: #888;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧁 Emily Bakes Cakes</h1>
+    <p style="color: #666; margin-bottom: 30px;">Network & Rendering Diagnostics Tool</p>
+
+    <h2>🌐 Environment Detection</h2>
+    <div class="info-box">
+      <div class="info-item">
+        <span class="label">Current URL:</span>
+        <span class="value" id="current-url">-</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Hostname:</span>
+        <span class="value" id="hostname">-</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Protocol:</span>
+        <span class="value" id="protocol">-</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Environment:</span>
+        <span class="value" id="environment">-</span>
+      </div>
+      <div class="info-item">
+        <span class="label">In iframe:</span>
+        <span class="value" id="in-iframe">-</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Screen Size:</span>
+        <span class="value" id="screen-size">-</span>
+      </div>
+    </div>
+
+    <h2>🎨 Design System Colors</h2>
+    <div class="info-box">
+      <div class="info-item">
+        <span class="color-swatch" style="background: #C44569;"></span>
+        <span class="label">Raspberry Pink:</span>
+        <span class="value">#C44569</span>
+      </div>
+      <div class="info-item">
+        <span class="color-swatch" style="background: #F8EBD7;"></span>
+        <span class="label">Cream:</span>
+        <span class="value">#F8EBD7</span>
+      </div>
+      <div class="info-item">
+        <span class="color-swatch" style="background: #2B2B2B;"></span>
+        <span class="label">Charcoal:</span>
+        <span class="value">#2B2B2B</span>
+      </div>
+      <div class="info-item">
+        <span class="color-swatch" style="background: #E9E9E9;"></span>
+        <span class="label">Soft Gray:</span>
+        <span class="value">#E9E9E9</span>
+      </div>
+    </div>
+
+    <h2>🧪 Test Actions</h2>
+    <button onclick="testMainApp()">Open Main App</button>
+    <button onclick="testMainAppNewTab()">Open Main App (New Tab)</button>
+    <button onclick="runNetworkTests()">Run Network Tests</button>
+    <button onclick="clearConsole()">Clear Console</button>
+
+    <h2>📊 Console Output</h2>
+    <div id="console-output"></div>
+  </div>
+
+  <script>
+    const consoleOutput = document.getElementById('console-output');
+
+    function log(message, type = 'info') {
+      const timestamp = new Date().toLocaleTimeString();
+      const color = type === 'error' ? '#ff6b6b' : 
+                    type === 'success' ? '#51cf66' : 
+                    type === 'warning' ? '#ffd43b' : '#00ff00';
+      consoleOutput.innerHTML += `<div style="color: ${color}"><span class="timestamp">[${timestamp}]</span> ${message}</div>`;
+      consoleOutput.scrollTop = consoleOutput.scrollHeight;
+    }
+
+    function clearConsole() {
+      consoleOutput.innerHTML = '';
+      log('Console cleared', 'info');
+    }
+
+    function detectEnvironment() {
+      const url = window.location.href;
+      const hostname = window.location.hostname;
+      const protocol = window.location.protocol;
+      const isReplitExternal = hostname.includes('replit.dev') || hostname.includes('repl.co');
+      const isReplitPreview = window.location !== window.parent.location;
+      const inIframe = window.self !== window.top;
+      const screenSize = `${window.innerWidth}x${window.innerHeight}`;
+
+      document.getElementById('current-url').textContent = url;
+      document.getElementById('hostname').textContent = hostname;
+      document.getElementById('protocol').textContent = protocol;
+      document.getElementById('in-iframe').textContent = inIframe ? 'Yes (Preview Mode)' : 'No (Direct Access)';
+      document.getElementById('screen-size').textContent = screenSize;
+
+      let environment = 'Unknown';
+      if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        environment = 'Localhost Development';
+      } else if (isReplitPreview) {
+        environment = 'Replit Preview (iframe)';
+      } else if (isReplitExternal) {
+        environment = 'Replit External Network Host';
+      }
+      document.getElementById('environment').textContent = environment;
+
+      log('🌐 Environment Detection Complete', 'success');
+      log(`Environment: ${environment}`, 'info');
+      log(`URL: ${url}`, 'info');
+      log(`Protocol: ${protocol}`, 'info');
+    }
+
+    function testMainApp() {
+      log('🔄 Opening main app in same window...', 'info');
+      const baseUrl = window.location.origin;
+      window.location.href = baseUrl;
+    }
+
+    function testMainAppNewTab() {
+      log('🔄 Opening main app in new tab...', 'info');
+      const baseUrl = window.location.origin;
+      window.open(baseUrl, '_blank');
+    }
+
+    async function runNetworkTests() {
+      log('🧪 Starting network tests...', 'info');
+      
+      // Test 1: Fetch index page
+      try {
+        const response = await fetch(window.location.origin);
+        if (response.ok) {
+          log('✅ Main page accessible (200 OK)', 'success');
+        } else {
+          log(`⚠️ Main page returned status: ${response.status}`, 'warning');
+        }
+      } catch (error) {
+        log(`❌ Error fetching main page: ${error.message}`, 'error');
+      }
+
+      // Test 2: Check for common assets
+      const assetsToTest = [
+        '/src/main.tsx',
+        '/src/App.tsx',
+        '/vite.svg'
+      ];
+
+      for (const asset of assetsToTest) {
+        try {
+          const response = await fetch(window.location.origin + asset);
+          if (response.ok) {
+            log(`✅ Asset found: ${asset}`, 'success');
+          } else {
+            log(`⚠️ Asset not found: ${asset} (${response.status})`, 'warning');
+          }
+        } catch (error) {
+          log(`❌ Error fetching ${asset}: ${error.message}`, 'error');
+        }
+      }
+
+      // Test 3: WebSocket capability
+      try {
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${wsProtocol}//${window.location.host}`;
+        log(`Testing WebSocket connection to: ${wsUrl}`, 'info');
+        const ws = new WebSocket(wsUrl);
+        ws.onopen = () => {
+          log('✅ WebSocket connection successful', 'success');
+          ws.close();
+        };
+        ws.onerror = (error) => {
+          log('⚠️ WebSocket connection failed (expected for HMR)', 'warning');
+        };
+      } catch (error) {
+        log(`⚠️ WebSocket test error: ${error.message}`, 'warning');
+      }
+
+      log('🏁 Network tests complete', 'success');
+    }
+
+    // Run detection on load
+    window.addEventListener('DOMContentLoaded', () => {
+      detectEnvironment();
+      log('🚀 Diagnostics tool ready', 'success');
+      log('Click buttons above to run tests', 'info');
+    });
+  </script>
+</body>
+</html>

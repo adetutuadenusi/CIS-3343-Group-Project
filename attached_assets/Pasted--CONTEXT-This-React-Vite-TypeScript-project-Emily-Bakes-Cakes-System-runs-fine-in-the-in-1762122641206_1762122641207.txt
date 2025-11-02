@@ -1,0 +1,90 @@
+🧠 CONTEXT:
+This React + Vite + TypeScript project (“Emily Bakes Cakes System”) runs fine in the internal Preview panel but shows partial or blank content when opened via Network Host (.replit.dev).  
+We’ve already fixed the animation and AnimatePresence logic. Now we must visually confirm whether the site truly renders in the external environment.
+
+🎯 GOAL:
+Perform a **complete visual and color-based diagnostic** across all pages and modes.
+
+---
+
+### 🧩 TASKS FOR THE AGENT
+
+#### **PHASE 1 – DISCOVERY**
+1. Detect all route paths or major pages:
+   ```
+   /
+   /shop
+   /builder
+   /gallery
+   /about
+   /contact
+   /login
+   /admin
+   ```
+2. For each path, open both:
+   - **Preview mode** (internal Replit iframe)
+   - **Network Host mode** (external .replit.dev URL)
+
+#### **PHASE 2 – SCREENSHOT CAPTURE**
+1. Use headless browser automation inside the Replit environment to:
+   - Wait for all animations or loaders to complete (≈ 5 seconds each)
+   - Capture a full-page screenshot in **PNG** format for both modes
+   - Name files:
+     ```
+     diagnostics/preview_home.png
+     diagnostics/network_home.png
+     diagnostics/preview_shop.png
+     diagnostics/network_shop.png
+     ...
+     ```
+2. Save screenshots in a `diagnostics` folder for user download.
+
+#### **PHASE 3 – COLOR & VISUAL ANALYSIS**
+For each screenshot:
+- Sample the **dominant 5 colors**.
+- Compare them with the project’s official brand palette:
+  - Raspberry Pink #C44569  
+  - Cream Vanilla #F8EBD7  
+  - Chocolate Brown #5A3825  
+  - Mint Green #A9E5BB  
+  - Soft Gold #FFD166
+- Detect any of these anomalies:
+  - ⚠️ Missing dominant color → likely blank screen or CSS fail
+  - ⚠️ All white/cream only → possible rendering halt
+  - ⚠️ Gray/black only → potential animation overlay stuck
+  - ✅ Expected brand mix → page rendered correctly
+
+Produce a **visual-integrity score** for each page:
+| Page | Mode | Dominant Colors | Brand Match % | Render Status |
+|------|------|-----------------|----------------|----------------|
+| Home | Network | Pink + Cream | 92 % | ✅ Good |
+| Shop | Network | Only #F8EBD7 | 5 % | ⚠️ Blank |
+
+#### **PHASE 4 – RENDER CUE CHECK**
+While analyzing screenshots, also:
+- OCR or pixel-detect if the **navigation bar text** (“Home Shop Gallery About Contact”) is visible.
+- Log whether logo “Emily Bakes Cakes” appears.
+- Detect contrast ratios to confirm readable content.
+
+#### **PHASE 5 – REPORT & RECOMMENDATIONS**
+At the end:
+1. Generate a structured summary titled **“Network Host Render Diagnostics Report”** including:
+   - Screenshot links (relative paths)
+   - Brand color match percentages
+   - Which pages fail visually
+   - Console or network errors, if any
+2. Include suggested remediations:
+   - If page = blank → verify vite `base` or routing
+   - If CSS missing → check asset path
+   - If colors muted → confirm global stylesheet loaded
+
+---
+
+⚡ EXECUTION DIRECTIVES
+- Execute all phases automatically.
+- If any screenshot shows all pixels ≈ #F8EBD7 (cream background > 90 %), treat as a **blank render** and log cause.
+- Cross-compare Preview vs Network results side-by-side.
+- Generate a final human-readable summary + color heatmap analysis.
+- Ensure the output confirms whether **the full site truly renders** in Network Host mode.
+
+START NOW → Run visual analysis, capture screenshots, compare brand colors, and report findings.

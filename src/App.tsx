@@ -34,6 +34,22 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+    const isReplitExternal = window.location.hostname.includes('replit.dev') || 
+                             window.location.hostname.includes('repl.co');
+    const isReplitPreview = window.location !== window.parent.location;
+    
+    console.log('🌐 Emily Bakes Cakes - Environment Detection');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('URL:', window.location.href);
+    console.log('Hostname:', window.location.hostname);
+    console.log('Protocol:', window.location.protocol);
+    console.log('Is Replit External:', isReplitExternal);
+    console.log('Is Preview (iframe):', isReplitPreview);
+    console.log('Screen Size:', `${window.innerWidth}x${window.innerHeight}`);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  }, []);
+
+  useEffect(() => {
     if (showWelcome) {
       const timer = setTimeout(() => {
         setShowWelcome(false);
