@@ -52,19 +52,23 @@ export default defineConfig({
     target: 'esnext',
     outDir: 'build',
   },
-  server: {
-    host: '0.0.0.0',              // ⭐ ADDED: Allow Replit proxy access
-    port: 3000,                   // ✅ KEPT: Your original port
-    strictPort: false,            // ⭐ ADDED: Allow fallback ports if 3000 busy
-    hmr: {
-      clientPort: 443,            // ⭐ ADDED: Fix Hot Module Reload over HTTPS
-      protocol: 'wss',            // ⭐ ADDED: WebSocket secure protocol
-    },
-    allowedHosts: [               // ⭐⭐ THE MAIN FIX ⭐⭐
-      '.replit.dev',              // All Replit preview domains
-      '.repl.co',                 // Legacy Replit domains
-      'localhost',                // Local development
-    ],
-    // ❌ REMOVED: open: true (doesn't work in Replit)
+ server: {
+  host: '0.0.0.0',
+  port: 3000,
+  strictPort: false,
+  https: true,              // ✅ Forces HTTPS to match .replit.dev proxy
+  open: false,              // ✅ Avoids preview auto-open loop
+  hmr: {
+    protocol: 'wss',        // ✅ WebSocket secure
+    host: process.env.REPL_SLUG
+      ? `${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`
+      : 'localhost',
+    clientPort: 443,
   },
-});
+  allowedHosts: [
+    '.replit.dev',
+    '.repl.co',
+    'localhost',
+  ],
+},
+base: './',                 // ✅ Ensures assets load correctly under proxy paths
