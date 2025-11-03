@@ -46,6 +46,15 @@ The application is built using React 18.3.1 with TypeScript, Vite 6.3.5, and Tai
 - **React DnD**: Drag-and-drop functionality (for admin order board).
 
 ## Recent Changes
+- November 3, 2025: Shop Page & Inquiry Form Updates
+  - **Mobile Menu Close Button Fix**: Replaced Lucide icon with inline SVG (48x48px) to prevent dot rendering on mobile devices
+  - **Shop Page Sorting Dropdown**: Added z-index: 100 to ensure dropdown appears above CTA section
+  - **Inquiry Form Redesign**: Compact 2-column layout (Name/Email, Phone/Date) with full-width message field, fits within 700px height without scrolling
+  - **Inquiry Form Header**: Enhanced with cake emoji, improved typography (24px title), and instruction text
+  - **Inquiry Form Inputs**: Reduced to h-11 (44px), smaller icons (16px), compact spacing for better visual density
+  - **Inquiry Form Buttons**: Border-top separator, h-11 buttons with gradient submit button
+  - **Shop Page Top Padding Reduction**: Reduced top padding by ~40px (paddingTop: clamp(24px, 4vw, 56px)) to minimize scrolling on desktop
+
 - November 3, 2025: Shop Page Comprehensive Redesign (All Features Complete)
   - **Inquiry Modal**: Replaced toast notifications with professional modal featuring form validation (name, email, phone, event date, message fields)
   - **Custom Cake CTA**: Prominent section at top with animated sparkle icon and clear call-to-action linking to custom builder
