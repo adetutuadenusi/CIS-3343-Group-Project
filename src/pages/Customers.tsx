@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Label } from '../components/ui/label';
 import { Search, UserPlus, Download, Mail, Phone, Calendar, ShoppingBag, Loader2, X } from 'lucide-react';
 import { useToast } from '../components/ToastContext';
+import { exportCustomersToCSV, formatDate as formatDateUtil } from '../utils/csvExport';
 
 interface Customer {
   id: number;
@@ -185,14 +186,25 @@ export function Customers() {
     }
   };
 
+  // Enhancement #47: Consistent MM/DD/YYYY date formatting
   const formatDate = (dateString: string | null) => {
     if (!dateString) return 'No orders yet';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return formatDateUtil(dateString) || 'No orders yet';
   };
 
+  // Enhancement #25: CSV Export with filtering
   const handleExport = (type: string) => {
-    showToast('success', `${type} customer list has been downloaded successfully.`, 'Export Complete');
+    let filteredCustomers = customers;
+    
+    if (type === 'VIP List') {
+      filteredCustomers = customers.filter(c => c.isVip);
+    } else if (type === 'Birthday List') {
+      // Filter customers with upcoming birthdays (would need birthday field in real app)
+      filteredCustomers = customers;
+    }
+    
+    exportCustomersToCSV(filteredCustomers);
+    showToast('success', `${type} exported successfully as CSV`, 'Export Complete');
   };
 
   const clearSearch = () => {

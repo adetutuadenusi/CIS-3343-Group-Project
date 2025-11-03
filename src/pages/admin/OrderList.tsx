@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { exportOrdersToCSV, formatDate as formatDateUtil } from '../../utils/csvExport';
 import { Card } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
@@ -54,6 +55,8 @@ interface Order {
   depositAmount: number | null;
   balanceDue: number | null;
   paymentStatus: string;
+  depositRequired: number | null; // Enhancement #32
+  depositMet: boolean; // Enhancement #32
   createdAt: string;
   cancellationReason: string | null;
   cancelledAt: string | null;
@@ -266,13 +269,16 @@ export function OrderList() {
     }
   };
 
+  // Enhancement #47: Consistent MM/DD/YYYY date formatting
   const formatDate = (dateString: string | null) => {
     if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    });
+    return formatDateUtil(dateString) || 'N/A';
+  };
+  
+  // Enhancement #25: CSV Export for filtered orders
+  const handleExportOrders = () => {
+    exportOrdersToCSV(filteredOrders);
+    showToast('success', `${filteredOrders.length} orders exported as CSV`, 'Export Complete');
   };
 
   const formatCurrency = (cents: number | null) => {
@@ -298,6 +304,19 @@ export function OrderList() {
     } catch {
       return [];
     }
+  };
+  
+  // Enhancement #46: Order aging indicator (7+ days pending)
+  const getOrderAge = (createdAt: string): number => {
+    const created = new Date(createdAt);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - created.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+  
+  const isOrderAging = (order: Order): boolean => {
+    return order.status === 'pending' && getOrderAge(order.createdAt) >= 7;
   };
 
   return (
@@ -333,7 +352,7 @@ export function OrderList() {
         </div>
         <Button 
           variant="outline"
-          onClick={() => showToast('success', 'Order list exported successfully', 'Export Complete')}
+          onClick={handleExportOrders}
           className="hover:scale-105 active:scale-95 transition-all duration-200"
           style={{ 
             borderRadius: '10px', 

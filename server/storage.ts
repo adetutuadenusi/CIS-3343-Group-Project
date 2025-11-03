@@ -74,7 +74,14 @@ export async function searchCustomers(query: string) {
 // ============ ORDERS ============
 
 export async function createOrder(data: NewOrder) {
-  const [order] = await db.insert(orders).values(data).returning();
+  // Enhancement #32: Calculate 50% deposit requirement for custom orders
+  let orderData = { ...data };
+  if (data.orderType === 'custom' && data.totalAmount) {
+    orderData.depositRequired = Math.ceil(data.totalAmount * 0.5); // 50% deposit
+    orderData.depositMet = (data.depositAmount || 0) >= orderData.depositRequired;
+  }
+  
+  const [order] = await db.insert(orders).values(orderData).returning();
   
   // Update customer's total orders and last order date
   const customer = await getCustomerById(data.customerId);
@@ -117,6 +124,8 @@ export async function getAllOrdersWithCustomers() {
       depositAmount: orders.depositAmount,
       balanceDue: orders.balanceDue,
       paymentStatus: orders.paymentStatus,
+      depositRequired: orders.depositRequired, // Enhancement #32
+      depositMet: orders.depositMet, // Enhancement #32
       cancellationReason: orders.cancellationReason,
       cancelledAt: orders.cancelledAt,
       createdAt: orders.createdAt,
