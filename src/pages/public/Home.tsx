@@ -410,33 +410,29 @@ export function PublicHome({ onNavigate }: PublicHomeProps = {}) {
 
             {/* Carousel Navigation */}
             <div className="flex justify-center items-center gap-4 sm:gap-6 mt-6 sm:mt-8">
-              <button
+              <motion.button
                 onClick={prevSlide}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
                 aria-label="Previous slide"
                 style={{
-                  width: '44px',
-                  height: '44px',
-                  minWidth: '44px',
-                  minHeight: '44px',
+                  width: '52px',
+                  height: '52px',
+                  minWidth: '52px',
+                  minHeight: '52px',
                   borderRadius: '50%',
-                  background: 'white',
-                  border: '2px solid #C44569',
+                  background: '#C44569',
+                  border: 'none',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   cursor: 'pointer',
                   transition: 'all 250ms ease',
-                  boxShadow: '0 2px 8px rgba(90, 56, 37, 0.1)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = '#C44569';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'white';
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)'
                 }}
               >
-                <ChevronLeft size={24} color="#C44569" />
-              </button>
+                <ChevronLeft size={28} color="white" strokeWidth={3} />
+              </motion.button>
 
               {/* Dots */}
               <div className="flex gap-2">
@@ -460,33 +456,29 @@ export function PublicHome({ onNavigate }: PublicHomeProps = {}) {
                 ))}
               </div>
 
-              <button
+              <motion.button
                 onClick={nextSlide}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
                 aria-label="Next slide"
                 style={{
-                  width: '44px',
-                  height: '44px',
-                  minWidth: '44px',
-                  minHeight: '44px',
+                  width: '52px',
+                  height: '52px',
+                  minWidth: '52px',
+                  minHeight: '52px',
                   borderRadius: '50%',
-                  background: 'white',
-                  border: '2px solid #C44569',
+                  background: '#C44569',
+                  border: 'none',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   cursor: 'pointer',
                   transition: 'all 250ms ease',
-                  boxShadow: '0 2px 8px rgba(90, 56, 37, 0.1)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = '#C44569';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'white';
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)'
                 }}
               >
-                <ChevronRight size={24} color="#C44569" />
-              </button>
+                <ChevronRight size={28} color="white" strokeWidth={3} />
+              </motion.button>
             </div>
           </div>
         </div>
