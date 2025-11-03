@@ -104,24 +104,57 @@ export function Builder() {
     }
   };
 
-  const handleSubmit = () => {
-    showToast('success', 'Custom order submitted! Emily will reach out within 24 hours to finalize details.');
-    
-    // Reset form
-    setFormData({
-      occasion: '',
-      flavor: '',
-      design: '',
-      name: '',
-      email: '',
-      phone: '',
-      date: '',
-      servings: '',
-      message: '',
-      notes: ''
-    });
-    setCompletedSteps([]);
-    setOpenStep(1);
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('/api/orders/custom', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          occasion: formData.occasion,
+          flavor: formData.flavor,
+          design: formData.design,
+          servings: formData.servings,
+          date: formData.date,
+          message: formData.message,
+          notes: formData.notes,
+          inspirationImages: formData.inspirationImages,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit order');
+      }
+
+      const data = await response.json();
+      console.log('Order created:', data);
+      
+      showToast('success', 'Custom order submitted! Emily will reach out within 24 hours to finalize details.');
+      
+      // Reset form
+      setFormData({
+        occasion: '',
+        flavor: '',
+        design: '',
+        name: '',
+        email: '',
+        phone: '',
+        date: '',
+        servings: '',
+        message: '',
+        notes: '',
+        inspirationImages: []
+      });
+      setCompletedSteps([]);
+      setOpenStep(1);
+    } catch (error) {
+      console.error('Error submitting order:', error);
+      showToast('error', 'Failed to submit order. Please try again.');
+    }
   };
 
   const selectedFlavor = flavors.find(f => f.id === formData.flavor);

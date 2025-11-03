@@ -1,85 +1,108 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export interface Inquiry {
   id: number;
   name: string;
   email: string;
   phone: string;
-  eventDate: string;
+  eventDate: string | null;
   message: string;
   productName: string;
-  inspirationImages?: File[];
+  inspirationImages?: File[] | string;
   status: 'pending' | 'reviewed' | 'contacted';
-  submittedAt: string;
+  createdAt?: string;
 }
 
 interface InquiriesContextType {
   inquiries: Inquiry[];
-  addInquiry: (inquiry: Omit<Inquiry, 'id' | 'status' | 'submittedAt'>) => void;
-  updateInquiryStatus: (id: number, status: 'pending' | 'reviewed' | 'contacted') => void;
+  addInquiry: (inquiry: Omit<Inquiry, 'id' | 'status' | 'createdAt'>) => Promise<void>;
+  updateInquiryStatus: (id: number, status: 'pending' | 'reviewed' | 'contacted') => Promise<void>;
+  isLoading: boolean;
 }
 
 const InquiriesContext = createContext<InquiriesContextType | undefined>(undefined);
 
-const mockInquiries: Inquiry[] = [
-  {
-    id: 1,
-    name: 'Sarah Johnson',
-    email: 'sarah.j@email.com',
-    phone: '555-123-4567',
-    eventDate: '2025-12-15',
-    message: 'Looking for a 3-tier wedding cake with floral decorations',
-    productName: 'Elegant Wedding Tier',
-    status: 'pending',
-    submittedAt: '2025-11-02T14:30:00'
-  },
-  {
-    id: 2,
-    name: 'Michael Chen',
-    email: 'mchen@company.com',
-    phone: '555-234-5678',
-    eventDate: '2025-11-20',
-    message: 'Need a corporate logo cake for our company anniversary',
-    productName: 'Corporate Logo Cake',
-    status: 'reviewed',
-    submittedAt: '2025-11-01T10:15:00'
-  },
-  {
-    id: 3,
-    name: 'Emma Davis',
-    email: 'emma.davis@email.com',
-    phone: '555-345-6789',
-    eventDate: '2025-11-25',
-    message: 'Birthday cake for my daughter turning 5, she loves unicorns!',
-    productName: 'Birthday Celebration',
-    status: 'contacted',
-    submittedAt: '2025-10-31T16:45:00'
-  }
-];
-
 export function InquiriesProvider({ children }: { children: ReactNode }) {
-  const [inquiries, setInquiries] = useState<Inquiry[]>(mockInquiries);
+  const [inquiries, setInquiries] = useState<Inquiry[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const addInquiry = (inquiry: Omit<Inquiry, 'id' | 'status' | 'submittedAt'>) => {
-    const newInquiry: Inquiry = {
-      ...inquiry,
-      id: Date.now(),
-      status: 'pending',
-      submittedAt: new Date().toISOString()
+  // Fetch inquiries from API on mount
+  useEffect(() => {
+    const fetchInquiries = async () => {
+      try {
+        const response = await fetch('/api/inquiries');
+        if (response.ok) {
+          const data = await response.json();
+          setInquiries(data);
+        }
+      } catch (error) {
+        console.error('Error fetching inquiries:', error);
+      } finally {
+        setIsLoading(false);
+      }
     };
-    setInquiries(prev => [newInquiry, ...prev]);
+
+    fetchInquiries();
+  }, []);
+
+  const addInquiry = async (inquiry: Omit<Inquiry, 'id' | 'status' | 'createdAt'>) => {
+    try {
+      const response = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: inquiry.name,
+          email: inquiry.email,
+          phone: inquiry.phone,
+          eventDate: inquiry.eventDate,
+          message: inquiry.message,
+          productName: inquiry.productName,
+          inspirationImages: inquiry.inspirationImages,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create inquiry');
+      }
+
+      const newInquiry = await response.json();
+      setInquiries(prev => [newInquiry, ...prev]);
+    } catch (error) {
+      console.error('Error adding inquiry:', error);
+      throw error;
+    }
   };
 
-  const updateInquiryStatus = (id: number, status: 'pending' | 'reviewed' | 'contacted') => {
-    setInquiries(prev =>
-      prev.map(inquiry =>
-        inquiry.id === id ? { ...inquiry, status } : inquiry
-      )
-    );
+  const updateInquiryStatus = async (id: number, status: 'pending' | 'reviewed' | 'contacted') => {
+    try {
+      const response = await fetch(`/api/inquiries/${id}/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update inquiry status');
+      }
+
+      const updatedInquiry = await response.json();
+      setInquiries(prev =>
+        prev.map(inquiry =>
+          inquiry.id === id ? { ...inquiry, status: updatedInquiry.status } : inquiry
+        )
+      );
+    } catch (error) {
+      console.error('Error updating inquiry status:', error);
+      throw error;
+    }
   };
 
   return (
-    <InquiriesContext.Provider value={{ inquiries, addInquiry, updateInquiryStatus }}>
+    <InquiriesContext.Provider value={{ inquiries, addInquiry, updateInquiryStatus, isLoading }}>
       {children}
     </InquiriesContext.Provider>
   );
