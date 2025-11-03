@@ -3,6 +3,7 @@ import { motion, AnimatePresence, PanInfo } from 'motion/react';
 import { ArrowRight, Heart, Award, Clock, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Card, CardContent } from '../../components/ui/card';
 import { LazyImage } from '../../components/Loading/LazyImage';
+import heroImage from '../../assets/hero-image.jpeg';
 
 // Weekly Spotlight Cakes
 const spotlightCakes = [
@@ -125,8 +126,8 @@ export function PublicHome() {
         {/* Lifestyle Cake Image Overlay - Creates depth with gradient background */}
         <div className="absolute inset-0" style={{ opacity: 0.4 }}>
           <LazyImage
-            src="https://images.unsplash.com/photo-1736959574670-a8ace9856e1c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwY2FrZSUyMGNlbGVicmF0aW9ufGVufDF8fHx8MTc2MjAzNjA2Mnww&ixlib=rb-4.1.0&q=80&w=1080"
-            alt="Elegant celebration cake lifestyle"
+            src={heroImage}
+            alt="Emily Bakes Cakes hero"
             style={{
               width: '100%',
               height: '100%',
