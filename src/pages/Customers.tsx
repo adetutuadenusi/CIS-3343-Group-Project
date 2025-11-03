@@ -817,7 +817,7 @@ export function Customers() {
 
       {/* Customer Detail Modal */}
       <Dialog open={isDetailModalOpen} onOpenChange={setIsDetailModalOpen}>
-        <DialogContent className="sm:max-w-[550px] bg-white max-h-[80vh] overflow-y-auto rounded-2xl border-2" style={{ boxShadow: '0 8px 32px rgba(196, 69, 105, 0.25)', borderColor: 'rgba(196, 69, 105, 0.15)' }}>
+        <DialogContent className="sm:max-w-[480px] bg-white max-h-[75vh] overflow-y-auto rounded-xl border-2" style={{ boxShadow: '0 8px 32px rgba(196, 69, 105, 0.25)', borderColor: 'rgba(196, 69, 105, 0.2)' }}>
           {isDetailLoading ? (
             <div className="py-12">
               <div className="flex flex-col items-center justify-center gap-4">
@@ -832,14 +832,14 @@ export function Customers() {
               <DialogHeader>
                 <DialogTitle style={{ 
                   fontFamily: 'Playfair Display', 
-                  fontSize: '28px', 
+                  fontSize: '24px', 
                   color: '#C44569',
                   letterSpacing: '-0.02em',
                   lineHeight: 1.3,
                   display: 'flex',
                   alignItems: 'center',
                   flexWrap: 'wrap',
-                  gap: '12px'
+                  gap: '10px'
                 }}>
                   {selectedCustomer.name}
                   {selectedCustomer.isVip && (
@@ -861,22 +861,22 @@ export function Customers() {
                 <DialogDescription style={{ 
                   fontFamily: 'Open Sans', 
                   color: '#5A3825',
-                  fontSize: '14px',
+                  fontSize: '13px',
                   marginTop: '4px'
                 }}>
                   Customer ID: #{selectedCustomer.id}
                 </DialogDescription>
               </DialogHeader>
               
-              <div className="space-y-6 mt-6">
+              <div className="space-y-5 mt-4">
                 {/* Contact Information */}
                 <div>
                   <h3 style={{ 
                     fontFamily: 'Poppins', 
                     fontWeight: 600, 
-                    fontSize: '17px', 
+                    fontSize: '15px', 
                     color: '#2B2B2B', 
-                    marginBottom: '16px',
+                    marginBottom: '12px',
                     letterSpacing: '-0.01em'
                   }}>
                     Contact Information

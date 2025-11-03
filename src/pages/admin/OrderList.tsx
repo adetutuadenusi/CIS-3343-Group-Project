@@ -773,22 +773,22 @@ export function OrderList() {
 
       {/* Order Detail Modal */}
       <Dialog open={isDetailModalOpen} onOpenChange={setIsDetailModalOpen}>
-        <DialogContent className="sm:max-w-[700px] bg-white max-h-[80vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-[600px] bg-white max-h-[85vh] overflow-y-auto rounded-xl border-2" style={{ boxShadow: '0 8px 32px rgba(196, 69, 105, 0.25)', borderColor: 'rgba(196, 69, 105, 0.2)' }}>
           {selectedOrder && (
             <>
               <DialogHeader>
-                <DialogTitle style={{ fontFamily: 'Playfair Display', fontSize: '24px', color: '#C44569' }}>
+                <DialogTitle style={{ fontFamily: 'Playfair Display', fontSize: '22px', color: '#C44569' }}>
                   Order #{selectedOrder.id}
                 </DialogTitle>
-                <DialogDescription style={{ fontFamily: 'Open Sans', color: '#5A3825' }}>
+                <DialogDescription style={{ fontFamily: 'Open Sans', color: '#5A3825', fontSize: '13px' }}>
                   {selectedOrder.occasion || 'Custom Order'} · {formatDate(selectedOrder.createdAt)}
                 </DialogDescription>
               </DialogHeader>
 
-              <div className="space-y-6 mt-4">
+              <div className="space-y-5 mt-4">
                 {/* Customer Info */}
                 <div>
-                  <h3 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '16px', color: '#2B2B2B', marginBottom: '12px' }}>
+                  <h3 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '15px', color: '#2B2B2B', marginBottom: '10px' }}>
                     Customer Information
                   </h3>
                   <div className="space-y-2">
@@ -808,7 +808,7 @@ export function OrderList() {
 
                 {/* Cake Details */}
                 <div>
-                  <h3 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '16px', color: '#2B2B2B', marginBottom: '12px' }}>
+                  <h3 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '15px', color: '#2B2B2B', marginBottom: '10px' }}>
                     Cake Details
                   </h3>
                   {selectedOrder.layers && parseLayers(selectedOrder.layers).length > 0 ? (
@@ -860,7 +860,7 @@ export function OrderList() {
 
                 {/* Payment Info */}
                 <div>
-                  <h3 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '16px', color: '#2B2B2B', marginBottom: '12px' }}>
+                  <h3 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '15px', color: '#2B2B2B', marginBottom: '10px' }}>
                     Payment Information
                   </h3>
                   <div className="space-y-2">
@@ -888,7 +888,7 @@ export function OrderList() {
                 {/* Payment Tracking */}
                 {selectedOrder.status !== 'cancelled' && (
                   <div className="space-y-4">
-                    <h3 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '16px', color: '#2B2B2B', marginBottom: '12px' }}>
+                    <h3 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '15px', color: '#2B2B2B', marginBottom: '10px' }}>
                       Payment Tracker
                     </h3>
                     
