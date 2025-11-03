@@ -49,11 +49,15 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
       >
         <div className="container mx-auto px-3 sm:px-4 lg:px-6 h-full">
           <div className="flex items-center justify-between h-full">
-            {/* Logo */}
+            {/* Logo - Always navigates to top of home page */}
             <button
-              onClick={() => onNavigate('home')}
+              onClick={() => {
+                onNavigate('home');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               className="flex items-center gap-1.5 sm:gap-2 cursor-pointer hover:opacity-90 transition-opacity flex-shrink-0"
               style={{ background: 'none', border: 'none', padding: 0 }}
+              aria-label="Emily Bakes Cakes - Go to home page"
             >
               <Heart size={32} fill="#F8EBD7" color="#F8EBD7" className="flex-shrink-0" />
               <span
