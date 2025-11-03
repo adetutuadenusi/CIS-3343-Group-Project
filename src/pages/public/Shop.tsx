@@ -312,12 +312,12 @@ export function Shop({ onNavigate }: ShopProps = {}) {
               />
             </div>
 
-            {/* Sort Dropdown - Enhanced and Centered */}
+            {/* Sort Dropdown - Enhanced */}
             <div className="relative" style={{ zIndex: 100 }}>
               <select
                 value={sortBy}
                 onChange={(e) => handleSortChange(e.target.value)}
-                className="h-12 md:h-13 px-5 pr-11 rounded-xl appearance-none cursor-pointer w-full transition-all duration-200 text-center"
+                className="h-12 md:h-13 px-4 pr-11 rounded-xl appearance-none cursor-pointer w-full transition-all duration-200"
                 style={{
                   background: 'var(--surface-elevated)',
                   border: '2px solid #C44569',
@@ -329,7 +329,9 @@ export function Shop({ onNavigate }: ShopProps = {}) {
                   boxShadow: '0 2px 4px rgba(196, 69, 105, 0.1)',
                   paddingRight: '44px',
                   position: 'relative',
-                  zIndex: 100
+                  zIndex: 100,
+                  textAlign: 'left',
+                  direction: 'ltr'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'rgba(196, 69, 105, 0.05)';
