@@ -35,22 +35,25 @@ export function MobileNav({ isOpen, onClose, activePage, onNavigate, onAdminAcce
             aria-label="Close menu"
           />
           
-          {/* Menu Panel */}
+          {/* Menu Panel - Fits on desktop, scrollable on mobile */}
           <motion.div
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed top-0 right-0 bottom-0 w-full max-w-sm overflow-y-auto"
+            className="fixed top-0 right-0 bottom-0 w-full max-w-sm"
             style={{
               background: 'white',
               boxShadow: '-4px 0 24px rgba(90, 56, 37, 0.15)',
-              zIndex: 9998
+              zIndex: 9998,
+              display: 'flex',
+              flexDirection: 'column',
+              overflowY: 'auto'
             }}
           >
-            <div className="p-6">
+            <div className="p-6 flex flex-col h-full">
               {/* Close Button */}
-              <div className="flex justify-end mb-8">
+              <div className="flex justify-end mb-6">
                 <button
                   onClick={onClose}
                   aria-label="Close navigation menu"
@@ -88,7 +91,7 @@ export function MobileNav({ isOpen, onClose, activePage, onNavigate, onAdminAcce
               </div>
 
               {/* Logo */}
-              <div className="mb-12">
+              <div className="mb-8">
                 <h3 style={{
                   fontFamily: 'Playfair Display',
                   fontWeight: 700,
@@ -101,7 +104,7 @@ export function MobileNav({ isOpen, onClose, activePage, onNavigate, onAdminAcce
               </div>
 
               {/* Navigation Links */}
-              <nav className="space-y-2 mb-8">
+              <nav className="space-y-1 mb-6 flex-shrink-0">
                 {navItems.map((item, index) => (
                   <motion.button
                     key={item.id}
@@ -116,10 +119,10 @@ export function MobileNav({ isOpen, onClose, activePage, onNavigate, onAdminAcce
                     style={{
                       fontFamily: 'Poppins',
                       fontWeight: 500,
-                      fontSize: '16px',
+                      fontSize: '15px',
                       color: activePage === item.id ? '#C44569' : '#5A3825',
                       background: activePage === item.id ? 'rgba(196, 69, 105, 0.1)' : 'transparent',
-                      padding: '16px 20px',
+                      padding: '12px 20px',
                       border: 'none',
                       cursor: 'pointer',
                       minHeight: '44px'
@@ -141,7 +144,7 @@ export function MobileNav({ isOpen, onClose, activePage, onNavigate, onAdminAcce
               </nav>
 
               {/* Divider */}
-              <div className="border-t mb-6" style={{ borderColor: 'rgba(90, 56, 37, 0.15)' }} />
+              <div className="border-t mb-4 flex-shrink-0" style={{ borderColor: 'rgba(90, 56, 37, 0.15)' }} />
 
               {/* Staff Login Button */}
               <button
@@ -149,13 +152,14 @@ export function MobileNav({ isOpen, onClose, activePage, onNavigate, onAdminAcce
                   onAdminAccess();
                   onClose();
                 }}
+                className="flex-shrink-0"
                 style={{
                   background: '#C44569',
                   color: 'white',
                   fontFamily: 'Poppins',
                   fontWeight: 600,
                   fontSize: '15px',
-                  padding: '16px 24px',
+                  padding: '14px 24px',
                   borderRadius: '12px',
                   border: 'none',
                   cursor: 'pointer',
@@ -165,7 +169,7 @@ export function MobileNav({ isOpen, onClose, activePage, onNavigate, onAdminAcce
                   justifyContent: 'center',
                   gap: '10px',
                   boxShadow: '0 4px 16px rgba(196, 69, 105, 0.3)',
-                  minHeight: '56px',
+                  minHeight: '52px',
                   transition: 'all 200ms ease'
                 }}
                 onMouseEnter={(e) => {
@@ -182,19 +186,19 @@ export function MobileNav({ isOpen, onClose, activePage, onNavigate, onAdminAcce
               </button>
 
               {/* Contact Info */}
-              <div className="mt-12 p-6 rounded-xl" style={{ background: 'rgba(248, 235, 215, 0.5)' }}>
+              <div className="mt-6 p-4 rounded-xl flex-shrink-0" style={{ background: 'rgba(248, 235, 215, 0.5)' }}>
                 <p style={{
                   fontFamily: 'Poppins',
                   fontWeight: 600,
-                  fontSize: '14px',
+                  fontSize: '13px',
                   color: '#2B2B2B',
-                  marginBottom: '12px'
+                  marginBottom: '8px'
                 }}>
                   Contact Us
                 </p>
-                <div className="space-y-2" style={{ fontSize: '14px', color: '#5A3825' }}>
-                  <p>(555) 123-4567</p>
-                  <p>hello@emilybakescakes.com</p>
+                <div className="space-y-1" style={{ fontSize: '13px', color: '#5A3825' }}>
+                  <p>(713) 555-CAKE</p>
+                  <p>info@emilybakescakes.com</p>
                 </div>
               </div>
             </div>

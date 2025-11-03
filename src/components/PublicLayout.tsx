@@ -141,12 +141,14 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                 <span className="xl:hidden">Login</span>
               </button>
 
-              {/* Mobile Menu Button */}
-              <HamburgerIcon 
-                isOpen={mobileMenuOpen} 
-                onClick={() => setMobileMenuOpen(true)}
-                color="white"
-              />
+              {/* Mobile Menu Button - Only show when menu is closed */}
+              {!mobileMenuOpen && (
+                <HamburgerIcon 
+                  isOpen={false} 
+                  onClick={() => setMobileMenuOpen(true)}
+                  color="white"
+                />
+              )}
             </div>
           </div>
         </div>

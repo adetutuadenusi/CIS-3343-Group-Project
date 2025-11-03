@@ -41,3 +41,14 @@ The application is built using React 18.3.1 with TypeScript, Vite 6.3.5, and Tai
 - **Lucide React**: Icon library.
 - **Sonner**: Toast notifications.
 - **React DnD**: Drag-and-drop functionality (for admin order board).
+
+## Recent Changes
+- November 3, 2025: Mobile Menu Optimization & Duplicate Close Button Fix
+  - **Fixed duplicate X button issue**: Removed hamburger-to-X transformation in navigation bar
+  - **Single functional close button**: Only the X in the menu panel remains, fully visible and functional
+  - **Desktop menu optimization**: Entire menu (nav links, login, contact) now fits on desktop without scrolling
+  - **Maintained mobile scrollability**: Menu remains scrollable on smaller mobile screens
+  - **Hamburger icon behavior**: Only shows when menu is closed
+  - **Z-index standardization**: Mobile menu (9998), Hero content (3), Nav bar (9999)
+  - **Logo navigation**: Clicking "Emily Bakes Cakes" logo returns to home page with smooth scroll to top
+  - **Spotlight carousel arrows**: Optimized for mobile visibility (52px, solid raspberry, white icons)
