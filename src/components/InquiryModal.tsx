@@ -254,7 +254,7 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                       background: 'rgba(255, 255, 255, 0.15)',
                       padding: '12px 16px',
                       borderRadius: '8px',
-                      marginBottom: '20px',
+                      marginBottom: '28px',
                       borderLeft: '4px solid rgba(255, 255, 255, 0.4)'
                     }}
                   >
