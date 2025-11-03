@@ -89,6 +89,19 @@ The application runs on port 5000 and is configured for the Replit environment.
 - **Build Output**: `build/` directory
 
 ## Recent Changes
+- November 3, 2025: Compact Footer Redesign with Logo & Houston Contact Info
+  - **4-column responsive layout**: Logo + Brand, Explore links, Learn More links, Contact information
+  - **Added logo image**: 40px logo displayed with brand name in footer
+  - **Houston business details**: 
+    - Address: 2847 Westheimer Road, Houston, TX 77098
+    - Phone: (713) 555-CAKE
+    - Email: info@emilybakescakes.com (clickable mailto link)
+  - **Shorter, more compact design**: Reduced padding (py-8 vs py-12), tighter spacing, smaller fonts (13px body)
+  - **Split navigation**: First 3 nav items in "Explore" column, last 3 in "Learn More" column
+  - **All footer links functional**: Every navigation link properly connected via onNavigate prop
+  - **Navigation bar z-index fix**: Increased to 9999 to always stay on top during scrolling
+  - Result: Professional, space-efficient footer with complete contact information
+
 - November 3, 2025: Bold Homepage Hero Redesign with Custom Image
   - **Custom hero image**: Integrated user-provided image (gift box with ribbon) at 50% opacity
   - **Dramatic new headline**: "Emily Bakes Cakes" in large Playfair Display (52-96px) with scale animation

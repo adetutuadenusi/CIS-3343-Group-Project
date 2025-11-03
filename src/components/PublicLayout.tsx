@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { HamburgerIcon } from './HamburgerIcon';
 import { MobileNav } from './MobileNav';
 import { StickyBottomCTA } from './StickyBottomCTA';
+import logoImage from '../assets/logo.png';
 
 interface PublicLayoutProps {
   children: React.ReactNode;
@@ -166,36 +167,46 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
 
       {/* Footer */}
       <footer
-        className="mt-auto py-12 px-4 sm:px-6"
+        className="mt-auto py-8 px-4 sm:px-6"
         style={{
           background: '#2B2B2B',
           color: 'rgba(255, 255, 255, 0.9)'
         }}
       >
         <div className="container mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            {/* Brand */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {/* Brand with Logo */}
             <div>
-              <h4
-                style={{
-                  fontFamily: 'Playfair Display, serif',
-                  fontWeight: 700,
-                  fontSize: '24px',
-                  color: '#C44569',
-                  marginBottom: '12px'
-                }}
-              >
-                Emily Bakes Cakes
-              </h4>
+              <div className="flex items-center gap-2 mb-3">
+                <img 
+                  src={logoImage} 
+                  alt="Emily Bakes Cakes Logo" 
+                  style={{ 
+                    width: '40px', 
+                    height: '40px',
+                    objectFit: 'contain'
+                  }}
+                />
+                <h4
+                  style={{
+                    fontFamily: 'Playfair Display, serif',
+                    fontWeight: 700,
+                    fontSize: '18px',
+                    color: '#C44569'
+                  }}
+                >
+                  Emily Bakes Cakes
+                </h4>
+              </div>
               <p
                 style={{
                   fontFamily: 'Open Sans, sans-serif',
-                  fontSize: '14px',
+                  fontSize: '13px',
                   color: 'rgba(255, 255, 255, 0.7)',
-                  lineHeight: 1.7
+                  lineHeight: 1.6
                 }}
               >
-                Handcrafted artisan cakes that transform celebrations into unforgettable moments.
+                Handcrafted artisan cakes for Houston's special moments.
               </p>
             </div>
 
@@ -205,28 +216,72 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                 style={{
                   fontFamily: 'Poppins, sans-serif',
                   fontWeight: 600,
-                  fontSize: '16px',
+                  fontSize: '14px',
                   color: 'white',
-                  marginBottom: '16px'
+                  marginBottom: '12px'
                 }}
               >
-                Quick Links
+                Explore
               </h5>
-              <ul className="space-y-2">
-                {navItems.map((item) => (
+              <ul className="space-y-1">
+                {navItems.slice(0, 3).map((item) => (
                   <li key={item.id}>
                     <button
                       onClick={() => onNavigate(item.id)}
                       style={{
                         fontFamily: 'Open Sans, sans-serif',
-                        fontSize: '14px',
+                        fontSize: '13px',
                         color: 'rgba(255, 255, 255, 0.7)',
                         background: 'none',
                         border: 'none',
                         padding: '4px 0',
                         cursor: 'pointer',
                         textAlign: 'left',
-                        minHeight: '32px',
+                        minHeight: '28px',
+                        transition: 'color 200ms ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = '#C44569';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
+                      }}
+                    >
+                      {item.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* More Links */}
+            <div>
+              <h5
+                style={{
+                  fontFamily: 'Poppins, sans-serif',
+                  fontWeight: 600,
+                  fontSize: '14px',
+                  color: 'white',
+                  marginBottom: '12px'
+                }}
+              >
+                Learn More
+              </h5>
+              <ul className="space-y-1">
+                {navItems.slice(3).map((item) => (
+                  <li key={item.id}>
+                    <button
+                      onClick={() => onNavigate(item.id)}
+                      style={{
+                        fontFamily: 'Open Sans, sans-serif',
+                        fontSize: '13px',
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        background: 'none',
+                        border: 'none',
+                        padding: '4px 0',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        minHeight: '28px',
                         transition: 'color 200ms ease'
                       }}
                       onMouseEnter={(e) => {
@@ -249,51 +304,60 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                 style={{
                   fontFamily: 'Poppins, sans-serif',
                   fontWeight: 600,
-                  fontSize: '16px',
+                  fontSize: '14px',
                   color: 'white',
-                  marginBottom: '16px'
+                  marginBottom: '12px'
                 }}
               >
-                Contact Us
+                Contact
               </h5>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <p
                   style={{
                     fontFamily: 'Open Sans, sans-serif',
-                    fontSize: '14px',
-                    color: 'rgba(255, 255, 255, 0.7)'
-                  }}
-                >
-                  (555) 123-4567
-                </p>
-                <p
-                  style={{
-                    fontFamily: 'Open Sans, sans-serif',
-                    fontSize: '14px',
-                    color: 'rgba(255, 255, 255, 0.7)'
-                  }}
-                >
-                  hello@emilybakescakes.com
-                </p>
-                <p
-                  style={{
-                    fontFamily: 'Open Sans, sans-serif',
-                    fontSize: '14px',
+                    fontSize: '13px',
                     color: 'rgba(255, 255, 255, 0.7)',
-                    lineHeight: 1.6
+                    lineHeight: 1.5
                   }}
                 >
-                  123 Sweet Street
-                  <br />
-                  Bakery Town, CA 12345
+                  2847 Westheimer Road<br />
+                  Houston, TX 77098
                 </p>
+                <p
+                  style={{
+                    fontFamily: 'Open Sans, sans-serif',
+                    fontSize: '13px',
+                    color: 'rgba(255, 255, 255, 0.7)'
+                  }}
+                >
+                  (713) 555-CAKE
+                </p>
+                <a
+                  href="mailto:info@emilybakescakes.com"
+                  style={{
+                    fontFamily: 'Open Sans, sans-serif',
+                    fontSize: '13px',
+                    color: '#C44569',
+                    textDecoration: 'none',
+                    display: 'block',
+                    transition: 'opacity 200ms ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.opacity = '0.8';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.opacity = '1';
+                  }}
+                >
+                  info@emilybakescakes.com
+                </a>
               </div>
             </div>
           </div>
 
           {/* Copyright */}
           <div
-            className="mt-12 pt-8"
+            className="mt-6 pt-6"
             style={{
               borderTop: '1px solid rgba(255, 255, 255, 0.1)',
               textAlign: 'center'
@@ -302,7 +366,7 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
             <p
               style={{
                 fontFamily: 'Open Sans, sans-serif',
-                fontSize: '14px',
+                fontSize: '12px',
                 color: 'rgba(255, 255, 255, 0.5)'
               }}
             >
