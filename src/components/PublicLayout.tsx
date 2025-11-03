@@ -44,18 +44,20 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
           background: scrolled ? 'rgba(196, 69, 105, 0.98)' : '#C44569',
           boxShadow: scrolled ? '0 4px 16px rgba(90, 56, 37, 0.2)' : 'none',
           backdropFilter: scrolled ? 'blur(10px)' : 'none',
-          zIndex: 9999
+          zIndex: 9999,
+          height: '64px',
+          overflow: 'visible'
         }}
       >
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between h-16 md:h-18">
+        <div className="container mx-auto px-4 sm:px-6 h-full">
+          <div className="flex items-center justify-between h-full">
             {/* Logo */}
             <button
               onClick={() => onNavigate('home')}
               className="cursor-pointer hover:opacity-90 transition-opacity"
-              style={{ background: 'none', border: 'none', padding: 0, position: 'relative', display: 'flex', alignItems: 'center', marginTop: '10px' }}
+              style={{ background: 'none', border: 'none', padding: 0, position: 'relative', display: 'flex', alignItems: 'center', height: '100%' }}
             >
-              <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
                 <img
                   src={logoImage}
                   alt="Emily Bakes Cakes Logo"
@@ -63,8 +65,9 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                     width: '160px',
                     height: '160px',
                     objectFit: 'contain',
-                    flexShrink: 0,
-                    display: 'block'
+                    display: 'block',
+                    marginTop: '-48px',
+                    marginBottom: '-48px'
                   }}
                 />
                 <span
@@ -74,10 +77,8 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                     fontSize: 'clamp(20px, 4vw, 26px)',
                     color: 'white',
                     letterSpacing: '-0.5px',
-                    position: 'absolute',
-                    left: '105px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
+                    position: 'relative',
+                    left: '-55px',
                     zIndex: 2,
                     whiteSpace: 'nowrap'
                   }}
@@ -174,7 +175,7 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
       />
 
       {/* Main Content */}
-      <main className="flex-1 pt-16 md:pt-18">
+      <main className="flex-1 pt-16">
         {children}
       </main>
 
