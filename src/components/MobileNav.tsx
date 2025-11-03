@@ -48,12 +48,16 @@ export function MobileNav({ isOpen, onClose, activePage, onNavigate, onAdminAcce
               zIndex: 9998,
               display: 'flex',
               flexDirection: 'column',
-              overflowY: 'auto'
+              overflowY: 'auto',
+              paddingTop: '1.5rem',
+              paddingBottom: '1.5rem',
+              paddingLeft: '1.5rem',
+              paddingRight: '1.5rem'
             }}
           >
-            <div className="p-6 flex flex-col h-full">
+            <div className="flex flex-col h-full">
               {/* Close Button */}
-              <div className="flex justify-end mb-6">
+              <div className="flex justify-end mb-6" style={{ flexShrink: 0 }}>
                 <button
                   onClick={onClose}
                   aria-label="Close navigation menu"
