@@ -634,7 +634,7 @@ export function PublicHome({ onNavigate }: PublicHomeProps = {}) {
                 color: '#5A3825'
               }}
             >
-              Real stories from real celebrations
+              True experiences from memorable celebrations
             </p>
           </motion.div>
 

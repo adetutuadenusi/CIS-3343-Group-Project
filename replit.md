@@ -89,6 +89,18 @@ The application runs on port 5000 and is configured for the Replit environment.
 - **Build Output**: `build/` directory
 
 ## Recent Changes
+- November 3, 2025: Homepage & About Page UI/UX Enhancements
+  - **Updated testimonials section text**: Changed from "Real stories from real celebrations" to "True experiences from memorable celebrations" (Home.tsx and TestimonialCarousel.tsx)
+  - **Larger navigation logo**: Increased Heart icon from 28px to 40px and brand text from 18-24px to 20-26px for better visibility
+  - **Order Now buttons verified**: All carousel "Order Now" buttons properly linked to custom builder page
+  - **New About page CTA section**: Added "Why Choose Emily Bakes Cakes" section with:
+    - Centered headline in Playfair Display (32-48px)
+    - Raspberry pink divider line
+    - Mission statement: "We're not just bakers—we're artisans dedicated to making every celebration extraordinary."
+    - "Explore Our Story" button with hover animations that scrolls to top
+    - Clean white background for visual contrast
+  - All UI/UX changes maintain responsive design and accessibility standards
+  
 - November 3, 2025: Compact Footer Redesign with Logo & Houston Contact Info
   - **4-column responsive layout**: Logo + Brand, Explore links, Learn More links, Contact information
   - **Added logo image**: 40px logo displayed with brand name in footer

@@ -56,7 +56,7 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
               style={{ background: 'none', border: 'none', padding: 0 }}
             >
               <Heart
-                size={28}
+                size={40}
                 fill="white"
                 color="white"
                 style={{ flexShrink: 0 }}
@@ -65,7 +65,7 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                 style={{
                   fontFamily: 'Playfair Display, serif',
                   fontWeight: 700,
-                  fontSize: 'clamp(18px, 4vw, 24px)',
+                  fontSize: 'clamp(20px, 4vw, 26px)',
                   color: 'white',
                   letterSpacing: '-0.5px'
                 }}

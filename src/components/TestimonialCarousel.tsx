@@ -137,7 +137,7 @@ export function TestimonialCarousel() {
               margin: '0 auto'
             }}
           >
-            Real stories from real celebrations
+            True experiences from memorable celebrations
           </p>
         </motion.div>
 
