@@ -11,6 +11,19 @@ export const customers = pgTable('customers', {
   totalOrders: integer('total_orders').default(0).notNull(),
   lastOrderDate: timestamp('last_order_date'),
   isVip: boolean('is_vip').default(false).notNull(),
+  
+  // Enhancement #33: Soft delete support
+  deletedAt: timestamp('deleted_at'),
+  deletedBy: varchar('deleted_by', { length: 255 }),
+  
+  // Enhancement #35: Admin notes (internal only)
+  adminNotes: text('admin_notes'),
+  
+  // Enhancement #39: Guest customer flagging
+  isGuest: boolean('is_guest').default(false).notNull(),
+  
+  // Enhancement #12: Audit tracking
+  lastModifiedBy: varchar('last_modified_by', { length: 255 }),
 });
 
 export const orders = pgTable('orders', {
@@ -56,6 +69,17 @@ export const orders = pgTable('orders', {
   cancelledAt: timestamp('cancelled_at'),
   cancelledBy: varchar('cancelled_by', { length: 255 }), // Admin or customer name
   
+  // Enhancement #33: Soft delete support
+  deletedAt: timestamp('deleted_at'),
+  deletedBy: varchar('deleted_by', { length: 255 }),
+  
+  // Enhancement #12: Audit tracking
+  lastModifiedBy: varchar('last_modified_by', { length: 255 }),
+  
+  // Enhancement #32: Deposit requirement tracking
+  depositRequired: integer('deposit_required'), // in cents (e.g., 50% of total)
+  depositMet: boolean('deposit_met').default(false).notNull(),
+  
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
@@ -72,6 +96,11 @@ export const inquiries = pgTable('inquiries', {
   inspirationImages: text('inspiration_images'), // JSON array
   status: varchar('status', { length: 50 }).default('pending').notNull(), // pending, reviewed, contacted
   createdAt: timestamp('created_at').defaultNow().notNull(),
+  
+  // Enhancement #43: Email/open status tracking
+  viewedAt: timestamp('viewed_at'),
+  viewedBy: varchar('viewed_by', { length: 255 }),
+  respondedAt: timestamp('responded_at'),
 });
 
 export const contactMessages = pgTable('contact_messages', {
