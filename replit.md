@@ -3,6 +3,9 @@ This project is for "Emily Bakes Cakes," a dual-interface web application. It fe
 
 ## User Preferences
 - **HOMEPAGE LOCKED**: The homepage design is finalized and stable. No major changes should be made without explicit user clarification and acceptance.
+- **NAVIGATION BAR LOCKED**: The navigation bar design and functionality are finalized. No changes without explicit approval.
+- **MOBILE MENU LOCKED**: The mobile menu layout, spacing, and close button are finalized. No changes without explicit approval.
+- **FOOTER LOCKED**: The footer design and layout are finalized. No changes without explicit approval.
 
 ## System Architecture
 The application is built using React 18.3.1 with TypeScript, Vite 6.3.5, and Tailwind CSS 4.1. It utilizes Radix UI primitives for components, Framer Motion for animations, React Hook Form for forms, and Recharts for data visualization. Key design decisions include:
