@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Mail, Phone, User, Calendar } from 'lucide-react';
+import { Mail, Phone, User, Calendar } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 
@@ -138,6 +138,7 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                   borderBottom: '3px solid rgba(255, 255, 255, 0.2)'
                 }}
               >
+                {/* Close Button - Highly Visible */}
                 <button
                   type="button"
                   onClick={(e) => {
@@ -145,29 +146,52 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                     e.stopPropagation();
                     onClose();
                   }}
-                  className="absolute top-3 right-3 p-2 rounded-full transition-colors"
+                  className="absolute top-4 right-4 rounded-lg transition-all"
                   style={{ 
-                    width: '36px', 
-                    height: '36px',
-                    background: 'rgba(255, 255, 255, 0.2)',
-                    border: '2px solid rgba(255, 255, 255, 0.4)',
+                    width: '48px', 
+                    height: '48px',
+                    minWidth: '48px',
+                    minHeight: '48px',
+                    background: 'rgba(255, 255, 255, 0.25)',
+                    border: '2px solid rgba(255, 255, 255, 0.6)',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    padding: '0',
+                    zIndex: 10
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.4)';
+                    e.currentTarget.style.transform = 'scale(1.05)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
+                    e.currentTarget.style.transform = 'scale(1)';
                   }}
-                  aria-label="Close modal"
+                  aria-label="Close"
                 >
-                  <X size={20} strokeWidth={3} />
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{
+                      display: 'block',
+                      flexShrink: 0
+                    }}
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
                 </button>
 
-                <div style={{ paddingRight: '40px' }}>
+                {/* Title and Instructions */}
+                <div style={{ paddingRight: '60px' }}>
                   <h3
                     style={{
                       fontFamily: 'Playfair Display',
@@ -199,7 +223,7 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                       fontStyle: 'italic'
                     }}
                   >
-                    Please fill out all required fields (*) to place your order
+                    Please fill out all required fields (*) to submit your inquiry
                   </p>
                 </div>
               </div>
