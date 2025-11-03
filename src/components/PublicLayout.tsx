@@ -38,11 +38,12 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
     <div className="min-h-screen flex flex-col" style={{ background: '#F8EBD7' }}>
       {/* Navigation Bar */}
       <nav
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        className="fixed top-0 left-0 right-0 transition-all duration-300"
         style={{
           background: scrolled ? 'rgba(196, 69, 105, 0.98)' : '#C44569',
           boxShadow: scrolled ? '0 4px 16px rgba(90, 56, 37, 0.2)' : 'none',
-          backdropFilter: scrolled ? 'blur(10px)' : 'none'
+          backdropFilter: scrolled ? 'blur(10px)' : 'none',
+          zIndex: 9999
         }}
       >
         <div className="container mx-auto px-4 sm:px-6">
