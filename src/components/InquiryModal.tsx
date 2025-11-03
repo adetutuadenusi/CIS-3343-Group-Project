@@ -130,9 +130,12 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
-            style={{ zIndex: 10001 }}
+            transition={{ duration: 0.15 }}
+            className="fixed inset-0"
+            style={{ 
+              zIndex: 10001,
+              background: 'rgba(0, 0, 0, 0.75)'
+            }}
             onClick={onClose}
             aria-label="Close modal"
           />
@@ -149,8 +152,8 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
               className="w-full max-w-lg rounded-2xl overflow-hidden"
               style={{
-                background: 'var(--surface-elevated)',
-                boxShadow: '0 20px 60px rgba(90, 56, 37, 0.25)',
+                background: '#FFFFFF',
+                boxShadow: '0 25px 70px rgba(0, 0, 0, 0.4)',
                 maxHeight: '90vh',
                 display: 'flex',
                 flexDirection: 'column'
@@ -166,9 +169,29 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                 }}
               >
                 <button
-                  onClick={onClose}
-                  className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/20 transition-colors"
-                  style={{ width: '40px', height: '40px' }}
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onClose();
+                  }}
+                  className="absolute top-4 right-4 p-2 rounded-full transition-colors"
+                  style={{ 
+                    width: '40px', 
+                    height: '40px',
+                    background: 'rgba(255, 255, 255, 0.15)',
+                    border: '2px solid rgba(255, 255, 255, 0.3)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                  }}
                   aria-label="Close modal"
                 >
                   <X size={24} strokeWidth={2.5} />
@@ -197,7 +220,7 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
               </div>
 
               {/* Form */}
-              <form onSubmit={handleSubmit} className="overflow-y-auto px-8 py-6">
+              <form onSubmit={handleSubmit} className="overflow-y-auto px-8 py-6" style={{ background: '#FFFFFF' }}>
                 <div className="space-y-5">
                   {/* Name Field */}
                   <div>
@@ -207,7 +230,7 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                       style={{
                         fontSize: '14px',
                         fontWeight: 600,
-                        color: 'var(--text-primary)',
+                        color: '#2B2B2B',
                         fontFamily: 'Poppins'
                       }}
                     >
@@ -226,6 +249,11 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                         value={formData.name}
                         onChange={(e) => handleChange('name', e.target.value)}
                         className="pl-12 h-12 rounded-xl"
+                        style={{
+                          background: '#F8F8F8',
+                          border: '2px solid #E0E0E0',
+                          color: '#2B2B2B'
+                        }}
                         aria-invalid={!!errors.name}
                         aria-describedby={errors.name ? 'name-error' : undefined}
                       />
@@ -250,7 +278,7 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                       style={{
                         fontSize: '14px',
                         fontWeight: 600,
-                        color: 'var(--text-primary)',
+                        color: '#2B2B2B',
                         fontFamily: 'Poppins'
                       }}
                     >
@@ -269,6 +297,11 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                         value={formData.email}
                         onChange={(e) => handleChange('email', e.target.value)}
                         className="pl-12 h-12 rounded-xl"
+                        style={{
+                          background: '#F8F8F8',
+                          border: '2px solid #E0E0E0',
+                          color: '#2B2B2B'
+                        }}
                         aria-invalid={!!errors.email}
                         aria-describedby={errors.email ? 'email-error' : undefined}
                       />
@@ -293,7 +326,7 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                       style={{
                         fontSize: '14px',
                         fontWeight: 600,
-                        color: 'var(--text-primary)',
+                        color: '#2B2B2B',
                         fontFamily: 'Poppins'
                       }}
                     >
@@ -312,6 +345,11 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                         value={formData.phone}
                         onChange={(e) => handleChange('phone', e.target.value)}
                         className="pl-12 h-12 rounded-xl"
+                        style={{
+                          background: '#F8F8F8',
+                          border: '2px solid #E0E0E0',
+                          color: '#2B2B2B'
+                        }}
                         aria-invalid={!!errors.phone}
                         aria-describedby={errors.phone ? 'phone-error' : undefined}
                       />
@@ -336,7 +374,7 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                       style={{
                         fontSize: '14px',
                         fontWeight: 600,
-                        color: 'var(--text-primary)',
+                        color: '#2B2B2B',
                         fontFamily: 'Poppins'
                       }}
                     >
@@ -354,6 +392,11 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                         value={formData.eventDate}
                         onChange={(e) => handleChange('eventDate', e.target.value)}
                         className="pl-12 h-12 rounded-xl"
+                        style={{
+                          background: '#F8F8F8',
+                          border: '2px solid #E0E0E0',
+                          color: '#2B2B2B'
+                        }}
                         min={new Date().toISOString().split('T')[0]}
                         aria-invalid={!!errors.eventDate}
                         aria-describedby={errors.eventDate ? 'date-error' : undefined}
@@ -379,7 +422,7 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                       style={{
                         fontSize: '14px',
                         fontWeight: 600,
-                        color: 'var(--text-primary)',
+                        color: '#2B2B2B',
                         fontFamily: 'Poppins'
                       }}
                     >
@@ -397,10 +440,13 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                         value={formData.message}
                         onChange={(e) => handleChange('message', e.target.value)}
                         rows={4}
-                        className="w-full pl-12 pr-4 py-3 rounded-xl resize-none input-field"
+                        className="w-full pl-12 pr-4 py-3 rounded-xl resize-none"
                         style={{
                           fontFamily: 'Open Sans',
-                          fontSize: '15px'
+                          fontSize: '15px',
+                          background: '#F8F8F8',
+                          border: '2px solid #E0E0E0',
+                          color: '#2B2B2B'
                         }}
                       />
                     </div>
@@ -414,7 +460,7 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                       style={{
                         fontSize: '14px',
                         fontWeight: 600,
-                        color: 'var(--text-primary)',
+                        color: '#2B2B2B',
                         fontFamily: 'Poppins'
                       }}
                     >
@@ -422,7 +468,7 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                     </label>
                     <p
                       className="mb-3 text-sm"
-                      style={{ color: 'var(--text-tertiary)' }}
+                      style={{ color: '#666666' }}
                     >
                       Upload up to 3 images of cakes or designs you like
                     </p>
@@ -433,22 +479,22 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                         htmlFor="inquiry-images"
                         className="flex items-center justify-center gap-3 p-4 rounded-xl border-2 border-dashed cursor-pointer transition-all duration-200"
                         style={{
-                          borderColor: 'var(--border-medium)',
-                          background: 'var(--surface-elevated)'
+                          borderColor: '#E0E0E0',
+                          background: '#F8F8F8'
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.borderColor = '#C44569';
                           e.currentTarget.style.background = 'rgba(196, 69, 105, 0.05)';
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.borderColor = 'var(--border-medium)';
-                          e.currentTarget.style.background = 'var(--surface-elevated)';
+                          e.currentTarget.style.borderColor = '#E0E0E0';
+                          e.currentTarget.style.background = '#F8F8F8';
                         }}
                       >
                         <Upload size={20} color="#C44569" />
                         <span
                           style={{
-                            color: 'var(--text-primary)',
+                            color: '#2B2B2B',
                             fontFamily: 'Poppins',
                             fontSize: '14px',
                             fontWeight: 500
@@ -476,7 +522,7 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                             className="relative group rounded-lg overflow-hidden"
                             style={{
                               aspectRatio: '1',
-                              border: '2px solid var(--border-subtle)'
+                              border: '2px solid #E0E0E0'
                             }}
                           >
                             <img
@@ -507,12 +553,16 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
                 <div className="flex gap-3 mt-8">
                   <Button
                     type="button"
-                    onClick={onClose}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onClose();
+                    }}
                     className="flex-1 h-12 rounded-xl"
                     style={{
-                      background: 'var(--surface-elevated)',
-                      border: '1px solid var(--border-medium)',
-                      color: 'var(--text-primary)',
+                      background: '#F8F8F8',
+                      border: '2px solid #E0E0E0',
+                      color: '#2B2B2B',
                       fontFamily: 'Poppins',
                       fontWeight: 600
                     }}
@@ -535,7 +585,7 @@ export function InquiryModal({ isOpen, onClose, productName, onSubmit }: Inquiry
 
                 <p
                   className="mt-4 text-center text-sm"
-                  style={{ color: 'var(--text-tertiary)' }}
+                  style={{ color: '#666666' }}
                 >
                   We'll get back to you within 24 hours
                 </p>

@@ -182,7 +182,11 @@ const LoadingSkeleton = () => (
   </div>
 );
 
-export function Shop() {
+interface ShopProps {
+  onNavigate?: (page: string) => void;
+}
+
+export function Shop({ onNavigate }: ShopProps = {}) {
   const { showToast } = useToast();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -237,77 +241,15 @@ export function Shop() {
   return (
     <div className="min-h-screen section-padding" style={{ background: 'var(--background)' }}>
       <div className="container mx-auto">
-        {/* Custom Cake CTA - Compact Section */}
+        {/* Header - Modern Title with Gradient - Moved to Top */}
         <motion.div
+          className="text-center mb-6"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="glass-card p-6 mb-8 text-center relative overflow-hidden"
-          style={{
-            background: 'linear-gradient(135deg, rgba(196, 69, 105, 0.08) 0%, rgba(248, 235, 215, 0.4) 100%)',
-            border: '2px solid rgba(196, 69, 105, 0.2)'
-          }}
-        >
-          <motion.div
-            className="absolute top-3 right-3"
-            animate={{
-              rotate: [0, 10, -10, 0],
-              scale: [1, 1.1, 1]
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              repeatType: 'reverse'
-            }}
-          >
-            <Sparkles size={24} color="#C44569" fill="rgba(196, 69, 105, 0.2)" />
-          </motion.div>
-
-          <h2
-            className="mb-2 text-xl font-semibold"
-            style={{
-              fontFamily: 'Playfair Display',
-              color: 'var(--text-primary)'
-            }}
-          >
-            Don't See What You're Looking For?
-          </h2>
-          <p
-            className="mb-4 text-sm"
-            style={{
-              color: 'var(--text-secondary)',
-              maxWidth: '600px',
-              margin: '0 auto 16px',
-              lineHeight: 1.6
-            }}
-          >
-            Create your dream cake with our custom cake builder!
-          </p>
-          <a href="/custom-builder" style={{ textDecoration: 'none' }}>
-            <Button
-              className="btn-primary"
-              style={{
-                height: '48px',
-                fontSize: '15px',
-                fontWeight: 600,
-                padding: '0 32px',
-                fontFamily: 'Poppins'
-              }}
-            >
-              Create Your Custom Cake
-            </Button>
-          </a>
-        </motion.div>
-
-        {/* Header - Modern Title with Gradient */}
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
         >
           <h1 
-            className="text-4xl md:text-5xl font-bold mb-2 relative inline-block"
+            className="text-3xl md:text-4xl font-bold mb-1 relative inline-block"
             style={{
               fontFamily: 'Playfair Display',
               background: 'linear-gradient(to right, #C44569, #8B3A5E, #C44569)',
@@ -318,15 +260,15 @@ export function Shop() {
           >
             Our Cake Collection
             <span 
-              className="absolute -bottom-2 left-0 h-1 rounded-full"
+              className="absolute -bottom-1 left-0 h-1 rounded-full"
               style={{
-                width: '96px',
+                width: '80px',
                 background: 'linear-gradient(to right, #C44569, transparent)'
               }}
             />
           </h1>
           <p 
-            className="text-lg italic mt-4"
+            className="text-base italic mt-3"
             style={{ 
               color: 'var(--text-secondary)', 
               fontFamily: 'Poppins',
@@ -339,10 +281,10 @@ export function Shop() {
 
         {/* Search & Filter Bar */}
         <motion.div
-          className="glass-card p-4 md:p-6 mb-12"
+          className="glass-card p-4 md:p-5 mb-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.1 }}
         >
           <div className="flex flex-col lg:flex-row gap-4 items-stretch lg:items-center">
             {/* Search */}
@@ -357,18 +299,18 @@ export function Shop() {
                 placeholder="Search cakes..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 h-12 md:h-14 rounded-xl input-field w-full"
+                className="pl-12 h-12 md:h-13 rounded-xl input-field w-full"
                 style={{ fontSize: '15px' }}
                 aria-label="Search cakes"
               />
             </div>
 
-            {/* Sort Dropdown - Enhanced */}
+            {/* Sort Dropdown - Enhanced and Centered */}
             <div className="relative">
               <select
                 value={sortBy}
                 onChange={(e) => handleSortChange(e.target.value)}
-                className="h-12 md:h-14 px-4 md:px-6 pr-10 md:pr-12 rounded-xl appearance-none cursor-pointer w-full transition-all duration-200"
+                className="h-12 md:h-13 px-5 pr-11 rounded-xl appearance-none cursor-pointer w-full transition-all duration-200 text-center"
                 style={{
                   background: 'var(--surface-elevated)',
                   border: '2px solid #C44569',
@@ -377,7 +319,8 @@ export function Shop() {
                   fontSize: '15px',
                   fontWeight: 500,
                   minWidth: '200px',
-                  boxShadow: '0 2px 4px rgba(196, 69, 105, 0.1)'
+                  boxShadow: '0 2px 4px rgba(196, 69, 105, 0.1)',
+                  paddingRight: '44px'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'rgba(196, 69, 105, 0.05)';
@@ -402,7 +345,7 @@ export function Shop() {
                 <option value="price-high">Price: High to Low</option>
               </select>
               <ChevronDown 
-                className="absolute right-3 md:right-4 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none"
                 size={22}
                 color="#C44569"
                 strokeWidth={2.5}
@@ -411,8 +354,8 @@ export function Shop() {
             </div>
           </div>
 
-          {/* Category Filters */}
-          <div className="flex flex-wrap gap-2 md:gap-3 mt-4 md:mt-6">
+          {/* Category Filters - Centered */}
+          <div className="flex flex-wrap justify-center gap-2 md:gap-3 mt-4 md:mt-5">
             {categories.map((category) => (
               <motion.button
                 key={category}
@@ -440,6 +383,67 @@ export function Shop() {
               </motion.button>
             ))}
           </div>
+        </motion.div>
+
+        {/* Custom Cake CTA - Compact Section - Moved Below Filters */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="glass-card p-4 mb-6 text-center relative overflow-hidden"
+          style={{
+            background: 'linear-gradient(135deg, rgba(196, 69, 105, 0.08) 0%, rgba(248, 235, 215, 0.4) 100%)',
+            border: '2px solid rgba(196, 69, 105, 0.2)'
+          }}
+        >
+          <motion.div
+            className="absolute top-2 right-2"
+            animate={{
+              rotate: [0, 10, -10, 0],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              repeatType: 'reverse'
+            }}
+          >
+            <Sparkles size={20} color="#C44569" fill="rgba(196, 69, 105, 0.2)" />
+          </motion.div>
+
+          <h2
+            className="mb-1 text-lg font-semibold"
+            style={{
+              fontFamily: 'Playfair Display',
+              color: 'var(--text-primary)'
+            }}
+          >
+            Don't See What You're Looking For?
+          </h2>
+          <p
+            className="mb-3 text-sm"
+            style={{
+              color: 'var(--text-secondary)',
+              maxWidth: '500px',
+              margin: '0 auto 12px',
+              lineHeight: 1.5
+            }}
+          >
+            Create your dream cake with our custom cake builder!
+          </p>
+          <Button
+            onClick={() => onNavigate?.('builder')}
+            className="btn-primary"
+            style={{
+              height: '44px',
+              fontSize: '14px',
+              fontWeight: 600,
+              padding: '0 28px',
+              fontFamily: 'Poppins'
+            }}
+          >
+            Create Your Custom Cake
+          </Button>
         </motion.div>
 
         {/* Product Grid */}

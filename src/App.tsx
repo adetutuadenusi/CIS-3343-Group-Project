@@ -104,7 +104,7 @@ export default function App() {
       case 'home':
         return <PublicHome onNavigate={handlePublicNavigate} />;
       case 'shop':
-        return <Shop />;
+        return <Shop onNavigate={handlePublicNavigate} />;
       case 'builder':
         return <Builder />;
       case 'gallery':
