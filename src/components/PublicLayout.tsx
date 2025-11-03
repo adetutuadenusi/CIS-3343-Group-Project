@@ -53,7 +53,7 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
             <button
               onClick={() => onNavigate('home')}
               className="cursor-pointer hover:opacity-90 transition-opacity"
-              style={{ background: 'none', border: 'none', padding: 0, position: 'relative', display: 'flex', alignItems: 'center' }}
+              style={{ background: 'none', border: 'none', padding: 0, position: 'relative', display: 'flex', alignItems: 'center', marginTop: '10px' }}
             >
               <img
                 src={logoImage}
@@ -75,7 +75,7 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                   color: 'white',
                   letterSpacing: '-0.5px',
                   position: 'relative',
-                  marginLeft: '-40px',
+                  marginLeft: '-55px',
                   zIndex: 2
                 }}
               >
@@ -207,7 +207,7 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                     color: '#C44569',
                     lineHeight: 1.2,
                     position: 'relative',
-                    marginLeft: '-35px',
+                    marginLeft: '-50px',
                     zIndex: 2
                   }}
                 >
