@@ -74,7 +74,7 @@
             "build": "vite build",
             "db:push": "drizzle-kit push",
             "db:studio": "drizzle-kit studio",
-            "server": "node --loader tsx server/index.ts",
-            "server:dev": "node --watch --loader tsx server/index.ts"
+            "server": "tsx server/index.ts",
+            "server:dev": "tsx watch server/index.ts"
       }
 }

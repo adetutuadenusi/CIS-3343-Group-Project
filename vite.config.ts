@@ -71,6 +71,13 @@ export default defineConfig({
       ".repl.co", // Legacy Replit domains
       "localhost", // Local development
     ],
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+      }
+    },
     // ❌ REMOVED: open: true (doesn't work in Replit)
   },
 });
