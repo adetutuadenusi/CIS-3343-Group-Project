@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { User } from 'lucide-react';
+import { User, Heart } from 'lucide-react';
 import { motion } from 'motion/react';
 import { HamburgerIcon } from './HamburgerIcon';
 import { MobileNav } from './MobileNav';
 import { StickyBottomCTA } from './StickyBottomCTA';
-import logoImage from '../assets/logo-40px.png';
 
 interface PublicLayoutProps {
   children: React.ReactNode;
@@ -51,48 +50,20 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
       >
         <div className="container mx-auto px-4 sm:px-6 h-full">
           <div className="flex items-center justify-between h-full">
-            {/* Logo & Brand */}
+            {/* Logo */}
             <button
               onClick={() => onNavigate('home')}
-              className="cursor-pointer hover:opacity-90 transition-opacity"
-              style={{ 
-                background: 'none', 
-                border: 'none', 
-                padding: 0, 
-                position: 'relative', 
-                display: 'flex', 
-                alignItems: 'center', 
-                height: '64px',
-                paddingRight: '3rem'
-              }}
+              className="flex items-center gap-2 cursor-pointer hover:opacity-90 transition-opacity"
+              style={{ background: 'none', border: 'none', padding: 0 }}
             >
-              {/* Logo - absolutely positioned to float above/below nav bar */}
-              <img
-                src={logoImage}
-                alt="Emily Bakes Cakes Logo"
-                style={{
-                  width: '160px',
-                  height: '160px',
-                  objectFit: 'contain',
-                  position: 'absolute',
-                  left: 0,
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  pointerEvents: 'none'
-                }}
-              />
-              {/* Text - centered on nav bar centerline */}
+              <Heart size={40} fill="#F8EBD7" color="#F8EBD7" />
               <span
                 style={{
                   fontFamily: 'Playfair Display, serif',
                   fontWeight: 700,
                   fontSize: 'clamp(20px, 4vw, 26px)',
                   color: 'white',
-                  letterSpacing: '-0.5px',
-                  position: 'relative',
-                  left: '105px',
-                  zIndex: 2,
-                  whiteSpace: 'nowrap'
+                  letterSpacing: '-0.5px'
                 }}
               >
                 Emily Bakes Cakes
@@ -186,7 +157,7 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
       />
 
       {/* Main Content */}
-      <main className="flex-1" style={{ paddingTop: '7rem' }}>
+      <main className="flex-1 pt-16 md:pt-18">
         {children}
       </main>
 
@@ -202,31 +173,19 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
       >
         <div className="container mx-auto max-w-5xl">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {/* Brand with Logo */}
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col items-start gap-3">
-                <img 
-                  src={logoImage} 
-                  alt="Emily Bakes Cakes Logo" 
-                  style={{ 
-                    width: '96px', 
-                    height: '96px',
-                    objectFit: 'contain',
-                    display: 'block'
-                  }}
-                />
-                <h4
-                  style={{
-                    fontFamily: 'Playfair Display, serif',
-                    fontWeight: 700,
-                    fontSize: '20px',
-                    color: '#C44569',
-                    lineHeight: 1.2
-                  }}
-                >
-                  Emily Bakes Cakes
-                </h4>
-              </div>
+            {/* Brand */}
+            <div>
+              <h4
+                style={{
+                  fontFamily: 'Playfair Display, serif',
+                  fontWeight: 700,
+                  fontSize: '20px',
+                  color: '#C44569',
+                  marginBottom: '12px'
+                }}
+              >
+                Emily Bakes Cakes
+              </h4>
               <p
                 style={{
                   fontFamily: 'Open Sans, sans-serif',
