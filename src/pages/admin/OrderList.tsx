@@ -33,10 +33,16 @@ import {
   Layers,
   Loader2,
   X,
-  PackageSearch
+  PackageSearch,
+  FileDown,
+  AlertCircle,
+  Clock
 } from 'lucide-react';
 import { useToast } from '../../components/ToastContext';
 import type { CakeLayer } from '../../../shared/schema';
+import { Tooltip, TooltipTrigger, TooltipContent } from '../../components/ui/tooltip';
+import { OrderTimeline } from '../../components/OrderTimeline';
+import { ExpandableLayers } from '../../components/ExpandableLayers';
 
 interface Order {
   id: number;
@@ -100,6 +106,10 @@ export function OrderList() {
     paymentStatus: 'completed',
     notes: ''
   });
+  
+  // Enhancement #6: Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 25;
 
   useEffect(() => {
     fetchOrders();
@@ -318,6 +328,31 @@ export function OrderList() {
   const isOrderAging = (order: Order): boolean => {
     return order.status === 'pending' && getOrderAge(order.createdAt) >= 7;
   };
+  
+  // Enhancement #6: Pagination helpers
+  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+  const paginatedOrders = filteredOrders.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+  
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, statusFilter]);
+  
+  // Enhancement #5, #22, #36: Check if order can be edited (locked after preparing/baking)
+  const canEditOrder = (status: string): boolean => {
+    return status === 'pending';
+  };
+  
+  const getEditLockReason = (status: string): string => {
+    if (status === 'preparing') return 'Order is currently being prepared and cannot be modified';
+    if (status === 'ready') return 'Order is ready for pickup and cannot be modified';
+    if (status === 'completed') return 'Completed orders cannot be modified';
+    if (status === 'cancelled') return 'Cancelled orders cannot be modified';
+    return 'This order is locked from editing';
+  };
 
   return (
     <div className="space-y-6 lg:space-y-8">
@@ -519,14 +554,29 @@ export function OrderList() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredOrders.map((order) => (
+                  {paginatedOrders.map((order) => (
                 <TableRow 
                   key={order.id}
                   style={{ borderColor: 'rgba(90, 56, 37, 0.1)' }}
                   className="hover:bg-gray-50 transition-colors duration-150"
                 >
                   <TableCell style={{ fontFamily: 'Poppins', fontWeight: 500, color: '#C44569' }}>
-                    #{order.id}
+                    <div className="flex items-center gap-2">
+                      #{order.id}
+                      {/* Enhancement #46: Aging indicator for old pending orders */}
+                      {isOrderAging(order) && (
+                        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full" style={{ background: '#F59E0B20', border: '1px solid #F59E0B40' }} title={`Order is ${getOrderAge(order.createdAt)} days old`}>
+                          <Clock size={12} color="#F59E0B" />
+                          <span style={{ fontSize: '11px', color: '#F59E0B', fontWeight: 500 }}>{getOrderAge(order.createdAt)}d</span>
+                        </div>
+                      )}
+                      {/* Enhancement #32: Deposit status indicator */}
+                      {order.depositRequired && !order.depositMet && (
+                        <div className="px-2 py-0.5 rounded-full" style={{ background: '#EF444420', border: '1px solid #EF444440' }} title="Deposit not met">
+                          <span style={{ fontSize: '11px', color: '#EF4444', fontWeight: 500 }}>Deposit Pending</span>
+                        </div>
+                      )}
+                    </div>
                   </TableCell>
                   <TableCell>
                     <div>
@@ -604,7 +654,8 @@ export function OrderList() {
                       >
                         <Eye size={14} />
                       </Button>
-                      {order.status === 'pending' && (
+                      {/* Enhancement #5, #22, #36: Disabled states with tooltips */}
+                      {canEditOrder(order.status) ? (
                         <Button
                           size="sm"
                           variant="outline"
@@ -623,6 +674,32 @@ export function OrderList() {
                         >
                           <Ban size={14} />
                         </Button>
+                      ) : (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                disabled
+                                className="cursor-not-allowed"
+                                style={{ 
+                                  borderColor: '#D1D5DB',
+                                  color: '#9CA3AF',
+                                  height: '32px',
+                                  padding: '0 12px',
+                                  borderRadius: '6px',
+                                  opacity: 0.5
+                                }}
+                              >
+                                <Ban size={14} />
+                              </Button>
+                            </span>
+                          </TooltipTrigger>
+                          <TooltipContent style={{ backgroundColor: '#2B2B2B', color: 'white', padding: '8px 12px', borderRadius: '6px', fontFamily: 'Open Sans', fontSize: '12px' }}>
+                            {getEditLockReason(order.status)}
+                          </TooltipContent>
+                        </Tooltip>
                       )}
                     </div>
                   </TableCell>
@@ -647,6 +724,77 @@ export function OrderList() {
                     ? 'Try adjusting your search or filter criteria.'
                     : 'Orders will appear here once customers place them.'}
                 </p>
+              </div>
+            </div>
+          )}
+          
+          {/* Enhancement #6: Pagination Controls */}
+          {!isLoading && filteredOrders.length > itemsPerPage && (
+            <div className="flex items-center justify-between px-6 py-4 border-t" style={{ borderColor: 'rgba(90, 56, 37, 0.1)' }}>
+              <p style={{ fontFamily: 'Open Sans', fontSize: '14px', color: '#5A3825', opacity: 0.7 }}>
+                Showing {((currentPage - 1) * itemsPerPage) + 1} - {Math.min(currentPage * itemsPerPage, filteredOrders.length)} of {filteredOrders.length} orders
+              </p>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  style={{
+                    borderRadius: '8px',
+                    borderColor: 'rgba(90, 56, 37, 0.2)',
+                    color: '#5A3825',
+                    fontFamily: 'Poppins',
+                    fontWeight: 500
+                  }}
+                >
+                  Previous
+                </Button>
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1)
+                    .filter(page => {
+                      // Show first page, last page, current page, and pages around current
+                      return page === 1 || page === totalPages || Math.abs(page - currentPage) <= 1;
+                    })
+                    .map((page, index, array) => (
+                      <div key={page} className="flex items-center gap-1">
+                        {index > 0 && array[index - 1] !== page - 1 && (
+                          <span style={{ color: '#5A3825', opacity: 0.5 }}>...</span>
+                        )}
+                        <Button
+                          variant={currentPage === page ? 'default' : 'outline'}
+                          size="sm"
+                          onClick={() => setCurrentPage(page)}
+                          style={{
+                            borderRadius: '8px',
+                            backgroundColor: currentPage === page ? '#C44569' : 'transparent',
+                            borderColor: currentPage === page ? '#C44569' : 'rgba(90, 56, 37, 0.2)',
+                            color: currentPage === page ? 'white' : '#5A3825',
+                            fontFamily: 'Poppins',
+                            fontWeight: 500,
+                            minWidth: '36px'
+                          }}
+                        >
+                          {page}
+                        </Button>
+                      </div>
+                    ))}
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  style={{
+                    borderRadius: '8px',
+                    borderColor: 'rgba(90, 56, 37, 0.2)',
+                    color: '#5A3825',
+                    fontFamily: 'Poppins',
+                    fontWeight: 500
+                  }}
+                >
+                  Next
+                </Button>
               </div>
             </div>
           )}
@@ -729,11 +877,23 @@ export function OrderList() {
                 value={cancellationReason}
                 onChange={(e) => setCancellationReason(e.target.value)}
                 placeholder="e.g., Customer requested cancellation, Ingredients unavailable..."
+                maxLength={500}
                 className="min-h-[120px] rounded-lg border-2 transition-all focus:border-[#C44569]"
                 style={{ fontSize: '15px', fontFamily: 'Open Sans' }}
                 required
                 disabled={isCancelling}
               />
+              {/* Enhancement #15: Character counter */}
+              <p style={{ 
+                fontFamily: 'Open Sans', 
+                fontSize: '12px', 
+                color: cancellationReason.length > 450 ? '#EF4444' : '#5A3825',
+                opacity: 0.7,
+                marginTop: '4px',
+                textAlign: 'right'
+              }}>
+                {cancellationReason.length} / 500 characters
+              </p>
             </div>
           </div>
           <DialogFooter className="mt-6">

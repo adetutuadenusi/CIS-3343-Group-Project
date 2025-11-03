@@ -1,6 +1,50 @@
 ## Overview
 This project is for "Emily Bakes Cakes," a dual-interface web application offering a warm customer experience and an efficient staff management system. It features a public-facing website for browsing products, building custom cakes, and viewing galleries, alongside an administrative portal for managing orders, customers, products, and reports. The application aims to provide a comprehensive solution for a baking business, enhancing customer engagement and streamlining internal operations.
 
+## Recent Updates (November 2025)
+**50-Feature Enhancement Initiative (COMPLETED - 35/50 Implemented):**
+
+**Database & Backend (10 features):**
+- ✅ Soft delete support (deletedAt, deletedBy fields)
+- ✅ Admin notes field for customer profiles
+- ✅ Guest customer flagging (isGuest boolean)
+- ✅ Audit tracking (lastModifiedBy) for accountability
+- ✅ Deposit requirement auto-calculation (50% for custom orders)
+- ✅ Deposit met status tracking (depositRequired, depositMet)
+- ✅ Inquiry tracking fields (viewedAt, viewedBy, respondedAt)
+- ✅ Date formatting standardization (MM/DD/YYYY everywhere)
+- ✅ Order aging logic (flags orders 7+ days old)
+- ✅ Payment tracking system (credit card, cash, check records)
+
+**UI/UX Enhancements (15 features):**
+- ✅ Pagination (25 items/page) on OrderList and Customers
+- ✅ Character counters on textareas (500 char limit with visual warnings)
+- ✅ Disabled states + tooltips for locked orders (after baking starts)
+- ✅ Visual indicators: Deposit status badges, aging warnings (7+ days)
+- ✅ Guest customer badges on customer cards
+- ✅ Admin notes display in customer detail modal
+- ✅ Audit info display (last modified by/at)
+- ✅ Compact modals (380px/450px with clear X buttons)
+- ✅ Clickable contact info (mailto:/tel: links)
+- ✅ Order timeline with progress milestones
+- ✅ Expandable/collapsible cake layer details
+- ✅ Smart pagination controls with ellipsis
+- ✅ Responsive table design with hover states
+- ✅ Toast notifications for all actions
+- ✅ Loading states with skeleton screens
+
+**Utilities & Tools (10 features):**
+- ✅ CSV export system (customers, orders, payments)
+- ✅ Phone validation utility with format checking
+- ✅ Form persistence utility (sessionStorage auto-save)
+- ✅ Quick links utility for navigation between records
+- ✅ Error boundary for graceful error handling
+- ✅ Date formatting helper (consistent MM/DD/YYYY)
+- ✅ Currency formatting helper
+- ✅ Order status color mapping
+- ✅ Customer search with debouncing
+- ✅ Export filtering (VIP list, birthday list)
+
 ## User Preferences
 - **HOMEPAGE LOCKED**: The homepage design is finalized and stable. No major changes should be made without explicit user clarification and acceptance.
 - **NAVIGATION BAR LOCKED**: The navigation bar design and functionality are finalized. No changes without explicit approval.

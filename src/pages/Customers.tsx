@@ -6,7 +6,7 @@ import { Input } from '../components/ui/input';
 import { Badge } from '../components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
 import { Label } from '../components/ui/label';
-import { Search, UserPlus, Download, Mail, Phone, Calendar, ShoppingBag, Loader2, X } from 'lucide-react';
+import { Search, UserPlus, Download, Mail, Phone, Calendar, ShoppingBag, Loader2, X, UserCheck } from 'lucide-react';
 import { useToast } from '../components/ToastContext';
 import { exportCustomersToCSV, formatDate as formatDateUtil } from '../utils/csvExport';
 
@@ -19,6 +19,9 @@ interface Customer {
   lastOrderDate: string | null;
   isVip: boolean;
   createdAt?: string;
+  adminNotes?: string | null; // Enhancement #35
+  isGuest?: boolean; // Enhancement #39
+  lastModifiedBy?: string | null; // Enhancement #12
 }
 
 interface CustomerWithOrders extends Customer {
@@ -53,6 +56,17 @@ export function Customers() {
     email: '',
     phone: ''
   });
+  
+  // Enhancement #6: Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 25;
+  
+  // Paginated customers
+  const totalPages = Math.ceil(customers.length / itemsPerPage);
+  const paginatedCustomers = customers.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   useEffect(() => {
     fetchAllCustomers();
@@ -371,7 +385,7 @@ export function Customers() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
           >
-            {customers.map((customer, index) => (
+            {paginatedCustomers.map((customer, index) => (
               <motion.div
                 key={customer.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -414,18 +428,36 @@ export function Customers() {
                         </span>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p style={{ 
-                          fontFamily: 'Poppins', 
-                          fontWeight: 600, 
-                          fontSize: '16px', 
-                          color: '#2B2B2B',
-                          lineHeight: 1.4,
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap'
-                        }}>
-                          {customer.name}
-                        </p>
+                        <div className="flex items-center gap-2">
+                          <p style={{ 
+                            fontFamily: 'Poppins', 
+                            fontWeight: 600, 
+                            fontSize: '16px', 
+                            color: '#2B2B2B',
+                            lineHeight: 1.4,
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap'
+                          }}>
+                            {customer.name}
+                          </p>
+                          {/* Enhancement #39: Guest customer badge */}
+                          {customer.isGuest && (
+                            <Badge
+                              style={{
+                                backgroundColor: '#F59E0B20',
+                                color: '#F59E0B',
+                                fontFamily: 'Poppins',
+                                fontSize: '10px',
+                                fontWeight: 500,
+                                border: 'none',
+                                padding: '2px 6px'
+                              }}
+                            >
+                              Guest
+                            </Badge>
+                          )}
+                        </div>
                         <p style={{ 
                           fontFamily: 'Open Sans', 
                           fontSize: '13px', 
@@ -1048,6 +1080,36 @@ export function Customers() {
                       </div>
                     )}
                   </div>
+                </div>
+                
+                {/* Enhancement #35: Admin Notes */}
+                <div>
+                  <h3 style={{ 
+                    fontFamily: 'Poppins', 
+                    fontWeight: 600, 
+                    fontSize: '17px', 
+                    color: '#2B2B2B', 
+                    marginBottom: '12px',
+                    letterSpacing: '-0.01em'
+                  }}>
+                    Admin Notes
+                  </h3>
+                  <div className="p-4 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.05)', border: '1px solid rgba(196, 69, 105, 0.1)' }}>
+                    {selectedCustomer.adminNotes ? (
+                      <p style={{ fontFamily: 'Open Sans', fontSize: '14px', color: '#2B2B2B', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>
+                        {selectedCustomer.adminNotes}
+                      </p>
+                    ) : (
+                      <p style={{ fontFamily: 'Open Sans', fontSize: '13px', color: '#5A3825', opacity: 0.5, fontStyle: 'italic' }}>
+                        No admin notes for this customer
+                      </p>
+                    )}
+                  </div>
+                  {selectedCustomer.lastModifiedBy && (
+                    <p style={{ fontFamily: 'Open Sans', fontSize: '11px', color: '#5A3825', opacity: 0.6, marginTop: '8px' }}>
+                      Last modified by: {selectedCustomer.lastModifiedBy}
+                    </p>
+                  )}
                 </div>
               </div>
             </>
