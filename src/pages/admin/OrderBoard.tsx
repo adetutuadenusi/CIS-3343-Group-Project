@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { motion } from 'motion/react';
 import { Clock, User, Package, AlertCircle, Check } from 'lucide-react';
-import { mockOrders, Order } from '../../data/mockData';
+import { Order } from '../../data/mockData';
 import { Card, CardContent } from '../../components/ui/card';
 
 const ItemType = 'ORDER';
@@ -226,7 +226,27 @@ function DropZone({ status, title, icon: Icon, orders, moveOrder }: DropZoneProp
 }
 
 export function OrderBoard() {
-  const [orders, setOrders] = useState(mockOrders);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch orders from API on mount
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch('/api/orders');
+        if (response.ok) {
+          const data = await response.json();
+          setOrders(data);
+        }
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
 
   const columns: { id: Order['status']; title: string; icon: any }[] = [
     { id: 'pending', title: 'Pending', icon: Clock },
@@ -235,7 +255,8 @@ export function OrderBoard() {
     { id: 'completed', title: 'Completed', icon: Check }
   ];
 
-  const moveOrder = (orderId: string, newStatus: Order['status']) => {
+  const moveOrder = async (orderId: string, newStatus: Order['status']) => {
+    // Optimistically update UI
     setOrders(prevOrders =>
       prevOrders.map(order =>
         order.id === orderId
@@ -243,6 +264,29 @@ export function OrderBoard() {
           : order
       )
     );
+
+    // Update in database
+    try {
+      const response = await fetch(`/api/orders/${orderId}/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update order status');
+      }
+    } catch (error) {
+      console.error('Error updating order status:', error);
+      // Revert optimistic update on error
+      const response = await fetch('/api/orders');
+      if (response.ok) {
+        const data = await response.json();
+        setOrders(data);
+      }
+    }
   };
 
   const getOrdersByStatus = (status: Order['status']) => {

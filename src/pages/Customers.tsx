@@ -1,31 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Badge } from '../components/ui/badge';
 import { Search, UserPlus, Download, Mail, Phone } from 'lucide-react';
 import { useToast } from '../components/ToastContext';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../components/ui/tooltip';
 
-const customers = [
-  { name: 'Sarah Johnson', email: 'sarah.johnson@email.com', phone: '(555) 123-4567', orders: 12, lastOrder: 'Oct 28, 2025' },
-  { name: 'Michael Chen', email: 'michael.chen@email.com', phone: '(555) 234-5678', orders: 8, lastOrder: 'Oct 30, 2025' },
-  { name: 'Emily Rodriguez', email: 'emily.r@email.com', phone: '(555) 345-6789', orders: 15, lastOrder: 'Nov 1, 2025' },
-  { name: 'David Kim', email: 'david.kim@email.com', phone: '(555) 456-7890', orders: 6, lastOrder: 'Oct 25, 2025' },
-  { name: 'Lisa Martinez', email: 'lisa.martinez@email.com', phone: '(555) 567-8901', orders: 20, lastOrder: 'Oct 31, 2025' },
-  { name: 'James Wilson', email: 'james.w@email.com', phone: '(555) 678-9012', orders: 4, lastOrder: 'Oct 20, 2025' },
-  { name: 'Maria Garcia', email: 'maria.garcia@email.com', phone: '(555) 789-0123', orders: 9, lastOrder: 'Oct 29, 2025' },
-  { name: 'Robert Brown', email: 'robert.brown@email.com', phone: '(555) 890-1234', orders: 11, lastOrder: 'Oct 27, 2025' },
-  { name: 'Jennifer Davis', email: 'jennifer.d@email.com', phone: '(555) 901-2345', orders: 7, lastOrder: 'Oct 26, 2025' },
-  { name: 'Christopher Lee', email: 'chris.lee@email.com', phone: '(555) 012-3456', orders: 13, lastOrder: 'Nov 1, 2025' },
-  { name: 'Amanda Taylor', email: 'amanda.t@email.com', phone: '(555) 123-9876', orders: 5, lastOrder: 'Oct 24, 2025' },
-  { name: 'Daniel White', email: 'daniel.white@email.com', phone: '(555) 234-8765', orders: 16, lastOrder: 'Oct 30, 2025' },
-];
+interface Customer {
+  id: number;
+  name: string;
+  email: string;
+  phone: string | null;
+  totalOrders: number;
+  lastOrderDate: string | null;
+  isVip: boolean;
+}
 
 export function Customers() {
   const { showToast } = useToast();
+  const [customers, setCustomers] = useState<Customer[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState('All');
+
+  // Fetch customers from API
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const response = await fetch('/api/customers');
+        if (response.ok) {
+          const data = await response.json();
+          setCustomers(data);
+        }
+      } catch (error) {
+        console.error('Error fetching customers:', error);
+      }
+    };
+
+    fetchCustomers();
+  }, []);
 
   const filteredCustomers = customers.filter(customer => {
     const matchesSearch = customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -33,12 +44,17 @@ export function Customers() {
     return matchesSearch;
   });
 
+  const formatDate = (dateString: string | null) => {
+    if (!dateString) return 'No orders yet';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  };
+
   const handleExport = (type: string) => {
     showToast('success', `${type} customer list has been downloaded successfully.`, 'Export Complete');
   };
 
   return (
-    <TooltipProvider>
       <div className="space-y-6 lg:space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -50,7 +66,7 @@ export function Customers() {
         <Button 
           className="text-white w-full sm:w-auto hover:shadow-bakery-hover transition-all" 
           style={{ borderRadius: '8px', fontFamily: 'Poppins', fontWeight: 600, backgroundColor: '#C44569', height: '44px', minWidth: '44px' }}
-          onClick={() => toast.success('Add customer form opened!')}
+          onClick={() => showToast('success', 'Add customer form opened!')}
         >
           <UserPlus size={18} className="mr-2" />
           Add New Customer
@@ -91,7 +107,7 @@ export function Customers() {
             key={index} 
             className="p-5 rounded-xl cursor-pointer transition-all hover:shadow-bakery-hover bg-white"
             style={{ boxShadow: '0px 2px 8px rgba(90, 56, 37, 0.12)' }}
-            onClick={() => toast.info(`Viewing ${customer.name}'s profile`)}
+            onClick={() => showToast('info', `Viewing ${customer.name}'s profile`)}
           >
             <div className="space-y-4">
               {/* Avatar and Name */}
@@ -113,7 +129,7 @@ export function Customers() {
                     {customer.name}
                   </p>
                   <p style={{ fontFamily: 'Open Sans', fontSize: '13px', color: '#5A3825', opacity: 0.7 }}>
-                    {customer.orders} orders
+                    {customer.totalOrders} orders
                   </p>
                 </div>
               </div>
@@ -139,13 +155,13 @@ export function Customers() {
                 <div>
                   <p style={{ fontFamily: 'Open Sans', fontSize: '12px', color: '#5A3825', opacity: 0.6 }}>Total Orders</p>
                   <p style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '18px', color: '#2B2B2B' }}>
-                    {customer.orders}
+                    {customer.totalOrders}
                   </p>
                 </div>
                 <div className="text-right">
                   <p style={{ fontFamily: 'Open Sans', fontSize: '12px', color: '#5A3825', opacity: 0.6 }}>Last Order</p>
                   <p style={{ fontFamily: 'Open Sans', fontSize: '13px', color: '#2B2B2B' }}>
-                    {customer.lastOrder}
+                    {formatDate(customer.lastOrderDate)}
                   </p>
                 </div>
               </div>
@@ -234,7 +250,7 @@ export function Customers() {
               <div className="flex items-center justify-between">
                 <span style={{ fontFamily: 'Open Sans', fontSize: '14px', color: '#5A3825', opacity: 0.8 }}>VIP Customers</span>
                 <span style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '18px', color: '#C44569' }}>
-                  {customers.filter(c => c.orders >= 10).length}
+                  {customers.filter(c => c.totalOrders >= 10).length}
                 </span>
               </div>
               <div className="flex items-center justify-between">
@@ -248,6 +264,5 @@ export function Customers() {
         </div>
       </div>
     </div>
-    </TooltipProvider>
   );
 }
