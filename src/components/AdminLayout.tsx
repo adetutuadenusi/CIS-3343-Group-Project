@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { 
-  LayoutDashboard, 
   ClipboardList, 
   Users, 
   Cake, 
@@ -11,7 +10,9 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
-  MessageSquare
+  MessageSquare,
+  TrendingUp,
+  Kanban
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Button } from './ui/button';
@@ -24,10 +25,11 @@ interface AdminLayoutProps {
 }
 
 const navItems = [
-  { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { id: 'orders', label: 'Orders', icon: ClipboardList },
+  { id: 'dashboard', label: 'Analytics', icon: TrendingUp },
+  { id: 'order-board', label: 'Order Board', icon: Kanban },
+  { id: 'products-new', label: 'Products', icon: Cake },
+  { id: 'orders', label: 'Orders (Old)', icon: ClipboardList },
   { id: 'customers', label: 'Customers', icon: Users },
-  { id: 'products', label: 'Products', icon: Cake },
   { id: 'reports', label: 'Reports', icon: BarChart3 },
   { id: 'feedback', label: 'Feedback', icon: MessageSquare },
   { id: 'settings', label: 'Settings', icon: SettingsIcon },

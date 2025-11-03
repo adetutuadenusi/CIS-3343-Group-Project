@@ -15,7 +15,9 @@ import { Contact } from './pages/public/Contact';
 import { Login } from './pages/admin/Login';
 
 // Admin Pages
-import { Dashboard } from './pages/Dashboard';
+import { AdminDashboard } from './pages/admin/Dashboard';
+import { OrderBoard } from './pages/admin/OrderBoard';
+import { AdminProducts } from './pages/admin/Products';
 import { Orders } from './pages/Orders';
 import { Customers } from './pages/Customers';
 import { Products } from './pages/Products';
@@ -119,11 +121,17 @@ export default function App() {
   const renderAdminPage = () => {
     switch (activePage) {
       case 'dashboard':
-        return <Dashboard />;
+        return <AdminDashboard />;
+      case 'analytics':
+        return <AdminDashboard />;
+      case 'order-board':
+        return <OrderBoard />;
       case 'orders':
         return <Orders />;
       case 'customers':
         return <Customers />;
+      case 'products-new':
+        return <AdminProducts />;
       case 'products':
         return <Products />;
       case 'reports':
@@ -131,7 +139,7 @@ export default function App() {
       case 'settings':
         return <Settings />;
       default:
-        return <Dashboard />;
+        return <AdminDashboard />;
     }
   };
 
