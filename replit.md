@@ -89,6 +89,28 @@ The application runs on port 5000 and is configured for the Replit environment.
 - **Build Output**: `build/` directory
 
 ## Recent Changes
+- November 3, 2025: Navigation, Carousel & Footer Design Refinements
+  - **Navigation bar logo positioning fix**: 
+    - 160px logo absolutely positioned with top:50%/translateY(-50%) to float above/below 64px nav bar
+    - "Emily Bakes Cakes" text centered precisely on nav bar centerline at left:105px
+    - Eliminated viewport clipping with overflow:visible on nav container
+    - Added 7rem top padding to main content to prevent logo overlap
+  - **Enhanced carousel navigation arrows**:
+    - Upgraded from 40px to 48px solid raspberry (#C44569) buttons
+    - Replaced text arrows with white Chevron icons (24px, strokeWidth 3) from Lucide React
+    - Added box-shadow (0 8px 24px rgba(0,0,0,0.18)) for depth and visibility on all backgrounds
+    - Implemented motion.whileHover (scale 1.1) and whileTap (scale 0.95) animations
+    - Disabled state uses 0.4 opacity while maintaining raspberry color
+  - **Footer redesign for cleaner UX**:
+    - Restructured to true 3-column grid: Brand | Quick Links | Contact (md:2-col, lg:3-col)
+    - Vertical brand stack with 96px logo above "Emily Bakes Cakes" heading (gap-3)
+    - Consolidated all navigation items into single "Quick Links" column
+    - Increased spacing: 3rem vertical padding, gap-10 between columns
+    - Reduced max-width to 5xl for better proportions
+    - Maintained Houston contact info: 2847 Westheimer Road, (713) 555-CAKE, info@emilybakescakes.com
+  - All changes maintain WCAG AA accessibility and responsive design principles
+  - Architect-reviewed and approved for production readiness
+
 - November 3, 2025: Homepage & About Page UI/UX Enhancements
   - **Updated testimonials section text**: Changed from "Real stories from real celebrations" to "True experiences from memorable celebrations" (Home.tsx and TestimonialCarousel.tsx)
   - **Larger navigation logo**: Increased Heart icon from 28px to 40px and brand text from 18-24px to 20-26px for better visibility
