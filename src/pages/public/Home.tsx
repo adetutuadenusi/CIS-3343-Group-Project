@@ -74,13 +74,13 @@ export function PublicHome({ onNavigate }: PublicHomeProps = {}) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
-  // Auto-rotate carousel every 6 seconds
+  // Auto-rotate carousel every 10 seconds
   useEffect(() => {
     if (isDragging) return; // Don't auto-rotate while dragging
     
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % spotlightCakes.length);
-    }, 6000);
+    }, 10000);
 
     return () => clearInterval(timer);
   }, [isDragging]);
@@ -240,10 +240,10 @@ export function PublicHome({ onNavigate }: PublicHomeProps = {}) {
             <h2 
               style={{
                 fontFamily: 'Poppins, sans-serif',
-                fontSize: 'clamp(24px, 5vw, 36px)',
+                fontSize: 'clamp(28px, 5.5vw, 42px)',
                 fontWeight: 600,
                 color: '#2B2B2B',
-                marginBottom: '12px'
+                marginBottom: '16px'
               }}
             >
               Weekly Spotlight
@@ -251,12 +251,14 @@ export function PublicHome({ onNavigate }: PublicHomeProps = {}) {
             <p 
               style={{
                 fontFamily: 'Open Sans, sans-serif',
-                fontSize: 'clamp(14px, 3vw, 16px)',
+                fontSize: 'clamp(16px, 3.5vw, 20px)',
                 color: '#5A3825',
-                lineHeight: 1.6
+                lineHeight: 1.7,
+                maxWidth: '800px',
+                margin: '0 auto'
               }}
             >
-              This week's featured cakes, handpicked by Emily
+              Emily's handpicked cake highlights for this week — fresh inspiration for your next celebration
             </p>
           </motion.div>
 
@@ -306,7 +308,7 @@ export function PublicHome({ onNavigate }: PublicHomeProps = {}) {
                         <span 
                           style={{
                             fontFamily: 'Poppins, sans-serif',
-                            fontSize: 'clamp(10px, 2.5vw, 12px)',
+                            fontSize: 'clamp(12px, 3vw, 14px)',
                             fontWeight: 600,
                             color: '#C44569',
                             textTransform: 'uppercase',
@@ -320,10 +322,10 @@ export function PublicHome({ onNavigate }: PublicHomeProps = {}) {
                       <h3 
                         style={{
                           fontFamily: 'Poppins, sans-serif',
-                          fontSize: 'clamp(20px, 4.5vw, 32px)',
+                          fontSize: 'clamp(24px, 5vw, 36px)',
                           fontWeight: 600,
                           color: '#2B2B2B',
-                          marginBottom: '12px'
+                          marginBottom: '16px'
                         }}
                       >
                         {spotlightCakes[currentSlide].title}
@@ -332,10 +334,10 @@ export function PublicHome({ onNavigate }: PublicHomeProps = {}) {
                       <p 
                         style={{
                           fontFamily: 'Open Sans, sans-serif',
-                          fontSize: 'clamp(14px, 3vw, 16px)',
+                          fontSize: 'clamp(16px, 3.5vw, 18px)',
                           color: '#5A3825',
-                          lineHeight: 1.7,
-                          marginBottom: '20px'
+                          lineHeight: 1.8,
+                          marginBottom: '24px'
                         }}
                       >
                         {spotlightCakes[currentSlide].description}
@@ -346,9 +348,9 @@ export function PublicHome({ onNavigate }: PublicHomeProps = {}) {
                           <p 
                             style={{
                               fontFamily: 'Open Sans, sans-serif',
-                              fontSize: 'clamp(12px, 2.5vw, 14px)',
+                              fontSize: 'clamp(14px, 3vw, 16px)',
                               color: '#5A3825',
-                              marginBottom: '4px'
+                              marginBottom: '6px'
                             }}
                           >
                             Starting at
@@ -356,7 +358,7 @@ export function PublicHome({ onNavigate }: PublicHomeProps = {}) {
                           <p 
                             style={{
                               fontFamily: 'Poppins, sans-serif',
-                              fontSize: 'clamp(24px, 5vw, 28px)',
+                              fontSize: 'clamp(28px, 6vw, 32px)',
                               fontWeight: 700,
                               color: '#C44569'
                             }}
@@ -373,20 +375,21 @@ export function PublicHome({ onNavigate }: PublicHomeProps = {}) {
                       </div>
 
                       <button
+                        onClick={() => onNavigate?.('builder')}
                         style={{
                           background: '#C44569',
                           color: 'white',
                           fontFamily: 'Poppins, sans-serif',
                           fontWeight: 600,
-                          fontSize: 'clamp(14px, 3vw, 15px)',
-                          padding: '14px 32px',
+                          fontSize: 'clamp(16px, 3.5vw, 18px)',
+                          padding: '16px 40px',
                           borderRadius: '12px',
                           border: 'none',
                           cursor: 'pointer',
                           boxShadow: '0 2px 8px rgba(196, 69, 105, 0.25)',
                           transition: 'all 250ms ease',
                           width: '100%',
-                          minHeight: '48px'
+                          minHeight: '56px'
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'translateY(-2px)';
