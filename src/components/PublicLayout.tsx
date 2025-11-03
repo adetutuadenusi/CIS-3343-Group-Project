@@ -52,8 +52,8 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
             {/* Logo */}
             <button
               onClick={() => onNavigate('home')}
-              className="flex items-center gap-4 cursor-pointer hover:opacity-90 transition-opacity"
-              style={{ background: 'none', border: 'none', padding: 0 }}
+              className="cursor-pointer hover:opacity-90 transition-opacity"
+              style={{ background: 'none', border: 'none', padding: 0, position: 'relative', display: 'flex', alignItems: 'center' }}
             >
               <img
                 src={logoImage}
@@ -62,7 +62,9 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                   width: '160px',
                   height: '160px',
                   objectFit: 'contain',
-                  flexShrink: 0
+                  flexShrink: 0,
+                  position: 'relative',
+                  zIndex: 1
                 }}
               />
               <span
@@ -71,7 +73,10 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                   fontWeight: 700,
                   fontSize: 'clamp(20px, 4vw, 26px)',
                   color: 'white',
-                  letterSpacing: '-0.5px'
+                  letterSpacing: '-0.5px',
+                  position: 'relative',
+                  marginLeft: '-40px',
+                  zIndex: 2
                 }}
               >
                 Emily Bakes Cakes
@@ -181,7 +186,7 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {/* Brand with Logo */}
             <div>
-              <div className="flex items-center gap-4 mb-4">
+              <div className="flex items-center mb-4" style={{ position: 'relative' }}>
                 <img 
                   src={logoImage} 
                   alt="Emily Bakes Cakes Logo" 
@@ -189,7 +194,9 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                     width: '150px', 
                     height: '150px',
                     objectFit: 'contain',
-                    flexShrink: 0
+                    flexShrink: 0,
+                    position: 'relative',
+                    zIndex: 1
                   }}
                 />
                 <h4
@@ -198,7 +205,10 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                     fontWeight: 700,
                     fontSize: '20px',
                     color: '#C44569',
-                    lineHeight: 1.2
+                    lineHeight: 1.2,
+                    position: 'relative',
+                    marginLeft: '-35px',
+                    zIndex: 2
                   }}
                 >
                   Emily Bakes Cakes
