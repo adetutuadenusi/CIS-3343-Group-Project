@@ -71,12 +71,12 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
             </button>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-1">
+            <div className="hidden lg:flex items-center gap-4">
               {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.id)}
-                  className="relative px-2.5 py-2 transition-all"
+                  className="relative px-3 py-2 transition-all"
                   style={{
                     fontFamily: 'Poppins, sans-serif',
                     fontWeight: 500,
@@ -168,12 +168,12 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
         style={{
           background: '#2B2B2B',
           color: 'rgba(255, 255, 255, 0.9)',
-          paddingTop: '3rem',
-          paddingBottom: '3rem'
+          paddingTop: '2.5rem',
+          paddingBottom: '2.5rem'
         }}
       >
-        <div className="container mx-auto max-w-5xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Brand */}
             <div>
               <h5
@@ -182,7 +182,7 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                   fontWeight: 600,
                   fontSize: '15px',
                   color: 'white',
-                  marginBottom: '16px',
+                  marginBottom: '12px',
                   letterSpacing: '0.5px'
                 }}
               >
@@ -191,16 +191,17 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
               <p
                 style={{
                   fontFamily: 'Open Sans, sans-serif',
-                  fontSize: '14px',
+                  fontSize: '13px',
                   color: 'rgba(255, 255, 255, 0.7)',
-                  lineHeight: 1.7
+                  lineHeight: 1.6,
+                  margin: 0
                 }}
               >
                 Handcrafted artisan cakes for Houston's special moments.
               </p>
             </div>
 
-            {/* Quick Links - All Navigation Items */}
+            {/* Quick Links */}
             <div>
               <h5
                 style={{
@@ -208,20 +209,64 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                   fontWeight: 600,
                   fontSize: '15px',
                   color: 'white',
-                  marginBottom: '16px',
+                  marginBottom: '12px',
                   letterSpacing: '0.5px'
                 }}
               >
                 Quick Links
               </h5>
-              <ul className="space-y-2">
-                {navItems.map((item) => (
+              <ul className="space-y-1.5">
+                {navItems.slice(0, 3).map((item) => (
                   <li key={item.id}>
                     <button
                       onClick={() => onNavigate(item.id)}
                       style={{
                         fontFamily: 'Open Sans, sans-serif',
-                        fontSize: '14px',
+                        fontSize: '13px',
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        background: 'none',
+                        border: 'none',
+                        padding: '2px 0',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        transition: 'color 200ms ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = '#C44569';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
+                      }}
+                    >
+                      {item.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Learn More */}
+            <div>
+              <h5
+                style={{
+                  fontFamily: 'Poppins, sans-serif',
+                  fontWeight: 600,
+                  fontSize: '15px',
+                  color: 'white',
+                  marginBottom: '12px',
+                  letterSpacing: '0.5px'
+                }}
+              >
+                Learn More
+              </h5>
+              <ul className="space-y-1.5">
+                {navItems.slice(3).map((item) => (
+                  <li key={item.id}>
+                    <button
+                      onClick={() => onNavigate(item.id)}
+                      style={{
+                        fontFamily: 'Open Sans, sans-serif',
+                        fontSize: '13px',
                         color: 'rgba(255, 255, 255, 0.7)',
                         background: 'none',
                         border: 'none',
@@ -252,19 +297,19 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                   fontWeight: 600,
                   fontSize: '15px',
                   color: 'white',
-                  marginBottom: '16px',
+                  marginBottom: '12px',
                   letterSpacing: '0.5px'
                 }}
               >
                 Contact
               </h5>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <p
                   style={{
                     fontFamily: 'Open Sans, sans-serif',
-                    fontSize: '14px',
+                    fontSize: '13px',
                     color: 'rgba(255, 255, 255, 0.7)',
-                    lineHeight: 1.6,
+                    lineHeight: 1.5,
                     margin: 0
                   }}
                 >
@@ -274,7 +319,7 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                 <p
                   style={{
                     fontFamily: 'Open Sans, sans-serif',
-                    fontSize: '14px',
+                    fontSize: '13px',
                     color: 'rgba(255, 255, 255, 0.7)',
                     margin: 0
                   }}
@@ -285,7 +330,7 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                   href="mailto:info@emilybakescakes.com"
                   style={{
                     fontFamily: 'Open Sans, sans-serif',
-                    fontSize: '14px',
+                    fontSize: '13px',
                     color: '#C44569',
                     textDecoration: 'none',
                     display: 'block',
@@ -306,7 +351,7 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
 
           {/* Copyright */}
           <div
-            className="mt-10 pt-6"
+            className="mt-8 pt-5"
             style={{
               borderTop: '1px solid rgba(255, 255, 255, 0.15)',
               textAlign: 'center'
@@ -315,7 +360,7 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
             <p
               style={{
                 fontFamily: 'Open Sans, sans-serif',
-                fontSize: '13px',
+                fontSize: '12px',
                 color: 'rgba(255, 255, 255, 0.5)',
                 margin: 0
               }}
