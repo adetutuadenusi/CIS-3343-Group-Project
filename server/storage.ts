@@ -113,6 +113,12 @@ export async function getAllOrdersWithCustomers() {
       layers: orders.layers,
       status: orders.status,
       priority: orders.priority,
+      totalAmount: orders.totalAmount,
+      depositAmount: orders.depositAmount,
+      balanceDue: orders.balanceDue,
+      paymentStatus: orders.paymentStatus,
+      cancellationReason: orders.cancellationReason,
+      cancelledAt: orders.cancelledAt,
       createdAt: orders.createdAt,
     })
     .from(orders)

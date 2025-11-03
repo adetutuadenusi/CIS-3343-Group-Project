@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Card } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
@@ -52,6 +52,7 @@ interface Order {
   status: string;
   totalAmount: number | null;
   depositAmount: number | null;
+  balanceDue: number | null;
   paymentStatus: string;
   createdAt: string;
   cancellationReason: string | null;
@@ -77,6 +78,25 @@ export function OrderList() {
   // Detail modal
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  
+  // Payment tracking
+  const [payments, setPayments] = useState<Array<{
+    id: number;
+    paymentType: string;
+    amount: number;
+    paymentDate: string;
+    paymentStatus: string;
+    notes: string | null;
+    recordedBy: string;
+  }>>([]);
+  const [isRecordingPayment, setIsRecordingPayment] = useState(false);
+  const [paymentForm, setPaymentForm] = useState({
+    paymentType: 'cash',
+    amount: '',
+    paymentDate: new Date().toISOString().split('T')[0],
+    paymentStatus: 'completed',
+    notes: ''
+  });
 
   useEffect(() => {
     fetchOrders();
@@ -178,6 +198,72 @@ export function OrderList() {
 
   const clearSearch = () => {
     setSearchQuery('');
+  };
+
+  const fetchPayments = async (orderId: number) => {
+    try {
+      const response = await fetch(`/api/orders/${orderId}/payments`);
+      if (response.ok) {
+        const data = await response.json();
+        setPayments(data);
+      }
+    } catch (error) {
+      console.error('Error fetching payments:', error);
+    }
+  };
+
+  const handleViewOrderDetails = (order: Order) => {
+    setSelectedOrder(order);
+    setIsDetailModalOpen(true);
+    fetchPayments(order.id);
+  };
+
+  const handleRecordPayment = async () => {
+    if (!selectedOrder) return;
+    
+    if (!paymentForm.amount || parseFloat(paymentForm.amount) <= 0) {
+      showToast('error', 'Please enter a valid payment amount', 'Validation Error');
+      return;
+    }
+
+    try {
+      setIsRecordingPayment(true);
+      const amountInCents = Math.round(parseFloat(paymentForm.amount) * 100);
+      
+      const response = await fetch(`/api/orders/${selectedOrder.id}/payments`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          paymentType: paymentForm.paymentType,
+          amount: amountInCents,
+          paymentDate: paymentForm.paymentDate,
+          paymentStatus: paymentForm.paymentStatus,
+          notes: paymentForm.notes || null,
+          recordedBy: 'Admin' // In a real app, this would be the logged-in user
+        })
+      });
+
+      if (response.ok) {
+        await fetchPayments(selectedOrder.id);
+        await fetchOrders(); // Refresh orders to update payment status
+        setPaymentForm({
+          paymentType: 'cash',
+          amount: '',
+          paymentDate: new Date().toISOString().split('T')[0],
+          paymentStatus: 'completed',
+          notes: ''
+        });
+        showToast('success', 'Payment recorded successfully', 'Payment Recorded');
+      } else {
+        const error = await response.json();
+        showToast('error', error.error || 'Failed to record payment', 'Error');
+      }
+    } catch (error) {
+      console.error('Error recording payment:', error);
+      showToast('error', 'An unexpected error occurred', 'Error');
+    } finally {
+      setIsRecordingPayment(false);
+    }
   };
 
   const formatDate = (dateString: string | null) => {
@@ -487,10 +573,7 @@ export function OrderList() {
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => {
-                          setSelectedOrder(order);
-                          setIsDetailModalOpen(true);
-                        }}
+                        onClick={() => handleViewOrderDetails(order)}
                         className="hover:scale-105 active:scale-95 transition-all duration-200"
                         style={{ 
                           borderColor: 'rgba(90, 56, 37, 0.3)',
@@ -801,6 +884,181 @@ export function OrderList() {
                     </p>
                   </div>
                 </div>
+
+                {/* Payment Tracking */}
+                {selectedOrder.status !== 'cancelled' && (
+                  <div className="space-y-4">
+                    <h3 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '16px', color: '#2B2B2B', marginBottom: '12px' }}>
+                      Payment Tracker
+                    </h3>
+                    
+                    {/* Payment Summary */}
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="p-3 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.05)' }}>
+                        <p style={{ fontFamily: 'Open Sans', fontSize: '12px', color: '#5A3825', opacity: 0.7 }}>Total Paid</p>
+                        <p style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '16px', color: '#22C55E' }}>
+                          {formatCurrency(payments.reduce((sum, p) => sum + p.amount, 0))}
+                        </p>
+                      </div>
+                      <div className="p-3 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.05)' }}>
+                        <p style={{ fontFamily: 'Open Sans', fontSize: '12px', color: '#5A3825', opacity: 0.7 }}>Balance Due</p>
+                        <p style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '16px', color: '#EF4444' }}>
+                          {formatCurrency((selectedOrder.totalAmount || 0) - payments.reduce((sum, p) => sum + p.amount, 0))}
+                        </p>
+                      </div>
+                      <div className="p-3 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.05)' }}>
+                        <p style={{ fontFamily: 'Open Sans', fontSize: '12px', color: '#5A3825', opacity: 0.7 }}>Payment Count</p>
+                        <p style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '16px', color: '#C44569' }}>
+                          {payments.length}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Record Payment Form */}
+                    <div className="p-4 rounded-lg border-2" style={{ borderColor: 'rgba(196, 69, 105, 0.15)', backgroundColor: 'rgba(196, 69, 105, 0.02)' }}>
+                      <h4 style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: '14px', color: '#2B2B2B', marginBottom: '12px' }}>
+                        Record New Payment
+                      </h4>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label style={{ fontFamily: 'Open Sans', fontSize: '13px', color: '#5A3825', display: 'block', marginBottom: '6px' }}>
+                            Payment Type
+                          </label>
+                          <select
+                            value={paymentForm.paymentType}
+                            onChange={(e) => setPaymentForm({ ...paymentForm, paymentType: e.target.value })}
+                            className="w-full rounded-lg border-2 px-3 py-2"
+                            style={{ borderColor: 'rgba(90, 56, 37, 0.2)', fontFamily: 'Open Sans', fontSize: '14px' }}
+                          >
+                            <option value="cash">Cash</option>
+                            <option value="credit_card">Credit Card</option>
+                            <option value="check">Check</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label style={{ fontFamily: 'Open Sans', fontSize: '13px', color: '#5A3825', display: 'block', marginBottom: '6px' }}>
+                            Amount ($)
+                          </label>
+                          <Input
+                            type="number"
+                            step="0.01"
+                            value={paymentForm.amount}
+                            onChange={(e) => setPaymentForm({ ...paymentForm, amount: e.target.value })}
+                            placeholder="0.00"
+                            className="rounded-lg border-2"
+                            style={{ borderColor: 'rgba(90, 56, 37, 0.2)' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ fontFamily: 'Open Sans', fontSize: '13px', color: '#5A3825', display: 'block', marginBottom: '6px' }}>
+                            Payment Date
+                          </label>
+                          <Input
+                            type="date"
+                            value={paymentForm.paymentDate}
+                            onChange={(e) => setPaymentForm({ ...paymentForm, paymentDate: e.target.value })}
+                            className="rounded-lg border-2"
+                            style={{ borderColor: 'rgba(90, 56, 37, 0.2)' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ fontFamily: 'Open Sans', fontSize: '13px', color: '#5A3825', display: 'block', marginBottom: '6px' }}>
+                            Status
+                          </label>
+                          <select
+                            value={paymentForm.paymentStatus}
+                            onChange={(e) => setPaymentForm({ ...paymentForm, paymentStatus: e.target.value })}
+                            className="w-full rounded-lg border-2 px-3 py-2"
+                            style={{ borderColor: 'rgba(90, 56, 37, 0.2)', fontFamily: 'Open Sans', fontSize: '14px' }}
+                          >
+                            <option value="completed">Completed</option>
+                            <option value="pending">Pending</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="mt-3">
+                        <label style={{ fontFamily: 'Open Sans', fontSize: '13px', color: '#5A3825', display: 'block', marginBottom: '6px' }}>
+                          Notes (optional)
+                        </label>
+                        <Input
+                          value={paymentForm.notes}
+                          onChange={(e) => setPaymentForm({ ...paymentForm, notes: e.target.value })}
+                          placeholder="Additional payment details..."
+                          className="rounded-lg border-2"
+                          style={{ borderColor: 'rgba(90, 56, 37, 0.2)' }}
+                        />
+                      </div>
+                      <Button
+                        onClick={handleRecordPayment}
+                        disabled={isRecordingPayment}
+                        className="w-full mt-3"
+                        style={{
+                          background: isRecordingPayment ? '#94A3B8' : 'linear-gradient(135deg, #C44569 0%, #B23A5A 100%)',
+                          color: 'white',
+                          borderRadius: '10px',
+                          height: '44px',
+                          fontFamily: 'Poppins',
+                          fontWeight: 600
+                        }}
+                      >
+                        {isRecordingPayment ? (
+                          <>
+                            <Loader2 className="animate-spin mr-2" size={16} />
+                            Recording...
+                          </>
+                        ) : (
+                          'Record Payment'
+                        )}
+                      </Button>
+                    </div>
+
+                    {/* Payment History */}
+                    {payments.length > 0 && (
+                      <div>
+                        <h4 style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: '14px', color: '#2B2B2B', marginBottom: '12px' }}>
+                          Payment History ({payments.length})
+                        </h4>
+                        <div className="space-y-2">
+                          {payments.map((payment) => (
+                            <div key={payment.id} className="p-3 rounded-lg border" style={{ borderColor: 'rgba(90, 56, 37, 0.15)' }}>
+                              <div className="flex justify-between items-start">
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <Badge style={{
+                                      backgroundColor: payment.paymentType === 'cash' ? '#22C55E20' : payment.paymentType === 'credit_card' ? '#3B82F620' : '#F59E0B20',
+                                      color: payment.paymentType === 'cash' ? '#22C55E' : payment.paymentType === 'credit_card' ? '#3B82F6' : '#F59E0B'
+                                    }}>
+                                      {payment.paymentType.replace('_', ' ')}
+                                    </Badge>
+                                    <Badge style={{
+                                      backgroundColor: payment.paymentStatus === 'completed' ? '#22C55E20' : '#EF444420',
+                                      color: payment.paymentStatus === 'completed' ? '#22C55E' : '#EF4444'
+                                    }}>
+                                      {payment.paymentStatus}
+                                    </Badge>
+                                  </div>
+                                  <p style={{ fontFamily: 'Open Sans', fontSize: '12px', color: '#5A3825', opacity: 0.7 }}>
+                                    {formatDate(payment.paymentDate)} · By {payment.recordedBy}
+                                  </p>
+                                  {payment.notes && (
+                                    <p style={{ fontFamily: 'Open Sans', fontSize: '12px', color: '#5A3825', fontStyle: 'italic', marginTop: '4px' }}>
+                                      "{payment.notes}"
+                                    </p>
+                                  )}
+                                </div>
+                                <div>
+                                  <p style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '16px', color: '#22C55E' }}>
+                                    {formatCurrency(payment.amount)}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Cancellation Info */}
                 {selectedOrder.status === 'cancelled' && selectedOrder.cancellationReason && (

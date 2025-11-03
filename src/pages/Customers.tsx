@@ -817,7 +817,7 @@ export function Customers() {
 
       {/* Customer Detail Modal */}
       <Dialog open={isDetailModalOpen} onOpenChange={setIsDetailModalOpen}>
-        <DialogContent className="sm:max-w-[650px] bg-white max-h-[85vh] overflow-y-auto rounded-2xl border-0" style={{ boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2)' }}>
+        <DialogContent className="sm:max-w-[550px] bg-white max-h-[80vh] overflow-y-auto rounded-2xl border-2" style={{ boxShadow: '0 8px 32px rgba(196, 69, 105, 0.25)', borderColor: 'rgba(196, 69, 105, 0.15)' }}>
           {isDetailLoading ? (
             <div className="py-12">
               <div className="flex flex-col items-center justify-center gap-4">
@@ -886,18 +886,26 @@ export function Customers() {
                       <div className="p-2 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.1)' }}>
                         <Mail size={16} color="#C44569" />
                       </div>
-                      <span style={{ fontFamily: 'Open Sans', fontSize: '14px', color: '#2B2B2B', flex: 1 }}>
+                      <a 
+                        href={`mailto:${selectedCustomer.email}`}
+                        className="flex-1 hover:underline transition-all"
+                        style={{ fontFamily: 'Open Sans', fontSize: '14px', color: '#C44569', fontWeight: 500 }}
+                      >
                         {selectedCustomer.email}
-                      </span>
+                      </a>
                     </div>
                     {selectedCustomer.phone && (
                       <div className="flex items-center gap-3">
                         <div className="p-2 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.1)' }}>
                           <Phone size={16} color="#C44569" />
                         </div>
-                        <span style={{ fontFamily: 'Open Sans', fontSize: '14px', color: '#2B2B2B', flex: 1 }}>
+                        <a 
+                          href={`tel:${selectedCustomer.phone}`}
+                          className="flex-1 hover:underline transition-all"
+                          style={{ fontFamily: 'Open Sans', fontSize: '14px', color: '#C44569', fontWeight: 500 }}
+                        >
                           {selectedCustomer.phone}
-                        </span>
+                        </a>
                       </div>
                     )}
                     <div className="flex items-center gap-3">
