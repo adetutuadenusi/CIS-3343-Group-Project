@@ -70,27 +70,29 @@ export function MobileNav({ isOpen, onClose, activePage, onNavigate, onAdminAcce
                     alignItems: 'center',
                     justifyContent: 'center',
                     borderRadius: '12px',
-                    background: 'rgba(196, 69, 105, 0.1)',
-                    border: 'none',
+                    background: 'rgba(196, 69, 105, 0.15)',
+                    border: '1.5px solid rgba(196, 69, 105, 0.3)',
                     cursor: 'pointer',
                     transition: 'all 200ms ease',
                     position: 'relative',
                     zIndex: 1
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(196, 69, 105, 0.15)';
+                    e.currentTarget.style.background = 'rgba(196, 69, 105, 0.25)';
+                    e.currentTarget.style.borderColor = 'rgba(196, 69, 105, 0.5)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(196, 69, 105, 0.1)';
+                    e.currentTarget.style.background = 'rgba(196, 69, 105, 0.15)';
+                    e.currentTarget.style.borderColor = 'rgba(196, 69, 105, 0.3)';
                   }}
                   onTouchStart={(e) => {
-                    e.currentTarget.style.background = 'rgba(196, 69, 105, 0.2)';
+                    e.currentTarget.style.background = 'rgba(196, 69, 105, 0.25)';
                   }}
                   onTouchEnd={(e) => {
-                    e.currentTarget.style.background = 'rgba(196, 69, 105, 0.1)';
+                    e.currentTarget.style.background = 'rgba(196, 69, 105, 0.15)';
                   }}
                 >
-                  <X size={24} color="#C44569" strokeWidth={2.5} />
+                  <X size={26} color="#C44569" strokeWidth={3} />
                 </button>
               </div>
 
