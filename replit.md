@@ -45,7 +45,7 @@ The application is built using React 18.3.1 with TypeScript, Vite 6.3.5, and Tai
 ## Recent Changes
 - November 3, 2025: Mobile Menu Optimization & Duplicate Close Button Fix
   - **Fixed duplicate X button issue**: Removed hamburger-to-X transformation in navigation bar
-  - **Single functional close button**: Only the X in the menu panel remains, fully visible and functional
+  - **Highly visible close button**: Solid raspberry pink (#C44569) background with white X icon (26px, stroke 3)
   - **Desktop menu optimization**: Entire menu (nav links, login, contact) now fits on desktop without scrolling
   - **Maintained mobile scrollability**: Menu remains scrollable on smaller mobile screens
   - **Hamburger icon behavior**: Only shows when menu is closed

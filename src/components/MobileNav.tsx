@@ -70,29 +70,30 @@ export function MobileNav({ isOpen, onClose, activePage, onNavigate, onAdminAcce
                     alignItems: 'center',
                     justifyContent: 'center',
                     borderRadius: '12px',
-                    background: 'rgba(196, 69, 105, 0.15)',
-                    border: '1.5px solid rgba(196, 69, 105, 0.3)',
+                    background: '#C44569',
+                    border: 'none',
                     cursor: 'pointer',
                     transition: 'all 200ms ease',
                     position: 'relative',
-                    zIndex: 1
+                    zIndex: 1,
+                    boxShadow: '0 2px 8px rgba(196, 69, 105, 0.3)'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(196, 69, 105, 0.25)';
-                    e.currentTarget.style.borderColor = 'rgba(196, 69, 105, 0.5)';
+                    e.currentTarget.style.background = '#B03D5E';
+                    e.currentTarget.style.transform = 'scale(1.05)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(196, 69, 105, 0.15)';
-                    e.currentTarget.style.borderColor = 'rgba(196, 69, 105, 0.3)';
+                    e.currentTarget.style.background = '#C44569';
+                    e.currentTarget.style.transform = 'scale(1)';
                   }}
                   onTouchStart={(e) => {
-                    e.currentTarget.style.background = 'rgba(196, 69, 105, 0.25)';
+                    e.currentTarget.style.background = '#B03D5E';
                   }}
                   onTouchEnd={(e) => {
-                    e.currentTarget.style.background = 'rgba(196, 69, 105, 0.15)';
+                    e.currentTarget.style.background = '#C44569';
                   }}
                 >
-                  <X size={26} color="#C44569" strokeWidth={3} />
+                  <X size={26} color="white" strokeWidth={3} />
                 </button>
               </div>
 
