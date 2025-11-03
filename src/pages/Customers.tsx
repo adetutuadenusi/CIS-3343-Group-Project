@@ -817,7 +817,7 @@ export function Customers() {
 
       {/* Customer Detail Modal */}
       <Dialog open={isDetailModalOpen} onOpenChange={setIsDetailModalOpen}>
-        <DialogContent className="sm:max-w-[480px] bg-white max-h-[75vh] overflow-y-auto rounded-xl border-2" style={{ boxShadow: '0 8px 32px rgba(196, 69, 105, 0.25)', borderColor: 'rgba(196, 69, 105, 0.2)' }}>
+        <DialogContent className="sm:max-w-[380px] bg-white max-h-[65vh] overflow-y-auto rounded-xl border-2" style={{ boxShadow: '0 8px 32px rgba(196, 69, 105, 0.25)', borderColor: 'rgba(196, 69, 105, 0.2)' }}>
           {isDetailLoading ? (
             <div className="py-12">
               <div className="flex flex-col items-center justify-center gap-4">
@@ -832,14 +832,14 @@ export function Customers() {
               <DialogHeader>
                 <DialogTitle style={{ 
                   fontFamily: 'Playfair Display', 
-                  fontSize: '24px', 
+                  fontSize: '20px', 
                   color: '#C44569',
                   letterSpacing: '-0.02em',
-                  lineHeight: 1.3,
+                  lineHeight: 1.2,
                   display: 'flex',
                   alignItems: 'center',
                   flexWrap: 'wrap',
-                  gap: '10px'
+                  gap: '8px'
                 }}>
                   {selectedCustomer.name}
                   {selectedCustomer.isVip && (
@@ -861,58 +861,58 @@ export function Customers() {
                 <DialogDescription style={{ 
                   fontFamily: 'Open Sans', 
                   color: '#5A3825',
-                  fontSize: '13px',
-                  marginTop: '4px'
+                  fontSize: '12px',
+                  marginTop: '2px'
                 }}>
                   Customer ID: #{selectedCustomer.id}
                 </DialogDescription>
               </DialogHeader>
               
-              <div className="space-y-5 mt-4">
+              <div className="space-y-4 mt-3">
                 {/* Contact Information */}
                 <div>
                   <h3 style={{ 
                     fontFamily: 'Poppins', 
                     fontWeight: 600, 
-                    fontSize: '15px', 
+                    fontSize: '13px', 
                     color: '#2B2B2B', 
-                    marginBottom: '12px',
+                    marginBottom: '8px',
                     letterSpacing: '-0.01em'
                   }}>
                     Contact Information
                   </h3>
-                  <div className="space-y-3 p-4 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.04)' }}>
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.1)' }}>
-                        <Mail size={16} color="#C44569" />
+                  <div className="space-y-2 p-3 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.04)' }}>
+                    <div className="flex items-center gap-2">
+                      <div className="p-1.5 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.1)' }}>
+                        <Mail size={14} color="#C44569" />
                       </div>
                       <a 
                         href={`mailto:${selectedCustomer.email}`}
-                        className="flex-1 hover:underline transition-all"
-                        style={{ fontFamily: 'Open Sans', fontSize: '14px', color: '#C44569', fontWeight: 500 }}
+                        className="flex-1 hover:underline transition-all text-xs"
+                        style={{ fontFamily: 'Open Sans', color: '#C44569', fontWeight: 500 }}
                       >
                         {selectedCustomer.email}
                       </a>
                     </div>
                     {selectedCustomer.phone && (
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.1)' }}>
-                          <Phone size={16} color="#C44569" />
+                      <div className="flex items-center gap-2">
+                        <div className="p-1.5 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.1)' }}>
+                          <Phone size={14} color="#C44569" />
                         </div>
                         <a 
                           href={`tel:${selectedCustomer.phone}`}
-                          className="flex-1 hover:underline transition-all"
-                          style={{ fontFamily: 'Open Sans', fontSize: '14px', color: '#C44569', fontWeight: 500 }}
+                          className="flex-1 hover:underline transition-all text-xs"
+                          style={{ fontFamily: 'Open Sans', color: '#C44569', fontWeight: 500 }}
                         >
                           {selectedCustomer.phone}
                         </a>
                       </div>
                     )}
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.1)' }}>
-                        <Calendar size={16} color="#C44569" />
+                    <div className="flex items-center gap-2">
+                      <div className="p-1.5 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.1)' }}>
+                        <Calendar size={14} color="#C44569" />
                       </div>
-                      <span style={{ fontFamily: 'Open Sans', fontSize: '14px', color: '#2B2B2B', flex: 1 }}>
+                      <span style={{ fontFamily: 'Open Sans', fontSize: '12px', color: '#2B2B2B', flex: 1 }}>
                         Customer since {formatDate(selectedCustomer.createdAt || selectedCustomer.lastOrderDate)}
                       </span>
                     </div>
