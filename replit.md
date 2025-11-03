@@ -89,6 +89,15 @@ The application runs on port 5000 and is configured for the Replit environment.
 - **Build Output**: `build/` directory
 
 ## Recent Changes
+- November 3, 2025: Homepage Hero Improvements
+  - **Enhanced hero headline**: Changed from small 28px Lucida Handwriting to large, stylish Playfair Display serif (clamp 42-72px)
+  - **Redesigned tagline**: "Where Every Bite Tells a Story" with raspberry pink accent for maximum impact
+  - **Improved caption**: Modern, readable copy with Poppins font highlighting brand promise
+  - **Fixed carousel timing**: Increased auto-rotation from 4s to 6s for smoother transitions
+  - **Faster carousel animations**: Reduced transition duration from 0.5s to 0.3s with easeOut
+  - **Better scroll interaction**: Added touch-action: pan-y to prevent carousel from interfering with page scrolling
+  - Overall result: More elegant, readable, and professional hero section with improved UX
+
 - November 3, 2025: Frontend Enhancements - Interactive Admin Features
   - **Created comprehensive mock data system** (src/data/mockData.ts): Products, orders, customers, sales analytics with three demo datasets
   - **Built interactive Admin Dashboard** (src/pages/admin/Dashboard.tsx) with Recharts:

@@ -69,13 +69,13 @@ export function PublicHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
-  // Auto-rotate carousel every 4 seconds
+  // Auto-rotate carousel every 6 seconds
   useEffect(() => {
     if (isDragging) return; // Don't auto-rotate while dragging
     
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % spotlightCakes.length);
-    }, 4000);
+    }, 6000);
 
     return () => clearInterval(timer);
   }, [isDragging]);
@@ -135,20 +135,25 @@ export function PublicHome() {
         {/* Hero Content - Center Aligned */}
         <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-6">
           <div className="text-center max-w-4xl">
-            {/* H1: Lucida Handwriting 28px Raspberry Pink */}
+            {/* Hero Headline - Large & Stylish */}
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               style={{
-                fontFamily: 'Lucida Handwriting, cursive',
-                fontSize: '28px',
-                color: '#C44569',
+                fontFamily: 'Playfair Display, serif',
+                fontSize: 'clamp(42px, 8vw, 72px)',
+                fontWeight: 700,
+                color: '#2B2B2B',
                 marginBottom: '24px',
-                textShadow: '0 2px 8px rgba(255, 255, 255, 0.9)'
+                lineHeight: 1.2,
+                textShadow: '0 4px 12px rgba(255, 255, 255, 0.95)',
+                letterSpacing: '-0.02em'
               }}
             >
-              Sweetness from the Heart
+              Where Every Bite
+              <br />
+              <span style={{ color: '#C44569' }}>Tells a Story</span>
             </motion.h1>
 
             <motion.p
@@ -156,18 +161,21 @@ export function PublicHome() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               style={{
-                fontFamily: 'Open Sans, sans-serif',
-                fontSize: 'clamp(15px, 3.5vw, 18px)',
-                color: '#5A3825',
-                lineHeight: 1.6,
-                maxWidth: '600px',
-                margin: '0 auto 32px auto',
-                textShadow: '0 1px 4px rgba(255, 255, 255, 0.8)',
-                padding: '0 16px'
+                fontFamily: 'Poppins, sans-serif',
+                fontSize: 'clamp(16px, 3.5vw, 22px)',
+                fontWeight: 400,
+                color: '#2B2B2B',
+                lineHeight: 1.7,
+                maxWidth: '680px',
+                margin: '0 auto 40px auto',
+                textShadow: '0 2px 8px rgba(255, 255, 255, 0.9)',
+                padding: '0 20px',
+                letterSpacing: '0.01em'
               }}
             >
-              Premium custom cakes handcrafted with passion and precision. 
-              Making your celebrations unforgettable since 2018.
+              Artisan cakes crafted with love, designed to perfection.
+              <br className="hidden sm:block" />
+              <span style={{ color: '#C44569', fontWeight: 500 }}>Your celebration deserves extraordinary.</span>
             </motion.p>
 
             {/* Prominent CTA: Raspberry Pink #C44569, White text, 16px padding, 12px radius, subtle shadow */}
@@ -253,7 +261,7 @@ export function PublicHome() {
           </motion.div>
 
           {/* Swipeable Carousel */}
-          <div className="relative overflow-hidden">
+          <div className="relative overflow-hidden" style={{ touchAction: 'pan-y' }}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -265,7 +273,7 @@ export function PublicHome() {
                 initial={{ opacity: 0, x: 100 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -100 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
                 style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
               >
                 <Card 
