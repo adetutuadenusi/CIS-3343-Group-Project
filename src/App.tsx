@@ -5,6 +5,7 @@ import { PublicLayout } from './components/PublicLayout';
 import { AdminLayout } from './components/AdminLayout';
 import { ToastProvider } from './components/ToastContext';
 import { InquiriesProvider } from './contexts/InquiriesContext';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 // Public Pages
 import { PublicHome } from './pages/public/Home';
@@ -30,12 +31,42 @@ import { Settings } from './pages/Settings';
 type AppMode = 'public' | 'login' | 'admin';
 
 export default function App() {
-  const [showWelcome, setShowWelcome] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(() => {
+    const welcomeDone = sessionStorage.getItem('welcomeDone');
+    return welcomeDone !== 'true';
+  });
   const [appMode, setAppMode] = useState<AppMode>('public');
   const [activePage, setActivePage] = useState('home');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Scroll to top on page change
+  useEffect(() => {
+    const isReplitExternal = window.location.hostname.includes('replit.dev') || 
+                             window.location.hostname.includes('repl.co');
+    const isReplitPreview = window.location !== window.parent.location;
+    
+    console.log('🌐 Emily Bakes Cakes - Environment Detection');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('URL:', window.location.href);
+    console.log('Hostname:', window.location.hostname);
+    console.log('Protocol:', window.location.protocol);
+    console.log('Is Replit External:', isReplitExternal);
+    console.log('Is Preview (iframe):', isReplitPreview);
+    console.log('Screen Size:', `${window.innerWidth}x${window.innerHeight}`);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  }, []);
+
+  useEffect(() => {
+    if (showWelcome) {
+      const timer = setTimeout(() => {
+        setShowWelcome(false);
+        sessionStorage.setItem('welcomeDone', 'true');
+      }, 2500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showWelcome]);
+
+  // Scroll to top instantly on page change (Y:0 reset)
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [activePage, appMode]);
@@ -121,12 +152,13 @@ export default function App() {
   };
 
   return (
-    <InquiriesProvider>
-      <ToastProvider>
-      <AnimatePresence mode="wait">
-        {showWelcome ? (
-          <WelcomeScreen key="welcome" />
-        ) : (
+    <ErrorBoundary>
+      <InquiriesProvider>
+        <ToastProvider>
+        <AnimatePresence mode="wait">
+          {showWelcome ? (
+            <WelcomeScreen key="welcome" />
+          ) : (
           <motion.div
             key={appMode}
             initial={{ opacity: 0 }}
@@ -185,8 +217,9 @@ export default function App() {
             )}
           </motion.div>
         )}
-      </AnimatePresence>
-      </ToastProvider>
-    </InquiriesProvider>
+        </AnimatePresence>
+        </ToastProvider>
+      </InquiriesProvider>
+    </ErrorBoundary>
   );
 }

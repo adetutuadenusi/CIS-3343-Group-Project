@@ -1,6 +1,6 @@
 // Enhancement #17, #48: Error boundary for graceful error handling
 
-import { Component, ErrorInfo, ReactNode } from 'react';
+import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { AlertCircle, RefreshCw } from 'lucide-react';
 
 interface Props {
