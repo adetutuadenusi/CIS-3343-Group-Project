@@ -41,7 +41,7 @@ export default function App() {
   useEffect(() => {
     const isReplitExternal = window.location.hostname.includes('replit.dev') || 
                              window.location.hostname.includes('repl.co');
-    const isReplitPreview = window.location !== window.parent.location;
+    const isReplitPreview = window.self !== window.top;
     
     console.log('🌐 Emily Bakes Cakes - Environment Detection');
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
