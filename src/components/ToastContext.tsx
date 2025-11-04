@@ -33,9 +33,10 @@ interface ToastItemProps {
   index: number;
 }
 
-const ToastItem: React.FC<ToastItemProps> = ({ toast, onRemove, index }) => {
-  const [progress, setProgress] = useState(100);
-  const duration = toast.duration || 5000;
+const ToastItem = React.forwardRef<HTMLDivElement, ToastItemProps>(
+  ({ toast, onRemove, index }, ref) => {
+    const [progress, setProgress] = useState(100);
+    const duration = toast.duration || 5000;
 
   useEffect(() => {
     const startTime = Date.now();
@@ -103,6 +104,7 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onRemove, index }) => {
 
   return (
     <motion.div
+      ref={ref}
       layout
       initial={{ opacity: 0, x: 100, y: -20, scale: 0.9 }}
       animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
@@ -247,7 +249,9 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onRemove, index }) => {
       </div>
     </motion.div>
   );
-};
+});
+
+ToastItem.displayName = 'ToastItem';
 
 export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
