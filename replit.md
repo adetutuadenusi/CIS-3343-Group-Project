@@ -2,6 +2,13 @@
 This project is for "Emily Bakes Cakes," a dual-interface web application offering a warm customer experience and an efficient staff management system. It features a public-facing website for browsing products, building custom cakes, and viewing galleries, alongside an administrative portal for managing orders, customers, products, and reports. The application aims to provide a comprehensive solution for a baking business, enhancing customer engagement and streamlining internal operations.
 
 ## Recent Updates (November 2025)
+**Critical Bug Fixes (November 4, 2025):**
+- ✅ Fixed app freezing issue caused by welcome screen cross-origin iframe detection
+- ✅ Disabled welcome screen entirely to prevent UI lock-ups
+- ✅ Created complete Products API backend with database schema and storage functions
+- ✅ Synced Shop and Admin Products pages to use backend API with fallback to hardcoded data
+- ✅ Fixed API route ordering issue (search routes now before parameterized routes)
+
 **50-Feature Enhancement Initiative (COMPLETED - 35/50 Implemented):**
 
 **Database & Backend (10 features):**
@@ -77,7 +84,7 @@ The application is built using React 18.3.1 with TypeScript, Vite 6.3.5, and Tai
 
 ### System Design Choices
 - **Backend & Database**: PostgreSQL (Replit Neon) with Drizzle ORM for type-safe queries. The API server is built with Express.js (TypeScript with tsx).
-- **Database Schema**: Includes `customers`, `orders`, `inquiries`, `contact_messages` tables with relational foreign keys. Enhanced with payment tracking (depositAmount, balanceDue, paymentStatus, stripePaymentIntentId) and cancellation tracking (cancellationReason, cancelledAt, cancelledBy). The `orders` table includes a `layers` JSONB field for custom cake layers.
+- **Database Schema**: Includes `customers`, `orders`, `inquiries`, `contact_messages`, `products` tables with relational foreign keys. Enhanced with payment tracking (depositAmount, balanceDue, paymentStatus, stripePaymentIntentId) and cancellation tracking (cancellationReason, cancelledAt, cancelledBy). The `orders` table includes a `layers` JSONB field for custom cake layers. The `products` table stores all product data with soft-delete support.
 - **Data Flow**: Form submissions (Custom Builder, Shop Inquiries, Contact) persist to the database. Custom Builder automatically creates/links customers.
 - **Migrations**: Uses `npm run db:push` for schema changes.
 - **Project Structure**: Organized into `src/components`, `src/pages` (public and admin), `src/styles`, and `src/assets`.
@@ -103,6 +110,14 @@ The application is built using React 18.3.1 with TypeScript, Vite 6.3.5, and Tai
 - `PATCH /api/inquiries/:id/status` - Update inquiry status
 - `GET /api/contact` - Fetch all contact messages
 - `POST /api/contact` - Create contact form submission
+
+**Product Management:**
+- `GET /api/products` - Fetch all active products
+- `GET /api/products/search?q=query` - Search products by name/description
+- `GET /api/products/:id` - Get single product details
+- `POST /api/products` - Create new product (admin)
+- `PATCH /api/products/:id` - Update product (admin)
+- `DELETE /api/products/:id` - Soft delete product (admin)
 
 ## External Dependencies
 - **React**: Frontend library.
