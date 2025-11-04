@@ -1,6 +1,26 @@
 import { pgTable, text, serial, timestamp, integer, varchar, boolean } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 
+export const products = pgTable('products', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 255 }).notNull(),
+  category: varchar('category', { length: 100 }).notNull(),
+  price: integer('price').notNull(), // in cents
+  priceRange: varchar('price_range', { length: 50 }), // For products with variable pricing (e.g., "$45 - $85")
+  description: text('description').notNull(),
+  image: varchar('image', { length: 500 }), // URL to image
+  inStock: boolean('in_stock').default(true).notNull(),
+  popularity: integer('popularity').default(0).notNull(), // 0-100 score
+  isNew: boolean('is_new').default(false).notNull(),
+  isPopular: boolean('is_popular').default(false).notNull(),
+  rating: integer('rating').default(5).notNull(), // 1-5 stars (stored as integer)
+  reviews: integer('reviews').default(0).notNull(), // Number of reviews
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  deletedAt: timestamp('deleted_at'),
+  deletedBy: varchar('deleted_by', { length: 255 }),
+});
+
 export const customers = pgTable('customers', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 255 }).notNull(),
@@ -170,6 +190,8 @@ export interface CakeLayer {
 }
 
 // Types
+export type Product = typeof products.$inferSelect;
+export type NewProduct = typeof products.$inferInsert;
 export type Customer = typeof customers.$inferSelect;
 export type NewCustomer = typeof customers.$inferInsert;
 export type Order = typeof orders.$inferSelect;

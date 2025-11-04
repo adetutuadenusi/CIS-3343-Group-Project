@@ -1,23 +1,58 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Plus } from 'lucide-react';
 import { ProductCard } from '../../components/ProductCard';
 import { SearchBar } from '../../components/SearchBar';
 import { mockProducts, Product } from '../../data/mockData';
+import { useToast } from '../../components/ToastContext';
 
 export function AdminProducts() {
-  const [products] = useState<Product[]>(mockProducts);
+  const { showToast } = useToast();
+  const [products, setProducts] = useState<Product[]>([]);
+
+  // Fetch products from API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        if (response.ok) {
+          const data = await response.json();
+          // Transform API data to match Product interface
+          const transformedProducts = data.map((p: any) => ({
+            id: p.id.toString(),
+            name: p.name,
+            category: p.category,
+            price: p.price / 100, // Convert from cents
+            description: p.description,
+            image: p.image || `https://images.unsplash.com/photo-1558636508-e0db3814bd1d?w=400`,
+            inStock: p.inStock !== false,
+            popularity: p.popularity || 0
+          }));
+          setProducts(transformedProducts.length > 0 ? transformedProducts : mockProducts);
+        } else {
+          setProducts(mockProducts);
+          showToast('error', 'Failed to fetch products. Using mock data.');
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setProducts(mockProducts);
+        showToast('error', 'Failed to fetch products. Using mock data.');
+      }
+    };
+
+    fetchProducts();
+  }, [showToast]);
 
   const handleEdit = (product: Product) => {
-    alert(`Edit product: ${product.name}`);
+    showToast('info', `Edit functionality coming soon for ${product.name}`);
   };
 
   const handleView = (product: Product) => {
-    alert(`View product details: ${product.name}`);
+    showToast('info', `Viewing details for ${product.name}`);
   };
 
   const handleAddToCart = (product: Product) => {
-    alert(`Added ${product.name} to cart!`);
+    showToast('success', `Added ${product.name} to cart!`);
   };
 
   return (

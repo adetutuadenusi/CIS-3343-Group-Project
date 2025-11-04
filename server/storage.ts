@@ -1,7 +1,64 @@
 import { db } from './db.js';
-import { customers, orders, inquiries, contactMessages, payments } from '../shared/schema.js';
-import type { NewCustomer, NewOrder, NewInquiry, NewContactMessage, NewPayment } from '../shared/schema.js';
-import { eq, desc, and, or, like, ilike, sql } from 'drizzle-orm';
+import { products, customers, orders, inquiries, contactMessages, payments } from '../shared/schema.js';
+import type { NewProduct, NewCustomer, NewOrder, NewInquiry, NewContactMessage, NewPayment } from '../shared/schema.js';
+import { eq, desc, and, or, like, ilike, sql, isNull } from 'drizzle-orm';
+
+// ============ PRODUCTS ============
+
+export async function getAllProducts() {
+  return await db.select().from(products)
+    .where(isNull(products.deletedAt))
+    .orderBy(desc(products.createdAt));
+}
+
+export async function getProductById(id: number) {
+  const [product] = await db.select().from(products)
+    .where(and(eq(products.id, id), isNull(products.deletedAt)));
+  return product || null;
+}
+
+export async function createProduct(data: NewProduct) {
+  const [product] = await db.insert(products).values(data).returning();
+  return product;
+}
+
+export async function updateProduct(id: number, data: Partial<NewProduct>) {
+  const [updated] = await db.update(products)
+    .set({ ...data, updatedAt: new Date() })
+    .where(eq(products.id, id))
+    .returning();
+  return updated;
+}
+
+export async function deleteProduct(id: number, deletedBy: string) {
+  // Soft delete
+  const [deleted] = await db.update(products)
+    .set({ 
+      deletedAt: new Date(),
+      deletedBy,
+      updatedAt: new Date()
+    })
+    .where(eq(products.id, id))
+    .returning();
+  return deleted;
+}
+
+export async function searchProducts(query: string) {
+  const searchPattern = `%${query}%`;
+  return await db.select().from(products)
+    .where(
+      and(
+        isNull(products.deletedAt),
+        or(
+          ilike(products.name, searchPattern),
+          ilike(products.category, searchPattern),
+          ilike(products.description, searchPattern)
+        )
+      )
+    )
+    .orderBy(desc(products.popularity))
+    .limit(20);
+}
 
 // ============ CUSTOMERS ============
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, ChevronDown, Star, Info, Sparkles } from 'lucide-react';
 import { Button } from '../../components/ui/button';
@@ -193,14 +193,53 @@ export function Shop({ onNavigate }: ShopProps = {}) {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('popular');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [inquiryModal, setInquiryModal] = useState<{ isOpen: boolean; product: Product | null }>({
     isOpen: false,
     product: null
   });
   const [hoveredTooltip, setHoveredTooltip] = useState<number | null>(null);
+  const [apiProducts, setApiProducts] = useState<Product[]>([]);
 
-  const filteredProducts = products
+  // Fetch products from API on mount
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/api/products');
+        if (response.ok) {
+          const data = await response.json();
+          // Transform API data to match Product interface
+          const transformedProducts = data.map((p: any) => ({
+            id: p.id,
+            name: p.name,
+            category: p.category,
+            priceRange: p.priceRange || `$${(p.price / 100).toFixed(0)}`,
+            description: p.description,
+            rating: p.rating || 5,
+            reviews: p.reviews || 0,
+            popular: p.isPopular,
+            isNew: p.isNew,
+            image: p.image || products.find((prod) => prod.name === p.name)?.image
+          }));
+          setApiProducts(transformedProducts.length > 0 ? transformedProducts : products);
+        } else {
+          // Fallback to hardcoded products if API fails
+          setApiProducts(products);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setApiProducts(products); // Fallback to hardcoded products
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const productsToUse = apiProducts.length > 0 ? apiProducts : products;
+  const filteredProducts = productsToUse
     .filter(p => selectedCategory === 'All' || p.category === selectedCategory)
     .filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                  p.description.toLowerCase().includes(searchQuery.toLowerCase()))

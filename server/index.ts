@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import * as storage from './storage.js';
-import type { NewOrder, NewInquiry, NewContactMessage, NewPayment } from '../shared/schema.js';
+import type { NewProduct, NewOrder, NewInquiry, NewContactMessage, NewPayment } from '../shared/schema.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,6 +13,103 @@ app.use(express.json());
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// ============ PRODUCTS ============
+
+app.get('/api/products', async (req, res) => {
+  try {
+    const products = await storage.getAllProducts();
+    res.json(products);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ error: 'Failed to fetch products' });
+  }
+});
+
+// IMPORTANT: Search route must come BEFORE :id route
+app.get('/api/products/search', async (req, res) => {
+  try {
+    const query = req.query.q as string;
+    
+    if (!query || query.trim().length === 0) {
+      return res.status(400).json({ error: 'Search query is required' });
+    }
+    
+    const products = await storage.searchProducts(query.trim());
+    res.json(products);
+  } catch (error) {
+    console.error('Error searching products:', error);
+    res.status(500).json({ error: 'Failed to search products' });
+  }
+});
+
+app.get('/api/products/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const product = await storage.getProductById(id);
+    
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+    
+    res.json(product);
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    res.status(500).json({ error: 'Failed to fetch product' });
+  }
+});
+
+app.post('/api/products', async (req, res) => {
+  try {
+    const productData: NewProduct = req.body;
+    
+    if (!productData.name || !productData.category || !productData.description) {
+      return res.status(400).json({ error: 'Name, category, and description are required' });
+    }
+    
+    const product = await storage.createProduct(productData);
+    res.status(201).json(product);
+  } catch (error) {
+    console.error('Error creating product:', error);
+    res.status(500).json({ error: 'Failed to create product' });
+  }
+});
+
+app.put('/api/products/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const updates = req.body;
+    
+    const existing = await storage.getProductById(id);
+    if (!existing) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+    
+    const updated = await storage.updateProduct(id, updates);
+    res.json(updated);
+  } catch (error) {
+    console.error('Error updating product:', error);
+    res.status(500).json({ error: 'Failed to update product' });
+  }
+});
+
+app.delete('/api/products/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const deletedBy = req.body.deletedBy || 'admin';
+    
+    const existing = await storage.getProductById(id);
+    if (!existing) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+    
+    await storage.deleteProduct(id, deletedBy);
+    res.json({ success: true, message: 'Product deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    res.status(500).json({ error: 'Failed to delete product' });
+  }
 });
 
 // ============ CUSTOMERS ============
