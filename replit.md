@@ -37,7 +37,8 @@ The application is built with React 18.3.1, TypeScript, Vite 6.3.5, and Tailwind
 - **Accessibility**: Focus on ARIA labels and touch target sizes.
 - **Customer Management System**: Includes server-side search, create/detail modals with validation, and backend APIs.
 - **Order Cancellation System**: Allows cancellation of pending orders with reason tracking via an API endpoint.
-- **Navigation Optimization**: Implemented React lazy loading and Suspense for all public and admin pages, significantly reducing bundle size and improving navigation responsiveness.
+- **Navigation Optimization**: Direct imports used for all pages. React.lazy() and Suspense cause complete application freeze in Replit's iframe environment and have been permanently disabled.
+- **CRITICAL LESSON (Nov 4, 2025)**: React lazy loading BREAKS the Replit environment - causes total application freeze with no JavaScript interaction. Hero image fails to load, all clicks unresponsive, scrolling broken. NEVER attempt lazy loading again.
 
 ### System Design Choices
 - **Backend & Database**: PostgreSQL (Replit Neon) with Drizzle ORM for type-safe queries. The API server is built with Express.js (TypeScript with tsx).

@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { WelcomeScreen } from './components/WelcomeScreen';
 import { PublicLayout } from './components/PublicLayout';
@@ -6,47 +6,29 @@ import { AdminLayout } from './components/AdminLayout';
 import { ToastProvider } from './components/ToastContext';
 import { InquiriesProvider } from './contexts/InquiriesContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { Loader2 } from 'lucide-react';
 
-// Lazy load all pages for code splitting
-const PublicHome = lazy(() => import('./pages/public/Home').then(m => ({ default: m.PublicHome })));
-const Shop = lazy(() => import('./pages/public/Shop').then(m => ({ default: m.Shop })));
-const Builder = lazy(() => import('./pages/public/Builder').then(m => ({ default: m.Builder })));
-const OrderReview = lazy(() => import('./pages/public/OrderReview').then(m => ({ default: m.OrderReview })));
-const Gallery = lazy(() => import('./pages/public/Gallery').then(m => ({ default: m.Gallery })));
-const About = lazy(() => import('./pages/public/About').then(m => ({ default: m.About })));
-const Contact = lazy(() => import('./pages/public/Contact').then(m => ({ default: m.Contact })));
-const Login = lazy(() => import('./pages/admin/Login').then(m => ({ default: m.Login })));
+// Public pages - direct imports
+import { PublicHome } from './pages/public/Home';
+import { Shop } from './pages/public/Shop';
+import { Builder } from './pages/public/Builder';
+import { OrderReview } from './pages/public/OrderReview';
+import { Gallery } from './pages/public/Gallery';
+import { About } from './pages/public/About';
+import { Contact } from './pages/public/Contact';
 
-// Lazy load admin pages
-const AdminDashboard = lazy(() => import('./pages/admin/Dashboard').then(m => ({ default: m.AdminDashboard })));
-const OrderBoard = lazy(() => import('./pages/admin/OrderBoard').then(m => ({ default: m.OrderBoard })));
-const OrderList = lazy(() => import('./pages/admin/OrderList').then(m => ({ default: m.OrderList })));
-const OrderCreate = lazy(() => import('./pages/admin/OrderCreate').then(m => ({ default: m.OrderCreate })));
-const AdminProducts = lazy(() => import('./pages/admin/Products').then(m => ({ default: m.AdminProducts })));
-const Inquiries = lazy(() => import('./pages/admin/Inquiries').then(m => ({ default: m.Inquiries })));
-const Orders = lazy(() => import('./pages/Orders').then(m => ({ default: m.Orders })));
-const Customers = lazy(() => import('./pages/Customers').then(m => ({ default: m.Customers })));
-const Products = lazy(() => import('./pages/Products').then(m => ({ default: m.Products })));
-const Reports = lazy(() => import('./pages/Reports').then(m => ({ default: m.Reports })));
-const Settings = lazy(() => import('./pages/Settings').then(m => ({ default: m.Settings })));
-
-// Loading fallback component
-const PageLoader = () => (
-  <div style={{ 
-    display: 'flex', 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    minHeight: '60vh',
-    flexDirection: 'column',
-    gap: '16px'
-  }}>
-    <Loader2 size={40} className="animate-spin" style={{ color: '#C44569' }} />
-    <p style={{ fontFamily: 'Poppins', fontSize: '15px', color: '#5A3825', opacity: 0.7 }}>
-      Loading...
-    </p>
-  </div>
-);
+// Admin pages - direct imports
+import { Login } from './pages/admin/Login';
+import { AdminDashboard } from './pages/admin/Dashboard';
+import { OrderBoard } from './pages/admin/OrderBoard';
+import { OrderList } from './pages/admin/OrderList';
+import { OrderCreate } from './pages/admin/OrderCreate';
+import { AdminProducts } from './pages/admin/Products';
+import { Inquiries } from './pages/admin/Inquiries';
+import { Orders } from './pages/Orders';
+import { Customers } from './pages/Customers';
+import { Products } from './pages/Products';
+import { Reports } from './pages/Reports';
+import { Settings } from './pages/Settings';
 
 type AppMode = 'public' | 'login' | 'admin';
 
@@ -188,52 +170,52 @@ export default function App() {
             style={{ minHeight: '100vh' }}
           >
             {appMode === 'public' && (
-              <Suspense fallback={<PageLoader />}>
-                <PublicLayout 
-                  activePage={activePage} 
-                  onNavigate={handlePublicNavigate}
-                  onAdminAccess={handleAdminAccess}
-                >
+              <PublicLayout 
+                activePage={activePage} 
+                onNavigate={handlePublicNavigate}
+                onAdminAccess={handleAdminAccess}
+              >
+                <AnimatePresence mode="wait">
                   <motion.div
                     key={activePage}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 0.15, ease: 'easeOut' }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
                   >
                     {renderPublicPage()}
                   </motion.div>
-                </PublicLayout>
-              </Suspense>
+                </AnimatePresence>
+              </PublicLayout>
             )}
 
             {appMode === 'login' && (
-              <Suspense fallback={<PageLoader />}>
-                <Login 
-                  onLogin={handleLogin}
-                  onBackToPublic={handleBackToPublic}
-                />
-              </Suspense>
+              <Login 
+                onLogin={handleLogin}
+                onBackToPublic={handleBackToPublic}
+              />
             )}
 
             {appMode === 'admin' && isAuthenticated && (
-              <Suspense fallback={<PageLoader />}>
-                <AdminLayout
-                  activePage={activePage}
-                  onNavigate={setActivePage}
-                  onLogout={handleLogout}
-                >
-                  <div className="light-theme">
+              <AdminLayout
+                activePage={activePage}
+                onNavigate={setActivePage}
+                onLogout={handleLogout}
+              >
+                <div className="light-theme">
+                  <AnimatePresence mode="wait">
                     <motion.div
                       key={activePage}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ duration: 0.15, ease: 'easeOut' }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
                     >
                       {renderAdminPage()}
                     </motion.div>
-                  </div>
-                </AdminLayout>
-              </Suspense>
+                  </AnimatePresence>
+                </div>
+              </AdminLayout>
             )}
           </motion.div>
         )}
