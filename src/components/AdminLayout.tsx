@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { 
-  ClipboardList, 
   Users, 
   Cake, 
   BarChart3, 
@@ -10,7 +9,6 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
-  MessageSquare,
   TrendingUp,
   Kanban,
   Mail,
@@ -26,17 +24,16 @@ interface AdminLayoutProps {
   onLogout: () => void;
 }
 
+// Professional OMS Navigation Structure
 const navItems = [
-  { id: 'dashboard', label: 'Analytics', icon: TrendingUp },
-  { id: 'order-board', label: 'Order Board', icon: Kanban },
-  { id: 'order-list', label: 'Order List', icon: List },
-  { id: 'inquiries', label: 'Cake Inquiries', icon: Mail },
-  { id: 'products-new', label: 'Products', icon: Cake },
-  { id: 'orders', label: 'Orders (Old)', icon: ClipboardList },
-  { id: 'customers', label: 'Customers', icon: Users },
-  { id: 'reports', label: 'Reports', icon: BarChart3 },
-  { id: 'feedback', label: 'Feedback', icon: MessageSquare },
-  { id: 'settings', label: 'Settings', icon: SettingsIcon },
+  { id: 'analytics-dashboard', label: 'Business Analytics', icon: TrendingUp, description: 'KPIs & Performance Metrics' },
+  { id: 'fulfillment-board', label: 'Fulfillment Board', icon: Kanban, description: 'Visual Order Tracking' },
+  { id: 'order-management', label: 'Order Management', icon: List, description: 'Comprehensive Order Center' },
+  { id: 'inquiry-management', label: 'Inquiry Management', icon: Mail, description: 'Customer Inquiries & Requests' },
+  { id: 'inventory-management', label: 'Inventory Management', icon: Cake, description: 'Product Catalog & Stock' },
+  { id: 'customer-accounts', label: 'Customer Accounts', icon: Users, description: 'CRM & Customer Database' },
+  { id: 'business-intelligence', label: 'Business Intelligence', icon: BarChart3, description: 'Reports & Analytics' },
+  { id: 'system-configuration', label: 'System Configuration', icon: SettingsIcon, description: 'Settings & Preferences' },
 ];
 
 export function AdminLayout({ children, activePage, onNavigate, onLogout }: AdminLayoutProps) {
