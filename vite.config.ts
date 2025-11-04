@@ -4,7 +4,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  base: './',
+  base: '/',
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
     alias: {
@@ -56,6 +56,15 @@ export default defineConfig({
   build: {
     target: "esnext",
     outDir: "build",
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-select'],
+          motion: ['motion/react'],
+        }
+      }
+    }
   },
   server: {
     host: "0.0.0.0", // ⭐ ADDED: Allow Replit proxy access
