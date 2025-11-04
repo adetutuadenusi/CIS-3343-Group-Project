@@ -30,10 +30,7 @@ import { Settings } from './pages/Settings';
 type AppMode = 'public' | 'login' | 'admin';
 
 export default function App() {
-  const [showWelcome, setShowWelcome] = useState(() => {
-    const welcomeDone = sessionStorage.getItem('welcomeDone');
-    return welcomeDone !== 'true';
-  });
+  const [showWelcome, setShowWelcome] = useState(false);
   const [appMode, setAppMode] = useState<AppMode>('public');
   const [activePage, setActivePage] = useState('home');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
