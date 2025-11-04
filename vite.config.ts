@@ -71,6 +71,13 @@ export default defineConfig({
       ".repl.co", // Legacy Replit domains
       "localhost", // Local development
     ],
+    headers: {
+      // ⭐ CACHE BUSTING: Prevent browser from caching old broken JavaScript
+      'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      'Surrogate-Control': 'no-store',
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
