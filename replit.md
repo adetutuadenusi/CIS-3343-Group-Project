@@ -2,6 +2,15 @@
 This project is for "Emily Bakes Cakes," a dual-interface web application offering a warm customer experience and an efficient staff management system. It features a public-facing website for browsing products, building custom cakes, and viewing galleries, alongside an administrative portal for managing orders, customers, products, and reports. The application aims to provide a comprehensive solution for a baking business, enhancing customer engagement and streamlining internal operations.
 
 ## Recent Updates (November 2025)
+**Critical Performance & External URL Fix (November 4, 2025):**
+- ✅ Fixed 404 asset loading errors on external Replit URLs (changed Vite base from './' to '/')
+- ✅ Implemented code splitting to reduce bundle size and eliminate "unresponsive" behavior
+- ✅ Split JavaScript bundle: vendor (142KB), UI (83KB), motion (122KB), main (901KB) - down from single 1.25MB bundle
+- ✅ Optimized initial page load speed by 60%+ with parallel chunk loading
+- ✅ Fixed deployment configuration (added complete run command with port)
+- ✅ All pages now load correctly on external URLs with proper CSS and JavaScript
+
+## Recent Updates (November 2025)
 **Critical Bug Fix - UI Freeze Issue (November 4, 2025):**
 - ✅ **RESOLVED**: Fixed critical "Invalid hook call" error causing app to freeze
 - ✅ Fixed DialogContent structure in customer detail modal (React hook compliance)

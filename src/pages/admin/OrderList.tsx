@@ -40,8 +40,6 @@ import {
 import { useToast } from '../../components/ToastContext';
 import type { CakeLayer } from '../../../shared/schema';
 import { Tooltip, TooltipTrigger, TooltipContent } from '../../components/ui/tooltip';
-import { OrderTimeline } from '../../components/OrderTimeline';
-import { ExpandableLayers } from '../../components/ExpandableLayers';
 
 interface Order {
   id: number;
