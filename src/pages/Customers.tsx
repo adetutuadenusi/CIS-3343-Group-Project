@@ -613,6 +613,52 @@ export function Customers() {
         )}
       </AnimatePresence>
 
+      {/* Pagination Controls */}
+      {!isLoading && customers.length > itemsPerPage && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center justify-center gap-2 mt-8"
+        >
+          <Button
+            variant="outline"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+            style={{
+              borderRadius: '10px',
+              borderColor: 'rgba(196, 69, 105, 0.2)',
+              color: currentPage === 1 ? '#CCC' : '#C44569',
+              fontFamily: 'Poppins',
+              fontWeight: 500
+            }}
+          >
+            ← Previous
+          </Button>
+          <span style={{ 
+            fontFamily: 'Poppins', 
+            fontSize: '14px', 
+            color: '#2B2B2B',
+            padding: '0 16px'
+          }}>
+            Page {currentPage} of {totalPages}
+          </span>
+          <Button
+            variant="outline"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+            style={{
+              borderRadius: '10px',
+              borderColor: 'rgba(196, 69, 105, 0.2)',
+              color: currentPage === totalPages ? '#CCC' : '#C44569',
+              fontFamily: 'Poppins',
+              fontWeight: 500
+            }}
+          >
+            Next →
+          </Button>
+        </motion.div>
+      )}
+
       {/* Bottom Section - Analytics */}
       {!isLoading && customers.length > 0 && (
         <motion.div
@@ -859,72 +905,105 @@ export function Customers() {
         </DialogContent>
       </Dialog>
 
-      {/* Customer Detail Modal */}
+      {/* Customer Detail Modal - OPTIMIZED */}
       <Dialog open={isDetailModalOpen} onOpenChange={setIsDetailModalOpen}>
-        <DialogContent className="sm:max-w-[380px] bg-white max-h-[65vh] overflow-y-auto rounded-xl border-2" style={{ boxShadow: '0 8px 32px rgba(196, 69, 105, 0.25)', borderColor: 'rgba(196, 69, 105, 0.2)', position: 'relative' }}>
-          {/* Clear Close Button */}
-          <button
-            onClick={() => setIsDetailModalOpen(false)}
-            className="absolute top-3 right-3 z-50 rounded-full p-2 hover:bg-gray-100 transition-all"
-            style={{ 
-              backgroundColor: 'rgba(196, 69, 105, 0.1)',
-              border: '2px solid #C44569'
-            }}
-          >
-            <X size={20} color="#C44569" strokeWidth={3} />
-          </button>
-          
-          {isDetailLoading ? (
-            <div className="py-12">
-              <div className="flex flex-col items-center justify-center gap-4">
-                <Loader2 className="animate-spin" size={40} color="#C44569" />
-                <p style={{ fontFamily: 'Poppins', fontSize: '15px', color: '#5A3825', opacity: 0.7 }}>
-                  Loading customer details...
-                </p>
-              </div>
-            </div>
-          ) : selectedCustomer && (
-            <>
-              <DialogHeader>
+        <DialogContent 
+          className="bg-white rounded-2xl border-2 p-0 gap-0 max-h-[90vh] flex flex-col" 
+          style={{ 
+            boxShadow: '0 20px 60px rgba(196, 69, 105, 0.3)', 
+            borderColor: 'rgba(196, 69, 105, 0.2)',
+            width: '95vw',
+            maxWidth: '600px',
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            margin: 0
+          }}
+        >
+          {/* Fixed Header */}
+          <div className="flex-shrink-0 px-6 py-5 border-b flex items-center justify-between" style={{ borderColor: 'rgba(196, 69, 105, 0.1)' }}>
+            <div className="flex-1 pr-12">
+              {isDetailLoading ? (
+                <div className="h-8 bg-gray-200 rounded animate-pulse w-3/4"></div>
+              ) : selectedCustomer && (
                 <DialogTitle style={{ 
                   fontFamily: 'Playfair Display', 
-                  fontSize: '20px', 
+                  fontSize: '24px', 
+                  fontWeight: 700,
                   color: '#C44569',
                   letterSpacing: '-0.02em',
                   lineHeight: 1.2,
                   display: 'flex',
                   alignItems: 'center',
                   flexWrap: 'wrap',
-                  gap: '8px'
+                  gap: '10px',
+                  margin: 0
                 }}>
                   {selectedCustomer.name}
                   {selectedCustomer.isVip && (
                     <Badge 
-                      className="rounded-lg px-3 py-1"
+                      className="rounded-lg px-3 py-1.5"
                       style={{ 
                         background: 'linear-gradient(135deg, #C44569 0%, #B23A5A 100%)',
                         color: '#FFFFFF',
                         fontFamily: 'Poppins',
                         fontWeight: 600,
-                        fontSize: '12px',
+                        fontSize: '11px',
                         boxShadow: '0 2px 8px rgba(196, 69, 105, 0.3)'
                       }}
                     >
-                      VIP Customer
+                      ⭐ VIP
                     </Badge>
                   )}
                 </DialogTitle>
-                <DialogDescription style={{ 
-                  fontFamily: 'Open Sans', 
-                  color: '#5A3825',
-                  fontSize: '12px',
-                  marginTop: '2px'
-                }}>
-                  Customer ID: #{selectedCustomer.id}
-                </DialogDescription>
-              </DialogHeader>
+              )}
+            </div>
+            {/* Close Button */}
+            <button
+              onClick={() => setIsDetailModalOpen(false)}
+              className="absolute top-4 right-4 z-50 rounded-full p-2.5 hover:bg-gray-100 transition-all flex-shrink-0"
+              style={{ 
+                backgroundColor: 'rgba(196, 69, 105, 0.1)',
+                border: '2px solid #C44569'
+              }}
+              aria-label="Close modal"
+            >
+              <X size={20} color="#C44569" strokeWidth={3} />
+            </button>
+          </div>
               
-              <div className="space-y-4 mt-3">
+          {/* Scrollable Content */}
+          <div className="flex-1 overflow-y-auto px-6 py-5" style={{ scrollbarWidth: 'thin', scrollbarColor: '#C44569 #F5F5F5' }}>
+            {isDetailLoading ? (
+              <div className="py-12">
+                <div className="flex flex-col items-center justify-center gap-4">
+                  <Loader2 className="animate-spin" size={40} color="#C44569" />
+                  <p style={{ fontFamily: 'Poppins', fontSize: '15px', color: '#5A3825', opacity: 0.7 }}>
+                    Loading customer details...
+                  </p>
+                </div>
+              </div>
+            ) : selectedCustomer && (
+              <div className="space-y-6">
+                {/* Customer ID Badge */}
+                <div className="flex items-center gap-3 px-4 py-3 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.05)', border: '1px dashed rgba(196, 69, 105, 0.3)' }}>
+                  <UserCheck size={18} color="#C44569" />
+                  <div className="flex-1">
+                    <p style={{ fontFamily: 'Open Sans', fontSize: '12px', color: '#5A3825', opacity: 0.7 }}>
+                      Customer ID
+                    </p>
+                    <p style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '15px', color: '#C44569' }}>
+                      #{selectedCustomer.id}
+                    </p>
+                  </div>
+                  {selectedCustomer.isGuest && (
+                    <Badge style={{ backgroundColor: '#F59E0B20', color: '#F59E0B', fontFamily: 'Poppins', fontSize: '11px', fontWeight: 600 }}>
+                      GUEST
+                    </Badge>
+                  )}
+                </div>
+
                 {/* Contact Information */}
                 <div>
                   <h3 style={{ 
@@ -1087,12 +1166,12 @@ export function Customers() {
                   <h3 style={{ 
                     fontFamily: 'Poppins', 
                     fontWeight: 600, 
-                    fontSize: '17px', 
+                    fontSize: '15px', 
                     color: '#2B2B2B', 
                     marginBottom: '12px',
                     letterSpacing: '-0.01em'
                   }}>
-                    Admin Notes
+                    📝 Internal Notes
                   </h3>
                   <div className="p-4 rounded-lg" style={{ backgroundColor: 'rgba(196, 69, 105, 0.05)', border: '1px solid rgba(196, 69, 105, 0.1)' }}>
                     {selectedCustomer.adminNotes ? (
@@ -1112,8 +1191,8 @@ export function Customers() {
                   )}
                 </div>
               </div>
-            </>
-          )}
+            )}
+          </div>
         </DialogContent>
       </Dialog>
     </div>
