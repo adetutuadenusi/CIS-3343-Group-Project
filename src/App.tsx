@@ -61,7 +61,7 @@ export default function App() {
   const handleLogin = () => {
     setIsAuthenticated(true);
     setAppMode('admin');
-    setActivePage('dashboard');
+    setActivePage('analytics-dashboard');
   };
 
   // Handle logout
@@ -99,11 +99,29 @@ export default function App() {
     }
   };
 
-  // Render admin pages
+  // Render admin pages - Professional OMS naming
   const renderAdminPage = () => {
     switch (activePage) {
-      case 'dashboard':
+      // Modern OMS Pages
+      case 'analytics-dashboard':
         return <AdminDashboard />;
+      case 'fulfillment-board':
+        return <OrderBoard />;
+      case 'order-management':
+        return <OrderList />;
+      case 'inquiry-management':
+        return <Inquiries />;
+      case 'inventory-management':
+        return <AdminProducts />;
+      case 'customer-accounts':
+        return <Customers />;
+      case 'business-intelligence':
+        return <Reports />;
+      case 'system-configuration':
+        return <Settings />;
+      
+      // Legacy routes (backward compatibility)
+      case 'dashboard':
       case 'analytics':
         return <AdminDashboard />;
       case 'order-board':
@@ -112,18 +130,21 @@ export default function App() {
         return <OrderList />;
       case 'inquiries':
         return <Inquiries />;
-      case 'orders':
-        return <Orders />;
-      case 'customers':
-        return <Customers />;
       case 'products-new':
         return <AdminProducts />;
-      case 'products':
-        return <Products />;
+      case 'customers':
+        return <Customers />;
       case 'reports':
         return <Reports />;
       case 'settings':
         return <Settings />;
+      
+      // Deprecated legacy pages
+      case 'orders':
+        return <Orders />;
+      case 'products':
+        return <Products />;
+      
       default:
         return <AdminDashboard />;
     }
