@@ -41,7 +41,7 @@ export function AdminLayout({ children, activePage, onNavigate, onLogout }: Admi
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col" style={{ background: '#F5F5F5' }}>
+    <div className="h-screen overflow-hidden flex flex-col" style={{ background: '#F8EBD7' }}>
       {/* BACK-END: Charcoal Gray Top Header */}
       <header 
         className="flex-shrink-0 h-16 z-40 flex items-center justify-between px-6 lg:px-8"
@@ -289,12 +289,12 @@ export function AdminLayout({ children, activePage, onNavigate, onLogout }: Admi
         )}
       </AnimatePresence>
 
-        {/* BACK-END: Main Content Area with Subtle Gradient */}
+        {/* BACK-END: Main Content Area with Vanilla Cream Background */}
         <main
           className="flex-1 overflow-auto"
           style={{
             padding: '24px',
-            background: 'linear-gradient(135deg, #F5F5F5 0%, #EBEBEB 50%, #F5F5F5 100%)'
+            background: '#F8EBD7'
           }}
         >
           <div className="h-full" style={{ maxWidth: '1600px', margin: '0 auto' }}>
