@@ -30,42 +30,16 @@ import { Settings } from './pages/Settings';
 type AppMode = 'public' | 'login' | 'admin';
 
 export default function App() {
+  console.log('🔥 APP COMPONENT RENDERING');
+  
   const [showWelcome, setShowWelcome] = useState(false);
   const [appMode, setAppMode] = useState<AppMode>('public');
   const [activePage, setActivePage] = useState('home');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const isReplitExternal = window.location.hostname.includes('replit.dev') || 
-                             window.location.hostname.includes('repl.co');
-    const isReplitPreview = window.self !== window.top;
-    
-    console.log('🌐 Emily Bakes Cakes - Environment Detection');
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.log('URL:', window.location.href);
-    console.log('Hostname:', window.location.hostname);
-    console.log('Protocol:', window.location.protocol);
-    console.log('Is Replit External:', isReplitExternal);
-    console.log('Is Preview (iframe):', isReplitPreview);
-    console.log('Screen Size:', `${window.innerWidth}x${window.innerHeight}`);
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('🔥 APP MOUNTED - useEffect running');
   }, []);
-
-  useEffect(() => {
-    if (showWelcome) {
-      const timer = setTimeout(() => {
-        setShowWelcome(false);
-        sessionStorage.setItem('welcomeDone', 'true');
-      }, 2500);
-
-      return () => clearTimeout(timer);
-    }
-  }, [showWelcome]);
-
-  // Scroll to top instantly on page change (Y:0 reset)
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, [activePage, appMode]);
 
   // Handle navigation for public pages
   const handlePublicNavigate = (page: string) => {
