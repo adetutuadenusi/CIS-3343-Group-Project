@@ -5,7 +5,6 @@ import { PublicLayout } from './components/PublicLayout';
 import { AdminLayout } from './components/AdminLayout';
 import { ToastProvider } from './components/ToastContext';
 import { InquiriesProvider } from './contexts/InquiriesContext';
-import { ErrorBoundary } from './components/ErrorBoundary';
 
 // Public Pages
 import { PublicHome } from './pages/public/Home';
@@ -152,13 +151,12 @@ export default function App() {
   };
 
   return (
-    <ErrorBoundary>
-      <InquiriesProvider>
-        <ToastProvider>
-        <AnimatePresence mode="wait">
-          {showWelcome ? (
-            <WelcomeScreen key="welcome" />
-          ) : (
+    <InquiriesProvider>
+      <ToastProvider>
+      <AnimatePresence mode="wait">
+        {showWelcome ? (
+          <WelcomeScreen key="welcome" />
+        ) : (
           <motion.div
             key={appMode}
             initial={{ opacity: 0 }}
@@ -217,9 +215,8 @@ export default function App() {
             )}
           </motion.div>
         )}
-        </AnimatePresence>
-        </ToastProvider>
-      </InquiriesProvider>
-    </ErrorBoundary>
+      </AnimatePresence>
+      </ToastProvider>
+    </InquiriesProvider>
   );
 }
