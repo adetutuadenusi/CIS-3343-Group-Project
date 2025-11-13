@@ -7,6 +7,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { Download, FileDown, Calendar, Loader2 } from 'lucide-react';
 import { useToast } from '../../components/ToastContext';
 import { OrderSummaryResponse, OrderSummaryFilters } from '../../types/reports';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const ORDER_STATUSES = ['all', 'pending', 'confirmed', 'baking', 'decorating', 'ready', 'completed', 'cancelled'];
 
@@ -56,22 +58,32 @@ export function OrderSummaryReport() {
     fetchReportData();
   }, [filters]);
 
+  const escapeCSVField = (field: string | number | null): string => {
+    if (field === null) return 'N/A';
+    const stringField = String(field);
+    // If field contains comma, quote, or newline, wrap in quotes and escape internal quotes
+    if (stringField.includes(',') || stringField.includes('"') || stringField.includes('\n')) {
+      return `"${stringField.replace(/"/g, '""')}"`;
+    }
+    return stringField;
+  };
+
   const handleExportCSV = () => {
     if (!data) return;
     
     setExportingCSV(true);
     
-    // Create CSV content
+    // Create CSV content with proper escaping
     const headers = ['Order #', 'Customer Name', 'Email', 'Phone', 'Pickup Date', 'Status', 'Total Price', 'Balance Due'];
     const rows = data.orders.map(order => [
       order.id,
-      order.customerName,
-      order.customerEmail,
-      order.customerPhone,
+      escapeCSVField(order.customerName),
+      escapeCSVField(order.customerEmail),
+      escapeCSVField(order.customerPhone),
       new Date(order.eventDate).toLocaleDateString(),
       order.status,
-      order.totalAmount ? `$${order.totalAmount.toLocaleString()}` : 'N/A',
-      order.balanceDue ? `$${order.balanceDue.toLocaleString()}` : 'N/A'
+      order.totalAmount ? escapeCSVField(`$${order.totalAmount.toLocaleString()}`) : 'N/A',
+      order.balanceDue ? escapeCSVField(`$${order.balanceDue.toLocaleString()}`) : 'N/A'
     ]);
     
     const csvContent = [
@@ -97,11 +109,70 @@ export function OrderSummaryReport() {
   };
 
   const handleExportPDF = () => {
+    if (!data) return;
+    
     setExportingPDF(true);
-    setTimeout(() => {
+    
+    try {
+      const doc = new jsPDF();
+      
+      // Header
+      doc.setFontSize(18);
+      doc.setTextColor(196, 69, 105);
+      doc.text('Order Summary Report', 14, 20);
+      
+      // Date range
+      doc.setFontSize(10);
+      doc.setTextColor(90, 56, 37);
+      doc.text(`Period: ${new Date(filters.startDate).toLocaleDateString()} - ${new Date(filters.endDate).toLocaleDateString()}`, 14, 28);
+      
+      // Summary stats
+      doc.setFontSize(12);
+      doc.setTextColor(43, 43, 43);
+      doc.text(`Total Orders: ${data.totals.count}`, 14, 38);
+      doc.text(`Total Revenue: $${data.totals.revenue.toLocaleString()}`, 14, 45);
+      
+      // Table data
+      const tableData = data.orders.map(order => [
+        `#${order.id}`,
+        order.customerName,
+        new Date(order.eventDate).toLocaleDateString(),
+        order.status,
+        order.totalAmount ? `$${order.totalAmount.toLocaleString()}` : 'N/A',
+        order.balanceDue ? `$${order.balanceDue.toLocaleString()}` : 'N/A'
+      ]);
+      
+      // Add table
+      autoTable(doc, {
+        head: [['Order #', 'Customer', 'Pickup Date', 'Status', 'Price', 'Balance']],
+        body: tableData,
+        startY: 52,
+        headStyles: {
+          fillColor: [196, 69, 105],
+          textColor: [255, 255, 255],
+          fontStyle: 'bold'
+        },
+        styles: {
+          fontSize: 9,
+          cellPadding: 3
+        },
+        alternateRowStyles: {
+          fillColor: [248, 235, 215]
+        }
+      });
+      
+      // Download
+      doc.save(`order-summary-${filters.startDate}-to-${filters.endDate}.pdf`);
+      
+      setTimeout(() => {
+        setExportingPDF(false);
+        showToast('success', 'PDF file downloaded successfully', 'Export Complete');
+      }, 800);
+    } catch (error) {
+      console.error('PDF export error:', error);
       setExportingPDF(false);
-      showToast('info', 'PDF export will be available in a future update', 'Coming Soon');
-    }, 1000);
+      showToast('error', 'Failed to generate PDF. Please try again.', 'Export Failed');
+    }
   };
 
   const formatChartDate = (dateStr: string) => {

@@ -40,7 +40,11 @@ const completionTime = [
   { day: 'Sun', hours: 20 },
 ];
 
-export function Reports() {
+interface ReportsProps {
+  onNavigate?: (page: string) => void;
+}
+
+export function Reports({ onNavigate }: ReportsProps = { onNavigate: undefined }) {
   const { showToast } = useToast();
   const [isDownloading, setIsDownloading] = useState(false);
   const [isEmailing, setIsEmailing] = useState(false);
@@ -62,6 +66,33 @@ export function Reports() {
 
   return (
     <div className="space-y-6 lg:space-y-8">
+      {/* Client Reports Navigation */}
+      {onNavigate && (
+        <Card className="p-6 rounded-xl bg-white" style={{ boxShadow: '0px 2px 8px rgba(90, 56, 37, 0.12)' }}>
+          <h2 className="mb-4" style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(18px, 4vw, 22px)', color: '#2B2B2B' }}>
+            Client Reports
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <Button
+              onClick={() => onNavigate('order-summary-report')}
+              variant="outline"
+              className="justify-start h-auto py-4 px-4"
+              style={{ 
+                borderRadius: '8px', 
+                fontFamily: 'Open Sans',
+                borderColor: 'rgba(90, 56, 37, 0.3)',
+                textAlign: 'left'
+              }}
+            >
+              <div>
+                <div style={{ fontWeight: 600, color: '#2B2B2B', fontSize: '15px' }}>Order Summary</div>
+                <div style={{ fontSize: '13px', color: '#5A3825', opacity: 0.7, marginTop: '2px' }}>View order trends and analytics</div>
+              </div>
+            </Button>
+          </div>
+        </Card>
+      )}
+      
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 style={{ fontFamily: 'Playfair Display', fontWeight: 700, color: '#C44569' }}>Reports & Analytics</h1>

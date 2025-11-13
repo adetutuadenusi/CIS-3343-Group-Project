@@ -37,6 +37,9 @@ import { DecoratorDashboard } from './pages/admin/dashboards/DecoratorDashboard'
 import { AccountantDashboard } from './pages/admin/dashboards/AccountantDashboard';
 import { ManagerDashboard } from './pages/admin/dashboards/ManagerDashboard';
 
+// Staff Reports
+import { OrderSummaryReport } from './pages/staff/OrderSummaryReport';
+
 type AppMode = 'public' | 'login' | 'admin';
 
 export default function App() {
@@ -187,7 +190,13 @@ export default function App() {
       case 'customer-accounts':
         return <Customers />;
       case 'business-intelligence':
-        return <Reports />;
+        return <Reports onNavigate={setActivePage} />;
+      case 'order-summary-report':
+        // RBAC: Sales, Baker, Decorator, Manager only
+        if (['sales', 'baker', 'decorator', 'manager', 'owner'].includes(userRole || '')) {
+          return <OrderSummaryReport />;
+        }
+        return getRoleDashboard(); // Redirect unauthorized users to their dashboard
       case 'system-configuration':
         return <Settings />;
       
