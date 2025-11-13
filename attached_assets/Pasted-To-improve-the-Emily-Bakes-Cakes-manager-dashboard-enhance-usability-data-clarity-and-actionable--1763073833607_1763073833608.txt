@@ -1,0 +1,50 @@
+To improve the Emily Bakes Cakes manager dashboard, enhance usability, data clarity, and actionable insights for all bakery staff. Consider the following evidence-based recommendations specific to your prototype and course requirements.
+
+Key Areas for Dashboard Improvement
+Make Critical Data Instantly Visible
+Add stat cards for daily orders, orders in progress, and total revenue. Cards should update in real time and function as links to filtered lists.​
+
+Display "Ready for Pickup" orders in a prominent list, limited to top 5, with customer name and pickup time. Add status color badges for clarity.​
+
+Introduce Activity and Alerts
+Add a recent activity feed showing order creation, status changes, and customer updates; limit display to last 5 actions.​
+
+Use notification toasts for errors, important updates, or confirmation of actions (e.g., order creation).​
+
+Empower Quick Actions and Navigation
+Add quick-access buttons for common tasks: "Create Order," "View All Orders," and "System Settings".​
+
+Ensure stat cards and lists are clickable for quick navigation to details.​
+
+Enhance Analytics and Reporting
+Integrate flexible date range filter for revenue, orders, and customer stats (Today, Week, Month, Custom).​
+
+Add export and print options for managers to easily produce reports or CSV summaries for revenue, orders, and customers.​
+
+Visualize Data Trends and Status
+Use line/bar charts for revenue trends and pie charts for orders by status, all filterable by date range.​
+
+Provide a top customer ranking table, showing repeated customers and overall spending.​
+
+User Interface and Accessibility Upgrades
+Apply Brand Guidelines and Contrast
+Use the project’s color palette, font stack, and button specs to preserve brand consistency and accessibility (WCAG 2.1 AA).​
+
+Ensure status indicators use both color and text to be accessible to colorblind users.​
+
+Optimize Responsiveness and Interaction
+For mobile users, display stat cards and orders in a single column. Make all touch targets at least 48px for easy use.​
+
+Enable keyboard navigation for all dashboard components and logical tab order so staff can move quickly through actions.​
+
+Loading States and Feedback
+Add skeleton screens and progress indicators while loading stats, orders, or reports to improve perceived performance.​
+
+Actionable Next Steps
+Start by prioritizing dashboard changes that align with rubric enhancements: more actionable KPIs, improved data filtering, and direct access to reports.
+
+Review the UI Style Guide for any design inconsistencies, and ensure all updates maintain brand standards.​
+
+Test across devices, with special attention to mobile responsiveness and accessibility for staff with disabilities.​
+
+Implementing these changes will make your dashboard more functional, actionable, and accessible while exceeding CIS 3343 deliverable requirements and providing a polished user experience for bakery staff and managers.​
