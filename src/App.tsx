@@ -192,7 +192,7 @@ export default function App() {
       case 'customer-accounts':
         return <Customers />;
       case 'business-intelligence':
-        return <Reports onNavigate={setActivePage} />;
+        return <Reports onNavigate={setActivePage} userRole={userRole || undefined} />;
       case 'order-summary-report':
         // RBAC: Sales, Baker, Decorator, Manager only
         if (['sales', 'baker', 'decorator', 'manager', 'owner'].includes(userRole || '')) {
@@ -229,7 +229,7 @@ export default function App() {
       case 'customers':
         return <Customers />;
       case 'reports':
-        return <Reports />;
+        return <Reports userRole={userRole || undefined} />;
       case 'settings':
         return <Settings />;
       

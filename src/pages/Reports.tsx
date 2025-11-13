@@ -42,9 +42,13 @@ const completionTime = [
 
 interface ReportsProps {
   onNavigate?: (page: string) => void;
+  userRole?: string;
 }
 
-export function Reports({ onNavigate }: ReportsProps = { onNavigate: undefined }) {
+const ALLOWED_FINANCIAL_ROLES = ['accountant', 'manager', 'owner'];
+
+export function Reports({ onNavigate, userRole }: ReportsProps = { onNavigate: undefined, userRole: undefined }) {
+  const canViewFinancialReports = userRole && ALLOWED_FINANCIAL_ROLES.includes(userRole);
   const { showToast } = useToast();
   const [isDownloading, setIsDownloading] = useState(false);
   const [isEmailing, setIsEmailing] = useState(false);
@@ -103,6 +107,39 @@ export function Reports({ onNavigate }: ReportsProps = { onNavigate: undefined }
               <div>
                 <div style={{ fontWeight: 600, color: '#2B2B2B', fontSize: '15px' }}>Customer List</div>
                 <div style={{ fontSize: '13px', color: '#5A3825', opacity: 0.7, marginTop: '2px' }}>Customer acquisition and contact info</div>
+              </div>
+            </Button>
+          </div>
+        </Card>
+      )}
+
+      {/* Financial Reports - Accountant & Manager Access */}
+      {onNavigate && canViewFinancialReports && (
+        <Card className="p-6 rounded-xl bg-white" style={{ boxShadow: '0px 2px 8px rgba(90, 56, 37, 0.12)', border: '2px solid rgba(196, 69, 105, 0.2)' }}>
+          <div className="flex items-center gap-2 mb-4">
+            <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#C44569' }}></div>
+            <h2 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(18px, 4vw, 22px)', color: '#C44569' }}>
+              Financial Reports
+            </h2>
+          </div>
+          <p className="mb-4" style={{ fontFamily: 'Open Sans', fontSize: '14px', color: '#5A3825', opacity: 0.8 }}>
+            Restricted to Accountant and Manager roles only
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <Button
+              onClick={() => onNavigate('revenue-report')}
+              variant="outline"
+              className="justify-start h-auto py-4 px-4"
+              style={{ 
+                borderRadius: '8px', 
+                fontFamily: 'Open Sans',
+                borderColor: 'rgba(196, 69, 105, 0.4)',
+                textAlign: 'left'
+              }}
+            >
+              <div>
+                <div style={{ fontWeight: 600, color: '#C44569', fontSize: '15px' }}>Revenue Report</div>
+                <div style={{ fontSize: '13px', color: '#5A3825', opacity: 0.7, marginTop: '2px' }}>Financial analytics and collection tracking</div>
               </div>
             </Button>
           </div>
