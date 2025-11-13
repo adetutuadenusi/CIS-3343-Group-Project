@@ -1,12 +1,12 @@
 ## Overview
-"Emily Bakes Cakes" is a CIS 3343 case study project - a **hybrid system** combining existing customer-facing features with a staff-only order management portal. The system consists of:
+"Emily Bakes Cakes" is a CIS 3343 case study project - a **pure staff-only internal order management system**. The system consists of:
 
-1. **Public Website** - Home, shop, custom cake builder, gallery, about, contact (7 pages BUILT)
-2. **Public Order Tracking** (no login) - Auto-cycling demo page showing order progress (NEW)
-3. **Staff Portal** (role-based access) - 5 unique dashboards for Sales, Baker, Decorator, Accountant, Manager (NEW)
-4. **PostgreSQL Database** - Complete schema with customers, orders, staff, products
+1. **Public Marketing Website** - Home, shop (inspiration only), gallery, about, contact (5 pages) - NO customer ordering capability
+2. **Public Order Tracking** (no login) - Auto-cycling demo page showing order progress
+3. **Staff Portal** (role-based access) - 5 unique dashboards for Sales, Baker, Decorator, Accountant, Manager with JWT authentication
+4. **PostgreSQL Database** - Complete schema with customers, orders, staff, products, tracking tokens
 
-**ARCHITECTURE DECISION (Nov 13, 2025):** After codebase audit, confirmed hybrid approach - KEEP existing excellent e-commerce features (builder, shop, gallery) while ADDING staff portal for case study compliance. Total: 19 pages (7 public + 1 tracking + 11 staff).
+**CRITICAL ARCHITECTURE DECISION (Nov 13, 2025):** Pure staff-only system - customers CANNOT order online. All orders are entered manually by staff through the admin portal. Customers call, email, or visit in person to place orders. Public pages serve marketing/awareness purposes only.
 
 ## User Preferences
 - **HOMEPAGE LOCKED**: The homepage design is finalized and stable. No major changes should be made without explicit user clarification and acceptance.
@@ -27,9 +27,8 @@ The application is built with React 18.3.1, TypeScript, Vite 6.3.5, and Tailwind
 - **Design System**: Consistent border radius, shadow system, height standards, and animation timings.
 
 ### Technical Implementations
-- **Public Interface**: Includes a home page, product shop, custom cake builder (with unlimited layer system and dynamic pricing), order review page, photo gallery, about page, and contact form.
-- **Order Review System**: Dedicated page for displaying a comprehensive order summary before submission, with data transferred via sessionStorage.
-- **Backend Order Creation**: A comprehensive admin form for manual order creation, mirroring custom builder features with added admin-specific enhancements (status, priority, management notes, payment tracking).
+- **Public Interface**: Marketing-only pages - home, shop (inspiration), gallery, about, contact. NO customer ordering capability.
+- **Staff Order Creation**: Comprehensive admin form for manual order creation with unlimited layer system, dynamic pricing, status management, priority levels, internal notes, and payment tracking. Staff enter ALL orders.
 - **Admin Interface (Professional OMS)**: An enterprise-grade order management system featuring:
     - **Business Analytics Dashboard**
     - **Fulfillment Board** (Kanban-style)
@@ -49,8 +48,8 @@ The application is built with React 18.3.1, TypeScript, Vite 6.3.5, and Tailwind
 
 ### System Design Choices
 - **Backend & Database**: PostgreSQL (Replit Neon) with Drizzle ORM for type-safe queries. The API server is built with Express.js (TypeScript with tsx).
-- **Database Schema**: Includes `customers`, `orders`, `inquiries`, `contact_messages`, `products` tables with relational foreign keys. Enhanced with payment tracking, cancellation tracking, and a `layers` JSONB field for custom cake layers. Products table supports soft-delete.
-- **Data Flow**: Form submissions persist to the database. Custom Builder automatically creates/links customers.
+- **Database Schema**: Includes `customers`, `orders`, `employees`, `order_status_history`, `inquiries`, `contact_messages`, `products` tables with relational foreign keys. Enhanced with JWT authentication, tracking tokens, payment tracking, cancellation tracking, and a `layers` JSONB field for custom cake layers. Products table supports soft-delete.
+- **Data Flow**: Staff manually enter all orders through admin portal. Public contact forms create inquiries only (NOT orders).
 - **Migrations**: Uses `npm run db:push` for schema changes.
 - **Project Structure**: Organized into `src/components`, `src/pages` (public and admin), `src/styles`, and `src/assets`.
 - **Vite Configuration**: Configured for Replit environment (port 5000, host 0.0.0.0) with HMR.
@@ -80,6 +79,7 @@ The application is built with React 18.3.1, TypeScript, Vite 6.3.5, and Tailwind
 - **tsx**: TypeScript execution for Node.js.
 
 ## Project Documentation
-- **SINGLE SOURCE OF TRUTH:** `docs/FINAL_IMPLEMENTATION_PLAN.md` - Authoritative implementation plan based on codebase audit. Covers all 19 pages (7 public + 1 tracking + 11 staff), what exists vs what needs to be built, role-based permissions, 6 client reports, database schema, and complete technical specifications. Created Nov 13, 2025.
-- **Critical Correction:** Baker and Decorator roles have FULL Sales permissions + specialized functions (per case study: "Bakers/Decorators can also serve as sales staff when not busy").
+- **SINGLE SOURCE OF TRUTH:** `docs/FINAL_IMPLEMENTATION_PLAN.md` - Authoritative implementation plan for pure staff-only system. Covers public marketing pages (5 pages, NO ordering), public tracking page, staff portal (5 role-based dashboards + 11 admin pages), 6 client reports, JWT authentication, database schema, and complete technical specifications. Updated Nov 13, 2025.
+- **Critical Business Rule:** Baker and Decorator roles have FULL Sales permissions + specialized functions (per case study: "Bakers/Decorators can also serve as sales staff when not busy").
+- **Critical Fixes Required:** `attached_assets/CRITICAL-FIXES-REQUIRED.md` - Comprehensive list of 10 UI issues violating staff-only requirement. All customer ordering CTAs must be removed.
 - **Superseded Documents:** All other planning documents (23_MASTER, EMILY-BAKES, etc.) are outdated. Use FINAL_IMPLEMENTATION_PLAN.md only.

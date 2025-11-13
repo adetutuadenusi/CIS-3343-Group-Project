@@ -2,9 +2,10 @@
 ## Single Source of Truth - CIS 3343 Case Study Compliance
 
 **Created:** November 13, 2025  
+**Updated:** November 13, 2025 (Architecture clarified to pure staff-only)  
 **Status:** ✅ AUTHORITATIVE - All other documents superseded  
 **Deadline:** Saturday, November 15, 2025 (Prefinal Draft)  
-**Architecture:** Hybrid (Existing E-commerce + Staff Portal)
+**Architecture:** Pure Staff-Only System (NO customer e-commerce)
 
 ---
 
@@ -26,18 +27,18 @@
 ## 1. EXECUTIVE SUMMARY
 
 ### Project Scope
-"Emily Bakes Cakes" is a **hybrid system** combining:
-- **Public marketing website** (existing e-commerce features)
-- **Staff-only order management portal** (new case study requirement)
+"Emily Bakes Cakes" is a **pure staff-only internal order management system** for CIS 3343 case study:
+- **Public marketing website** (NO customer e-commerce - marketing/awareness only)
+- **Staff-only order management portal** (ALL orders entered by staff)
 - **Public order tracking** (auto-cycling demo page)
 - **Email notifications** (Resend integration)
 
 ### Key Architecture Decision
-**KEEP existing customer-facing features** (cake builder, shop, gallery) while **ADDING staff portal** for case study compliance. This hybrid approach:
-- ✅ Preserves your excellent existing work
-- ✅ Meets all case study requirements
-- ✅ Demonstrates full-stack capabilities
-- ✅ Provides realistic business workflow
+**Pure staff-only system** - customers CANNOT order online. This approach:
+- ✅ Meets case study requirement: staff enter ALL orders
+- ✅ Public pages serve marketing/awareness purposes only
+- ✅ Customers call, email, or visit in person to place orders
+- ✅ Staff portal handles complete order lifecycle
 
 ### Critical Business Rule (Case Study)
 > "Bakers and Decorators, if not busy, can also serve as sales staff."
@@ -48,40 +49,43 @@
 
 ## 2. WHAT ALREADY EXISTS ✅
 
-### Public Website (7 pages - BUILT & WORKING)
+### Public Website (5 pages - MARKETING ONLY)
 
 | Page | Route | Status | Notes |
 |------|-------|--------|-------|
-| Home | `/` | ✅ Complete | Hero, testimonials, featured cakes |
-| Shop | `/shop` | ✅ Complete | Product catalog with filtering |
-| **Builder** | `/builder` | ✅ Complete | Multi-step custom cake builder |
-| OrderReview | `/order-review` | ✅ Complete | Order confirmation page |
-| Gallery | `/gallery` | ✅ Complete | Masonry grid with lightbox |
+| Home | `/` | ⚠️ Needs CTA fixes | Hero with invalid "Start Building" buttons |
+| Shop | `/shop` | ⚠️ Needs restructure | Must remove inquiry forms, convert to inspiration only |
+| Gallery | `/gallery` | ⚠️ Needs CTA fixes | Remove "Start Custom Builder" button |
 | About | `/about` | ✅ Complete | Parisian-themed story page |
-| Contact | `/contact` | ✅ Complete | Contact form with FAQ |
+| Contact | `/contact` | ⚠️ Needs enhancement | Add Google Maps, ordering workflow, remove Builder references |
 
-### Admin Portal (10 pages - BUILT, needs role-based split)
+**CRITICAL:** Public pages must have ALL customer ordering CTAs removed. Customers call/email/visit to order.
+
+### Staff Portal (11 pages - BUILT, JWT auth completed)
 
 | Page | Route | Status | Notes |
 |------|-------|--------|-------|
-| Login | `/admin/login` | ✅ Built (demo) | Needs JWT upgrade |
-| Dashboard | `/admin/dashboard` | ✅ Complete | KPIs + Recharts analytics |
+| Login | `/admin/login` | ✅ Complete | JWT auth with 6 demo staff accounts |
+| **5 Dashboards** | `/admin/analytics-dashboard` | ✅ Complete | Role-based (Sales, Baker, Decorator, Accountant, Manager) |
 | OrderBoard | `/admin/fulfillment-board` | ✅ Complete | Kanban drag-and-drop |
 | OrderList | `/admin/order-management` | ✅ Complete | Table view with filtering |
-| OrderCreate | `/admin/order-create` | ✅ Complete | Manual order form |
+| OrderCreate | `/admin/order-create` | ✅ Complete | Manual order form (staff enter ALL orders) |
 | Inquiries | `/admin/inquiry-management` | ✅ Complete | Customer inquiry management |
 | Products | `/admin/inventory-management` | ✅ Complete | Product CRUD |
 | Customers | `/admin/customer-accounts` | ✅ Complete | Customer CRUD with search |
-| Reports | `/admin/business-intelligence` | ✅ Built | Needs 6 specific reports |
+| Reports | `/admin/business-intelligence` | ⚠️ In Progress | Needs 6 specific reports with Recharts |
 | Settings | `/admin/system-configuration` | ✅ Complete | System config |
+| **Tracking** | `/track/:token` | ✅ Complete | Public tracking with 11-stage auto-cycling (2-min loop) |
 
 ### Database (Drizzle ORM - WORKING)
 
 **Existing Tables:**
 - ✅ `products` - Full product catalog
 - ✅ `customers` - Customer records with VIP status
-- ✅ `orders` - Orders with JSON layers field
-- ✅ `inquiries` - Customer inquiries
+- ✅ `orders` - Orders with JSON layers field, tracking_token, assigned staff
+- ✅ `employees` - Staff with roles, passwords, JWT auth
+- ✅ `order_status_history` - Status change tracking
+- ✅ `inquiries` - Customer inquiries (NOT orders)
 - ✅ `contact_messages` - Contact form submissions
 - ✅ `payments` - Payment tracking
 
@@ -99,29 +103,24 @@
 
 ## 3. WHAT MUST BE ADDED 🆕
 
-### Critical Additions for Case Study Compliance
+### Remaining Tasks for Case Study Compliance
 
-#### A. Database Additions
-1. **`employees` table** - Staff with roles (sales, baker, decorator, accountant, manager, owner)
-2. **Order tracking tokens** - Add `tracking_token` field to orders
-3. **Order status history** - Track status changes with timestamps
+#### A. ✅ COMPLETED
+1. ✅ **`employees` table** - Staff with roles, JWT auth (6 demo accounts)
+2. ✅ **Order tracking tokens** - `tracking_token` field added to orders
+3. ✅ **Order status history** - Tracking table with timestamps
+4. ✅ **Public Tracking Page** (`/track/:token`) - Auto-cycling demo (11 stages, 2-min loop)
+5. ✅ **JWT Authentication** - Login, token validation, protected routes
+6. ✅ **5 Role-Based Dashboards** - Sales, Baker (+ Sales tab), Decorator (+ Sales tab), Accountant, Manager
 
-#### B. New Pages (2 pages)
-1. **Public Tracking Page** (`/track/:token`) - Auto-cycling demo
-2. **Staff Login** (upgrade existing to JWT)
+#### B. ⚠️ IN PROGRESS
+1. **6 Client Reports** - Order Summary, Customer List, Revenue, Pending Orders, Completed Orders, Product Inventory
+2. **Critical UI Fixes** - Remove all customer ordering CTAs from public pages
 
-#### C. Role-Based Dashboards (5 dashboards)
-Convert existing admin pages to role-based views:
-1. **Sales Dashboard** - Order creation focus
-2. **Baker Dashboard** - Baking queue + Sales access
-3. **Decorator Dashboard** - Decoration queue + Sales access
-4. **Accountant Dashboard** - Financial KPIs + 6 reports
-5. **Manager Dashboard** - Full system access
-
-#### D. Authentication System
-- JWT token generation/validation
-- Role-based access control middleware
-- Protected routes
+#### C. 🔜 PENDING
+1. **Email Notifications** - Resend integration for order tracking
+2. **Google Maps** - Contact page embed
+3. **Final Testing** - All role permissions, workflows, mobile responsiveness
 
 #### E. Six Client Reports (with Recharts)
 1. Order Summary Report
@@ -143,32 +142,36 @@ Convert existing admin pages to role-based views:
 
 ## 4. COMPLETE PAGE INVENTORY
 
-### Final Page Count: **19 Pages Total**
+### Final Page Count: **16 Pages Total** (Pure Staff-Only System)
 
-#### PUBLIC WEBSITE (7 pages)
-1. Home - `/`
-2. Shop - `/shop`
-3. Builder - `/builder`
-4. OrderReview - `/order-review`
-5. Gallery - `/gallery`
-6. About - `/about`
-7. Contact - `/contact`
+#### PUBLIC MARKETING WEBSITE (5 pages - NO customer ordering)
+1. Home - `/` ⚠️ (remove "Start Building" CTAs)
+2. Shop - `/shop` ⚠️ (convert to inspiration-only, remove inquiry forms)
+3. Gallery - `/gallery` ⚠️ (remove "Start Custom Builder" button)
+4. About - `/about` ✅ (complete)
+5. Contact - `/contact` ⚠️ (add Google Maps, ordering workflow)
+
+**CRITICAL:** All public pages must emphasize phone/email/visit ordering only. NO customer online ordering capability.
 
 #### PUBLIC TRACKING (1 page)
-8. **Track Order** - `/track/:token` 🆕
+6. **Track Order** - `/track/:token` ✅ (auto-cycling 11 stages, 2-min loop)
 
-#### STAFF PORTAL (11 pages)
-9. **Staff Login** - `/staff-login` ⚡ (upgrade existing)
-10. **Sales Dashboard** - `/staff/dashboard/sales` 🆕
-11. **Baker Dashboard** - `/staff/dashboard/baker` 🆕
-12. **Decorator Dashboard** - `/staff/dashboard/decorator` 🆕
-13. **Accountant Dashboard** - `/staff/dashboard/accountant` 🆕
-14. **Manager Dashboard** - `/staff/dashboard/manager` 🆕
-15. Orders List - `/staff/orders` ✅ (existing)
-16. Order Create - `/staff/orders/new` ✅ (existing)
-17. Customers - `/staff/customers` ✅ (existing)
-18. Products - `/staff/products` ✅ (existing)
-19. Reports - `/staff/reports` ⚡ (add 6 reports)
+#### STAFF PORTAL (10 pages - JWT authenticated)
+7. **Staff Login** - `/admin/login` ✅ (JWT complete)
+8. **Role-Based Dashboards** - `/admin/analytics-dashboard` ✅ (ONE page with 5 role views)
+   - Sales Dashboard (role: sales)
+   - Baker Dashboard (role: baker + Sales tab)
+   - Decorator Dashboard (role: decorator + Sales tab)
+   - Accountant Dashboard (role: accountant)
+   - Manager Dashboard (role: manager/owner)
+9. Fulfillment Board - `/admin/fulfillment-board` ✅ (Kanban)
+10. Orders List - `/admin/order-management` ✅ (table with filters)
+11. Order Create - `/admin/order-create` ✅ (staff enter ALL orders)
+12. Customers - `/admin/customer-accounts` ✅ (CRM)
+13. Products - `/admin/inventory-management` ✅ (product CRUD)
+14. Reports - `/admin/business-intelligence` ⚠️ (needs 6 reports with Recharts)
+15. Inquiries - `/admin/inquiry-management` ✅ (from public contact forms)
+16. Settings - `/admin/system-configuration` ✅ (system config)
 
 ---
 
@@ -621,21 +624,28 @@ setInterval(() => updateStatus(), 10000);
 
 ## ✅ FINAL ARCHITECTURE SUMMARY
 
-**Total Pages:** 19 (7 public + 1 tracking + 11 staff)
+**Total Functional Pages:** 16 (5 public marketing + 1 tracking + 10 staff portal)
 
-**Hybrid Approach:**
-- Keep existing customer e-commerce features (Builder, Shop)
-- Add staff portal with role-based dashboards
-- Add public tracking page (auto-cycling demo)
-- Integrate email notifications
-- Build 6 client reports with Recharts
+**Pure Staff-Only System:**
+- Public pages: Marketing/awareness only, NO customer online ordering
+- Staff portal: Role-based dashboards with JWT authentication
+- Order entry: Staff manually create ALL orders through admin portal
+- Customer ordering: Call/email/visit in person only
+- Public tracking: Auto-cycling demo (11 stages, 2-min loop)
+- Email notifications: Resend integration for order tracking
+- Reports: 6 client reports with Recharts visualization
 
-**What Makes This Work:**
-- ✅ Leverages existing excellent infrastructure
-- ✅ Meets all case study requirements
-- ✅ Demonstrates full-stack capabilities
-- ✅ Realistic business workflow
-- ✅ Achievable by Saturday deadline
+**System Compliance:**
+- ✅ Pure staff-only ordering (no customer e-commerce)
+- ✅ Baker/Decorator have FULL Sales permissions (case study requirement)
+- ✅ 5 role-based dashboards with session management
+- ✅ JWT authentication with 6 demo staff accounts
+- ✅ PostgreSQL database with complete schema
+- ✅ Public tracking with auto-cycling demonstration
+- ⚠️ Need to remove all customer ordering CTAs from public pages
+- ⚠️ Need to build 6 client reports with Recharts
+- ⚠️ Need Resend email integration
+- ⚠️ Need Google Maps on Contact page
 
 ---
 
