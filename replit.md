@@ -33,8 +33,7 @@ The application is built with React 18.3.1, TypeScript, Vite 6.3.5, and Tailwind
     - **Business Analytics Dashboard**
     - **Fulfillment Board** (Kanban-style)
     - **Order Management Center** (advanced filtering/sorting)
-    - **Inquiry Management**
-    - **Inventory Management**
+    - **Product Catalog** (pure admin CRUD with 14 case study cakes, NO e-commerce)
     - **Customer Accounts** (CRM)
     - **Business Intelligence**
     - **System Configuration**
@@ -80,6 +79,6 @@ The application is built with React 18.3.1, TypeScript, Vite 6.3.5, and Tailwind
 
 ## Project Documentation
 - **SINGLE SOURCE OF TRUTH:** `docs/FINAL_IMPLEMENTATION_PLAN.md` - Authoritative implementation plan for pure staff-only system. Covers public marketing pages (5 pages, NO ordering), public tracking page, staff portal (5 role-based dashboards + 11 admin pages), 6 client reports, JWT authentication, database schema, and complete technical specifications. Updated Nov 13, 2025.
+- **Product Catalog Transformation (Nov 13, 2025):** `docs/PRODUCT-CATALOG-TRANSFORMATION.md` - Complete removal of all e-commerce "Add to Cart" functionality. Rebuilt as pure admin CRUD system with Add/Edit/Delete modals, search/filter capabilities, and populated with all 14 case study standard cakes. NO customer ordering features.
 - **Critical Business Rule:** Baker and Decorator roles have FULL Sales permissions + specialized functions (per case study: "Bakers/Decorators can also serve as sales staff when not busy").
-- **Critical Fixes Required:** `attached_assets/CRITICAL-FIXES-REQUIRED.md` - Comprehensive list of 10 UI issues violating staff-only requirement. All customer ordering CTAs must be removed.
 - **Superseded Documents:** All other planning documents (23_MASTER, EMILY-BAKES, etc.) are outdated. Use FINAL_IMPLEMENTATION_PLAN.md only.
