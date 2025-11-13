@@ -1,0 +1,529 @@
+Tutu, this is exactly your lane. You’re basically creative director and systems analyst in one, so let’s treat this like a real redesign brief.
+
+I’ll do three things:
+
+1. Set a **clean global layout + design system** for the staff app.
+2. Design **role-based dashboards** and fix your UX pain points structurally.
+3. Outline **all the core pages** (orders, customers, products, inquiries, BI, settings) in a developer-friendly way.
+
+You can hand this straight to your dev teammate or use it to refactor your Replit project.
+
+---
+
+## 1. Global Layout & Design System
+
+### 1.1 Global Layout
+
+Use a standard, predictable app shell:
+
+* **Top Bar**
+
+  * Left: Logo + system name: “Emily Bakes Cakes Staff Portal”
+  * Center: Page title (matches menu item exactly)
+  * Right:
+
+    * Current user avatar + name
+    * Role badge (Sales, Baker, Decorator, Manager, Accountant)
+    * “Switch Account” option
+    * Settings icon
+
+* **Left Sidebar Navigation** (persistent)
+
+  * Role-aware. Items only show if the role can actually use them.
+  * Example items:
+
+    * Dashboard
+    * Orders
+    * Customers
+    * Inquiries
+    * Product Catalog
+    * Reports
+    * Settings
+  * Highlight the current page with:
+
+    * Bold text
+    * Accent bar on the left
+    * Background tint
+
+* **Content Area**
+
+  * Top: Breadcrumbs
+
+    * Example: `Dashboard / Orders / Order #1045`
+  * Middle: Page content (cards, tables, forms)
+  * Bottom: Short status hints or last update time
+
+* **Feedback**
+
+  * Success and error toasts in top right for:
+
+    * Order created
+    * Status updated
+    * Form validation issues
+
+This immediately fixes:
+
+* Menu / page title mismatch
+* No breadcrumb trail
+* Confusion about where you are in the app
+
+---
+
+### 1.2 Visual Design & Components
+
+**Color Theme (subtle, bakery-professional):**
+
+* Primary: Soft Pink `#FFC0CB`
+* Accent 1: Royal Blue `#0033A0` (buttons, links)
+* Accent 2: Gold `#FFD700` (primary actions)
+* Background: `#F9FAFB`
+* Cards: `#FFFFFF` with light shadow
+* Text: `#111827` (blackish)
+* Muted Text: `#6B7280`
+
+**Components:**
+
+* **Card**: Rounded corners, title, optional icon, content area, footer for actions.
+
+* **Table**: Striped rows, sticky header, clear sorting icons, hover highlight.
+
+* **Buttons**:
+
+  * Primary: Gold with dark text (`Create Order`, `Save Changes`)
+  * Secondary: White with border (`Cancel`, `Back`)
+
+* **Dropdowns**:
+
+  * Label above
+  * Full-width input
+  * Clear arrow on the right
+
+* **Modals**:
+
+  * Max width 600–800px
+  * Dimmed background
+  * Title, content, primary + secondary actions
+  * Always has a visible close “X” in the top right
+
+These patterns fix:
+
+* Modal cut-off issues
+* Dropdown alignment problems
+* Overall “cute but not functional” feel
+
+---
+
+## 2. Role-Based Dashboards
+
+There are really four important dashboards:
+
+1. Sales Dashboard
+2. Baker / Decorator Production Dashboard
+3. Manager / Owner Business Dashboard
+4. Accountant / Reports View (lighter, mostly data)
+
+### 2.1 Sales Dashboard
+
+**Route:** `/sales-dashboard`
+**Menu Label:** “Sales Dashboard”
+**Page Title:** “Sales Dashboard”
+
+**Layout:**
+
+1. **Row 1 – KPIs (4 cards)**
+
+   * “New Orders Today”
+   * “Upcoming Pickups (Next 48h)”
+   * “Deposits Collected Today”
+   * “Outstanding Balances”
+
+2. **Row 2 – Quick Actions (Buttons / small cards)**
+
+   * “Create Custom Order”
+   * “Add New Customer”
+   * “View Today’s Orders”
+   * “View Inquiries”
+
+3. **Row 3 – Today’s Orders Table**
+
+   * Columns: Time, Customer, Cake, Size, Status, Balance Due, Actions
+   * Actions: “View”, “Print Ticket”
+
+4. **Row 4 – Inquiries & Alerts**
+
+   * Left: List of new inquiries (convert to order)
+   * Right: Alerts
+
+     * “Order missing deposit”
+     * “Rush order flagged”
+
+**Permissions:**
+
+* Can create orders
+* Can edit customer info
+* Cannot change order status beyond “New”
+
+This addresses:
+
+* Sales workflow clarity
+* Lost orders due to confusion
+* Hidden quick actions
+
+---
+
+### 2.2 Baker / Decorator Dashboard
+
+**Route:** `/production-dashboard`
+**Label:** “Production”
+**Title:** “Production Dashboard”
+
+**Layout:**
+
+1. **Row 1 – KPIs**
+
+   * “Orders In Baking”
+   * “Orders In Decorating”
+   * “Due in Next 4 Hours”
+   * “Overdue Orders”
+
+2. **Row 2 – Kanban Board**
+   Columns:
+
+   * New (read-only)
+   * Pending Baking
+   * In Baking
+   * Ready for Decorating
+   * In Decorating
+   * Ready for Approval
+
+   Each card:
+
+   * Customer name
+   * Pickup time
+   * Cake size / flavour
+   * Allergy icon
+   * Rush tag if applicable
+
+   Bakers and Decorators can drag cards between allowed columns. That visually enforces status flow.
+
+3. **Row 3 – Order Details Drawer**
+
+   * When a card is clicked, open a slide-in panel from right:
+
+     * Ingredients summary
+     * Allergies
+     * Special requests
+     * Inspiration image previews
+     * Notes
+
+Status updates from this dashboard are controlled by role. Sales cannot even reach these states.
+
+---
+
+### 2.3 Manager / Owner Dashboard
+
+**Route:** `/manager-dashboard`
+**Label:** “Management”
+**Title:** “Management Dashboard”
+
+**Layout:**
+
+1. **Row 1 – Business KPIs**
+
+   * “Total Orders This Week”
+   * “Custom Orders vs Standard”
+   * “Average Order Value”
+   * “Returning Customers This Month”
+
+2. **Row 2 – Approvals Queue**
+
+   * Table: Orders that are “Awaiting Approval”
+   * Columns: Customer, Pickup Time, Decorator, Photos, Status, Approve/Reject
+   * Manager clicks “Approve” to change status to “Ready for Pickup”
+
+3. **Row 3 – Risk & Issues**
+
+   * Left card: “Orders at Risk” (less than 4 hours to pickup and not finished)
+   * Right card: “Complaints or Red Flags” (optional future enhancement)
+
+4. **Row 4 – Quick Links**
+
+   * Manage staff accounts
+   * Edit products & prices
+   * Download weekly report (PDF/CSV)
+
+This answers:
+
+* Sponsor’s focus on efficiencies
+* “Manager must approve completed cakes” rule
+
+---
+
+### 2.4 Accountant / Reports View
+
+**Route:** `/reports`
+**Label:** “Reports”
+**Title:** “Financial & Operations Reports”
+
+* Filters for date range and type of report
+* Report cards:
+
+  * Deposits vs Final Payments
+  * Revenue per product category
+  * Outstanding balances
+  * Returning customer count
+
+Accountant role is mostly read-only.
+
+---
+
+## 3. Core Page Designs
+
+Now let’s design the other pages you complained about to remove every UX bug.
+
+---
+
+### 3.1 Orders Page
+
+**Route:** `/orders`
+**Label:** “Orders”
+**Title:** “Orders”
+
+**Top section: Filters**
+
+* Search bar: customer name, phone, order id
+* Status filter: multi-select chips
+* Date range (pickup date)
+* Role filter (last touched by: Sales, Baker, Decorator)
+
+**Main content: Orders Table**
+
+* Columns:
+
+  * Order ID
+  * Customer
+  * Pickup date & time
+  * Product summary
+  * Status (colored pill)
+  * Last updated by (staff name)
+  * Actions: View | Edit (if permitted)
+
+**Row click → Order Detail View**
+
+* Opens a right drawer or separate page:
+
+  * All details from the custom order form
+  * Timeline of status changes:
+
+    * “09:15 – Sales created order”
+    * “12:03 – Baker moved to In Baking”
+
+This fixes:
+
+* Confusing order list
+* No visibility into who did what
+* Misalignment of dropdowns and icons
+
+---
+
+### 3.2 Custom Order Creation Page
+
+**Route:** `/orders/new`
+**Title:** “Create Custom Order”
+
+Use the improved form we already built, with:
+
+* Section headings and progress:
+
+  * Customer → Cake → Colors & Decorations → Payment → Review & Save
+* Show a **sticky summary card** on the right:
+
+  * Cake size, flavor, fillings, price, deposit
+
+Validation:
+
+* Disable “Create Order” until required fields are filled
+* Show inline validation messages, not just alerts
+
+---
+
+### 3.3 Customers Page
+
+**Route:** `/customers`
+**Title:** “Customers”
+
+**Top:**
+
+* “Add New Customer” button
+* Search + filters (Retail / Corporate, Preferred only)
+
+**Main Table:**
+
+* Name
+* Type
+* Preferred (badge)
+* Phone
+* Email
+* Total orders
+* Last order date
+* Actions: View, Edit
+
+**Customer Detail Page:**
+
+* Left: Profile info and tags (Retail / Corporate / Preferred)
+* Right: Tabbed view:
+
+  * Orders
+  * Contact history
+  * Notes
+  * Marketing preferences
+
+This ties into the “increase returning customers by 15 percent” requirement.
+
+---
+
+### 3.4 Product Catalog Page
+
+**Route:** `/products`
+**Title:** “Product Catalog”
+
+Grid or table of products:
+
+* Product name
+* Category (Cake, Cupcake, etc.)
+* Size / serving range
+* Base price
+* Active / Inactive toggle
+
+Top right: “Add Product” button.
+
+This replaces the improper “Inventory Management” page and keeps the scope correct.
+
+---
+
+### 3.5 Inquiries Page
+
+**Route:** `/inquiries`
+**Title:** “Inquiries”
+
+**Top Row:**
+
+* Filters: New, In Progress, Converted, Closed
+* Search by email / name
+
+**Main Table:**
+
+* Date
+* Name
+* Contact info
+* Message preview
+* Rush indicator (if rush)
+* Status
+* Action: “Convert to Order”
+
+When “Convert to Order” is clicked:
+
+* Pre-fill customer info in new custom order form
+* Attach original inquiry as note
+
+This solves:
+
+* “Why do we have no inquiries?”
+* “Where is rush order routing?”
+
+---
+
+### 3.6 Reports / Business Intelligence Page
+
+**Route:** `/reports`
+
+Use panels, not one generic chart.
+
+* Filter bar: date range, role view (Owner, Sales, Production)
+* Cards:
+
+  * Sales over time chart
+  * Product popularity bar chart
+  * New vs returning customers pie chart
+  * Top 10 customers table
+
+Different roles see content tailored to them. That solves the issue of BI being the same for Sales and Emily.
+
+---
+
+### 3.7 Settings & Account Switching
+
+**Route:** `/settings`
+**Title:** “Settings”
+
+**Tabs:**
+
+* Profile (name, avatar, contact)
+* Security (password)
+* Role & Permissions (Manager only)
+* System Options (Manager only)
+
+In the top bar:
+
+* User avatar click → dropdown menu:
+
+  * View Profile
+  * Switch Account
+  * Logout
+
+“Switch Account” should bring up a small modal with a list of demo accounts (Emily, James, Sales Staff, Baker, Decorator) so that during presentations you can jump roles quickly.
+
+---
+
+## 4. Specific Bug Fixes Mapped To Design
+
+Let’s map your original complaints directly to fixes:
+
+1. **KPI dashboards not informative / quick actions hidden**
+   → KPIs always in row 1, quick actions in row 2, tables below.
+
+2. **Menu vs page title mismatch (“Business Analytics” vs “Sales Dashboard”)**
+   → Every route has one name used consistently in menu, URL, and header.
+
+3. **Orders categorized by occasion**
+   → Remove “occasion” everywhere. Orders categorized by status, date, and customer.
+
+4. **Custom cake builder layers / 1 layer option**
+   → Layer count dropdown minimum 2.
+
+5. **No breadcrumbs**
+   → Standard breadcrumb bar under header on all pages.
+
+6. **Sales moving orders to Pending**
+   → Role rules: Sales only create; production roles handle status.
+
+7. **Dropdown alignment with weird icons**
+   → Single standard dropdown component with left label and right arrow.
+
+8. **Popups too big, no cancel icon, cut off**
+   → Constrained modal width, internal scroll, always show close icon.
+
+9. **Inventory vs product scope**
+   → Page renamed to Product Catalog, inventory fields removed.
+
+10. **Business Intelligence same for all roles**
+    → Role-specific BI views on Reports and Dashboards.
+
+11. **Settings / System Configuration naming confusion**
+    → Single “Settings” section with inner tabs.
+
+12. **No easy account switching**
+    → Avatar dropdown with “Switch Account”.
+
+13. **Everyone has “eb” icon**
+    → Avatar initials with color or uploadable photo.
+
+---
+
+If you want, next step I can:
+
+* Turn this into a **page-by-page component tree** for React (with suggested file structure).
+* Or generate **Figma-style text prompts** so you can feed them to Gamma / Figma AI and get instant wireframes.
+* Or create a **QA test checklist** for each page to verify all UX fixes before your next deploy.
+
+You tell me which one you want, and we go straight there.
