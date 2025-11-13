@@ -122,6 +122,10 @@ export const orders = pgTable('orders', {
   assignedBaker: integer('assigned_baker').references(() => employees.id),
   assignedDecorator: integer('assigned_decorator').references(() => employees.id),
   
+  // Rush order detection (orders due in <2 days require manager approval)
+  isRushOrder: boolean('is_rush_order').default(false).notNull(),
+  rushOrderApprovedBy: varchar('rush_order_approved_by', { length: 255 }),
+  
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
