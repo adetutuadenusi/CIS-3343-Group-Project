@@ -1,6 +1,6 @@
 import { db } from './db.js';
-import { products, customers, orders, inquiries, contactMessages, payments } from '../shared/schema.js';
-import type { NewProduct, NewCustomer, NewOrder, NewInquiry, NewContactMessage, NewPayment } from '../shared/schema.js';
+import { products, customers, orders, inquiries, contactMessages, payments, employees } from '../shared/schema.js';
+import type { NewProduct, NewCustomer, NewOrder, NewInquiry, NewContactMessage, NewPayment, NewEmployee } from '../shared/schema.js';
 import { eq, desc, and, or, like, ilike, sql, isNull } from 'drizzle-orm';
 
 // ============ PRODUCTS ============
@@ -281,6 +281,31 @@ export async function updatePayment(id: number, data: Partial<NewPayment>) {
     .where(eq(payments.id, id))
     .returning();
   return updated;
+}
+
+// ============ EMPLOYEES ============
+
+export async function getEmployeeByEmail(email: string) {
+  const [employee] = await db.select().from(employees)
+    .where(and(eq(employees.email, email), eq(employees.isActive, true)));
+  return employee || null;
+}
+
+export async function getEmployeeById(id: number) {
+  const [employee] = await db.select().from(employees)
+    .where(and(eq(employees.id, id), eq(employees.isActive, true)));
+  return employee || null;
+}
+
+export async function getAllEmployees() {
+  return await db.select().from(employees)
+    .where(eq(employees.isActive, true))
+    .orderBy(employees.name);
+}
+
+export async function createEmployee(data: NewEmployee) {
+  const [employee] = await db.insert(employees).values(data).returning();
+  return employee;
 }
 
 // ============ COMBINED QUERIES ============

@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
+import bcrypt from 'bcryptjs';
 import * as storage from './storage.js';
+import { authenticateToken, generateToken, type AuthRequest } from './authMiddleware.js';
 import type { NewProduct, NewOrder, NewInquiry, NewContactMessage, NewPayment } from '../shared/schema.js';
 
 const app = express();
@@ -13,6 +15,54 @@ app.use(express.json());
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// ============ AUTHENTICATION ============
+
+app.post('/api/auth/staff-login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    const employee = await storage.getEmployeeByEmail(email.toLowerCase().trim());
+    
+    if (!employee) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    const isValidPassword = await bcrypt.compare(password, employee.passwordHash);
+    
+    if (!isValidPassword) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    const token = generateToken({
+      id: employee.id,
+      email: employee.email,
+      role: employee.role,
+      name: employee.name,
+    });
+
+    res.json({
+      token,
+      user: {
+        id: employee.id,
+        email: employee.email,
+        role: employee.role,
+        name: employee.name,
+      },
+    });
+  } catch (error) {
+    console.error('Error during login:', error);
+    res.status(500).json({ error: 'Login failed' });
+  }
+});
+
+app.get('/api/auth/me', authenticateToken, (req: AuthRequest, res) => {
+  res.json({ user: req.user });
 });
 
 // ============ PRODUCTS ============

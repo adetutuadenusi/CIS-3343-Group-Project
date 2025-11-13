@@ -21,6 +21,17 @@ export const products = pgTable('products', {
   deletedBy: varchar('deleted_by', { length: 255 }),
 });
 
+export const employees = pgTable('employees', {
+  id: serial('id').primaryKey(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  passwordHash: varchar('password_hash', { length: 255 }).notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  role: varchar('role', { length: 20 }).notNull(), // 'sales', 'baker', 'decorator', 'accountant', 'manager', 'owner'
+  isActive: boolean('is_active').default(true).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
 export const customers = pgTable('customers', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 255 }).notNull(),
@@ -101,6 +112,11 @@ export const orders = pgTable('orders', {
   depositRequired: integer('deposit_required'), // in cents (e.g., 50% of total)
   depositMet: boolean('deposit_met').default(false).notNull(),
   
+  // Staff Portal: Tracking and assignment
+  trackingToken: varchar('tracking_token', { length: 50 }),
+  assignedBaker: integer('assigned_baker').references(() => employees.id),
+  assignedDecorator: integer('assigned_decorator').references(() => employees.id),
+  
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
@@ -155,6 +171,17 @@ export const payments = pgTable('payments', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
+// Order Status History Tracking
+export const orderStatusHistory = pgTable('order_status_history', {
+  id: serial('id').primaryKey(),
+  orderId: integer('order_id').references(() => orders.id).notNull(),
+  oldStatus: varchar('old_status', { length: 50 }),
+  newStatus: varchar('new_status', { length: 50 }).notNull(),
+  updatedBy: integer('updated_by').references(() => employees.id),
+  notes: text('notes'), // Optional notes about the status change
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
 // Relations
 export const customersRelations = relations(customers, ({ many }) => ({
   orders: many(orders),
@@ -173,6 +200,23 @@ export const paymentsRelations = relations(payments, ({ one }) => ({
   order: one(orders, {
     fields: [payments.orderId],
     references: [orders.id],
+  }),
+}));
+
+export const employeesRelations = relations(employees, ({ many }) => ({
+  assignedBakerOrders: many(orders, { relationName: 'baker' }),
+  assignedDecoratorOrders: many(orders, { relationName: 'decorator' }),
+  statusUpdates: many(orderStatusHistory),
+}));
+
+export const orderStatusHistoryRelations = relations(orderStatusHistory, ({ one }) => ({
+  order: one(orders, {
+    fields: [orderStatusHistory.orderId],
+    references: [orders.id],
+  }),
+  employee: one(employees, {
+    fields: [orderStatusHistory.updatedBy],
+    references: [employees.id],
   }),
 }));
 
@@ -203,3 +247,7 @@ export type ContactMessage = typeof contactMessages.$inferSelect;
 export type NewContactMessage = typeof contactMessages.$inferInsert;
 export type Payment = typeof payments.$inferSelect;
 export type NewPayment = typeof payments.$inferInsert;
+export type Employee = typeof employees.$inferSelect;
+export type NewEmployee = typeof employees.$inferInsert;
+export type OrderStatusHistory = typeof orderStatusHistory.$inferSelect;
+export type NewOrderStatusHistory = typeof orderStatusHistory.$inferInsert;
