@@ -1,0 +1,101 @@
+I am listing all issues as i go through the site: <<Ready to Create Something
+Extraordinary?
+Let's design your perfect cake together. Start our interactive custom cake builder or connect with Emily to discuss your vision.
+Start BuildingContact Emily>> This button cannot exist because customers do not order through website. The customer facing pages need to emphasize ordering by calling or going in person, refer to case study. we need to change all building logistics to ensure that customers are told the right information. all order now buttons,need to be visit to order or call to order. our home page start building is not valid, change to visit us today or order your custom cake through phone or visit now. In the shop page inquiry forms and inquire buttons need to be removed. price range should be edited to set prices and menu should be revise to standard menu. custom builder tab exists in menu but leads to home page. delete completelty. gallery is fine but remove all start building change this<<Love What You See?
+These are just a few examples of our work. Let's create something unique for your special occasion.
+
+Start Custom Builder
+Contact Emily>> change this <<Experience Parisian Artistry
+Let's create a masterpiece together. From Paris to your celebration— handcrafted with European precision and Texas heart.
+Start Your Order>>. contact page needs to be on point and reference case study. always ensure that the customer knows how to order << Prefer to Order Online?
+Use our custom cake builder to design your perfect cake in minutes.
+Start Building Your Cake>> change this its not possible. for admin, the demo credentials arent referenced and then when i put in random credentials (y and y ) it takes me to sales dashboard but yet in menu its titled business analytics in the slaes dashboard. order occasion should be removed from custom cake builder. drop down menu and new setup is not emphasized in the custom cake builder. design style is invalid follow requirements <<edit custom cake uilder>>Emily Bakes Cakes
+ADMIN PORTAL
+EB
+
+Create New Order
+Cancel
+Manually create a custom cake order for a customer
+
+
+1. Customer Selection
+Search Existing Customer
+Search by name, email, or ID...
+
+or
+Create New Customer
+
+2. Order Details
+Occasion *
+
+🎂
+Birthday
+
+💒
+Wedding
+
+💕
+Anniversary
+
+🎓
+Graduation
+
+🏢
+Corporate Event
+
+🎉
+Other
+
+3. Build Cake Layers
+1 layer
+Layer 1
+Flavor *
+
+Select a flavor
+Fillings (Max 2, $1 each)
+Vanilla Buttercream
+Chocolate Ganache
+Strawberry Preserves
+Raspberry Coulis
+Lemon Curd
+Cream Cheese Frosting
+Salted Caramel
+Nutella
+Peanut Butter
+White Chocolate
+Selected: 0/2
+
+Special Notes (Optional, 255 characters max)
+Any special requests for this layer?
+0/255
+
+Add Another Layer
+
+4. Design Style
+
+5. Event Information
+Event Date *
+
+mm/dd/yyyy
+Servings *
+e.g., 20
+Cake Message (optional)
+e.g., 'Happy Birthday Sarah!'
+Customer Notes (optional)
+Any special requests or dietary restrictions...
+
+6. Admin Management Settings
+Order Status
+
+Pending
+Priority Level
+
+Medium
+Internal Management Notes
+Internal notes (not visible to customer)...
+These notes are for internal use only and won't be shown to the customer
+
+
+7. Payment Information
+Create Order
+Please select or create a customer to continue>>>>>>
