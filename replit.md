@@ -1,12 +1,12 @@
 ## Overview
-"Emily Bakes Cakes" is a CIS 3343 case study project - a **staff-only internal order management system** for a bakery business. The system consists of:
+"Emily Bakes Cakes" is a CIS 3343 case study project - a **hybrid system** combining existing customer-facing features with a staff-only order management portal. The system consists of:
 
-1. **Public Website** (marketing only) - Gallery, menu, contact, order tracking
-2. **Staff Portal** (role-based access) - 5 unique dashboards for Sales, Baker, Decorator, Accountant, Manager
-3. **Public Order Tracking** (no login) - Auto-cycling demo page showing order progress
+1. **Public Website** - Home, shop, custom cake builder, gallery, about, contact (7 pages BUILT)
+2. **Public Order Tracking** (no login) - Auto-cycling demo page showing order progress (NEW)
+3. **Staff Portal** (role-based access) - 5 unique dashboards for Sales, Baker, Decorator, Accountant, Manager (NEW)
 4. **PostgreSQL Database** - Complete schema with customers, orders, staff, products
 
-**MAJOR SCOPE CLARIFICATION (Nov 13, 2025):** This is NOT a customer-facing e-commerce site. Customers call/email/visit to place orders. Staff use the internal portal to manage all operations.
+**ARCHITECTURE DECISION (Nov 13, 2025):** After codebase audit, confirmed hybrid approach - KEEP existing excellent e-commerce features (builder, shop, gallery) while ADDING staff portal for case study compliance. Total: 19 pages (7 public + 1 tracking + 11 staff).
 
 ## User Preferences
 - **HOMEPAGE LOCKED**: The homepage design is finalized and stable. No major changes should be made without explicit user clarification and acceptance.
@@ -80,5 +80,6 @@ The application is built with React 18.3.1, TypeScript, Vite 6.3.5, and Tailwind
 - **tsx**: TypeScript execution for Node.js.
 
 ## Project Documentation
-- **Master Implementation Spec:** `docs/23_MASTER_IMPLEMENTATION_SPECIFICATION.md` - Complete consolidated specification covering all 17 pages (6 public + 11 staff portal), role-based permissions, 6 client reports, wireframes, and technical details. Updated Nov 13, 2025.
+- **SINGLE SOURCE OF TRUTH:** `docs/FINAL_IMPLEMENTATION_PLAN.md` - Authoritative implementation plan based on codebase audit. Covers all 19 pages (7 public + 1 tracking + 11 staff), what exists vs what needs to be built, role-based permissions, 6 client reports, database schema, and complete technical specifications. Created Nov 13, 2025.
 - **Critical Correction:** Baker and Decorator roles have FULL Sales permissions + specialized functions (per case study: "Bakers/Decorators can also serve as sales staff when not busy").
+- **Superseded Documents:** All other planning documents (23_MASTER, EMILY-BAKES, etc.) are outdated. Use FINAL_IMPLEMENTATION_PLAN.md only.
