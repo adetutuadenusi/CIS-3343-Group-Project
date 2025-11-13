@@ -9,19 +9,24 @@ import { useToast } from '../../components/ToastContext';
 
 const contactInfo = [
   {
-    icon: MapPin,
-    title: 'Visit Us',
-    details: ['123 Magazine Street', 'New Orleans, LA 70130']
-  },
-  {
     icon: Phone,
     title: 'Call Us',
-    details: ['(555) 123-4567', 'Mon-Sat: 9 AM - 6 PM']
+    subtitle: 'Primary Ordering Method',
+    details: ['(555) 123-4567', 'Mon-Sat: 9 AM - 6 PM'],
+    link: 'tel:555-123-4567',
+    isPrimary: true
   },
   {
     icon: Mail,
     title: 'Email Us',
-    details: ['hello@emilybakescakes.com', 'Response within 24 hours']
+    details: ['hello@emilybakescakes.com', 'Response within 24 hours'],
+    link: 'mailto:hello@emilybakescakes.com'
+  },
+  {
+    icon: MapPin,
+    title: 'Visit Us',
+    details: ['123 Magazine Street', 'New Orleans, LA 70130'],
+    link: 'https://maps.google.com/?q=123+Magazine+Street+New+Orleans+LA+70130'
   },
   {
     icon: Clock,
@@ -116,8 +121,113 @@ export function Contact() {
         >
           <h1 className="mb-4">Get in Touch</h1>
           <p className="text-xl" style={{ color: 'var(--text-secondary)', maxWidth: '700px', margin: '0 auto' }}>
-            Have questions? Want to place an order? We'd love to hear from you.
+            <strong style={{ color: '#C44569' }}>We do not accept online orders.</strong><br />
+            Please call or visit us to place your custom cake order!
           </p>
+        </motion.div>
+
+        {/* How Ordering Works - Workflow Section */}
+        <motion.div
+          className="glass-card p-8 md:p-10 mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          style={{
+            background: 'linear-gradient(135deg, rgba(196, 69, 105, 0.08) 0%, rgba(196, 69, 105, 0.03) 100%)',
+            border: '2px solid rgba(196, 69, 105, 0.2)'
+          }}
+        >
+          <div className="text-center mb-8">
+            <h2 className="mb-2" style={{ color: '#C44569' }}>How Ordering Works</h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '16px' }}>
+              Our personalized ordering process ensures your cake is perfect
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 max-w-5xl mx-auto">
+            {/* Step 1: Call */}
+            <div className="text-center">
+              <div 
+                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                style={{ background: '#C44569', boxShadow: '0 4px 12px rgba(196, 69, 105, 0.3)' }}
+              >
+                <Phone size={28} color="white" />
+              </div>
+              <h4 className="mb-2" style={{ fontFamily: 'Poppins', fontSize: '18px', fontWeight: 600 }}>1. Call</h4>
+              <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '12px' }}>
+                Reach us at
+              </p>
+              <a 
+                href="tel:555-123-4567"
+                style={{
+                  color: '#C44569',
+                  fontWeight: 700,
+                  fontSize: '16px',
+                  textDecoration: 'none'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+                onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+              >
+                (555) 123-4567
+              </a>
+            </div>
+
+            {/* Step 2: Discuss */}
+            <div className="text-center">
+              <div 
+                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                style={{ background: '#8B3A5E', boxShadow: '0 4px 12px rgba(139, 58, 94, 0.3)' }}
+              >
+                <MessageCircle size={28} color="white" />
+              </div>
+              <h4 className="mb-2" style={{ fontFamily: 'Poppins', fontSize: '18px', fontWeight: 600 }}>2. Discuss</h4>
+              <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                Share your vision, flavor preferences, and event details with our team
+              </p>
+            </div>
+
+            {/* Step 3: Deposit */}
+            <div className="text-center">
+              <div 
+                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                style={{ background: '#C44569', boxShadow: '0 4px 12px rgba(196, 69, 105, 0.3)' }}
+              >
+                <span style={{ fontSize: '28px' }}>💳</span>
+              </div>
+              <h4 className="mb-2" style={{ fontFamily: 'Poppins', fontSize: '18px', fontWeight: 600 }}>3. Deposit</h4>
+              <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                Secure your order with a 50% deposit to begin the creation process
+              </p>
+            </div>
+
+            {/* Step 4: Build */}
+            <div className="text-center">
+              <div 
+                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                style={{ background: '#8B3A5E', boxShadow: '0 4px 12px rgba(139, 58, 94, 0.3)' }}
+              >
+                <span style={{ fontSize: '28px' }}>🎂</span>
+              </div>
+              <h4 className="mb-2" style={{ fontFamily: 'Poppins', fontSize: '18px', fontWeight: 600 }}>4. Build</h4>
+              <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                Our bakers handcraft your custom cake with care and precision
+              </p>
+            </div>
+
+            {/* Step 5: Pickup */}
+            <div className="text-center">
+              <div 
+                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                style={{ background: '#C44569', boxShadow: '0 4px 12px rgba(196, 69, 105, 0.3)' }}
+              >
+                <span style={{ fontSize: '28px' }}>📦</span>
+              </div>
+              <h4 className="mb-2" style={{ fontFamily: 'Poppins', fontSize: '18px', fontWeight: 600 }}>5. Pickup</h4>
+              <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                Collect your masterpiece or arrange delivery to your event
+              </p>
+            </div>
+          </div>
         </motion.div>
 
         {/* Contact Info Cards */}
@@ -134,18 +244,79 @@ export function Contact() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 + i * 0.1 }}
             >
-              <Card className="surface-elevated p-6 h-full text-center">
+              <Card 
+                className="surface-elevated p-6 h-full text-center relative"
+                style={{
+                  background: (info as any).isPrimary 
+                    ? 'linear-gradient(135deg, rgba(196, 69, 105, 0.12) 0%, rgba(196, 69, 105, 0.06) 100%)' 
+                    : undefined,
+                  border: (info as any).isPrimary ? '2px solid rgba(196, 69, 105, 0.4)' : undefined
+                }}
+              >
+                {(info as any).isPrimary && (
+                  <div 
+                    className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold"
+                    style={{
+                      background: '#C44569',
+                      color: 'white',
+                      fontSize: '11px',
+                      fontFamily: 'Poppins',
+                      letterSpacing: '0.5px'
+                    }}
+                  >
+                    PRIMARY
+                  </div>
+                )}
                 <div 
                   className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4"
-                  style={{ background: 'rgba(196, 69, 105, 0.1)' }}
+                  style={{ 
+                    background: (info as any).isPrimary ? '#C44569' : 'rgba(196, 69, 105, 0.1)',
+                    boxShadow: (info as any).isPrimary ? '0 4px 12px rgba(196, 69, 105, 0.3)' : undefined
+                  }}
                 >
-                  <info.icon size={24} color="#C44569" />
+                  <info.icon size={24} color={(info as any).isPrimary ? 'white' : '#C44569'} />
                 </div>
-                <h5 className="mb-3">{info.title}</h5>
-                {info.details.map((detail, j) => (
-                  <p key={j} style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                    {detail}
+                <h5 className="mb-2">{info.title}</h5>
+                {(info as any).subtitle && (
+                  <p 
+                    className="mb-3"
+                    style={{ 
+                      fontSize: '12px', 
+                      color: '#C44569', 
+                      fontWeight: 600,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}
+                  >
+                    {(info as any).subtitle}
                   </p>
+                )}
+                {info.details.map((detail, j) => (
+                  (info as any).link && j === 0 ? (
+                    <a
+                      key={j}
+                      href={(info as any).link}
+                      target={(info as any).link?.startsWith('https') ? '_blank' : undefined}
+                      rel={(info as any).link?.startsWith('https') ? 'noopener noreferrer' : undefined}
+                      style={{ 
+                        fontSize: (info as any).isPrimary ? '18px' : '15px', 
+                        color: '#C44569', 
+                        lineHeight: 1.6,
+                        fontWeight: (info as any).isPrimary ? 700 : 600,
+                        textDecoration: 'none',
+                        display: 'block',
+                        marginBottom: '4px'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+                      onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+                    >
+                      {detail}
+                    </a>
+                  ) : (
+                    <p key={j} style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                      {detail}
+                    </p>
+                  )
                 ))}
               </Card>
             </motion.div>
@@ -170,7 +341,9 @@ export function Contact() {
                 </div>
                 <div>
                   <h3>Send Us a Message</h3>
-                  <p style={{ fontSize: '14px', color: 'var(--text-tertiary)' }}>We'll respond within 24 hours</p>
+                  <p style={{ fontSize: '14px', color: 'var(--text-tertiary)' }}>
+                    For general questions only • <strong style={{ color: '#C44569' }}>Call to place orders</strong>
+                  </p>
                 </div>
               </div>
 
