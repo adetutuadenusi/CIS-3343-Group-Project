@@ -679,6 +679,143 @@ app.get('/api/reports/customer-list', async (req, res) => {
   }
 });
 
+// Revenue Report (TIER 3 - Report 3)
+// Accountant, Manager ONLY - Financial analytics with invoiced revenue, deposits, outstanding
+app.get('/api/reports/revenue', async (req, res) => {
+  try {
+    const { period, startDate, endDate } = req.query;
+    
+    // Calculate date range based on period
+    let start: Date, end: Date;
+    const now = new Date();
+    
+    if (period === 'day') {
+      start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+    } else if (period === 'week') {
+      const dayOfWeek = now.getDay();
+      start = new Date(now.getTime() - dayOfWeek * 24 * 60 * 60 * 1000);
+      start.setHours(0, 0, 0, 0);
+      end = new Date(start.getTime() + 6 * 24 * 60 * 60 * 1000);
+      end.setHours(23, 59, 59);
+    } else if (period === 'month') {
+      start = new Date(now.getFullYear(), now.getMonth(), 1);
+      end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+    } else {
+      // Custom date range
+      end = endDate ? new Date(endDate as string) : now;
+      start = startDate ? new Date(startDate as string) : new Date(end.getTime() - 30 * 24 * 60 * 60 * 1000);
+    }
+    
+    // Get revenue data (excludes cancelled & refunded orders per architect guidance)
+    const revenueOrders = await storage.getRevenueData(start, end);
+    
+    // Calculate KPIs
+    let totalRevenue = 0;
+    let totalDeposits = 0;
+    let totalOutstanding = 0;
+    const revenueByType: Record<string, number> = {};
+    
+    revenueOrders.forEach(order => {
+      const revenue = order.totalAmount || 0;
+      const deposit = order.depositAmount || 0;
+      const outstanding = order.balanceDue ?? (revenue - deposit); // Use balanceDue, fallback to calculation
+      
+      totalRevenue += revenue;
+      totalDeposits += deposit;
+      totalOutstanding += outstanding;
+      
+      // Aggregate by order type for pie chart
+      const type = order.orderType || 'other';
+      revenueByType[type] = (revenueByType[type] || 0) + revenue;
+    });
+    
+    const collectionRate = totalRevenue > 0 ? (totalDeposits / totalRevenue) * 100 : 0;
+    
+    // Determine bucket size for trend chart (per architect guidance)
+    const rangeDays = Math.ceil((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000));
+    let bucketFormat: string;
+    if (rangeDays <= 1) bucketFormat = 'hour'; // ≤1 day → hourly
+    else if (rangeDays <= 31) bucketFormat = 'day'; // ≤31 days → daily
+    else if (rangeDays <= 180) bucketFormat = 'week'; // ≤180 days → weekly
+    else bucketFormat = 'month'; // >180 days → monthly
+    
+    // Aggregate revenue trend by bucket
+    const trendData: Record<string, number> = {};
+    revenueOrders.forEach(order => {
+      const date = new Date(order.createdAt);
+      let bucket: string;
+      
+      if (bucketFormat === 'hour') {
+        bucket = `${date.toISOString().slice(0, 13)}:00`;
+      } else if (bucketFormat === 'day') {
+        bucket = date.toISOString().split('T')[0];
+      } else if (bucketFormat === 'week') {
+        const weekStart = new Date(date);
+        weekStart.setDate(date.getDate() - date.getDay());
+        bucket = weekStart.toISOString().split('T')[0];
+      } else {
+        bucket = date.toISOString().slice(0, 7); // YYYY-MM
+      }
+      
+      trendData[bucket] = (trendData[bucket] || 0) + (order.totalAmount || 0);
+    });
+    
+    const trendChartData = Object.entries(trendData).map(([period, revenue]) => ({
+      period,
+      revenue
+    })).sort((a, b) => a.period.localeCompare(b.period));
+    
+    // Pie chart: Revenue by product type
+    const pieChartData = Object.entries(revenueByType).map(([type, revenue]) => ({
+      type: type.charAt(0).toUpperCase() + type.slice(1),
+      revenue
+    }));
+    
+    // Bar chart: Trailing 12 months (per architect guidance)
+    const monthlyData: Record<string, number> = {};
+    const endMonth = new Date(end.getFullYear(), end.getMonth(), 1);
+    const startMonth = new Date(endMonth);
+    startMonth.setMonth(endMonth.getMonth() - 11); // 12 months including current
+    
+    // Get data for trailing 12 months
+    const monthlyOrders = await storage.getRevenueData(startMonth, end);
+    monthlyOrders.forEach(order => {
+      const month = new Date(order.createdAt).toISOString().slice(0, 7);
+      monthlyData[month] = (monthlyData[month] || 0) + (order.totalAmount || 0);
+    });
+    
+    const barChartData = Object.entries(monthlyData).map(([month, revenue]) => ({
+      month,
+      revenue
+    })).sort((a, b) => a.month.localeCompare(b.month));
+    
+    res.json({
+      kpis: {
+        totalRevenue,
+        totalDeposits,
+        totalOutstanding,
+        collectionRate: Math.round(collectionRate * 10) / 10 // Round to 1 decimal
+      },
+      trendChart: {
+        data: trendChartData,
+        bucketFormat
+      },
+      pieChart: pieChartData,
+      barChart: barChartData,
+      metadata: {
+        startDate: start.toISOString(),
+        endDate: end.toISOString(),
+        period: period || 'custom',
+        orderCount: revenueOrders.length
+      }
+    });
+  } catch (error) {
+    console.error('Error generating revenue report:', error);
+    res.status(500).json({ error: 'Failed to generate report' });
+  }
+});
+
 // Order Summary Report
 app.get('/api/reports/order-summary', async (req, res) => {
   try {

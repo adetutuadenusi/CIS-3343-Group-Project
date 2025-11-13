@@ -300,6 +300,36 @@ export async function getOrdersForReport(startDate: Date, endDate: Date, status?
     .orderBy(desc(orders.createdAt));
 }
 
+// TIER 3 - Report 3: Revenue Report
+// Returns: invoiced revenue (totalAmount), deposits, outstanding (balanceDue), collection rate
+// Excludes: cancelled orders, refunded orders, soft-deleted orders
+// Per architect guidance: Use totalAmount for revenue, balanceDue for outstanding
+export async function getRevenueData(startDate: Date, endDate: Date) {
+  // Get all non-cancelled, non-refunded orders in the date range
+  const revenueOrders = await db
+    .select({
+      id: orders.id,
+      totalAmount: orders.totalAmount,
+      depositAmount: orders.depositAmount,
+      balanceDue: orders.balanceDue,
+      orderType: orders.orderType,
+      status: orders.status,
+      paymentStatus: orders.paymentStatus,
+      createdAt: orders.createdAt,
+    })
+    .from(orders)
+    .where(and(
+      sql`${orders.createdAt} >= ${startDate.toISOString()}`,
+      sql`${orders.createdAt} <= ${endDate.toISOString()}`,
+      isNull(orders.deletedAt),
+      sql`${orders.status} != 'cancelled'`,
+      sql`${orders.paymentStatus} != 'refunded'`
+    ))
+    .orderBy(desc(orders.createdAt));
+  
+  return revenueOrders;
+}
+
 // Get order by tracking token (public endpoint - limited fields)
 export async function getOrderByTrackingToken(token: string) {
   const result = await db
