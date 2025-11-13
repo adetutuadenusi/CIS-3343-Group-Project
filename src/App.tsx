@@ -30,6 +30,13 @@ import { Products } from './pages/Products';
 import { Reports } from './pages/Reports';
 import { Settings } from './pages/Settings';
 
+// Role-based dashboards
+import { SalesDashboard } from './pages/admin/dashboards/SalesDashboard';
+import { BakerDashboard } from './pages/admin/dashboards/BakerDashboard';
+import { DecoratorDashboard } from './pages/admin/dashboards/DecoratorDashboard';
+import { AccountantDashboard } from './pages/admin/dashboards/AccountantDashboard';
+import { ManagerDashboard } from './pages/admin/dashboards/ManagerDashboard';
+
 type AppMode = 'public' | 'login' | 'admin';
 
 export default function App() {
@@ -38,9 +45,37 @@ export default function App() {
   const [appMode, setAppMode] = useState<AppMode>('public');
   const [activePage, setActivePage] = useState('home');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [isInitializing, setIsInitializing] = useState(true);
+
+  // Decode JWT to get user role
+  const getUserRole = (): string => {
+    const token = localStorage.getItem('token');
+    if (!token) return 'sales';
+    
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.role || 'sales';
+    } catch {
+      return 'sales';
+    }
+  };
 
   useEffect(() => {
     console.log('🌐 Emily Bakes Cakes - Loaded');
+    
+    // Initialize userRole from JWT on page load/refresh
+    const token = localStorage.getItem('token');
+    if (token) {
+      const role = getUserRole();
+      setUserRole(role);
+      setIsAuthenticated(true);
+      setAppMode('admin');
+      setActivePage('analytics-dashboard');
+    } else {
+      setUserRole('sales'); // Default for non-authenticated users
+    }
+    setIsInitializing(false);
   }, []);
 
   // Scroll to top instantly on page change (Y:0 reset)
@@ -62,12 +97,17 @@ export default function App() {
   const handleLogin = () => {
     setIsAuthenticated(true);
     setAppMode('admin');
+    const role = getUserRole();
+    setUserRole(role);
+    // Set default page based on role
     setActivePage('analytics-dashboard');
   };
 
   // Handle logout
   const handleLogout = () => {
+    localStorage.removeItem('token'); // Clear JWT token
     setIsAuthenticated(false);
+    setUserRole('sales');
     setAppMode('public');
     setActivePage('home');
   };
@@ -100,10 +140,38 @@ export default function App() {
 
   // Render admin pages - Professional OMS naming
   const renderAdminPage = () => {
+    // Show loading state while role is being determined
+    if (isInitializing || userRole === null) {
+      return (
+        <div className="h-screen flex items-center justify-center" style={{ background: '#F8EBD7' }}>
+          <p style={{ fontFamily: 'Open Sans, sans-serif', color: '#5A3825' }}>Loading...</p>
+        </div>
+      );
+    }
+
+    // Role-based dashboard routing
+    const getRoleDashboard = () => {
+      switch (userRole) {
+        case 'sales':
+          return <SalesDashboard onNavigate={setActivePage} />;
+        case 'baker':
+          return <BakerDashboard onNavigate={setActivePage} />;
+        case 'decorator':
+          return <DecoratorDashboard onNavigate={setActivePage} />;
+        case 'accountant':
+          return <AccountantDashboard onNavigate={setActivePage} />;
+        case 'manager':
+        case 'owner':
+          return <ManagerDashboard onNavigate={setActivePage} />;
+        default:
+          return <SalesDashboard onNavigate={setActivePage} />;
+      }
+    };
+
     switch (activePage) {
       // Modern OMS Pages
       case 'analytics-dashboard':
-        return <AdminDashboard />;
+        return getRoleDashboard();
       case 'fulfillment-board':
         return <OrderBoard />;
       case 'order-management':
@@ -126,7 +194,7 @@ export default function App() {
       // Legacy routes (backward compatibility)
       case 'dashboard':
       case 'analytics':
-        return <AdminDashboard />;
+        return getRoleDashboard();
       case 'order-board':
         return <OrderBoard />;
       case 'order-list':
@@ -149,7 +217,7 @@ export default function App() {
         return <Products />;
       
       default:
-        return <AdminDashboard />;
+        return getRoleDashboard();
     }
   };
 
