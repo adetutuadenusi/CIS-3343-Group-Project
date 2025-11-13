@@ -1,0 +1,1651 @@
+📄 Complete Page Inventory & Wireframes
+I'll create a comprehensive wireframe document for you! Let me outline all pages first, then I'll generate the full wireframe document.
+
+Page Inventory (17 Total Pages)
+PUBLIC WEBSITE (6 pages - existing + 1 new)
+✅ Home - Keep existing
+✅ Gallery - Keep existing
+✅ Menu - Keep existing
+✅ About - Keep existing
+✅ Contact - Enhanced with Google Maps
+🆕 Track Order - Auto-cycling demo page
+STAFF PORTAL (11 pages - all new)
+Staff Login
+Sales Dashboard
+Baker Dashboard
+Decorator Dashboard
+Accountant Dashboard
+Manager Dashboard
+Orders List
+Order Form (Create/Edit)
+Customers List
+Customer Form (Add/Edit)
+Reports & Analytics
+I'll now create a detailed wireframe document with descriptions and ASCII wireframes for all 17 pages:
+
+# Emily Bakes Cakes - Complete Page Wireframes
+**Project:** CIS 3343 Case Study Implementation  
+**Date:** November 13, 2025  
+**Pages:** 17 total (6 public + 11 staff portal)
+---
+## PUBLIC WEBSITE PAGES
+### 1. HOME PAGE (Existing - Keep As-Is)
+**Purpose:** Welcome visitors, showcase bakery story  
+**Access:** Public  
+**Status:** ✅ LOCKED - No changes per user preferences
+**Features:**
+- Hero section with bakery image
+- About Emily story
+- Featured products
+- Call-to-action buttons
+- Testimonials
+┌─────────────────────────────────────────────────┐
+│ [LOGO] Emily Bakes Cakes [Gallery][Menu] │
+│ [About][Contact] │
+├─────────────────────────────────────────────────┤
+│ │
+│ ╔═══════════════════════════════╗ │
+│ ║ HERO IMAGE - BAKERY ║ │
+│ ║ "Every Cake Tells a Story" ║ │
+│ ║ [Order Custom Cake] ║ │
+│ ╚═══════════════════════════════╝ │
+│ │
+│ About Emily's European Baking Journey │
+│ ┌──────────┐ ┌──────────┐ ┌──────────┐ │
+│ │ Quality │ │European │ │ Custom │ │
+│ │ Since │ │ Trained │ │ Designs │ │
+│ │ 2003 │ │ Baker │ │Available │ │
+│ └──────────┘ └──────────┘ └──────────┘ │
+│ │
+│ Featured Products... │
+│ Customer Testimonials... │
+│ │
+│ [Footer - Contact Info, Hours, Social] │
+└─────────────────────────────────────────────────┘
+
+---
+### 2. GALLERY PAGE (Existing - Keep)
+**Purpose:** Showcase previous cake designs  
+**Access:** Public  
+**Status:** ✅ Existing, no major changes
+---
+### 3. SHOP/MENU PAGE (Existing - Keep)
+**Purpose:** Display standard products and pricing  
+**Access:** Public  
+**Status:** ✅ Existing, no major changes
+---
+### 4. ABOUT PAGE (Existing - Keep)
+**Purpose:** Tell Emily's story, team info  
+**Access:** Public  
+**Status:** ✅ Existing, no major changes
+---
+### 5. CONTACT PAGE (Enhanced)
+**Purpose:** Contact form + location map  
+**Access:** Public  
+**Changes:** ✅ Add Google Maps embed
+**Features:**
+- Contact form (saves to DB + sends email)
+- Google Maps embed (no API key)
+- Business hours
+- Phone, email, address
+┌─────────────────────────────────────────────────┐
+│ [LOGO] Emily Bakes Cakes [Navigation] │
+├─────────────────────────────────────────────────┤
+│ │
+│ Contact Us │
+│ │
+│ ┌─────────────────┐ ┌────────────────────┐ │
+│ │ CONTACT FORM │ │ BUSINESS INFO │ │
+│ │ │ │ │ │
+│ │ Name: [] │ │ 📍 123 Galleria Dr │ │
+│ │ Email: [] │ │ Houston, TX │ │
+│ │ Phone: [] │ │ │ │
+│ │ Message: │ │ 📞 (713) 555-CAKE │ │
+│ │ [____] │ │ │ │
+│ │ [________] │ │ ✉️ info@emily... │ │
+│ │ │ │ │ │
+│ │ [Send] │ │ 🕒 Mon-Sat 8am-6pm │ │
+│ └─────────────────┘ └────────────────────┘ │
+│ │
+│ ╔═══════════════════════════════════════╗ │
+│ ║ GOOGLE MAPS EMBED ║ │
+│ ║ [Interactive map showing location] ║ │
+│ ║ ║ │
+│ ╚═══════════════════════════════════════╝ │
+│ │
+│ [Footer] │
+└─────────────────────────────────────────────────┘
+
+---
+### 6. TRACK ORDER PAGE ⭐ NEW
+**Purpose:** Public order tracking with auto-cycling status  
+**Access:** Public (anyone with link, NO login)  
+**URL:** `/track/{TOKEN}` (e.g., `/track/TRK-Q1-001`)
+**Features:**
+- Order summary (customer, product, price)
+- Pickup day/time
+- Auto-cycling status bar (2-min intervals)
+- Loops through ALL 11 stages continuously
+- Mobile-responsive
+- Real-time elapsed time + estimated completion
+┌─────────────────────────────────────────────────┐
+│ [LOGO] Emily Bakes Cakes Track Order │
+├─────────────────────────────────────────────────┤
+│ │
+│ Order Tracking: #TRK-Q1-001 │
+│ │
+│ ╔═══════════════════════════════════════╗ │
+│ ║ Customer: John Doe ║ │
+│ ║ Product: 3-Layer Birthday Cake ║ │
+│ ║ Pickup: Saturday, Nov 16 at 2:00 PM ║ │
+│ ╚═══════════════════════════════════════╝ │
+│ │
+│ Order Status (Updates every 2 minutes) │
+│ │
+│ ●━━━●━━━●━━━○━━━○━━━○━━━○━━━○━━━○━━━○━━━○ │
+│ │ │ │ │ │ │ │ │ │ │ │ │
+│ ✓ ✓ ✓ ⟳ │
+│ Received │
+│ Confirmed Current: Baking Layer 2 │
+│ In Production │
+│ Baking │
+│ Decorating Next: Decorating │
+│ Quality Check │
+│ Packaging │
+│ Ready │
+│ │
+│ ⏱️ Elapsed: 4 hours 23 minutes │
+│ 📅 Est. Completion: Friday 6:00 PM │
+│ │
+│ ┌─────────────────────────────────────┐ │
+│ │ 🔔 You'll receive an email when │ │
+│ │ your order is ready for pickup! │ │
+│ └─────────────────────────────────────┘ │
+│ │
+│ Questions? Call (713) 555-CAKE │
+│ │
+│ [Footer] │
+└─────────────────────────────────────────────────┘
+
+Auto-Cycle Stages (2-min total, loops forever):
+
+Order Received
+Order Confirmed
+In Production - Baking Layer 1
+In Production - Baking Layer 2
+In Production - Baking Layer 3
+In Production - Assembling
+In Production - Decorating
+Quality Check
+Packaging
+Ready for Pickup
+(Loop back to #1)
+---
+## STAFF PORTAL PAGES
+### 7. STAFF LOGIN PAGE ⭐ NEW
+**Purpose:** Authenticate staff members  
+**Access:** Public URL (hidden link)  
+**URL:** `/staff-login`
+**Features:**
+- Email/password login
+- Role-based redirect after login
+- JWT token authentication
+- Remember me option
+- Error handling
+┌─────────────────────────────────────────────────┐
+│ │
+│ │
+│ Emily Bakes Cakes │
+│ Staff Portal Login │
+│ │
+│ ┌────────────────────────┐ │
+│ │ │ │
+│ │ Email: │ │
+│ │ [] │ │
+│ │ │ │
+│ │ Password: │ │
+│ │ [] │ │
+│ │ │ │
+│ │ ☐ Remember me │ │
+│ │ │ │
+│ │ [ Login ] │ │
+│ │ │ │
+│ │ Forgot password? │ │
+│ │ │ │
+│ └────────────────────────┘ │
+│ │
+│ Demo Accounts: 6 total│
+│ sales@emilybakes.com │
+│ baker@emilybakes.com │
+│ (Password: DemoPass123!) │
+│ │
+└─────────────────────────────────────────────────┘
+
+---
+### 8. SALES DASHBOARD ⭐ NEW
+**Purpose:** Sales staff home screen  
+**Access:** Role: Sales  
+**Login:** `sales@emilybakes.com`
+**Features:**
+- Quick action: Create new order
+- Today's pickups list
+- Pending orders requiring follow-up
+- Recent customers
+- No revenue/financial data
+┌─────────────────────────────────────────────────┐
+│ [🎂 Logo] Emily Staff Portal 👤 Sales Staff │
+│ [Dashboard][Orders][Customers][Products][Logout]│
+├─────────────────────────────────────────────────┤
+│ │
+│ Sales Dashboard │
+│ │
+│ ┌──────────────────┐ ┌──────────────────┐ │
+│ │ 🆕 Create Order │ │ 📞 Pending Calls │ │
+│ │ │ │ │ │
+│ │ [+ New Order] │ │ 3 customers │ │
+│ │ │ │ need follow-up │ │
+│ └──────────────────┘ └──────────────────┘ │
+│ │
+│ 📅 Today's Pickups (5) │
+│ ┌────────────────────────────────────────┐ │
+│ │ 10:00 AM │ Jane Smith │ Birthday #234 │ │
+│ │ 2:00 PM │ Corp Client │ Event #235 │ │
+│ │ 4:00 PM │ John Doe │ Wedding #236 │ │
+│ │ 5:30 PM │ Mary Jones │ Baby #237 │ │
+│ │ 6:00 PM │ Bob Wilson │ Anniv #238 │ │
+│ └────────────────────────────────────────┘ │
+│ │
+│ 📋 Recent Orders (Status) │
+│ ┌────────────────────────────────────────┐ │
+│ │ #239 │ Processing │ Due: Nov 15 │ │
+│ │ #240 │ Baking │ Due: Nov 16 │ │
+│ │ #241 │ Decorating │ Due: Nov 17 │ │
+│ └────────────────────────────────────────┘ │
+│ │
+│ 👥 Recent Customers │
+│ [Customer list with quick actions...] │
+│ │
+└─────────────────────────────────────────────────┘
+
+---
+### 9. BAKER DASHBOARD ⭐ NEW
+**Purpose:** Baker home screen  
+**Access:** Role: Baker  
+**Login:** `baker@emilybakes.com`
+**Features:**
+- Assigned orders queue
+- Baking status updates
+- Layer details view
+- No revenue/financial data
+- Production schedule
+┌─────────────────────────────────────────────────┐
+│ [🎂 Logo] Emily Staff Portal 👤 Baker │
+│ [Dashboard][My Orders][Products][Logout] │
+├─────────────────────────────────────────────────┤
+│ │
+│ Baker Dashboard │
+│ │
+│ 🔥 My Baking Queue (4 orders) │
+│ │
+│ ┌─────────────────────────────────────────┐ │
+│ │ ⚡ URGENT - Due Today │ │
+│ │ Order #234 - 3-Layer Chocolate │ │
+│ │ Customer: Jane Smith │ │
+│ │ Pickup: Today 2:00 PM │ │
+│ │ │ │
+│ │ Layer 1: Chocolate, Buttercream (✓) │ │
+│ │ Layer 2: Chocolate, Raspberry (✓) │ │
+│ │ Layer 3: Chocolate, Mousse (⏳ current) │ │
+│ │ │ │
+│ │ [Update Status] [Mark Complete] │ │
+│ └─────────────────────────────────────────┘ │
+│ │
+│ 📅 Tomorrow's Schedule (3 orders) │
+│ ┌─────────────────────────────────────────┐ │
+│ │ #235 - 2-Layer Vanilla │ Start 8am │ │
+│ │ #236 - 4-Layer Wedding │ Start 9am │ │
+│ │ #237 - Cupcakes (24) │ Start 2pm │ │
+│ └─────────────────────────────────────────┘ │
+│ │
+│ ✅ Completed Today (2) │
+│ #230, #231 │
+│ │
+│ 📊 This Week: 12 orders assigned │
+│ │
+└─────────────────────────────────────────────────┘
+
+---
+### 10. DECORATOR DASHBOARD ⭐ NEW
+**Purpose:** Decorator home screen  
+**Access:** Role: Decorator  
+**Login:** `decorator@emilybakes.com`
+**Features:**
+- Assigned decoration queue
+- Decoration details/notes
+- Customer photo references
+- Status updates
+- No revenue/financial data
+┌─────────────────────────────────────────────────┐
+│ [🎂 Logo] Emily Staff Portal 👤 Decorator │
+│ [Dashboard][My Orders][Gallery][Logout] │
+├─────────────────────────────────────────────────┤
+│ │
+│ Decorator Dashboard │
+│ │
+│ 🎨 My Decoration Queue (3 orders) │
+│ │
+│ ┌─────────────────────────────────────────┐ │
+│ │ ⚡ PRIORITY │ │
+│ │ Order #234 - Wedding Cake │ │
+│ │ Customer: Jane Smith │ │
+│ │ Pickup: Tomorrow 2:00 PM │ │
+│ │ │ │
+│ │ Icing: White Buttercream │ │
+│ │ Colors: Blush Pink, Gold │ │
+│ │ Decorations: Fondant flowers, pearls │ │
+│ │ │ │
+│ │ 📸 Customer References: │ │
+│ │ [pinterest.com/example-cake-link] │ │
+│ │ │ │
+│ │ 📝 Special Notes: │ │
+│ │ "Monogram 'J&M' on top tier" │ │
+│ │ │ │
+│ │ Status: [▓▓▓▓░░░░░░] 40% Complete │ │
+│ │ │ │
+│ │ [Update Progress] [Mark Complete] │ │
+│ │ [Contact Customer] [Request Approval] │ │
+│ └─────────────────────────────────────────┘ │
+│ │
+│ 📋 Next in Queue (2) │
+│ #235 - Birthday (Start after #234) │
+│ #236 - Anniversary (Due Nov 18) │
+│ │
+│ ✅ Completed This Week: 5 orders │
+│ │
+└─────────────────────────────────────────────────┘
+
+---
+### 11. ACCOUNTANT DASHBOARD ⭐ NEW
+**Purpose:** Accountant/CPA home screen  
+**Access:** Role: Accountant  
+**Login:** `accountant@emilybakes.com`
+**Features:**
+- Revenue charts (Recharts)
+- Payment tracking
+- Outstanding balances
+- Weekly/monthly reports
+- Financial KPIs
+┌─────────────────────────────────────────────────┐
+│ [🎂 Logo] Emily Staff Portal 👤 Dan (CPA) │
+│ [Dashboard][Orders][Reports][Analytics][Logout] │
+├─────────────────────────────────────────────────┤
+│ │
+│ Accountant Dashboard │
+│ │
+│ 💰 Financial Overview (This Month) │
+│ ┌──────────┐ ┌──────────┐ ┌──────────┐ │
+│ │ Revenue │ │Outstanding│ │ Deposits │ │
+│ │ $12,450 │ │ $2,300 │ │ $8,100 │ │
+│ │ +15% ↗ │ │ 18 orders│ │ Collected│ │
+│ └──────────┘ └──────────┘ └──────────┘ │
+│ │
+│ 📊 Revenue Trends (Recharts) │
+│ ╔═══════════════════════════════════════╗ │
+│ ║ $ ║ │
+│ ║ 15k│ ╱╲ ║ │
+│ ║ 12k│ ╱ ╲ ╱╲ ║ │
+│ ║ 9k│ ╱ ╲ ╱ ╲ ╱ ║ │
+│ ║ 6k│ ╱ ╲ ╱ ╲ ╱ ║ │
+│ ║ 3k│╱ ╲╱ ╲╱ ║ │
+│ ║ └────────────────────────── ║ │
+│ ║ Sep Oct Nov Dec Jan Feb ║ │
+│ ╚═══════════════════════════════════════╝ │
+│ │
+│ ⚠️ Outstanding Balances (8 orders) │
+│ ┌─────────────────────────────────────────┐ │
+│ │ #234│Jane Smith │$150│Due: Nov 16│[Pay]│ │
+│ │ #237│Corp Client │$450│Due: Nov 17│[
+
+---
+
+## 📄 PAGE-BY-PAGE IMPLEMENTATION GUIDE
+
+---
+
+# PAGE 1: PUBLIC HOME PAGE
+
+## Wireframe
+
+```
+┌─────────────────────────────────────────────────────┐
+│                   HEADER / NAV                      │
+│  Logo  Home  Gallery  Menu  Contact  [Staff Login]  │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│         🎂 HERO SECTION                             │
+│    "Handcrafted Custom Cakes"                       │
+│                                                       │
+│    [Background: 1 large hero image]                 │
+│    [CTA Button 1: "View Gallery"]                   │
+│    [CTA Button 2: "Contact Us"]                     │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  📸 FEATURED CAKES (3 columns on desktop)           │
+│                                                       │
+│  [Cake 1]    [Cake 2]    [Cake 3]                  │
+│  Title       Title       Title                      │
+│  Category    Category    Category                   │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  ⭐ TESTIMONIALS (Carousel)                         │
+│                                                       │
+│  "Emily made my daughter's birthday cake!"          │
+│  - Jane Smith                                       │
+│                                                       │
+│  [Prev] [Next] (or auto-scroll)                    │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  👤 ABOUT BLURB (150 words + photo)                 │
+│                                                       │
+│  [Small photo] Emily's Story...                     │
+│                                                       │
+│  [Learn More button]                                │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  FOOTER                                             │
+│  Hours | Contact | Social | [Hidden: Staff Portal]│
+│                                                       │
+└─────────────────────────────────────────────────────┘
+
+MOBILE (320px):
+- Stack all sections vertically
+- Featured cakes: 1 per row
+- Hero button below image
+- Footer: Stack horizontally
+```
+
+## Implementation Prompt
+
+```
+Build PUBLIC HOME PAGE (React component):
+
+Component: src/pages/public/Home.tsx
+
+SECTIONS (in order):
+
+1. HERO SECTION
+   - Full-width image background
+   - Overlay text: "Handcrafted Custom Cakes for Every Occasion"
+   - Two CTA buttons: "View Gallery" (blue), "Contact Us" (pink)
+   - Responsive: 100vh on desktop, 60vh on mobile
+   - Image from: /public/images/hero-cake.jpg
+
+2. FEATURED CAKES
+   - Grid: 1 col (mobile) → 3 cols (desktop)
+   - Show 3 featured cakes
+   - Data source: Array of cake objects OR query /api/ingredients/featured
+   - Each card shows: Image, cake name, category, "View More" link
+   - On click: Filter gallery by category
+
+3. TESTIMONIALS CAROUSEL
+   - 3-5 testimonials from array
+   - Auto-scroll every 5 seconds OR manual prev/next buttons
+   - Show: Quote, customer name, rating (stars)
+   - Smooth fade transition
+
+4. ABOUT SECTION
+   - 2-column layout: Image (left) + Text (right)
+   - Mobile: Stack vertically
+   - Emily's story (150 words)
+   - "Learn More" button → links to /about page
+
+5. FOOTER
+   - 4 columns: Hours | Address | Contact | Links
+   - Include hidden link: "Staff Portal" (bottom right, small text)
+   - Social media icons: Facebook, Instagram, Google
+   - Copyright notice
+
+STYLING:
+- Color scheme: Raspberry (#C44569) for CTAs, Vanilla (#F8EBD7) background
+- Font: Serif for headings, sans-serif for body
+- Mobile breakpoints: md: 768px, lg: 1024px
+- Use Tailwind CSS classes
+
+COMPONENT STRUCTURE:
+<HomePage>
+  <Header />
+  <HeroSection />
+  <FeaturedCakes />
+  <TestimonialCarousel />
+  <AboutSection />
+  <Footer />
+</HomePage>
+
+ACCEPTANCE CRITERIA:
+✅ Responsive: Works on 320px (mobile), 768px (tablet), 1920px (desktop)
+✅ All sections render without errors
+✅ Links navigate correctly
+✅ Images lazy-load
+✅ No console errors
+✅ Mobile navigation works (hamburger menu on header)
+```
+
+## Clarifying Questions for This Page
+
+1. **Hero Image:** Should it be a photo of an actual cake OR an illustrated background?
+2. **Featured Cakes Data:** Should this query the API or use hardcoded array?
+3. **Testimonials:** Are these hardcoded in component OR from database?
+4. **About Section:** Should "Learn More" button link to `/about` page (need to build) OR expand inline?
+
+**Answers needed:** _______________
+
+---
+
+# PAGE 2: GALLERY PAGE
+
+## Wireframe
+
+```
+┌─────────────────────────────────────────────────────┐
+│                   HEADER / NAV                      │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  FILTER BUTTONS (horizontal tabs)                   │
+│  [All] [Birthdays] [Weddings] [Events] [Custom]    │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  GALLERY GRID (responsive)                          │
+│                                                       │
+│  [Cake 1] [Cake 2] [Cake 3] [Cake 4]  (4 desktop) │
+│  [Cake 5] [Cake 6] [Cake 7] [Cake 8]  (2 tablet)  │
+│  [Cake 9] [Cake 10]                    (1 mobile)  │
+│                                                       │
+│  Each card: Image + Title + Category               │
+│  Hover: Dim + "View Full Image" overlay             │
+│                                                       │
+│  LIGHTBOX (modal when clicked):                     │
+│  ┌──────────────────────────┐                       │
+│  │ [X] Full image (large)   │                       │
+│  │ Description text         │                       │
+│  │ [Prev] [Next] [Close]    │                       │
+│  └──────────────────────────┘                       │
+│                                                       │
+│  PAGINATION (if >20 cakes)                         │
+│  [< Prev] [1] [2] [3] [Next >]                    │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  FOOTER                                             │
+│                                                       │
+└─────────────────────────────────────────────────────┘
+
+MOBILE (320px):
+- Filter buttons: Scroll horizontally OR dropdown menu
+- Gallery grid: 1 per row
+- Lightbox: Full screen
+```
+
+## Implementation Prompt
+
+```
+Build GALLERY PAGE (React component):
+
+Component: src/pages/public/Gallery.tsx
+
+FEATURES:
+
+1. FILTER BUTTONS
+   - State: selectedCategory (All, Birthday, Wedding, Event, Custom)
+   - On click: Re-filter gallery array
+   - Active button: Highlighted color (Raspberry)
+   - Mobile: Show as dropdown select OR horizontal scroll
+
+2. GALLERY GRID
+   - Grid layout: 1 col (mobile) → 2 cols (tablet) → 4 cols (desktop)
+   - Each cake card:
+     * Image (square, 300x300px, object-fit: cover)
+     * Title (h3 font)
+     * Category tag (small badge)
+     * Hover effect: Dark overlay + "View" text
+   - Lazy load images: Use IntersectionObserver
+
+3. LIGHTBOX MODAL
+   - On card click: Open modal with:
+     * Full image (larger preview)
+     * Title
+     * Description/details
+     * Prev/Next buttons (if multiple cakes)
+     * Close button (X) or click outside to close
+   - Smooth transition (fade in/out)
+   - Disable body scroll when open
+
+4. PAGINATION
+   - If >12 cakes per page: Show pagination
+   - Pages: 1, 2, 3, etc.
+   - Previous/Next buttons
+   - Show "Showing X of Y cakes" text
+
+DATA STRUCTURE:
+const cakes = [
+  {
+    id: 1,
+    image: '/images/cake-1.jpg',
+    title: 'Pink Birthday Cake',
+    category: 'birthday',
+    description: '3-layer vanilla cake...'
+  },
+  // ... more cakes
+]
+
+STYLING:
+- Gap between cards: 20px
+- Card border-radius: 8px
+- Hover: Opacity 0.8 + scale(1.02)
+- Lightbox: z-index 50, semi-transparent backdrop
+
+ACCEPTANCE CRITERIA:
+✅ Filters work (changes gallery display)
+✅ Lightbox opens and closes
+✅ Prev/Next navigate between cakes
+✅ Mobile responsive (1 col on phone)
+✅ Images lazy-load
+✅ Pagination works if >12 cakes
+```
+
+## Clarifying Questions
+
+1. **Sample Images:** How many cake photos should be seeded? (12, 20, 30?)
+2. **Category Tags:** Can a cake have multiple categories (e.g., "Wedding + Custom")?
+3. **Lightbox:** Should it show full image OR crop to lightbox size?
+4. **Data Source:** Hardcoded array OR query from `/api/gallery` endpoint?
+
+**Answers needed:** _______________
+
+---
+
+# PAGE 3: MENU/PRICING PAGE
+
+## Wireframe
+
+```
+┌─────────────────────────────────────────────────────┐
+│                   HEADER / NAV                      │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  HEADING: "Our Menu & Pricing"                      │
+│                                                       │
+│  INTRO TEXT:                                        │
+│  "Customize your perfect cake with our options"     │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  CAKE SIZE & PRICING TABLE                          │
+│                                                       │
+│  Size      | Layers | Serves | Base Price          │
+│  ────────────────────────────────────────           │
+│  6" Small  | 2      | 8-10   | $25                 │
+│  8" Medium | 2-3    | 12-16  | $35                 │
+│  10" Large | 3-4    | 20-24  | $45                 │
+│  12" XL    | 4+     | 25+    | $55                 │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  FLAVOR OPTIONS (Grid)                              │
+│                                                       │
+│  🍫 Flavors          🍓 Fillings      🎨 Icings     │
+│  ────────────────    ──────────────    ──────────   │
+│  • Chocolate        • Buttercream     • Fondant    │
+│  • Vanilla          • Fruit           • Ganache    │
+│  • Strawberry       • Mousse          • Buttercream│
+│  • Red Velvet       • Cream Cheese    • Whipped    │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  CUSTOMIZATION CHARGES (Optional)                   │
+│                                                       │
+│  + Writing/Personalization: $5                      │
+│  + Premium Fillings: +$3 per layer                  │
+│  + Rush Order (< 48h): +$10                         │
+│  + Dietary: Gluten-Free, Vegan: +$5                │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  CTA BUTTONS:                                        │
+│  [Request Custom Quote] [Contact Us] [View Gallery] │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  FOOTER                                             │
+│                                                       │
+└─────────────────────────────────────────────────────┘
+```
+
+## Implementation Prompt
+
+```
+Build MENU/PRICING PAGE (React component):
+
+Component: src/pages/public/Menu.tsx
+
+SECTIONS:
+
+1. PAGE HEADER
+   - Title: "Our Menu & Pricing"
+   - Subtitle: "Customize your perfect cake"
+   - Short intro (2-3 sentences)
+
+2. CAKE SIZE & PRICING TABLE
+   - Show all available sizes
+   - Columns: Size | Base Price | Layers | Serves
+   - Data source: Either hardcoded OR /api/products
+   - Styled as clean table with alternating row colors
+   - Responsive: Scroll horizontally on mobile
+
+3. FLAVOR OPTIONS (3-column grid)
+   - Column 1: FLAVORS
+     * Chocolate
+     * Vanilla
+     * Strawberry
+     * Red Velvet
+     * [More...]
+   
+   - Column 2: FILLINGS
+     * Buttercream
+     * Fruit (berries, lemon, etc.)
+     * Mousse (chocolate, vanilla)
+     * Cream Cheese
+     * [More...]
+   
+   - Column 3: ICINGS
+     * Fondant (smooth, professional)
+     * Ganache (glossy)
+     * Buttercream (classic)
+     * Whipped Cream
+     * [More...]
+
+   - Mobile: Stack to 1 column
+
+4. SPECIAL OPTIONS
+   - Gluten-Free: +$5
+   - Vegan: +$5
+   - Dairy-Free: +$5
+   - Show as toggleable checkboxes OR info text
+
+5. CUSTOMIZATION CHARGES
+   - Display in card format:
+     * Personalized Writing: $5
+     * Premium Fillings: +$3/layer
+     * Rush Order (<48h): +$10
+
+6. CALL-TO-ACTION SECTION
+   - 3 buttons:
+     * [Request Custom Quote] → links to /contact
+     * [View Our Gallery] → links to /gallery
+     * [Contact Us] → links to /contact
+
+STYLING:
+- Table: Clean borders, alternating gray/white rows
+- Flavor grid: 3 cols on desktop, 1 col on mobile
+- Cards: Light background, subtle shadow
+- CTA buttons: Different colors (blue, pink, green)
+
+DATA SOURCE OPTIONS:
+Option A: Hardcoded array in component
+Option B: Query from /api/products endpoint
+Option C: Static text (no API)
+
+ACCEPTANCE CRITERIA:
+✅ All sizes and prices display
+✅ All flavors/fillings/icings listed
+✅ Responsive layout (mobile/tablet/desktop)
+✅ Buttons navigate correctly
+✅ No console errors
+✅ Table readable on mobile (horizontal scroll OK)
+```
+
+## Clarifying Questions
+
+1. **Flavor Data:** Should flavors come from database (INGREDIENT table) OR hardcoded?
+2. **Pricing Display:** Should price be calculated based on size? (Auto-add $10 for each layer?)
+3. **Special Options:** Should these be ordered together with cake OR separate?
+4. **Customization Charges:** Are these fixed prices OR variable by order?
+
+**Answers needed:** _______________
+
+---
+
+# PAGE 4: CONTACT PAGE
+
+## Wireframe
+
+```
+┌─────────────────────────────────────────────────────┐
+│                   HEADER / NAV                      │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  HEADING: "Get in Touch"                            │
+│  Subheading: "Have questions? Contact us!"          │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  2-COLUMN LAYOUT (Desktop) / STACKED (Mobile)       │
+│                                                       │
+│  LEFT COLUMN:                                        │
+│  ┌────────────────────────┐                          │
+│  │  CONTACT FORM          │                          │
+│  │                        │                          │
+│  │  Name: [input]         │                          │
+│  │  Email: [input]        │                          │
+│  │  Phone: [input]        │                          │
+│  │  Event Date: [picker]  │                          │
+│  │  Message: [textarea]   │                          │
+│  │                        │                          │
+│  │  [Submit]              │                          │
+│  └────────────────────────┘                          │
+│                                                       │
+│  RIGHT COLUMN:                                       │
+│  ┌────────────────────────┐                          │
+│  │  GOOGLE MAP            │                          │
+│  │                        │                          │
+│  │  [Embedded map showing  │                          │
+│  │   bakery location]     │                          │
+│  │                        │                          │
+│  └────────────────────────┘                          │
+│                                                       │
+│  BUSINESS HOURS (below map):                         │
+│  Monday-Friday: 9am-6pm                              │
+│  Saturday: 10am-5pm                                  │
+│  Sunday: Closed                                      │
+│                                                       │
+│  ADDRESS:                                            │
+│  1234 Main St, Houston, TX 77001                     │
+│                                                       │
+│  PHONE:                                              │
+│  (713) 555-CAKE                                      │
+│                                                       │
+│  EMAIL:                                              │
+│  emily@emilybakes.com                                │
+│                                                       │
+│  SOCIAL MEDIA ICONS:                                 │
+│  [Facebook] [Instagram] [Google]                     │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  FOOTER                                             │
+│                                                       │
+└─────────────────────────────────────────────────────┘
+```
+
+## Implementation Prompt
+
+```
+Build CONTACT PAGE (React component):
+
+Component: src/pages/public/Contact.tsx
+
+LAYOUT:
+- Desktop: 2 columns (form left, map right)
+- Mobile: Single column (form above, map below)
+- Tablet: Depends on width (can adjust breakpoints)
+
+LEFT COLUMN - CONTACT FORM:
+
+Form fields (all required):
+1. Name
+   - Input type: text
+   - Placeholder: "Your name"
+   - Validation: min 2 chars
+
+2. Email
+   - Input type: email
+   - Placeholder: "your@email.com"
+   - Validation: valid email format
+
+3. Phone
+   - Input type: tel
+   - Placeholder: "(713) 555-0000"
+   - Validation: valid phone format
+
+4. Event Date
+   - Input type: date
+   - Placeholder: Select date picker
+   - Validation: not in past
+
+5. Subject (dropdown)
+   - Options: Birthday, Wedding, Corporate, Other
+   - Default: Select...
+
+6. Message
+   - Textarea: 5 rows
+   - Placeholder: "Tell us about your cake..."
+   - Max length: 500 chars
+
+7. Submit Button
+   - Text: "Send Inquiry"
+   - On click: Validate form → Send to backend
+   - Show success message: "Thank you! We'll get back to you soon."
+   - Show error message: "Oops, something went wrong."
+
+FORM SUBMISSION ENDPOINT:
+POST /api/contact
+Body: {
+  name: string,
+  email: string,
+  phone: string,
+  eventDate: string,
+  subject: string,
+  message: string
+}
+
+RIGHT COLUMN - MAP & INFO:
+
+1. GOOGLE MAP
+   - Embedded iframe OR react-google-maps library
+   - Bakery address: 1234 Main St, Houston, TX 77001
+   - Show marker on location
+   - Zoom level: 15
+   - Allow click to open in Google Maps
+
+   >>> CLARIFYING QUESTION <<<
+   **Should we use Google Maps API (need key + setup) 
+      OR static image / OpenStreetMap (simpler)?**
+
+2. BUSINESS INFO CARDS
+   - Card 1: HOURS
+     * Monday-Friday: 9am-6pm
+     * Saturday: 10am-5pm
+     * Sunday: Closed
+
+   - Card 2: ADDRESS
+     * 1234 Main St
+     * Houston, TX 77001
+     * Link: Opens Google Maps
+
+   - Card 3: CONTACT
+     * Phone: (713) 555-CAKE (clickable: tel: link)
+     * Email: emily@emilybakes.com (mailto: link)
+
+   - Card 4: SOCIAL
+     * Facebook icon (link)
+     * Instagram icon (link)
+     * Google Business link
+
+STYLING:
+- Form: White background, subtle shadow, rounded corners
+- Form fields: 100% width on mobile, use Tailwind grid
+- Map: 400px height on desktop, 300px on mobile
+- Info cards: 4 columns desktop, 2 columns tablet, 1 mobile
+- Submit button: Raspberry color, hover effect
+
+VALIDATION:
+✅ All fields required
+✅ Email format validated
+✅ Phone format validated
+✅ Event date not in past
+✅ Show inline error messages
+
+BACKEND ACTIONS (when form submitted):
+1. Save inquiry to database (inquiries table)
+2. Send email to emily@emilybakes.com with inquiry details
+3. Optionally: Send confirmation email to customer
+
+ACCEPTANCE CRITERIA:
+✅ Form validates correctly
+✅ Form submits successfully
+✅ Success message displays
+✅ Map displays bakery location
+✅ All info cards show correctly
+✅ Responsive on mobile/tablet/desktop
+✅ All links work (phone, email, social, maps)
+✅ No console errors
+```
+
+## Clarifying Questions
+
+**🔴 CRITICAL: GOOGLE MAPS API**
+1. **Should Contact page include Google Maps embedded map?**
+   - Option A: YES - Embedded Google Map showing bakery location (need API key)
+   - Option B: NO - Just show address text and "View on Google Maps" link
+   - Option C: Use OpenStreetMap instead (open-source, no API key)
+   - **DECISION:** ________________
+
+2. **Form Submission Backend:**
+   - Option A: Send email immediately to emily@emilybakes.com
+   - Option B: Save to database, staff reviews in portal
+   - Option C: Both
+   - **DECISION:** ________________
+
+3. **Success Message:**
+   - Option A: Toast notification (appears top-right, auto-dismiss)
+   - Option B: Modal popup
+   - Option C: Page redirect to "Thank you" page
+   - **DECISION:** ________________
+
+4. **Confirmation Email to Customer:**
+   - Option A: YES - Send "We received your inquiry" email
+   - Option B: NO - Don't send confirmation
+   - **DECISION:** ________________
+
+**Answers needed:** _______________
+
+---
+
+# PAGE 5: CUSTOMER LOGIN PAGE
+
+## Wireframe
+
+```
+┌─────────────────────────────────────────────────────┐
+│                   HEADER / NAV                      │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│                                                       │
+│          CENTER LOGIN FORM (300px wide)             │
+│                                                       │
+│    ┌────────────────────────────┐                    │
+│    │   Emily Bakes Cakes        │                    │
+│    │   Customer Login            │                    │
+│    │                            │                    │
+│    │  Email: [input]            │                    │
+│    │  Password: [input]         │                    │
+│    │                            │                    │
+│    │  ☐ Remember me             │                    │
+│    │                            │                    │
+│    │  [Login] [Cancel]          │                    │
+│    │                            │                    │
+│    │  Forgot password?          │                    │
+│    │  Don't have account?       │                    │
+│    │  [Create Account]          │                    │
+│    │                            │                    │
+│    └────────────────────────────┘                    │
+│                                                       │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  FOOTER                                             │
+│                                                       │
+└─────────────────────────────────────────────────────┘
+```
+
+## Implementation Prompt
+
+```
+Build CUSTOMER LOGIN PAGE (React component):
+
+Component: src/pages/public/CustomerLogin.tsx
+
+FORM LAYOUT:
+- Centered modal on page
+- Width: 400px (desktop), 90% (mobile)
+- Padding: 40px
+- Background: White with subtle shadow
+- Border-radius: 8px
+
+FORM FIELDS:
+
+1. Email
+   - Type: email
+   - Placeholder: "your@email.com"
+   - Required: Yes
+   - Validation: Valid email format
+
+2. Password
+   - Type: password
+   - Placeholder: "••••••••"
+   - Required: Yes
+   - Show/hide toggle (eye icon)
+
+3. "Remember Me" Checkbox
+   - Saves credentials locally (localStorage) - optional
+   - Default: unchecked
+
+BUTTONS:
+
+1. Login Button
+   - Text: "Sign In"
+   - Color: Raspberry (#C44569)
+   - On click: 
+     * Validate form
+     * Call POST /api/customer/auth/login
+     * If success: Store JWT token, redirect to /customer/dashboard
+     * If error: Show error message
+
+2. Cancel Button
+   - Text: "Back"
+   - On click: Navigate to home page (/)
+
+LINKS (below form):
+
+1. "Forgot Password?"
+   - On click: Show password reset modal OR navigate to /reset-password
+
+   >>> CLARIFYING QUESTION <<<
+   **Should we build password reset feature?**
+
+2. "Don't have an account?"
+   - Link text: "Create Account"
+   - On click: Navigate to /customer/signup
+
+FORM SUBMISSION:
+POST /api/customer/auth/login
+Body: {
+  email: string,
+  password: string
+}
+Response: {
+  token: JWT,
+  customerId: number,
+  name: string,
+  email: string
+}
+
+ON SUCCESS:
+- Store JWT in localStorage or cookie
+- Redirect to /customer/dashboard
+- Show "Welcome back, [Name]!" toast
+
+ON ERROR:
+- Show error message (red text below form)
+- Clear password field
+- Keep email field filled
+- Show specific errors:
+  * "Email not found"
+  * "Incorrect password"
+  * "Account not activated"
+
+STYLING:
+- Form: White background, 2px border (light gray)
+- Input fields: Full width, padding 12px, border 1px gray
+- Focus state: Border changes to Raspberry
+- Error text: Red color (#E63946)
+- Label font: Bold, 14px
+- Button: Full width, 14px padding, cursor pointer
+
+RESPONSIVE:
+- Desktop: 400px centered modal
+- Tablet: 90% width, centered
+- Mobile: Full width with padding
+
+ACCEPTANCE CRITERIA:
+✅ Form validates (email + password required)
+✅ Login API call succeeds
+✅ JWT token stored
+✅ Redirects to dashboard on success
+✅ Shows error messages on failure
+✅ Mobile responsive
+✅ "Forgot Password" link (if implemented)
+✅ "Create Account" link works
+```
+
+## Clarifying Questions
+
+1. **Password Reset Feature:**
+   - Option A: YES - Build password reset email flow
+   - Option B: NO - Skip for MVP
+   - **DECISION:** ________________
+
+2. **Create Account:**
+   - Option A: Self-service signup (public signup form)
+   - Option B: Staff-only (can't create own account)
+   - **DECISION:** ________________
+
+3. **Remember Me:**
+   - Option A: YES - Save credentials in localStorage
+   - Option B: NO - Don't save anything
+   - **DECISION:** ________________
+
+4. **Multi-Customer Family:**
+   - Option A: One account = one customer
+   - Option B: One account = manage multiple customers
+   - **DECISION:** ________________
+
+**Answers needed:** _______________
+
+---
+
+# PAGE 6: CUSTOMER DASHBOARD / MY ORDERS
+
+## Wireframe
+
+```
+┌─────────────────────────────────────────────────────┐
+│           HEADER: Welcome, [Customer Name]          │
+│  [Notifications] [Profile] [Logout]                 │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  SIDEBAR (collapsed on mobile):                      │
+│  • My Orders                                         │
+│  • Track Order                                       │
+│  • Profile Settings                                 │
+│  • Invoices                                          │
+│  • Logout                                            │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  MAIN CONTENT AREA:                                 │
+│                                                       │
+│  HEADING: "My Orders"                               │
+│                                                       │
+│  FILTERS: [All] [Pending] [Ready] [Picked Up]      │
+│                                                       │
+│  ORDERS TABLE/CARDS:                                │
+│                                                       │
+│  ┌─────────────────────────────────┐                │
+│  │ Order #1234                     │                │
+│  │ Date: Nov 10, 2025              │                │
+│  │ Pickup: Nov 15, 2pm             │                │
+│  │ Status: [In Progress] 🟡        │                │
+│  │ Price: $65.00                   │                │
+│  │ [View Details] [Track]          │                │
+│  └─────────────────────────────────┘                │
+│                                                       │
+│  ┌─────────────────────────────────┐                │
+│  │ Order #1233                     │                │
+│  │ Date: Nov 5, 2025               │                │
+│  │ Pickup: Nov 12, 3pm             │                │
+│  │ Status: [Picked Up] ✅           │                │
+│  │ Price: $45.00                   │                │
+│  │ [View Details] [Reorder]        │                │
+│  └─────────────────────────────────┘                │
+│                                                       │
+│  PAGINATION (if >5 orders):                         │
+│  [< Prev] [1] [2] [3] [Next >]                     │
+│                                                       │
+└─────────────────────────────────────────────────────┘
+```
+
+## Implementation Prompt
+
+```
+Build CUSTOMER DASHBOARD (React component):
+
+Component: src/pages/admin/CustomerDashboard.tsx
+
+LAYOUT:
+- Desktop: Sidebar (left) + Main content (right)
+- Mobile: Hamburger menu (header) OR full-width
+- Responsive: Sidebar collapses on <768px
+
+HEADER SECTION:
+- Welcome message: "Welcome back, [Customer Name]!"
+- Icons (top-right):
+  * Notification bell (show count if unread messages)
+  * Profile icon (dropdown menu)
+  * Logout button
+
+SIDEBAR NAVIGATION:
+- My Orders (primary page)
+- Track My Order (if applicable)
+- Profile Settings
+- Invoices / Receipts
+- Help / Support
+- Logout
+
+MAIN CONTENT - MY ORDERS:
+
+1. HEADING + DESCRIPTION
+   - Title: "My Orders"
+   - Subtitle: "Track and manage your cake orders"
+
+2. FILTER TABS (Optional but recommended)
+   - All (default)
+   - Pending / In Progress
+   - Ready for Pickup
+   - Picked Up / Completed
+
+3. ORDERS DISPLAY:
+   
+   Option A: CARD VIEW (Recommended for mobile)
+   ┌────────────────────────┐
+   │ Order #1234            │
+   │ ────────────────────   │
+   │ Date: Nov 15, 2025     │
+   │ Pickup: 2:00 PM        │
+   │ Status: [In Progress]  │
+   │ ────────────────────   │
+   │ 3-Layer Chocolate Cake │
+   │ Price: $65.00          │
+   │ ────────────────────   │
+   │ [Track] [Details]      │
+   └────────────────────────┘
+
+   Option B: TABLE VIEW (Recommended for desktop)
+   Order # | Date      | Pickup   | Status    | Price  | Actions
+   1234    | Nov 15    | 2pm      | In Prog   | $65.00 | [Track]
+   1233    | Nov 12    | 3pm      | Picked Up | $45.00 | [Details]
+
+   Data source: GET /api/customer/orders
+
+4. ORDER CARD COMPONENTS:
+   - Order ID (clickable → view details)
+   - Order Date
+   - Pickup Date & Time
+   - Status (with color badge)
+     * Pending: Gray
+     * In Progress: Yellow
+     * Ready: Blue
+     * Picked Up: Green
+   - Cake description (layers, flavors)
+   - Total Price
+   - Action buttons:
+     * "Track Order" → Shows tracking page / timeline
+     * "View Details" → Modal with full order info
+     * "Reorder" (if completed) → Pre-fill order form
+
+5. NO ORDERS STATE:
+   - If customer has no orders:
+     * Message: "You haven't placed any orders yet"
+     * Button: "Start Your Order" → Links to homepage
+
+6. PAGINATION:
+   - Show if >5 orders
+   - Pages: 1, 2, 3, etc.
+   - Previous / Next buttons
+
+STYLING:
+- Card background: White (#FFFFFF)
+- Card border: 1px light gray
+- Card shadow: Subtle (2px blur)
+- Status badges: Color-coded (gray, yellow, blue, green)
+- Action buttons: Small (12px font), clickable hover effect
+- Responsive gap between cards: 20px
+
+DATA API:
+GET /api/customer/orders
+  - Filters: status, dateRange
+  - Pagination: page, limit (default 5)
+  - Response: { orders: [...], total: X, pages: Y }
+
+ACCEPTANCE CRITERIA:
+✅ Displays all customer orders
+✅ Filters by status (optional)
+✅ Responsive (card view on mobile)
+✅ Shows pagination if >5 orders
+✅ "Track Order" button works
+✅ "Reorder" pre-fills form
+✅ No console errors
+✅ Handles empty state (no orders)
+```
+
+## Clarifying Questions
+
+1. **Sidebar Navigation:**
+   - Option A: Visible sidebar (desktop) + hamburger (mobile)
+   - Option B: Hamburger menu always
+   - Option C: Top navigation tabs
+   - **DECISION:** ________________
+
+2. **Orders Display:**
+   - Option A: Card view (better for mobile)
+   - Option B: Table view (better for desktop)
+   - Option C: Both (toggle between them)
+   - **DECISION:** ________________
+
+3. **"Reorder" Feature:**
+   - Option A: YES - Pre-fill last order details
+   - Option B: NO - Just show order info
+   - **DECISION:** ________________
+
+4. **Notifications:**
+   - Option A: Show notifications (order updates)
+   - Option B: No notifications
+   - **DECISION:** ________________
+
+**Answers needed:** _______________
+
+---
+
+# PAGE 7: DEMO TRACKING PAGE (Public - No Login)
+
+## Wireframe
+
+```
+┌─────────────────────────────────────────────────────┐
+│                   HEADER                            │
+│  Track Your Order                                   │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  ORDER HEADER INFO:                                 │
+│  ┌─────────────────────────────────┐                │
+│  │ Order #1234                     │                │
+│  │ Customer: John Smith            │                │
+│  │ Pickup: Friday, Nov 15, 2:00 PM │                │
+│  │ Status: 🟡 In Progress          │                │
+│  └─────────────────────────────────┘                │
+│                                                       │
+│  PROGRESS BAR:                                       │
+│  ┌─────────────────────────────────┐                │
+│  │ ███░░░░░░░░░░░░░░░░░░░░░░░░░░  │ 35%           │
+│  │ [Order] [Approved] [Baking] [...] │                │
+│  └─────────────────────────────────┘                │
+│                                                       │
+│  STATUS TIMELINE:                                    │
+│  ┌─────────────────────────────────┐                │
+│  │ ✅ Order Placed                 │ Nov 13, 9am   │
+│  │ ✅ Design Approved              │ Nov 13, 10am  │
+│  │ 🟡 Baking in Progress           │ Nov 14, 10am  │
+│  │ ⏳ Cooling (next)               │ ~2 hours      │
+│  │ ○ Decorating                    │ Nov 14, 3pm   │
+│  │ ○ Ready for Pickup              │ Nov 15, 1pm   │
+│  │ ○ Picked Up                     │ ---           │
+│  └─────────────────────────────────┘                │
+│                                                       │
+│  CAKE DETAILS:                                       │
+│  ┌─────────────────────────────────┐                │
+│  │ 3-Layer Chocolate Cake          │                │
+│  │ Layer 1: Chocolate / Vanilla FI  │                │
+│  │ Layer 2: Chocolate / Berries FI  │                │
+│  │ Layer 3: Chocolate / Cream Ch FI │                │
+│  │ Writing: Happy Birthday John!    │                │
+│  │ Total Price: $65.00             │                │
+│  │ Deposit Paid: $32.50            │                │
+│  │ Balance Due: $32.50 (at pickup) │                │
+│  └─────────────────────────────────┘                │
+│                                                       │
+│  NEXT STEP:                                          │
+│  "Your cake will be cooling next. Check back soon!" │
+│                                                       │
+│  CONTACT:                                            │
+│  Questions? Call (713) 555-CAKE or email emily@... │
+│                                                       │
+├─────────────────────────────────────────────────────┤
+│                                                       │
+│  FOOTER                                             │
+│                                                       │
+└─────────────────────────────────────────────────────┘
+
+🔴 CRITICAL FOR DEMO:
+- Status auto-updates every 2 minutes
+- Cycles through all 11 statuses over ~22 minutes
+- Progress bar fills as status advances
+```
+
+## Implementation Prompt
+
+```
+Build DEMO TRACKING PAGE (React component):
+
+Component: src/pages/public/DemoTracker.tsx
+Route: /track/:token (or /demo-track)
+
+IMPORTANT: This page uses MOCK DATA, not real database data.
+Show a hardcoded demo order that cycles through statuses.
+
+MOCK DATA STRUCTURE:
+const mockOrder = {
+  orderId: 1234,
+  customerName: "John Smith",
+  pickupDate: "November 15, 2025",
+  pickupTime: "2:00 PM",
+  totalPrice: 65.00,
+  depositPaid: 32.50,
+  balanceDue: 32.50,
+  layers: [
+    { flavor: "Chocolate", filling: "Vanilla", icing: "Ganache", writing: "Happy Birthday John!" }
+    // ... more layers
+  ]
+}
+
+DEMO STATUS CYCLE (auto-progression every 2 min):
+1. Order Placed (blue) → Nov 13, 9:00 AM
+2. Design Approved (blue) → Nov 13, 10:15 AM
+3. Pending Baking (yellow) → Nov 13, 11:30 AM
+4. In Baking (yellow) → Nov 14, 9:00 AM
+5. Cooling (orange) → Nov 14, 10:30 AM
+6. Ready for Decorating (yellow) → Nov 14, 12:00 PM
+7. Decorating (purple) → Nov 14, 1:00 PM
+8. Decorated Complete (purple) → Nov 14, 2:30 PM
+9. Quality Check (orange) → Nov 14, 3:00 PM
+10. Ready for Pickup (green) → Nov 15, 1:00 PM
+11. Picked Up (blue) → Nov 15, 2:00 PM
+
+THEN: Cycle back to step 1 (continuous loop for demo)
+
+LAYOUT:
+
+1. ORDER HEADER CARD
+   - Order ID: Big, bold (#1234)
+   - Customer Name
+   - Pickup Date & Time
+   - Current Status with colored badge
+
+2. PROGRESS BAR
+   - Horizontal bar showing overall progress
+   - Percentage: (currentStatusIndex / 11) * 100
+   - Status labels below: [Order] [Approved] [Baking] [...]
+   - Visual: Filled portion changes color to match current status
+
+3. STATUS TIMELINE
+   - Vertical timeline showing all 11 steps
+   - Each step has:
+     * Status icon (✅ completed, 🟡 current, ○ pending)
+     * Status name
+     * Timestamp (actual date/time)
+   - Current step: Highlighted with pulsing animation
+   - Smooth transitions between steps
+
+4. CAKE DETAILS CARD
+   - Show all layers: Flavor, Filling, Icing, Color
+   - Writing / Special instructions
+   - Total Price
+   - Deposit Paid
+   - Balance Due (to be paid at pickup)
+
+5. NEXT STEP MESSAGE
+   - Message based on current status
+   - Examples:
+     * "Your cake is now in the oven!"
+     * "Your cake is cooling down..."
+     * "Your beautiful cake is ready for pickup!"
+
+6. CONTACT SECTION
+   - Phone: (713) 555-CAKE (clickable)
+   - Email: emily@emilybakes.com (mailto link)
+   - Help text: "Questions about your order?"
+
+AUTO-UPDATE LOGIC (JavaScript):
+```javascript
+const [currentStatusIndex, setCurrentStatusIndex] = useState(0);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentStatusIndex((prev) => (prev + 1) % 11);
+  }, 120000); // 2 minutes = 120,000 ms
+
+  return () => clearInterval(interval);
+}, []);
+
+// Calculate progress percentage
+const progressPercentage = (currentStatusIndex / 10) * 100; // 10 = 11 statuses - 1
+```
+
+STYLING:
+- Progress bar: 20px height, gradient (blue → green)
+- Timeline steps: 40px height, color-coded circles
+- Status badge: Size 24px, color-coded
+- Card shadow: Subtle (3px blur, #00000010)
+- Animations: Pulse (current step), fade (transitions)
+- Font sizes: Title 28px, status 16px, details 14px
+
+RESPONSIVE:
+- Desktop: 900px max-width centered
+- Tablet: 95% width
+- Mobile: Full width with padding
+
+ACCEPTANCE CRITERIA:
+✅ Shows demo order on page load
+✅ Status updates automatically every 2 minutes
+✅ Progress bar fills as status advances
+✅ Timeline shows all 11 statuses
+✅ Cycles continuously (loops after step 11)
+✅ Displays cake details correctly
+✅ Contact info clickable
+✅ Mobile responsive
+✅ No console errors
+✅ Smooth animations between status changes
+```
+
+## Clarifying Questions
+
+1. **Tracking URL:**
+   - Option A: Public URL `/track/{token}` (unique for each order)
+   - Option B: Demo URL `/demo-track` (hardcoded demo data)
+   - **DECISION:** ________________
+
+2. **Status Update Speed:**
+   - Option A: 2 minutes per status (realistic demo timing)
+   - Option B: 30 seconds per status (faster demo)
+   - Option C: Manual button to advance status
+   - **DECISION:** ________________
+
+3. **Real Data vs Mock:**
+   - Option A: ALWAYS use hardcoded demo data (no API calls)
+   - Option B: Try to fetch from database, fall back to mock
+   - **DECISION:** ________________
+
+4. **Payment Display:**
+   - Option A: Show deposit + balance due
+   - Option B: Only show total price
+   - **DECISION:** ________________
+
+**Answers needed:** _______________
+
+---
+
+## STAFF PORTAL PAGES (Summary)
+
+The staff portal pages have detailed wireframes in your existing documents (21_FIRST_Complete-Page-Wireframes.md, etc.). 
+
+**Staff Pages to implement:**
+1. Staff Login Page
+2. Manager Dashboard (with charts + KPIs)
+3. Sales Dashboard (order creation wizard)
+4. Baker Dashboard (orders to bake + status updates)
+5. Decorator Dashboard (ready for decoration)
+6. Accountant Dashboard (reports + revenue)
+
+Each follows same pattern: Wireframe + Detailed Prompt + Clarifying Questions
+
+---
+
+## NEXT STEPS
+
+**Before Replit AI starts building:**
+
+1. ✅ Answer ALL clarifying questions above (30 questions total)
+2. ✅ Confirm wireframes look correct
+3. ✅ Provide any additional requirements
+4. ✅ Approve implementation prompts
+
+**Then:** Share this document with Replit AI and start building page-by-page
+
+---
+
+*Page-by-Page Implementation Guide | Created Nov 13, 2025*  
+*Status: WAITING FOR CLARIFICATIONS*  
+*Next: Answer all 30 questions, then proceed with build*

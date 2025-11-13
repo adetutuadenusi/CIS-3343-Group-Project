@@ -1,0 +1,444 @@
+# STAFF PERMISSIONS & NAVIGATION MASTER REFERENCE
+## Emily Bakes Cakes | Role-Based Access & 6 Reports
+## Thursday, November 13, 2025
+
+**Status:** FINAL - Ready for Replit AI Implementation
+
+---
+
+## 🎯 THE 6 CLIENT REPORTS (RUBRIC REQUIREMENT)
+
+Each report displays specific data + filters + charts + export options.
+
+### REPORT 1: ORDER SUMMARY REPORT
+**What:** All orders in system  
+**Columns:** Order#, Customer, Product, Status, Pickup Date, Price, Deposit, Balance  
+**Filters:** Date range, status, staff assigned  
+**Chart:** Order volume by day (bar chart)  
+**Export:** CSV, PDF  
+**Access:** Sales, Manager  
+**Route:** `/reports/order-summary`
+
+### REPORT 2: CUSTOMER LIST REPORT
+**What:** All customers + history  
+**Columns:** Name, Email, Phone, Type (Retail/Corporate), Total Orders, Total Spent  
+**Filters:** Type, spending range, signup date  
+**Chart:** Customer acquisition over time (line chart)  
+**Export:** Email list, Phone list, CSV, PDF  
+**Access:** Sales, Manager  
+**Route:** `/reports/customer-list`
+
+### REPORT 3: REVENUE REPORT ⭐ (MOST IMPORTANT)
+**What:** Financial breakdown  
+**Data:** Monthly/weekly revenue, deposits vs balance, payment methods  
+**KPIs:** Total revenue, deposits collected, outstanding, % collected  
+**Charts:** 
+- Revenue trend (line chart)
+- Payment methods (pie chart)
+- Monthly comparison (bar chart)  
+**Filters:** Month, payment method, status  
+**Export:** CSV, PDF, Excel  
+**Access:** Accountant, Manager  
+**Route:** `/reports/revenue`
+
+### REPORT 4: PENDING ORDERS REPORT
+**What:** Orders NOT completed  
+**Statuses included:** Quote, Pending, Confirmed, In Production  
+**Columns:** Order#, Customer, Pickup Date, Days Until Due, Assigned Staff, Status  
+**Chart:** Orders by status (funnel chart)  
+**Filters:** Status, days until due, assigned staff  
+**Color coding:**
+- 🟢 Green: On track (pickup >2 days away)
+- 🟡 Yellow: Watch (pickup 24-48 hours)
+- 🔴 Red: Rush (pickup <24 hours)  
+**Access:** Sales, Baker, Manager  
+**Route:** `/reports/pending-orders`
+
+### REPORT 5: COMPLETED ORDERS REPORT
+**What:** Fulfilled orders only  
+**Statuses included:** Ready, Picked Up  
+**Columns:** Completion date, customer, assigned staff, customer satisfaction, price  
+**Chart:** Completion time analysis (avg days from order to pickup)  
+**Filters:** Date range, assigned staff, satisfaction rating  
+**Sorting:** By completion time, by date, by staff  
+**Access:** Baker, Decorator, Manager  
+**Route:** `/reports/completed-orders`
+
+### REPORT 6: PRODUCT INVENTORY REPORT
+**What:** Standard products + usage stats  
+**Columns:** Product name, category, price, times ordered this month  
+**Data:** Most popular products, trending items  
+**Chart:** Top 10 products (horizontal bar chart)  
+**Filters:** Category, popularity range, date range  
+**Includes:** Recipes for standard items, ingredient costs  
+**Access:** Manager only  
+**Route:** `/reports/product-inventory`
+
+---
+
+# 👥 ROLE-BASED PERMISSIONS MATRIX
+
+## SALES STAFF
+
+**Navigation Menu:**
+```
+🏠 Dashboard
+📋 Orders (create new, view all)
+👥 Customers (add, edit, search)
+🎂 Products (view only)
+🚪 Logout
+```
+
+**Permissions - Can DO:**
+- ✅ Create new orders
+- ✅ Edit orders (own + others)
+- ✅ Add new customers
+- ✅ Edit customer info
+- ✅ Search customers
+- ✅ View all orders
+- ✅ Update order status: Received → Confirmed → Cancelled
+- ✅ View products (read-only)
+- ✅ Send customer emails
+- ✅ View deposit tracking
+- ✅ Access 3 reports:
+  - Daily Order Summary
+  - Customer List
+  - Pending Orders
+  -see status of order and status if customer
+
+**Permissions - Cannot DO:**
+- ❌ View revenue/financial data
+- ❌ Access financial reports
+- ❌ Update payment status
+- ❌ View staff assignments
+- ❌ Access analytics
+- ❌ Manage staff
+- ❌ Delete orders
+- ❌ View completed orders
+
+**Dashboard shows:**
+- Today's orders
+- Pending customer follow-ups
+- Recent customers
+- Quick action: Create order
+
+---
+
+## BAKER
+
+**Navigation Menu:**
+```
+🏠 Dashboard
+📋 My Orders (assigned to baker only)
+🎂 Products (standard recipes)
+🚪 Logout
+```
+
+**Permissions - Can DO:**
+- ✅ View orders assigned to them
+- ✅ Update baking status:
+  - Mark: Baking Layer 1
+  - Mark: Baking Layer 2
+  - Mark: Baking Layer 3
+  - Mark: Assembling
+  - Mark: Layer Complete
+- ✅ View layer details (flavors, fillings, quantities)
+- ✅ View standard product recipes
+- ✅ View customer order notes
+- ✅ Update overall order status to "Ready for Decoration"
+- ✅ Create new orders
+- ✅ Edit orders (own + others)
+- ✅ Add new customers
+- ✅ Edit customer info
+- ✅ Search customers
+- ✅ View all orders
+- ✅ Update order status: Received → Confirmed → Cancelled
+- ✅ View products (read-only)
+- ✅ Send customer emails
+- ✅ View deposit tracking
+- ✅ Access 3 reports:
+  - Daily Order Summary
+  - Customer List
+  - Pending Orders
+
+
+**Permissions - Cannot DO:**
+- ❌ View revenue/payments
+- ❌ Access any reports
+- ❌ Assign work to others
+
+**Dashboard shows:**
+- My queue (orders assigned to me)
+- Today's baking schedule
+- Tomorrow's preview
+- Layer breakdown per order
+- Completed count (today)
+
+---
+
+## DECORATOR
+
+**Navigation Menu:**
+```
+🏠 Dashboard
+📋 My Orders (assigned to decorator only)
+🖼️ Gallery (reference photos, inspiration)
+🚪 Logout
+```
+
+**Permissions - Can DO:**
+- ✅ View orders assigned to them
+- ✅ Update decorating status:
+  - Mark: Decorating
+  - Mark: Quality Check
+  - Mark: Ready for Pickup
+- ✅ View decoration notes & customer photo URLs
+- ✅ View gallery (reference photos for inspiration)
+- ✅ Contact customer (for decoration clarifications)
+- ✅ Update order status to "Picked Up"
+- ✅ Create new orders
+- ✅ Edit orders (own + others)
+- ✅ Add new customers
+- ✅ Edit customer info
+- ✅ Search customers
+- ✅ View all orders
+- ✅ Update order status: Received → Confirmed → Cancelled
+- ✅ View products (read-only)
+- ✅ Send customer emails
+- ✅ View deposit tracking
+- ✅ Access 3 reports:
+  - Daily Order Summary
+  - Customer List
+  - Pending Orders
+
+
+**Permissions - Cannot DO:**
+- ❌ Assign work to others
+- ❌ Delete photos
+
+**Dashboard shows:**
+- My queue (orders ready for decoration)
+- Design gallery (my finished work)
+- Schedule (this week)
+- Completed count
+- Customer photo references
+
+---
+
+## ACCOUNTANT
+
+**Navigation Menu:**
+```
+🏠 Dashboard (with revenue KPIs)
+📋 Orders (view all, read-only)
+👥 Customers (view all, read-only)
+📊 Reports (all 6 reports)
+📈 Analytics (financial charts)
+🚪 Logout
+```
+
+**Permissions - Can DO:**
+- ✅ View ALL orders (read-only)
+- ✅ View revenue/financial data
+- ✅ Access ALL 6 reports
+- ✅ Track deposits & outstanding balances
+- ✅ Update payment status (mark deposit paid, balance paid)
+- ✅ View customer spending history
+- ✅ Export financial reports
+- ✅ Generate revenue summaries
+- ✅ View payment methods breakdown
+- ✅ Flag outstanding balances
+- ✅ View analytics charts
+
+**Permissions - Cannot DO:**
+- ❌ Create orders
+- ❌ Edit orders
+- ❌ Create/edit customers
+- ❌ Update order status
+- ❌ Access staff management
+- ❌ Delete data
+- ❌ View baking/decoration details
+- ❌ System configuration
+
+**Dashboard shows:**
+- Revenue KPIs (daily, weekly, monthly)
+- Outstanding balances
+- Deposits collected
+- Payment breakdown
+- Revenue trend chart
+- 6 reports accessible
+
+---
+
+## MANAGER / OWNER (JAMES or EMILY)
+
+**Navigation Menu:**
+```
+🏠 Dashboard (full KPIs + charts)
+📋 Orders (view all, edit, assign)
+👥 Customers (full CRUD)
+🎂 Products (full CRUD)
+👷 Staff (view, assign orders)
+📊 Reports (all 6 reports)
+📈 Analytics (all charts)
+⚙️ Settings (system config)
+🚪 Logout
+```
+
+**Permissions - Can DO:**
+- ✅ EVERYTHING (full system access)
+- ✅ Create/edit/cancel orders
+- ✅ Assign orders to staff
+- ✅ Add/edit customers
+- ✅ Add/edit products (cakes, flavors, fillings)
+- ✅ View all reports & analytics
+- ✅ Approve completed cakes
+- ✅ System configuration
+- ✅ Staff management
+- ✅ Override business rules
+- ✅ Rush orders
+- ✅ Deposit exceptions
+- ✅ View activity logs
+- ✅ Mark customers as "Preferred" (10% discount)
+- ✅ Delete orders
+- ✅ Financial overrides
+
+**OWNER-Only (Emily) Extra:**
+- ✅ Mark customers as "Preferred" (10% discount applies)
+- ✅ Override business rules
+- ✅ Delete orders permanently
+- ✅ Financial overrides
+
+**Dashboard shows:**
+- Complete KPI summary
+- All metrics + charts
+- Staff workload
+- Order status Kanban
+- Revenue overview
+- Exceptions/alerts
+
+---
+
+# 📱 MOBILE NAVIGATION (HAMBURGER MENU)
+
+**On screens < 768px:**
+
+All navigation collapses to hamburger menu (☰):
+
+```
+Tap ☰ to expand:
+
+┌──────────────────────────────┐
+│ 👤 [Role] [Username]         │
+│ 📍 You are logged in as:     │
+│ sales@emilybakes.com         │
+├──────────────────────────────┤
+│ 🏠 Dashboard                 │
+│ 📋 Orders                    │
+│ 👥 Customers                 │
+│ 🎂 Products                  │
+│ 📊 Reports (if applicable)   │
+│ 📈 Analytics (if applicable) │
+├──────────────────────────────┤
+│ ⚙️ Settings (if Manager)     │
+│ ❓ Help                      │
+│ 🚪 Logout                    │
+└──────────────────────────────┘
+```
+
+**Tap item → Navigate**
+**Tap ☰ again → Close menu**
+
+---
+
+# 📊 QUICK REFERENCE: WHO SEES WHAT
+
+| Data / Feature | Sales | Baker | Decorator | Accountant | Manager |
+|---|---|---|---|---|---|
+| **Create Orders** | ✅ | ❌ | ❌ | ❌ | ✅ |
+| **View All Orders** | ✅ | Own only | Own only | ✅ | ✅ |
+| **Edit Orders** | ✅ | ❌ | ❌ | ❌ | ✅ |
+| **Customer Info** | ✅ | ❌ | Name only | ✅ | ✅ |
+| **Revenue/Financial** | ❌ | ❌ | ❌ | ✅ | ✅ |
+| **Order Summary Report** | ✅ | ❌ | ❌ | ❌ | ✅ |
+| **Revenue Report** | ❌ | ❌ | ❌ | ✅ | ✅ |
+| **Customer List Report** | ✅ | ❌ | ❌ | ❌ | ✅ |
+| **Pending Orders Report** | ✅ | ✅ | ❌ | ❌ | ✅ |
+| **Completed Orders Report** | ❌ | ✅ | ✅ | ❌ | ✅ |
+| **Inventory Report** | ❌ | ❌ | ❌ | ❌ | ✅ |
+| **Staff Management** | ❌ | ❌ | ❌ | ❌ | ✅ |
+| **System Settings** | ❌ | ❌ | ❌ | ❌ | ✅ |
+
+---
+
+# 🔐 DATA VISIBILITY SUMMARY
+
+## By Role:
+
+**SALES**
+- Sees: All customers, all orders, can create/edit
+- Cannot see: Revenue, financial data, reports (except 3 assigned)
+
+**BAKER**
+- Sees: Only orders assigned to them, layer details, recipes
+- Cannot see: Customer info, revenue, any reports
+
+**DECORATOR**
+- Sees: Only orders assigned to them, decoration notes, gallery
+- Cannot see: Customer info (except name), revenue, any reports
+
+**ACCOUNTANT**
+- Sees: ALL orders (read), ALL financial data, ALL 6 reports
+- Cannot see: Create/edit orders, full customer data, staff management
+
+**MANAGER**
+- Sees: EVERYTHING
+- Can: Do anything, override rules, delete data
+
+---
+
+# 🚀 IMPLEMENTATION CHECKLIST
+
+**For Replit AI Development:**
+
+### Backend (Node/Express):
+- [ ] Create role-based access control middleware
+- [ ] Implement permission checking on all API routes
+- [ ] Create 6 report generation endpoints
+- [ ] Filter data based on user role
+- [ ] Add report export (CSV, PDF)
+- [ ] Implement chart data aggregation
+
+### Frontend (React):
+- [ ] Build role-based navigation component
+- [ ] Hide/show menu items based on user role
+- [ ] Create 6 report page components
+- [ ] Build chart components (using Recharts)
+- [ ] Implement role-based page access guards
+- [ ] Add hamburger menu for mobile (<768px)
+- [ ] Create permission-based UI (disable buttons for non-authorized)
+
+### Database:
+- [ ] Verify EMPLOYEE table has role field
+- [ ] Add report query optimization
+- [ ] Ensure proper indexing on frequently filtered columns
+
+---
+
+# ✅ FINAL STATUS
+
+**All questions answered:**
+- ✅ 6 reports fully specified
+- ✅ Each role's permissions defined
+- ✅ Navigation menus by role
+- ✅ Mobile menu specified
+- ✅ Data visibility matrix complete
+- ✅ Implementation ready
+
+**Ready for Replit AI to build!** 🚀
+
+---
+
+*Staff Permissions & Navigation Master Reference*  
+*Created: November 13, 2025, 12:05 PM CST*  
+*Status: COMPLETE - ZERO AMBIGUITY*

@@ -1,0 +1,684 @@
+# Emily Bakes Cakes - Complete Page Wireframes & Descriptions
+**Project:** CIS 3343 Case Study Implementation  
+**Date:** November 13, 2025  
+**Pages:** 11 total (5 public + 6 staff portal)  
+**Status:** FINAL WIREFRAME REFERENCE
+
+---
+
+## 📋 PAGE INVENTORY SUMMARY
+
+| # | Page | Route | Type | Auth Required | Status |
+|---|------|-------|------|---------------|--------|
+| 1 | Home | `/` | Public | NO | ✅ Keep Existing |
+| 2 | Gallery | `/gallery` | Public | NO | ✅ Keep Existing |
+| 3 | Menu/Pricing | `/menu` | Public | NO | ✅ Keep Existing |
+| 4 | Contact | `/contact` | Public | NO | ✅ Enhanced |
+| 5 | Track Order | `/track/{token}` | Public | NO | 🆕 NEW |
+| 6 | Staff Login | `/staff-login` | Auth | NO | 🆕 NEW |
+| 7 | Sales Dashboard | `/staff/dashboard/sales` | Admin | YES | 🆕 NEW |
+| 8 | Baker Dashboard | `/staff/dashboard/baker` | Admin | YES | 🆕 NEW |
+| 9 | Decorator Dashboard | `/staff/dashboard/decorator` | Admin | YES | 🆕 NEW |
+| 10 | Accountant Dashboard | `/staff/dashboard/accountant` | Admin | YES | 🆕 NEW |
+| 11 | Manager Dashboard | `/staff/dashboard/manager` | Admin | YES | 🆕 NEW |
+
+---
+
+# 🌐 PUBLIC WEBSITE PAGES (5 TOTAL)
+
+## PAGE 1: HOME PAGE ✅ KEEP EXISTING
+**Route:** `/`  
+**Purpose:** Marketing landing page showcasing bakery  
+**Access:** Public (everyone)  
+**Status:** LOCKED - No changes  
+**Component:** `src/pages/public/Home.tsx`
+
+### Features:
+- Hero section with bakery hero image
+- About Emily story blurb
+- Featured product showcase (3-4 cakes)
+- Customer testimonials carousel
+- Call-to-action buttons
+- Footer with contact info
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ [LOGO] Emily Bakes │ Gallery │ Menu │ About │
+│ Contact │ [Hidden: Staff Portal]           │
+├─────────────────────────────────────────────┤
+│                                             │
+│  ╔═══════════════════════════════════════╗ │
+│  ║ HERO IMAGE & TEXT                     ║ │
+│  ║ "Every Cake Tells a Story"            ║ │
+│  ║ [Order Custom Cake] [View Gallery]    ║ │
+│  ╚═══════════════════════════════════════╝ │
+│                                             │
+│  About Emily (150 words + photo)            │
+│  ┌───────────────────────────────────────┐ │
+│  │ Story text...                         │ │
+│  └───────────────────────────────────────┘ │
+│                                             │
+│  Featured Cakes (3 cols desktop, 1 mobile) │
+│  ┌─────────┐ ┌─────────┐ ┌─────────┐     │
+│  │ Cake 1  │ │ Cake 2  │ │ Cake 3  │     │
+│  └─────────┘ └─────────┘ └─────────┘     │
+│                                             │
+│  Testimonials (Carousel)                    │
+│  ⭐⭐⭐⭐⭐ "Amazing cake!" - Customer      │
+│  [Prev] [Next]                              │
+│                                             │
+│  [FOOTER: Hours, Contact, Social]           │
+│                                             │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## PAGE 2: GALLERY PAGE ✅ KEEP EXISTING
+**Route:** `/gallery`  
+**Purpose:** Portfolio of completed cakes  
+**Access:** Public (everyone)  
+**Status:** LOCKED - No changes  
+**Component:** `src/pages/public/Gallery.tsx`
+
+### Features:
+- Filterable cake gallery
+- Lightbox image preview
+- Category filters (All, Birthday, Wedding, Events)
+- Pagination (if >12 cakes)
+- Mobile responsive grid
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ [LOGO] Emily Bakes │ Navigation...          │
+├─────────────────────────────────────────────┤
+│ Gallery                                     │
+│ Filter: [All] [Birthdays] [Weddings] [Evt] │
+│                                             │
+│ ┌────────┐ ┌────────┐ ┌────────┐           │
+│ │ Cake 1 │ │ Cake 2 │ │ Cake 3 │ (4 col) │
+│ └────────┘ └────────┘ └────────┘           │
+│ ┌────────┐ ┌────────┐ ┌────────┐           │
+│ │ Cake 4 │ │ Cake 5 │ │ Cake 6 │           │
+│ └────────┘ └────────┘ └────────┘           │
+│                                             │
+│ [< Prev] [1] [2] [3] [Next >]              │
+│                                             │
+│ [FOOTER]                                    │
+└─────────────────────────────────────────────┘
+
+LIGHTBOX (on click):
+┌──────────────────────┐
+│ [X] Full Image (lg)  │
+│ Title & Description  │
+│ [Prev] [Next] [Close]│
+└──────────────────────┘
+```
+
+---
+
+## PAGE 3: MENU/PRICING PAGE ✅ KEEP EXISTING
+**Route:** `/menu`  
+**Purpose:** Display cake options & pricing  
+**Access:** Public (everyone)  
+**Status:** LOCKED - No changes  
+**Component:** `src/pages/public/Menu.tsx`
+
+### Features:
+- Cake size & pricing table
+- Flavor/filling/icing options (grid)
+- Customization charges
+- "Request Quote" button
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ [LOGO] Emily Bakes │ Navigation...          │
+├─────────────────────────────────────────────┤
+│ Menu & Pricing                              │
+│                                             │
+│ Cake Sizes:                                 │
+│ ┌─────────────────────────────────────────┐ │
+│ │Size │ Price │ Servings │ Layers        │ │
+│ │6"   │ $25   │ 8-10    │ 2-3           │ │
+│ │8"   │ $35   │ 12-16   │ 2-4           │ │
+│ │10"  │ $45   │ 20-24   │ 3-5           │ │
+│ │12"  │ $55   │ 25+     │ 4+            │ │
+│ └─────────────────────────────────────────┘ │
+│                                             │
+│ Flavor Options:                             │
+│ ┌──────────┐ ┌──────────┐ ┌──────────┐    │
+│ │ Chocolate│ │ Vanilla  │ │Strawberry│    │
+│ │ Red Velvet...         │ Custom Options   │
+│ └──────────┘ └──────────┘ └──────────┘    │
+│                                             │
+│ [Request Custom Quote] [Contact Us]        │
+│                                             │
+│ [FOOTER]                                    │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## PAGE 4: CONTACT PAGE ✅ ENHANCED
+**Route:** `/contact`  
+**Purpose:** Contact form + location info  
+**Access:** Public (everyone)  
+**Status:** Enhanced with Google Maps  
+**Component:** `src/pages/public/Contact.tsx`
+**APIs:** `POST /api/contact`
+
+### New Features:
+- Google Maps embed (optional API)
+- Contact form (name, email, phone, message, date)
+- Business hours display
+- Address + clickable links
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ [LOGO] Emily Bakes │ Navigation...          │
+├─────────────────────────────────────────────┤
+│ Get in Touch                                │
+│                                             │
+│ ┌──────────────────┐ ┌──────────────────┐  │
+│ │ CONTACT FORM     │ │ BUSINESS INFO    │  │
+│ │ Name: [____]     │ │ Hours:           │  │
+│ │ Email: [____]    │ │ Mon-Sat 9-6pm    │  │
+│ │ Phone: [____]    │ │ Sunday Closed    │  │
+│ │ Event Date: [__] │ │                  │  │
+│ │ Message:         │ │ 📍 Address       │  │
+│ │ [________]       │ │ 1234 Main St     │  │
+│ │ [Send]           │ │ Houston, TX 77001│  │
+│ └──────────────────┘ └──────────────────┘  │
+│                                             │
+│ ╔═══════════════════════════════════════╗  │
+│ ║ GOOGLE MAPS EMBED                     ║  │
+│ ║ [Interactive map of bakery location]  ║  │
+│ ╚═══════════════════════════════════════╝  │
+│                                             │
+│ [FOOTER]                                    │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## PAGE 5: TRACK ORDER PAGE 🆕 NEW
+**Route:** `/track/{token}`  
+**Purpose:** Demo order tracking (auto-cycling status)  
+**Access:** Public (NO login - email link access)  
+**Component:** `src/pages/public/DemoTracker.tsx`
+**Auth:** NO  
+**Data:** Mock/hardcoded demo data
+
+### Features:
+- Order summary (customer, product, price, pickup)
+- Auto-cycling through 11 status stages
+- Progress bar (fills as status advances)
+- Status timeline (vertical)
+- Elapsed time + estimated completion
+- Mobile responsive
+- NO database queries (pure demo)
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ Emily Bakes │ Track Order #TRK-Q1-001       │
+├─────────────────────────────────────────────┤
+│                                             │
+│ ╔═══════════════════════════════════════╗  │
+│ ║ Order #TRK-Q1-001                     ║  │
+│ ║ Customer: John Smith                  ║  │
+│ ║ Product: 3-Layer Chocolate Cake       ║  │
+│ ║ Pickup: Saturday Nov 16 @ 2:00 PM     ║  │
+│ ║ Total: $65.00 | Deposit: $32.50       ║  │
+│ ╚═══════════════════════════════════════╝  │
+│                                             │
+│ Order Status (Updates Every 2 Minutes)      │
+│                                             │
+│ Progress: ████░░░░░░░░░░░░░░░░░░░░░ 36%   │
+│                                             │
+│ ┌─────────────────────────────────────────┐ │
+│ │ STATUS TIMELINE                         │ │
+│ │                                         │ │
+│ │ ✅ Order Placed      Nov 13, 9:00 AM  │ │
+│ │ ✅ Design Approved   Nov 13, 10:15 AM │ │
+│ │ ✅ Pending Baking    Nov 13, 11:30 AM │ │
+│ │ 🟡 Baking in Progress Nov 14, 9:00 AM │ │
+│ │ ⏳ Cooling (Next)    ~2 hours from now │ │
+│ │ ○ Decorating         Nov 14, 1:00 PM  │ │
+│ │ ○ Quality Check      Nov 14, 3:00 PM  │ │
+│ │ ○ Ready for Pickup   Nov 15, 1:00 PM  │ │
+│ │ ○ Picked Up          Nov 15, 2:00 PM  │ │
+│ └─────────────────────────────────────────┘ │
+│                                             │
+│ ⏱️ Elapsed: 4h 23min | Est: Tomorrow 2pm    │
+│                                             │
+│ 🔔 You'll receive email when ready!        │
+│                                             │
+│ Questions? Call (713) 555-CAKE             │
+│                                             │
+│ [FOOTER]                                    │
+└─────────────────────────────────────────────┘
+
+AUTO-CYCLE LOGIC (Every 2 minutes):
+1. Order Placed
+2. Design Approved
+3. Pending Baking
+4. Baking in Progress ← (current in example)
+5. Cooling
+6. Ready for Decorating
+7. Decorating
+8. Decorated Complete
+9. Quality Check
+10. Ready for Pickup
+11. Picked Up
+[Loop back to 1]
+```
+
+---
+
+# 👨‍💼 STAFF PORTAL PAGES (6 TOTAL - ALL REQUIRE AUTHENTICATION)
+
+## PAGE 6: STAFF LOGIN PAGE 🆕 NEW
+**Route:** `/staff-login`  
+**Purpose:** Staff authentication entry point  
+**Access:** Public URL (hidden link in footer)  
+**Component:** `src/pages/admin/StaffLogin.tsx`
+**Auth:** NO (but verifies credentials)
+**APIs:** `POST /api/staff/auth/login`
+
+### Features:
+- Email/password form
+- Remember me checkbox
+- Error messages
+- Demo credentials display
+- Forgot password link (optional)
+
+### Wireframe:
+```
+┌──────────────────────────────┐
+│                              │
+│  Emily Bakes Cakes           │
+│  Staff Portal Login          │
+│                              │
+│  ┌────────────────────────┐  │
+│  │ Email:                 │  │
+│  │ [________________]     │  │
+│  │                        │  │
+│  │ Password:              │  │
+│  │ [________________]     │  │
+│  │                        │  │
+│  │ ☐ Remember me          │  │
+│  │                        │  │
+│  │ [ Login ]              │  │
+│  │                        │  │
+│  │ Forgot password?       │  │
+│  └────────────────────────┘  │
+│                              │
+│ Demo Credentials:            │
+│ sales@emilybakes.com         │
+│ baker@emilybakes.com         │
+│ (Password: DemoPass123!)      │
+│                              │
+└──────────────────────────────┘
+```
+
+---
+
+## PAGE 7: SALES DASHBOARD 🆕 NEW
+**Route:** `/staff/dashboard/sales`  
+**Purpose:** Sales staff home - order creation & management  
+**Access:** Staff with SALES role  
+**Login:** `sales@emilybakes.com / DemoPass123!`
+**Component:** `src/pages/admin/SalesDashboard.tsx`
+**Auth:** YES (JWT required)
+**APIs:** `GET /api/orders`, `POST /api/orders`, `GET /api/customers`
+
+### Features:
+- Create new order button
+- Today's pickups queue
+- Pending follow-up calls
+- Recent orders list
+- Customer recent list
+- NO financial data visible
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ [🎂] Emily Staff Portal 👤 Sales  [Logout] │
+│ Dashboard | Orders | Customers | Help      │
+├─────────────────────────────────────────────┤
+│                                             │
+│ Sales Dashboard                             │
+│                                             │
+│ ┌──────────────────┐ ┌──────────────────┐  │
+│ │ 🆕 Create Order  │ │ 📞 Pending Calls │  │
+│ │                  │ │ 3 follow-ups     │  │
+│ │ [+ New Order]    │ │ needed           │  │
+│ └──────────────────┘ └──────────────────┘  │
+│                                             │
+│ 📅 Today's Pickups (5 orders)               │
+│ ┌──────────────────────────────────────────┐ │
+│ │ 10:00 AM │ Jane │ Birthday #1234        │ │
+│ │ 2:00 PM  │ Corp │ Event #1235          │ │
+│ │ 4:00 PM  │ John │ Wedding #1236        │ │
+│ │ 5:30 PM  │ Mary │ Baby #1237          │ │
+│ │ 6:00 PM  │ Bob  │ Anniversary #1238    │ │
+│ └──────────────────────────────────────────┘ │
+│                                             │
+│ 📋 Recent Orders (Status)                   │
+│ [Order list with status badges...]          │
+│                                             │
+│ 👥 Recent Customers                         │
+│ [Customer list...]                          │
+│                                             │
+│ [FOOTER]                                    │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## PAGE 8: BAKER DASHBOARD 🆕 NEW
+**Route:** `/staff/dashboard/baker`  
+**Purpose:** Baker home - baking queue & status  
+**Access:** Staff with BAKER role  
+**Login:** `baker@emilybakes.com / DemoPass123!`
+**Component:** `src/pages/admin/BakerDashboard.tsx`
+**Auth:** YES (JWT required)
+**APIs:** `GET /api/orders?role=baker`, `PATCH /api/orders/:id/status`
+
+### Features:
+- Orders to bake queue (priority sorted)
+- Layer details per order
+- Status update buttons (Baking, Cooling, Done)
+- Tomorrow's schedule preview
+- Completed today counter
+- NO financial/sales data
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ [🎂] Emily Staff Portal 👤 Baker   [Logout]│
+│ Dashboard | My Queue | Schedule | Help      │
+├─────────────────────────────────────────────┤
+│                                             │
+│ Baker Dashboard                             │
+│                                             │
+│ 🔥 My Baking Queue (4 orders)               │
+│                                             │
+│ ┌─────────────────────────────────────────┐ │
+│ │ ⚡ URGENT - Due Today                   │ │
+│ │ Order #1234 │ 3-Layer Chocolate          │ │
+│ │ Customer: Jane Smith                     │ │
+│ │ Pickup: Today 2:00 PM                    │ │
+│ │                                          │ │
+│ │ Layer 1: Chocolate + Buttercream (✓)     │ │
+│ │ Layer 2: Chocolate + Raspberry (✓)       │ │
+│ │ Layer 3: Chocolate + Mousse (⏳ NOW)     │ │
+│ │                                          │ │
+│ │ [Mark Layer Complete] [Finish Order]     │ │
+│ └─────────────────────────────────────────┘ │
+│                                             │
+│ 📅 Tomorrow's Queue (3 orders)               │
+│ #1235 - 2-Layer Vanilla (Start 8am)        │
+│ #1236 - 4-Layer Wedding (Start 9am)        │
+│ #1237 - 24 Cupcakes (Start 2pm)            │
+│                                             │
+│ ✅ Completed Today: 2 orders                │
+│                                             │
+│ [FOOTER]                                    │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## PAGE 9: DECORATOR DASHBOARD 🆕 NEW
+**Route:** `/staff/dashboard/decorator`  
+**Purpose:** Decorator home - decoration queue  
+**Access:** Staff with DECORATOR role  
+**Login:** `decorator@emilybakes.com / DemoPass123!`
+**Component:** `src/pages/admin/DecoratorDashboard.tsx`
+**Auth:** YES (JWT required)
+**APIs:** `GET /api/orders?role=decorator`, `PATCH /api/orders/:id/layers`
+
+### Features:
+- Decoration queue (ready cakes)
+- Layer details & design specs
+- Customer photo references
+- Decoration notes
+- Progress tracker (% complete)
+- Photo gallery (finished work)
+- NO financial/sales data
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ [🎂] Emily Staff Portal 👤 Decorator[Logout]│
+│ Dashboard | My Queue | Gallery | Help       │
+├─────────────────────────────────────────────┤
+│                                             │
+│ Decorator Dashboard                         │
+│                                             │
+│ 🎨 My Decoration Queue (3 orders)           │
+│                                             │
+│ ┌─────────────────────────────────────────┐ │
+│ │ ⚡ PRIORITY - Due Tomorrow               │ │
+│ │ Order #1234 │ Wedding Cake               │ │
+│ │ Customer: Jane Smith                     │ │
+│ │ Pickup: Tomorrow 2:00 PM                 │ │
+│ │                                          │ │
+│ │ Design: White Buttercream                │ │
+│ │ Colors: Blush Pink, Gold accents         │ │
+│ │ Decorations: Fondant flowers, pearls     │ │
+│ │                                          │ │
+│ │ 📸 Customer References:                  │ │
+│ │ [Link to reference image]                │ │
+│ │                                          │ │
+│ │ 📝 Special Notes:                        │ │
+│ │ "Monogram 'J&M' on top tier"             │ │
+│ │                                          │ │
+│ │ Progress: [████████░░░░] 67% Complete    │ │
+│ │                                          │ │
+│ │ [Update Progress] [Mark Complete]        │ │
+│ │ [Contact Customer] [Upload Photo]        │ │
+│ └─────────────────────────────────────────┘ │
+│                                             │
+│ 📋 Next in Queue (2 orders)                  │
+│ [Next orders...]                            │
+│                                             │
+│ 🖼️ My Portfolio (Completed)                 │
+│ [Gallery of decorated cakes...]             │
+│                                             │
+│ [FOOTER]                                    │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## PAGE 10: ACCOUNTANT DASHBOARD 🆕 NEW
+**Route:** `/staff/dashboard/accountant`  
+**Purpose:** Accountant home - financial tracking  
+**Access:** Staff with ACCOUNTANT role  
+**Login:** `accountant@emilybakes.com / DemoPass123!`
+**Component:** `src/pages/admin/AccountantDashboard.tsx`
+**Auth:** YES (JWT required)
+**APIs:** `GET /api/reports/revenue`, `GET /api/reports/payments`, `GET /api/orders?status=...`
+
+### Features:
+- Financial KPI cards (revenue, outstanding, deposits)
+- Revenue trend chart (Recharts line chart)
+- Payment status table
+- Outstanding balances by customer
+- Reports generation (CSV/PDF export)
+- Weekly/monthly report options
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ [🎂] Emily Staff Portal 👤 Dan (CPA) [Out] │
+│ Dashboard | Reports | Analytics | Logout    │
+├─────────────────────────────────────────────┤
+│                                             │
+│ Accountant Dashboard                        │
+│                                             │
+│ 💰 Financial Overview (This Month)          │
+│ ┌──────────┐ ┌──────────┐ ┌──────────┐    │
+│ │ Revenue  │ │Outstanding│ │Deposits │    │
+│ │ $12,450  │ │ $2,300   │ │ $8,100  │    │
+│ │  +15%↗  │ │ 18 orders│ │Collected│    │
+│ └──────────┘ └──────────┘ └──────────┘    │
+│                                             │
+│ 📊 Revenue Trend (Recharts)                 │
+│ ┌─────────────────────────────────────┐   │
+│ │ $                                   │   │
+│ │ 15k │    ╱╲                         │   │
+│ │ 12k │   ╱  ╲    ╱╲                  │   │
+│ │ 9k  │  ╱    ╲  ╱  ╲                 │   │
+│ │ 6k  │ ╱      ╲╱    ╲                │   │
+│ │ 3k  │╱              ╲               │   │
+│ │ └─────────────────────────────────  │   │
+│ │ Sep Oct Nov Dec Jan Feb              │   │
+│ └─────────────────────────────────────┘   │
+│                                             │
+│ ⚠️ Outstanding Balances (8 customers)      │
+│ ┌──────────────────────────────────────┐  │
+│ │ #1234│Jane Smith │$150│Due:11/16│Pay│  │
+│ │ #1237│Corp Client│$450│Due:11/17│Pay│  │
+│ │ #1240│John Doe   │$200│Due:11/20│Pay│  │
+│ └──────────────────────────────────────┘  │
+│                                             │
+│ 📄 Generate Reports:                       │
+│ [Weekly Report] [Monthly Report]           │
+│ [Export CSV] [Export PDF]                  │
+│                                             │
+│ [FOOTER]                                    │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## PAGE 11: MANAGER DASHBOARD 🆕 NEW
+**Route:** `/staff/dashboard/manager`  
+**Purpose:** Manager/Owner home - full visibility  
+**Access:** Staff with MANAGER role  
+**Login:** `manager@emilybakes.com / DemoPass123!`
+**Component:** `src/pages/admin/ManagerDashboard.tsx`
+**Auth:** YES (JWT required)
+**APIs:** `GET /api/orders`, `GET /api/reports/*`, `GET /api/staff`
+
+### Features:
+- Complete system overview
+- All KPIs (orders, revenue, staff, fulfillment)
+- Order status Kanban board (drag-drop)
+- Staff workload heatmap
+- Alerts & exceptions queue
+- All reports accessible
+- Can approve orders, override status
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ [🎂] Emily Staff Portal 👤 Manager [Logout]│
+│ Dashboard | Orders | Staff | Reports | Sys  │
+├─────────────────────────────────────────────┤
+│                                             │
+│ Manager Dashboard                           │
+│                                             │
+│ 📊 Daily Summary (Today)                    │
+│ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐            │
+│ │ 12  │ │$2.5k│ │ 8   │ │92%  │            │
+│ │Orders│ │Rev  │ │Compl│ │OnTime│           │
+│ └─────┘ └─────┘ └─────┘ └─────┘            │
+│                                             │
+│ 🎯 Staff Workload (Today)                   │
+│ Sales:     ████████░░░░░░░░░░░ 40%         │
+│ Bakers:    ███████████████░░░░░░ 70%       │
+│ Decorators:█████░░░░░░░░░░░░░░░░ 25%       │
+│ Manager:   ██░░░░░░░░░░░░░░░░░░░ 10%      │
+│                                             │
+│ 📋 Order Status (Kanban - Drag to Move)     │
+│ ┌─────────┐ ┌─────────┐ ┌─────────┐        │
+│ │ Ordered │ │InProgress│ │Ready    │        │
+│ │ (3)     │ │ (5)     │ │ (2)     │        │
+│ │         │ │         │ │         │        │
+│ │#1234    │ │#1237    │ │#1240    │        │
+│ │#1235    │ │#1238    │ │#1241    │        │
+│ │#1236    │ │#1239    │ │         │        │
+│ └─────────┘ └─────────┘ └─────────┘        │
+│                                             │
+│ ⚠️ Alerts (3 exceptions)                    │
+│ 🔴 Rush order #1240 - Pick up TODAY 6pm    │
+│ 🟡 Baker called in sick - reassign orders  │
+│ 🟡 Customer not responding - follow up     │
+│                                             │
+│ [All Reports] [Staff Schedule] [System]     │
+│                                             │
+│ [FOOTER]                                    │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+# 📋 TECHNICAL SUMMARY
+
+## Database Connections Required
+- CUSTOMER table (customer info)
+- ORDER table (order details)
+- ORDER_LAYER table (layer customization)
+- EMPLOYEE table (staff accounts)
+- PAYMENT table (deposit tracking)
+
+## API Endpoints Summary
+```
+PUBLIC:
+GET  /api/products (menu items)
+POST /api/contact (inquiry form)
+GET  /track/{token} (demo tracking, no DB call)
+
+STAFF (Authentication required):
+POST /api/staff/auth/login
+GET  /api/orders (with role filtering)
+POST /api/orders (create)
+PATCH /api/orders/:id/status
+GET  /api/reports/*
+GET  /api/staff
+```
+
+## Authentication Flow
+1. Visit `/staff-login`
+2. Enter email + password
+3. Backend validates against EMPLOYEE table
+4. Returns JWT token
+5. Token stored in localStorage
+6. All subsequent requests include token
+7. Middleware validates token
+8. Route guards check user role
+
+## Responsive Breakpoints
+- **Mobile:** 320px (1 column, hamburger menu)
+- **Tablet:** 768px (2 columns, collapsible sidebar)
+- **Desktop:** 1024px+ (full layout, visible sidebar)
+
+---
+
+# 🎯 COMPLETION STATUS
+
+✅ **All 11 pages documented**  
+✅ **ASCII wireframes for each page**  
+✅ **Component file paths specified**  
+✅ **API endpoints referenced**  
+✅ **Authentication requirements clear**  
+✅ **Mobile responsive notes included**  
+✅ **Database connections identified**  
+✅ **Demo credentials listed**  
+✅ **User roles defined**  
+✅ **Status of each page (existing vs new) marked**
+
+---
+
+**Ready for Replit AI Implementation! 🚀**
+
+*Last updated: November 13, 2025, 11:59 AM CST*

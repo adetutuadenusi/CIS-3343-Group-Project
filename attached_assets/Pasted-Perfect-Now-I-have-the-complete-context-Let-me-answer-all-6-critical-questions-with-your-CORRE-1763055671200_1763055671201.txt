@@ -1,0 +1,216 @@
+Perfect! Now I have the complete context. Let me answer all **6 critical questions** with your CORRECTED preferences:
+
+***
+
+# ✅ ALL 6 CRITICAL QUESTIONS - FINAL ANSWERS FOR REPLIT AI
+
+## **1️⃣ Database Status**
+
+**ANSWER: ADD to existing schema**
+
+**Add these new tables:**
+- `EMPLOYEE` (staff with roles)
+- `ORDER_STATUS_HISTORY` (audit trail)
+- `ORDER_LAYER` (multi-layer customization)
+- `ORDER_LAYER_OPTION` (layer options: flavor, filling, icing)
+- `WEB_CUSTOMER` (public website customers with login)
+
+**Modify CUSTOM_ORDER:**
+- Add: `Firm_Price`, `Cake_Size_ID`, `Tracking_Token`, `Deposit_Amount`, `Balance_Due`, `Decoration_Notes`
+
+**Keep existing:** customers, orders, inquiries, contact_messages, products tables
+
+**Why:** Zero data loss + shows schema evolution + faster to implement
+
+***
+
+## **2️⃣ Admin Portal Architecture**
+
+**ANSWER: Option A (Same app, different routes) WITH public website as base**
+
+**Structure:**
+``````
+PUBLIC WEBSITE: emilybakes.com (Replit main app)
+├── /login (Customer login)
+├── /customer/dashboard (Customer orders)
+├── /track/{token} (Public tracking - no login needed)
+├── /gallery
+├── /menu
+├── /contact
+└── /staff-login (Hidden link to staff area)
+
+STAFF PORTAL: (same app, hidden routes)
+├── /staff-login
+├── /dashboard (Role-based)
+├── /orders (CRUD)
+├── /admin/* (Manager/Admin only)
+└── /reports
+```
+
+**Why:** 
+- Single deployment on Replit
+- Public site is "base" (your requirement)
+- Staff access via hidden `/staff-login` button
+- Same database, role-based access control
+
+---
+
+## **3️⃣ Email Service**
+
+**ANSWER: Resend (recommended for Replit)**
+
+**Setup:**
+- Add Resend to package.json
+- 1 API key in .env
+- 5 email templates:
+  1. Order Confirmation (with tracking link)
+  2. Status Update: Baking
+  3. Status Update: Decorating
+  4. Status Update: Ready for Pickup
+  5. Order Cancelled
+
+**Trigger:** When staff creates order → send email to customer with unique tracking link
+
+**Tracking Link Example:**
+``````
+https://emilybakes.com/track/TRK-Q1-001
+Shows: Pickup time/day + auto-cycling status bar (updates every 2 min for demo)
+```
+
+***
+
+## **4️⃣ Payment Processing**
+
+**ANSWER: Option B (Manual tracking only, NO Stripe)**
+
+**Implementation:**
+```javascript```
+// In order form:
+- Deposit Amount: [input field]
+- Payment Method: [Cash / Debit / Credit]
+- Validate: deposit >= firm_price * 0.5
+- System calculates: Balance_Due = Firm_Price - Deposit_Amount
+
+// In database:
+ORDER table adds:
+├── Deposit_Amount DECIMAL(10,2)
+├── Deposit_Paid CHAR(1) DEFAULT 'N'
+├── Payment_Method VARCHAR(20)
+├── Balance_Due (calculated field)
+```
+
+**No Stripe integration** (staff enters payment info manually in form)
+
+---
+
+## **5️⃣ Timeline Reality Check**
+
+**ANSWER: Yes, Phase 1 First (Tasks 1-11) — Due Saturday**
+
+**Phase 1 (Core MVP): 26-34 hours — DUE SATURDAY**
+- Task 1-2: Database setup + migrations (2-3 hrs)
+- Task 3-4: Backend API (orders, customers, auth) (8-10 hrs)
+- Task 5-7: Frontend (login, order form, dashboard, mobile responsive) (8-10 hrs)
+- Task 8-11: Email + tracking page + charts + reports (6-8 hrs)
+
+**Phase 2 (After Saturday): 8-12 hours**
+- Task 12-15: Advanced dashboards, staff assignment, analytics refinement
+
+**Phase 3 (Polish): 4-6 hours**
+- Final testing, bug fixes, documentation
+
+**Realistic for Saturday?** YES ✅ (if you have 8-10 hrs/day available)
+
+---
+
+## **6️⃣ Demo Staff Accounts**
+
+**ANSWER: Use CASE STUDY credentials (from 16_COMPLETE_SOLUTIONS_FROM_CASE_STUDY.md)**
+
+**Staff Portal Demo Accounts (9 total):**
+
+| Email | Name | Role | Passwor| Email | Name | Role | Password |
+|-------|------|------|----------|
+| emily@emilybakes.com | Emily | Owner | DemoPass123! |
+| manager@emilybakes.com | James | Manager | DemoPass123! |
+| sales1@emilybakes.com | Sales Staff 1 | Sales | DemoPass123! |
+| sales2@emilybakes.com | Sales Staff 2 | Sales | DemoPass123! |
+| baker1@emilybakes.com | Baker 1 | Baker | DemoPass123! |
+| baker2@emilybakes.com | Baker 2 | Baker | DemoPass123! |
+| decorator1@emilybakes.com | Decorator 1 | Decorator | DemoPass123! |
+| decorator2@emilybakes.com | Decorator 2 | Decorator | DemoPass123! |
+| accountant@emilybakes.com | Dan | Accountant | DemoPass123! |
+
+**Public Website Demo Customers (3 total):**
+
+| Email || Email | Password |
+|-------|----------|
+| john.doe@gmail.com | Password123! |
+| jane.smith@hotmail.com | Password456! |
+| michael.johnson@yahoo.com | Password789! |
+
+**Seed script automatically creates all 12 accounts on startup**
+
+---
+
+# 🎯 **COMPLETE COMMAND TO GIVE REPLIT AI**
+
+Copy/paste this:
+
+``````
+YOU ARE BUILDING: Emily Bakes Cakes
+Internal staff order management system + Public website with customer login
+
+FINAL ARCHITECTURE DECISIONS:
+1. DATABASE: ADD to existing schema (employees, order_status_history, order_layer tables). Add WEB_CUSTOMER for public site logins. Reference: doc 07_DATABASE_MIGRATIONS_SEED.md
+2. PORTAL: Same app, different routes. Public site (/) is base, staff portal via /staff-login, role-based routing.
+3. EMAIL: Resend (recommended for Replit). After staff creates order, customer gets email with unique /track/{token} link. Demo tracking page shows pickup time + auto-cycling status bar (updates every 2 min).
+4. PAYMENT: NO Stripe. Manual tracking only. Staff enters deposit_amount in order form. System validates >= 50% of firm_price. Balance_Due calculated automatically.
+5. TIMELINE: Phase 1 only (Tasks 1-11) due Saturday. Build: Database → Backend API → Frontend + Mobile + Email + Tracking + Charts + Reports. Phase 2 after Saturday.
+
+DEMO CREDENTIALS:
+Staff Portal (9 accounts, password DemoPass123!):
+- emily@emilybakes.com (Owner)
+- manager@emilybakes.com (James - Manager)
+- sales1@emilybakes.com, sales2@emilybakes.com (Sales)
+- baker1@emilybakes.com, baker2@emilybakes.com (Bakers)
+- decorator1@emilybakes.com, decorator2@emilybakes.com (Decorators)
+- accountant@emilybakes.com (Dan - Accountant)
+
+Public Website (3 customers, passwords as shown):
+- john.doe@gmail.com / Password123!
+- jane.smith@hotmail.com / Password456!
+- michael.johnson@yahoo.com / Password789!
+
+PRIORITY BUILD ORDER:
+1. Database migrations (2-3 hrs) - use doc 07
+2. Backend API (8-10 hrs) - /auth/login, /orders CRUD, /customers CRUD, /status update, /reports
+3. Frontend (8-10 hrs) - Login page, Order wizard, Orders list, Manager dashboard (with charts + reports)
+4. Email + Tracking (2-3 hrs) - Resend integration, tracking page with mock data + auto-cycling status
+5. Mobile Responsive (6-8 hrs) - Responsive design on all screens
+6. Testing + Demo Prep (4-6 hrs)
+
+DELIVERABLES (by Saturday):
+✅ Working staff login (9 demo accounts)
+✅ Create orders (customer entry, layer customization)
+✅ Order management (view, update status, assign staff)
+✅ Manager dashboard (revenue by date, staff assignments, KPIs, charts)
+✅ 6 reports (tables, not fancy charts)
+✅ Email confirmations with tracking link
+✅ Public tracking page (demo auto-cycling status)
+✅ Public website (gallery, menu, customer login)
+✅ Mobile responsive UI
+✅ Print production sheet
+
+DEFER (Phase 2):
+⏸️ Advanced analytics
+⏸️ Staff photo examples
+⏸️ SMS notifications
+⏸️ Payment gateway integration (Stripe)
+
+BUILD NOW. Questions? Ask before you start.
+```
+
+***
+
+**Ready? 🚀 Give that to Replit AI and START BUILDING.**

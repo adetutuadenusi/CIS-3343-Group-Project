@@ -1,5 +1,12 @@
 ## Overview
-"Emily Bakes Cakes" is a web application designed for a baking business, featuring a dual interface: a public-facing website for customer engagement and an administrative portal for efficient staff management. The public site allows customers to browse products, design custom cakes, and view galleries, while the admin portal provides tools for managing orders, customers, products, and reports. The project aims to streamline operations and enhance the customer experience, offering a comprehensive solution for a modern baking enterprise.
+"Emily Bakes Cakes" is a CIS 3343 case study project - a **staff-only internal order management system** for a bakery business. The system consists of:
+
+1. **Public Website** (marketing only) - Gallery, menu, contact, order tracking
+2. **Staff Portal** (role-based access) - 5 unique dashboards for Sales, Baker, Decorator, Accountant, Manager
+3. **Public Order Tracking** (no login) - Auto-cycling demo page showing order progress
+4. **PostgreSQL Database** - Complete schema with customers, orders, staff, products
+
+**MAJOR SCOPE CLARIFICATION (Nov 13, 2025):** This is NOT a customer-facing e-commerce site. Customers call/email/visit to place orders. Staff use the internal portal to manage all operations.
 
 ## User Preferences
 - **HOMEPAGE LOCKED**: The homepage design is finalized and stable. No major changes should be made without explicit user clarification and acceptance.
@@ -71,3 +78,7 @@ The application is built with React 18.3.1, TypeScript, Vite 6.3.5, and Tailwind
 - **Drizzle ORM**: ORM for PostgreSQL.
 - **Express.js**: Backend framework.
 - **tsx**: TypeScript execution for Node.js.
+
+## Project Documentation
+- **Master Implementation Spec:** `docs/23_MASTER_IMPLEMENTATION_SPECIFICATION.md` - Complete consolidated specification covering all 17 pages (6 public + 11 staff portal), role-based permissions, 6 client reports, wireframes, and technical details. Updated Nov 13, 2025.
+- **Critical Correction:** Baker and Decorator roles have FULL Sales permissions + specialized functions (per case study: "Bakers/Decorators can also serve as sales staff when not busy").
