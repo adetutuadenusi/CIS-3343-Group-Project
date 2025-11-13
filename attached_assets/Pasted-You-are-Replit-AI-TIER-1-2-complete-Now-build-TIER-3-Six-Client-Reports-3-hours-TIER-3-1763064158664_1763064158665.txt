@@ -1,0 +1,53 @@
+You are Replit AI. TIER 1 & 2 complete. Now build TIER 3: Six Client Reports (~3 hours).
+
+**TIER 3 OBJECTIVE:** Create 6 role-based Recharts reports with filters, exports (CSV/PDF), and role-based access.
+
+**REPORT 1: Order Summary** (/staff/reports/order-summary)
+- Access: Sales, Baker, Decorator, Manager
+- Bar chart: Orders by day (past 30 days)
+- Table: Order #, Customer, Pickup, Status, Price, Balance
+- Features: Date range picker, status filter, CSV/PDF export
+- Totals: Count + Total Revenue
+
+**REPORT 2: Customer List** (/staff/reports/customer-list)
+- Access: Sales, Baker, Decorator, Manager
+- Line chart: Customer acquisition trend
+- Table: Name, Email, Phone, Type, Orders Count, Total Spent
+- Filters: Retail/Corporate, spending range
+- Export: CSV (names/emails/phones)
+
+**REPORT 3: Revenue** (/staff/reports/revenue) ⭐ ROLE: Accountant, Manager ONLY
+- Time periods: Day/Week/Month/Custom
+- KPI cards: Total Revenue, Deposits, Outstanding, Collection Rate
+- 3 Charts: Line (trend), Pie (by product type), Bar (monthly)
+- Export: CSV, PDF, Excel
+
+**REPORT 4: Pending Orders** (/staff/reports/pending-orders)
+- Access: Sales, Baker, Decorator, Manager
+- Funnel chart: By status
+- Table: Order #, Customer, Pickup, Days Until Due, Status, Assigned Staff
+- Color code: 🟢 >2d, 🟡 24-48h, 🔴 <24h
+
+**REPORT 5: Completed Orders** (/staff/reports/completed-orders)
+- Access: Baker, Decorator, Manager
+- Bar chart: Avg completion time by type
+- Table: Completion Date, Baker, Decorator, Days, Rating, Price
+- Filters: Date, staff, rating
+
+**REPORT 6: Product Inventory** (/staff/reports/product-inventory) - Manager ONLY
+- Horizontal bar chart: Top 10 products by revenue
+- Table: Product, Category, Price, Times Ordered, Revenue
+- Filter: Category, popularity
+
+**IMPLEMENTATION:**
+1. Create /staff/reports/ folder with 6 component files
+2. Add routes in main routing config
+3. Create ReportLayout wrapper for headers/filters
+4. Use existing Recharts (already in package.json)
+5. Add CSV/PDF export via react-csv + jsPDF
+6. Implement role-based access guards
+7. Test all 6 with demo accounts
+
+**VALIDATION:** Run dev, test each report. Verify: ✅ Role access correct ✅ Charts render ✅ Filters work ✅ Exports functional ✅ No errors. Create TIER3-COMPLETION-LOG.txt. When complete, generate TIER 4 PROMPT.
+
+Start immediately.

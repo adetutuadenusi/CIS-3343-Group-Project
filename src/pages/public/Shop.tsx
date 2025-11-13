@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, ChevronDown, Star, Info, Sparkles } from 'lucide-react';
+import { Search, ChevronDown, Star, Info, Sparkles, Phone } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Card } from '../../components/ui/card';
 import { Input } from '../../components/ui/input';
 import { Badge } from '../../components/ui/badge';
-import { InquiryModal, InquiryFormData } from '../../components/InquiryModal';
-import { useToast } from '../../components/ToastContext';
-import { useInquiries } from '../../contexts/InquiriesContext';
 
 import birthdayCake1 from '../../assets/stock_images/birthday_cake_with_c_2320daa1.jpg';
 import birthdayCake2 from '../../assets/stock_images/birthday_cake_with_c_7bc0f700.jpg';
@@ -26,7 +23,6 @@ interface Product {
   id: number;
   name: string;
   category: string;
-  priceRange: string;
   description: string;
   rating: number;
   reviews: number;
@@ -40,7 +36,6 @@ const products: Product[] = [
     id: 1,
     name: 'Birthday Celebration',
     category: 'Birthday',
-    priceRange: '$45 - $85',
     description: 'Classic birthday cake with custom decorations and personalized message',
     rating: 5,
     reviews: 127,
@@ -51,7 +46,6 @@ const products: Product[] = [
     id: 2,
     name: 'Elegant Wedding Tier',
     category: 'Wedding',
-    priceRange: '$250 - $450',
     description: 'Multi-tier wedding cake with elegant details and fresh flowers',
     rating: 5,
     reviews: 89,
@@ -62,7 +56,6 @@ const products: Product[] = [
     id: 3,
     name: 'Almond Delight',
     category: 'All',
-    priceRange: '$50 - $90',
     description: 'Rich almond flavor with smooth buttercream frosting',
     rating: 5,
     reviews: 156,
@@ -73,7 +66,6 @@ const products: Product[] = [
     id: 4,
     name: 'Lemon & Cream Cheese',
     category: 'All',
-    priceRange: '$48 - $88',
     description: 'Tangy lemon with smooth cream cheese frosting',
     rating: 4.8,
     reviews: 98,
@@ -83,7 +75,6 @@ const products: Product[] = [
     id: 5,
     name: 'Black Forest',
     category: 'All',
-    priceRange: '$55 - $95',
     description: 'Chocolate cake with cherries and whipped cream',
     rating: 5,
     reviews: 143,
@@ -93,7 +84,6 @@ const products: Product[] = [
     id: 6,
     name: 'German Chocolate',
     category: 'All',
-    priceRange: '$52 - $92',
     description: 'Traditional German chocolate with coconut pecan frosting',
     rating: 4.9,
     reviews: 201,
@@ -104,7 +94,6 @@ const products: Product[] = [
     id: 7,
     name: 'Anniversary Romance',
     category: 'Anniversary',
-    priceRange: '$65 - $120',
     description: 'Romantic design with edible flowers and gold accents',
     rating: 5,
     reviews: 67,
@@ -114,7 +103,6 @@ const products: Product[] = [
     id: 8,
     name: 'Corporate Logo Cake',
     category: 'Corporate',
-    priceRange: '$85 - $200',
     description: 'Custom branded cakes for business events and celebrations',
     rating: 4.9,
     reviews: 45,
@@ -124,7 +112,6 @@ const products: Product[] = [
     id: 9,
     name: 'Italian Cream',
     category: 'All',
-    priceRange: '$50 - $90',
     description: 'Light cream cake with pecans and coconut',
     rating: 4.8,
     reviews: 112,
@@ -134,7 +121,6 @@ const products: Product[] = [
     id: 10,
     name: 'Lemon Doberge',
     category: 'All',
-    priceRange: '$58 - $98',
     description: 'New Orleans style layered lemon cake with custard filling',
     rating: 5,
     reviews: 178,
@@ -145,7 +131,6 @@ const products: Product[] = [
     id: 11,
     name: 'Chocolate Doberge',
     category: 'All',
-    priceRange: '$58 - $98',
     description: 'New Orleans style layered chocolate cake with rich pudding',
     rating: 5,
     reviews: 165,
@@ -155,7 +140,6 @@ const products: Product[] = [
     id: 12,
     name: 'Seasonal Pumpkin Spice',
     category: 'Seasonal',
-    priceRange: '$55 - $95',
     description: 'Fall-inspired pumpkin spice cake with cream cheese frosting',
     rating: 4.9,
     reviews: 92,
@@ -188,16 +172,10 @@ interface ShopProps {
 }
 
 export function Shop({ onNavigate }: ShopProps = {}) {
-  const { showToast } = useToast();
-  const { addInquiry } = useInquiries();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('popular');
   const [isLoading, setIsLoading] = useState(true);
-  const [inquiryModal, setInquiryModal] = useState<{ isOpen: boolean; product: Product | null }>({
-    isOpen: false,
-    product: null
-  });
   const [hoveredTooltip, setHoveredTooltip] = useState<number | null>(null);
   const [apiProducts, setApiProducts] = useState<Product[]>([]);
 
@@ -209,12 +187,11 @@ export function Shop({ onNavigate }: ShopProps = {}) {
         const response = await fetch('/api/products');
         if (response.ok) {
           const data = await response.json();
-          // Transform API data to match Product interface
+          // Transform API data to match Product interface (prices excluded per staff-only policy)
           const transformedProducts = data.map((p: any) => ({
             id: p.id,
             name: p.name,
             category: p.category,
-            priceRange: p.priceRange || `$${(p.price / 100).toFixed(0)}`,
             description: p.description,
             rating: p.rating || 5,
             reviews: p.reviews || 0,
@@ -246,10 +223,8 @@ export function Shop({ onNavigate }: ShopProps = {}) {
     .sort((a, b) => {
       if (sortBy === 'popular') return (b.reviews || 0) - (a.reviews || 0);
       if (sortBy === 'rating') return (b.rating || 0) - (a.rating || 0);
-      if (sortBy === 'price-low') return parseInt(a.priceRange.split('-')[0].replace(/[^0-9]/g, '')) - 
-                                           parseInt(b.priceRange.split('-')[0].replace(/[^0-9]/g, ''));
-      if (sortBy === 'price-high') return parseInt(b.priceRange.split('-')[1].replace(/[^0-9]/g, '')) - 
-                                            parseInt(a.priceRange.split('-')[1].replace(/[^0-9]/g, ''));
+      if (sortBy === 'name-az') return a.name.localeCompare(b.name);
+      if (sortBy === 'name-za') return b.name.localeCompare(a.name);
       return 0;
     });
 
@@ -263,19 +238,6 @@ export function Shop({ onNavigate }: ShopProps = {}) {
     setIsLoading(true);
     setSortBy(newSort);
     setTimeout(() => setIsLoading(false), 400);
-  };
-
-  const handleInquireClick = (product: Product) => {
-    setInquiryModal({ isOpen: true, product });
-  };
-
-  const handleInquirySubmit = (data: InquiryFormData) => {
-    addInquiry({
-      ...data,
-      productName: inquiryModal.product?.name || ''
-    });
-    showToast('success', `We've received your inquiry for ${inquiryModal.product?.name}! We'll contact you within 24 hours.`, 'Inquiry Submitted');
-    setInquiryModal({ isOpen: false, product: null });
   };
 
   const getRatingColor = (rating: number) => {
@@ -323,6 +285,80 @@ export function Shop({ onNavigate }: ShopProps = {}) {
           >
             Handcrafted perfection, baked fresh daily
           </p>
+        </motion.div>
+
+        {/* Call to Order Banner */}
+        <motion.div
+          className="glass-card p-6 md:p-8 mb-6 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          style={{
+            background: 'linear-gradient(135deg, rgba(196, 69, 105, 0.1) 0%, rgba(196, 69, 105, 0.05) 100%)',
+            border: '2px solid rgba(196, 69, 105, 0.3)',
+            borderRadius: '16px'
+          }}
+        >
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+            <div className="flex items-center gap-3">
+              <div 
+                className="p-3 rounded-full"
+                style={{
+                  background: '#C44569',
+                  boxShadow: '0 4px 12px rgba(196, 69, 105, 0.3)'
+                }}
+              >
+                <Phone size={24} color="white" />
+              </div>
+              <div className="text-left">
+                <p 
+                  style={{
+                    fontFamily: 'Poppins',
+                    fontSize: '14px',
+                    color: 'var(--text-secondary)',
+                    marginBottom: '2px'
+                  }}
+                >
+                  Ready to order?
+                </p>
+                <a 
+                  href="tel:555-123-4567"
+                  style={{
+                    fontFamily: 'Poppins',
+                    fontSize: '22px',
+                    fontWeight: 700,
+                    color: '#C44569',
+                    textDecoration: 'none'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#8B3A5E'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#C44569'}
+                >
+                  (555) 123-4567
+                </a>
+              </div>
+            </div>
+            <div 
+              style={{
+                width: '1px',
+                height: '50px',
+                background: 'rgba(196, 69, 105, 0.2)',
+                display: 'none'
+              }}
+              className="md:block"
+            />
+            <p 
+              style={{
+                fontFamily: 'Open Sans',
+                fontSize: '15px',
+                color: 'var(--text-secondary)',
+                maxWidth: '400px',
+                lineHeight: 1.6
+              }}
+            >
+              <strong style={{ color: '#C44569' }}>Prices available upon consultation.</strong><br />
+              Call us today to discuss your custom cake vision!
+            </p>
+          </div>
         </motion.div>
 
         {/* Search & Filter Bar */}
@@ -391,8 +427,8 @@ export function Shop({ onNavigate }: ShopProps = {}) {
               >
                 <option value="popular">Most Popular</option>
                 <option value="rating">Highest Rated</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
+                <option value="name-az">Name: A-Z</option>
+                <option value="name-za">Name: Z-A</option>
               </select>
               <ChevronDown 
                 className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none"
@@ -744,44 +780,35 @@ export function Shop({ onNavigate }: ShopProps = {}) {
                           </button>
                         </div>
 
-                        {/* Price & CTA */}
+                        {/* Call to Order CTA */}
                         <div 
-                          className="flex items-center justify-between pt-4 border-t" 
+                          className="flex items-center justify-center pt-4 border-t" 
                           style={{ borderColor: 'var(--border-subtle)' }}
                         >
-                          <div>
-                            <p style={{ fontSize: '12px', color: 'var(--text-tertiary)', marginBottom: '4px', fontWeight: 500 }}>
-                              Price Range
-                            </p>
-                            <p style={{ 
-                              fontFamily: 'Poppins', 
-                              fontWeight: 700, 
-                              fontSize: 'clamp(18px, 3vw, 22px)', 
+                          <a 
+                            href="tel:555-123-4567"
+                            className="flex items-center gap-2 text-center"
+                            style={{
                               color: '#C44569',
-                              lineHeight: 1
-                            }}>
-                              {product.priceRange}
-                            </p>
-                          </div>
-                          <motion.div
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                              fontFamily: 'Poppins',
+                              fontWeight: 600,
+                              fontSize: '15px',
+                              textDecoration: 'none',
+                              padding: '12px',
+                              transition: 'all 250ms ease'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.color = '#8B3A5E';
+                              e.currentTarget.style.transform = 'translateY(-2px)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.color = '#C44569';
+                              e.currentTarget.style.transform = 'translateY(0)';
+                            }}
                           >
-                            <Button
-                              className="btn-primary touch-target"
-                              style={{ 
-                                height: '48px', 
-                                minWidth: '110px',
-                                fontSize: '15px',
-                                fontWeight: 600,
-                                fontFamily: 'Poppins'
-                              }}
-                              onClick={() => handleInquireClick(product)}
-                              aria-label={`Inquire about ${product.name}`}
-                            >
-                              Inquire
-                            </Button>
-                          </motion.div>
+                            <Phone size={18} />
+                            <span>Call us to order</span>
+                          </a>
                         </div>
                       </div>
                     </Card>
@@ -810,13 +837,6 @@ export function Shop({ onNavigate }: ShopProps = {}) {
         )}
       </div>
 
-      {/* Inquiry Modal */}
-      <InquiryModal
-        isOpen={inquiryModal.isOpen}
-        onClose={() => setInquiryModal({ isOpen: false, product: null })}
-        productName={inquiryModal.product?.name || ''}
-        onSubmit={handleInquirySubmit}
-      />
     </div>
   );
 }

@@ -192,12 +192,25 @@ export function PublicHome({ onNavigate }: PublicHomeProps = {}) {
               fontSize: '36px',
               fontWeight: 600,
               color: '#F8EBD7',
-              marginBottom: '50px',
+              marginBottom: '30px',
               textShadow: '0 2px 15px rgba(0, 0, 0, 0.8)'
             }}>
               Custom Cakes Crafted with<br />
               <span style={{ color: '#C44569' }}>Love and Tradition</span>
             </h2>
+            
+            <p style={{
+              fontFamily: 'Open Sans, sans-serif',
+              fontSize: '18px',
+              fontWeight: 400,
+              color: '#F8EBD7',
+              marginBottom: '40px',
+              textShadow: '0 2px 10px rgba(0, 0, 0, 0.7)',
+              maxWidth: '700px',
+              margin: '0 auto 40px'
+            }}>
+              We work exclusively by phone, visit, or email to ensure every cake is perfect for your special day.
+            </p>
             
             <a
               href="tel:555-123-4567"
