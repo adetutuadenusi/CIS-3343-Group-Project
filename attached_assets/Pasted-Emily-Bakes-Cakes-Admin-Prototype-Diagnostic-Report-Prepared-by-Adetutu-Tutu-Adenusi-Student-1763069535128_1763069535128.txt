@@ -1,0 +1,345 @@
+Emily Bakes Cakes – Admin Prototype Diagnostic Report
+
+Prepared by: Adetutu (Tutu) Adenusi – Student ID: 2180098
+Role: CIS Student Analyst and QA Lead
+
+0. Executive Summary
+
+After a deep test of the entire Staff Application (Admin Portal), it’s clear the current build looks visually “cute” but does not function in a way that supports Emily Bakes Cakes’ real operational workflow.
+
+The prototype is failing in three major areas:
+
+It does not match the case study requirements.
+
+UI/UX is inconsistent, confusing, and not business-grade.
+
+Role-based permissions, dashboards, navigation, and data structures are incorrect or incomplete.
+
+This system needs a serious correction sprint before presentation.
+
+1. Dashboard & KPIs
+Issue
+
+The dashboards are not actionable.
+Critical elements — Quick Links, System Overview, Alerts — are hidden below the fold.
+Sales Dashboard title does not match the menu (“Business Analytics”).
+Charts look cute but serve no real business logic.
+
+Recommendation
+
+Move Quick Actions, System Overview, and Alerts to the top.
+
+Change menu wording to match page titles (“Sales Dashboard,” “Order Overview,” etc.).
+
+Create role-specific dashboards:
+
+Sales: Today’s orders, customer spending, inquiries.
+
+Baker: Cakes in production, due today, overdue items.
+
+Owner: Revenue, order trends, customer retention.
+
+2. Menu & Navigation
+Issue
+
+Menu labels feel unprofessional and don’t match the pages.
+Breadcrumb navigation is missing, causing users to get “stuck.”
+
+Recommendation
+
+Replace “Business Analytics” with “Sales Dashboard.”
+
+Add breadcrumb trail:
+
+Dashboard > Orders > Order #1293
+
+Highlight menu item based on active page (route-based highlighting).
+
+3. Order Management Issues
+A. Occasion Problem
+
+“Occasion” should NOT exist anywhere.
+Case study explicitly removes it.
+
+Fix
+
+Remove “Occasion” from:
+
+Custom Cake Builder
+
+Order creation
+
+Order filters
+
+Order cards
+
+Order detail view
+
+Database schema (if applicable)
+
+B. Layer Selection
+
+A 1-layer cake makes zero sense.
+
+Fix
+
+Minimum: 2 layers
+
+Maximum: 4 layers
+
+Enforce validation logic in UI + backend.
+
+C. Design Style
+
+“Design Style” is not part of Emily’s business rules.
+
+Fix
+
+Completely remove it.
+
+4. Role Permissions: Sales, Baker, Decorator, Owner
+Issue
+
+Sales staff can move orders to “Pending.”
+That is out of scope and breaks workflow.
+
+Correct Logic
+
+Sales: can create orders and view orders.
+
+Baker/Decorator: can change order status.
+
+Manager/Owner: can override, approve, reassign.
+
+Fix
+
+Lock status dropdown for Sales roles.
+
+Only show allowed actions for each role.
+
+5. Order & Customer Popups
+Issue
+
+Popups are massive, cut off, and impossible to close.
+Close icon sometimes missing.
+Elements overlap or overflow.
+
+Recommendation
+
+Reduce popup width to 60% screen.
+
+Limit height and enable scroll inside modal.
+
+Always include top-right “X” close button.
+
+Center modal properly.
+
+6. Dropdown UI Problems
+Issue
+
+Dropdown icons are misaligned and extremely confusing.
+Icons appear on far left, text on right, spacing is off.
+
+Recommendation
+
+Use standard UI:
+
+[ Label ] [ v ]
+
+
+Left-align labels
+
+Right-align dropdown arrow
+
+Add spacing of 12–16px
+
+Increase font-weight
+
+Use modern standardized component patterns
+
+7. Inquiry System + Rush Orders
+Issue
+
+Inquiry page is empty, non-functional, missing rush-order logic.
+
+Recommendation
+
+Add standard inquiry list (Name, Email, Message, Date).
+
+Add search & filter.
+
+Add “Rush Order” indicator (boolean).
+
+Add “Respond” or “Convert to Order” button.
+
+8. Inventory Management (Out of Scope)
+Issue
+
+Staff are handling inventory. That is NOT part of the case study.
+
+Fix
+
+Rename to:
+
+“Product Catalog” OR
+
+“Products”
+
+What’s allowed:
+
+CRUD products
+
+View all product types used in custom cakes
+
+What’s NOT allowed:
+
+Stock levels
+
+Inventory counts
+
+Warehouse items
+
+Supply management
+
+9. Customer Management Issues
+Issue
+
+Customer pages are oversized, poorly aligned, and inconsistent.
+
+Fix
+
+Standardize spacing, padding, headers, tables.
+
+Make it responsive.
+
+Use same modal size rules as Order Management.
+
+10. Business Intelligence (BI)
+Issue
+
+BI page is identical for Sales and Owner.
+This is wrong and not role-based.
+
+Fix
+
+Owner: revenue, customer trends, year-over-year performance.
+
+Sales: customer spending, daily orders, conversion.
+
+Baker: orders due, production load.
+
+11. Settings + System Configuration
+Issue
+
+Pages are poorly named and inconsistent.
+
+Fix
+
+Use:
+
+“Settings”
+
+“System Configuration”
+
+“User Accounts”
+
+“Roles & Permissions”
+
+And apply those names everywhere.
+
+12. Account Switching
+Issue
+
+User must fully log out to switch accounts.
+
+Fix
+
+Add:
+“Switch Account” → opens quick switch modal (useful in bakery shared devices).
+
+13. Manager Account Branding
+Issue
+
+Every user has an “eb” icon.
+Unclear who is who.
+
+Fix
+
+Use initials:
+
+Emily Baker → EB
+
+John Smith → JS
+
+Add custom colors for avatar backgrounds
+
+Add ability to upload profile picture
+
+14. Prototype-Wide Dashboard Repetition
+Issue
+
+All dashboards repeat the same generic cards.
+Not useful for any role.
+
+Fix
+
+Create four unique dashboards:
+
+Sales Dashboard
+
+Order Dashboard (Baker/Decorator)
+
+Owner Dashboard
+
+Admin System Overview Dashboard
+
+15. Admin Menu Does Not Reflect Page State
+Issue
+
+Menu selection stays the same no matter what page you're on.
+
+Fix
+
+Route-based highlighting:
+
+“Sales Dashboard” highlights when you are on /sales-dashboard
+
+“Orders” highlights when you are on /orders
+
+Priority Fix List for Devs
+
+Here’s the fix order your team should follow:
+
+Tier 1: MUST FIX TODAY
+
+Remove Occasion + Design Style
+
+Fix menu labels + page title mismatch
+
+Fix dashboards (quick actions top)
+
+Fix Order status permissions
+
+Fix popups (sizing + close icon)
+
+Fix dropdown UI
+
+Rename Inventory → Product Catalog
+
+Fix modals in Customer + Order Management
+
+Add breadcrumb navigation
+
+Stop Sales from changing statuses
+
+Fix admin menu active state
+
+Tier 2: Fix After Tier 1
+
+Rebuild Inquiry system
+
+Add “Switch Account”
+
+Add user avatars
+
+Redesign BI pages for role specificity

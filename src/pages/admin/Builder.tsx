@@ -6,9 +6,8 @@ import { Card } from '../../components/ui/card';
 import { Input } from '../../components/ui/input';
 import { Textarea } from '../../components/ui/textarea';
 import { useToast } from '../../components/ToastContext';
-import { ImageUploadGrid } from '../../components/ImageUploadGrid';
 import { LayerBuilder } from '../../components/LayerBuilder';
-import { occasions, designs, flavors, fillings, calculateTotalPrice, type LayerData } from '../../data/cakeOptions';
+import { flavors, fillings, calculateTotalPrice, type LayerData } from '../../data/cakeOptions';
 
 interface Step {
   id: number;
@@ -17,11 +16,9 @@ interface Step {
 }
 
 const steps: Step[] = [
-  { id: 1, title: 'Occasion', description: 'What are you celebrating?' },
-  { id: 2, title: 'Build Layers', description: 'Create your custom cake layers' },
-  { id: 3, title: 'Design', description: 'Customize the look' },
-  { id: 4, title: 'Details', description: 'Finalize your order' },
-  { id: 5, title: 'Review', description: 'Confirm and submit' }
+  { id: 1, title: 'Build Layers', description: 'Create your custom cake layers' },
+  { id: 2, title: 'Details', description: 'Finalize your order' },
+  { id: 3, title: 'Review', description: 'Confirm and submit' }
 ];
 
 export function Builder() {
@@ -29,11 +26,10 @@ export function Builder() {
   const [openStep, setOpenStep] = useState<number>(1);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [layers, setLayers] = useState<LayerData[]>([
-    { id: 'layer-1', flavor: '', fillings: [], notes: '' }
+    { id: 'layer-1', flavor: '', fillings: [], notes: '' },
+    { id: 'layer-2', flavor: '', fillings: [], notes: '' }
   ]);
   const [formData, setFormData] = useState({
-    occasion: '',
-    design: '',
     name: '',
     email: '',
     phone: '',
@@ -54,13 +50,9 @@ export function Builder() {
 
   const handleCompleteStep = (stepId: number) => {
     // Validate step before marking complete
-    if (stepId === 1 && !formData.occasion) {
-      showToast('error', 'Please select an occasion to continue');
-      return;
-    }
-    if (stepId === 2) {
-      if (layers.length === 0) {
-        showToast('error', 'Please add at least one layer to continue');
+    if (stepId === 1) {
+      if (layers.length < 2) {
+        showToast('error', 'Please add at least two layers to continue');
         return;
       }
       for (const layer of layers) {
@@ -70,11 +62,7 @@ export function Builder() {
         }
       }
     }
-    if (stepId === 3 && !formData.design) {
-      showToast('error', 'Please select a design style to continue');
-      return;
-    }
-    if (stepId === 4 && (!formData.name || !formData.email || !formData.date || !formData.servings)) {
+    if (stepId === 2 && (!formData.name || !formData.email || !formData.date || !formData.servings)) {
       showToast('error', 'Please fill in all required fields to continue');
       return;
     }
@@ -84,7 +72,7 @@ export function Builder() {
     }
     
     // Auto-open next step
-    if (stepId < 5) {
+    if (stepId < 3) {
       setOpenStep(stepId + 1);
     }
   };
@@ -251,7 +239,7 @@ export function Builder() {
                             color: '#5A3825',
                             opacity: 0.6
                           }}>
-                            {step.id}/5
+                            {step.id}/3
                           </span>
                         </div>
                         <p style={{
@@ -297,42 +285,8 @@ export function Builder() {
                           padding: 'clamp(16px, 4vw, 24px)',
                           borderTop: '1px solid rgba(90, 56, 37, 0.1)'
                         }}>
-                          {/* Step 1: Occasion */}
+                          {/* Step 1: Build Layers */}
                           {step.id === 1 && (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-                              {occasions.map((occasion) => (
-                                <button
-                                  key={occasion.id}
-                                  onClick={() => setFormData({ ...formData, occasion: occasion.id })}
-                                  className="rounded-xl transition-all text-center"
-                                  style={{
-                                    padding: 'clamp(16px, 4vw, 24px)',
-                                    background: formData.occasion === occasion.id 
-                                      ? 'rgba(196, 69, 105, 0.15)' 
-                                      : 'rgba(248, 235, 215, 0.5)',
-                                    border: `2px solid ${formData.occasion === occasion.id ? '#C44569' : 'transparent'}`,
-                                    cursor: 'pointer',
-                                    minHeight: '100px'
-                                  }}
-                                >
-                                  <div style={{ fontSize: 'clamp(32px, 8vw, 40px)', marginBottom: '8px' }}>
-                                    {occasion.icon}
-                                  </div>
-                                  <p style={{ 
-                                    fontFamily: 'Poppins', 
-                                    fontWeight: 600,
-                                    fontSize: 'clamp(13px, 2.5vw, 15px)',
-                                    color: formData.occasion === occasion.id ? '#C44569' : '#2B2B2B'
-                                  }}>
-                                    {occasion.name}
-                                  </p>
-                                </button>
-                              ))}
-                            </div>
-                          )}
-
-                          {/* Step 2: Build Layers */}
-                          {step.id === 2 && (
                             <div>
                               <div style={{
                                 marginBottom: '20px',
@@ -356,76 +310,15 @@ export function Builder() {
                                   color: '#5A3825',
                                   margin: 0
                                 }}>
-                                  Add unlimited layers, each with its own flavor, up to 2 fillings ($1 each), and special notes.
+                                  Add unlimited layers (minimum 2 required), each with its own flavor, up to 2 fillings ($1 each), and special notes.
                                 </p>
                               </div>
                               <LayerBuilder layers={layers} onLayersChange={setLayers} />
                             </div>
                           )}
 
-                          {/* Step 3: Design */}
-                          {step.id === 3 && (
-                            <div className="space-y-6">
-                              {/* Design Style Selection */}
-                              <div>
-                                <h5 style={{
-                                  fontFamily: 'Poppins',
-                                  fontWeight: 600,
-                                  fontSize: 'clamp(15px, 3vw, 18px)',
-                                  color: '#2B2B2B',
-                                  marginBottom: '16px'
-                                }}>
-                                  Choose Your Design Style
-                                </h5>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                                  {designs.map((design) => (
-                                    <button
-                                      key={design.id}
-                                      onClick={() => setFormData({ ...formData, design: design.id })}
-                                      className="rounded-xl transition-all text-left"
-                                      style={{
-                                        padding: 'clamp(16px, 4vw, 20px)',
-                                        background: formData.design === design.id 
-                                          ? 'rgba(196, 69, 105, 0.15)' 
-                                          : 'rgba(248, 235, 215, 0.5)',
-                                        border: `2px solid ${formData.design === design.id ? '#C44569' : 'transparent'}`,
-                                        cursor: 'pointer',
-                                        minHeight: '88px'
-                                      }}
-                                    >
-                                      <h5 className="mb-2" style={{ 
-                                        fontFamily: 'Poppins', 
-                                        fontWeight: 600,
-                                        fontSize: 'clamp(14px, 3vw, 16px)',
-                                        color: formData.design === design.id ? '#C44569' : '#2B2B2B'
-                                      }}>
-                                        {design.name}
-                                      </h5>
-                                      <p style={{ 
-                                        fontSize: 'clamp(13px, 2.5vw, 14px)', 
-                                        color: '#5A3825',
-                                        opacity: 0.8
-                                      }}>
-                                        {design.description}
-                                      </p>
-                                    </button>
-                                  ))}
-                                </div>
-                              </div>
-
-                              {/* Image Upload Section */}
-                              <ImageUploadGrid
-                                maxImages={5}
-                                maxSizeMB={5}
-                                onImagesChange={(images) => {
-                                  setFormData({ ...formData, inspirationImages: images });
-                                }}
-                              />
-                            </div>
-                          )}
-
-                          {/* Step 4: Details */}
-                          {step.id === 4 && (
+                          {/* Step 2: Details */}
+                          {step.id === 2 && (
                             <div className="space-y-4 sm:space-y-5">
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                                 <div>
@@ -549,8 +442,8 @@ export function Builder() {
                             </div>
                           )}
 
-                          {/* Step 5: Review */}
-                          {step.id === 5 && (
+                          {/* Step 3: Review */}
+                          {step.id === 3 && (
                             <div className="space-y-6">
                               <div className="p-4 sm:p-6 rounded-xl" style={{ background: 'rgba(248, 235, 215, 0.6)' }}>
                                 <h5 className="mb-4" style={{ 
@@ -561,21 +454,6 @@ export function Builder() {
                                   Order Summary
                                 </h5>
                                 <div className="space-y-3">
-                                  <div className="flex justify-between items-start">
-                                    <span style={{ 
-                                      color: '#5A3825',
-                                      fontSize: 'clamp(14px, 2.5vw, 15px)'
-                                    }}>
-                                      Occasion:
-                                    </span>
-                                    <span style={{ 
-                                      fontWeight: 600,
-                                      fontSize: 'clamp(14px, 2.5vw, 15px)',
-                                      textAlign: 'right'
-                                    }}>
-                                      {occasions.find(o => o.id === formData.occasion)?.name || '—'}
-                                    </span>
-                                  </div>
                                   <div>
                                     <h6 style={{
                                       color: '#2B2B2B',
@@ -641,21 +519,6 @@ export function Builder() {
                                         );
                                       })}
                                     </div>
-                                  </div>
-                                  <div className="flex justify-between items-start">
-                                    <span style={{ 
-                                      color: '#5A3825',
-                                      fontSize: 'clamp(14px, 2.5vw, 15px)'
-                                    }}>
-                                      Design:
-                                    </span>
-                                    <span style={{ 
-                                      fontWeight: 600,
-                                      fontSize: 'clamp(14px, 2.5vw, 15px)',
-                                      textAlign: 'right'
-                                    }}>
-                                      {designs.find(d => d.id === formData.design)?.name || '—'}
-                                    </span>
                                   </div>
                                   <div className="flex justify-between items-start">
                                     <span style={{ 
@@ -739,8 +602,8 @@ export function Builder() {
                             </div>
                           )}
 
-                          {/* Continue Button for Steps 1-4 */}
-                          {step.id < 5 && (
+                          {/* Continue Button for Steps 1-2 */}
+                          {step.id < 3 && (
                             <div className="mt-6">
                               <Button
                                 onClick={() => handleCompleteStep(step.id)}

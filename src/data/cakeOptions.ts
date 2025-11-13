@@ -22,24 +22,6 @@ export const fillings = [
   { id: 'white-chocolate', name: 'White Chocolate', price: 1 }
 ];
 
-export const occasions = [
-  { id: 'birthday', name: 'Birthday', icon: '🎂' },
-  { id: 'wedding', name: 'Wedding', icon: '💒' },
-  { id: 'anniversary', name: 'Anniversary', icon: '💕' },
-  { id: 'graduation', name: 'Graduation', icon: '🎓' },
-  { id: 'corporate', name: 'Corporate Event', icon: '🏢' },
-  { id: 'other', name: 'Other', icon: '🎉' }
-];
-
-export const designs = [
-  { id: 'classic', name: 'Classic Elegance', description: 'Traditional buttercream design' },
-  { id: 'modern', name: 'Modern Minimalist', description: 'Clean lines and simple colors' },
-  { id: 'floral', name: 'Floral Garden', description: 'Handcrafted sugar flowers' },
-  { id: 'geometric', name: 'Geometric Patterns', description: 'Bold shapes and angles' },
-  { id: 'rustic', name: 'Rustic Charm', description: 'Naked cake with natural elements' },
-  { id: 'custom', name: 'Fully Custom', description: 'Design your own vision' }
-];
-
 export const pricingConstants = {
   basePrice: 50,
   perLayerPrice: 15,

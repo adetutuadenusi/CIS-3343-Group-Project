@@ -30,10 +30,10 @@ const navItems = [
   { id: 'fulfillment-board', label: 'Fulfillment Board', icon: Kanban, description: 'Visual Order Tracking' },
   { id: 'order-management', label: 'Order Management', icon: List, description: 'Comprehensive Order Center' },
   { id: 'inquiry-management', label: 'Inquiry Management', icon: Mail, description: 'Customer Inquiries & Requests' },
-  { id: 'inventory-management', label: 'Inventory Management', icon: Cake, description: 'Product Catalog & Stock' },
+  { id: 'inventory-management', label: 'Product Catalog', icon: Cake, description: 'Product Management' },
   { id: 'customer-accounts', label: 'Customer Accounts', icon: Users, description: 'CRM & Customer Database' },
   { id: 'business-intelligence', label: 'Business Intelligence', icon: BarChart3, description: 'Reports & Analytics' },
-  { id: 'system-configuration', label: 'System Configuration', icon: SettingsIcon, description: 'Settings & Preferences' },
+  { id: 'system-configuration', label: 'Settings', icon: SettingsIcon, description: 'System Configuration' },
 ];
 
 export function AdminLayout({ children, activePage, onNavigate, onLogout }: AdminLayoutProps) {

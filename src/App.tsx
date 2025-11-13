@@ -17,7 +17,6 @@ import { TrackOrder } from './pages/public/TrackOrder';
 
 // Admin pages - direct imports
 import { Login } from './pages/admin/Login';
-import { AdminDashboard } from './pages/admin/Dashboard';
 import { OrderBoard } from './pages/admin/OrderBoard';
 import { OrderList } from './pages/admin/OrderList';
 import { OrderCreate } from './pages/admin/OrderCreate';

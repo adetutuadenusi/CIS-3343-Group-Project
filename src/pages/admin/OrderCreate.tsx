@@ -5,7 +5,6 @@ import {
   X, 
   Calendar, 
   DollarSign, 
-  FileText,
   Save,
   Search,
   ChevronDown,
@@ -19,8 +18,6 @@ import { Textarea } from '../../components/ui/textarea';
 import { useToast } from '../../components/ToastContext';
 import { LayerBuilder } from '../../components/LayerBuilder';
 import { 
-  occasions, 
-  designs, 
   calculateTotalPrice, 
   type LayerData 
 } from '../../data/cakeOptions';
@@ -50,9 +47,7 @@ export function OrderCreate({ onBack }: OrderCreateProps) {
   // Collapsible sections
   const [openSections, setOpenSections] = useState({
     customer: true,
-    orderDetails: true,
     layers: true,
-    design: true,
     eventInfo: true,
     adminSettings: true,
     payment: false
@@ -67,8 +62,6 @@ export function OrderCreate({ onBack }: OrderCreateProps) {
 
   // Order form data
   const [formData, setFormData] = useState({
-    occasion: '',
-    design: '',
     servings: '',
     eventDate: '',
     message: '',
@@ -80,9 +73,10 @@ export function OrderCreate({ onBack }: OrderCreateProps) {
     paymentStatus: 'pending'
   });
 
-  // Layers for custom cake
+  // Layers for custom cake - MINIMUM 2 LAYERS per case study
   const [layers, setLayers] = useState<LayerData[]>([
-    { id: 'layer-1', flavor: '', fillings: [], notes: '' }
+    { id: 'layer-1', flavor: '', fillings: [], notes: '' },
+    { id: 'layer-2', flavor: '', fillings: [], notes: '' }
   ]);
 
   // Search customers
@@ -146,18 +140,8 @@ export function OrderCreate({ onBack }: OrderCreateProps) {
       return;
     }
 
-    if (!formData.occasion) {
-      showToast('error', 'Please select an occasion');
-      return;
-    }
-
-    if (layers.length === 0 || !layers[0].flavor) {
-      showToast('error', 'Please add at least one cake layer');
-      return;
-    }
-
-    if (!formData.design) {
-      showToast('error', 'Please select a design style');
+    if (layers.length < 2 || !layers[0].flavor || !layers[1].flavor) {
+      showToast('error', 'Please add at least two cake layers');
       return;
     }
 
@@ -173,8 +157,6 @@ export function OrderCreate({ onBack }: OrderCreateProps) {
         name: selectedCustomer.name,
         email: selectedCustomer.email,
         phone: selectedCustomer.phone || '',
-        occasion: formData.occasion,
-        design: formData.design,
         servings: parseInt(formData.servings),
         date: formData.eventDate,
         message: formData.message,
@@ -207,10 +189,11 @@ export function OrderCreate({ onBack }: OrderCreateProps) {
       
       // Reset form
       setSelectedCustomer(null);
-      setLayers([{ id: 'layer-1', flavor: '', fillings: [], notes: '' }]);
+      setLayers([
+        { id: 'layer-1', flavor: '', fillings: [], notes: '' },
+        { id: 'layer-2', flavor: '', fillings: [], notes: '' }
+      ]);
       setFormData({
-        occasion: '',
-        design: '',
         servings: '',
         eventDate: '',
         message: '',
@@ -499,75 +482,6 @@ export function OrderCreate({ onBack }: OrderCreateProps) {
           )}
         </Card>
 
-        {/* Order Details Section */}
-        <Card className="mb-6 p-6" style={{ background: '#FFFFFF', border: '1px solid #E0E0E0' }}>
-          <button
-            onClick={() => toggleSection('orderDetails')}
-            className="w-full flex items-center justify-between mb-4"
-          >
-            <div className="flex items-center gap-2">
-              <FileText size={20} color="#C44569" />
-              <h2 
-                style={{ 
-                  fontFamily: 'Poppins, sans-serif',
-                  fontSize: '18px',
-                  fontWeight: 600,
-                  color: '#2B2B2B'
-                }}
-              >
-                2. Order Details
-              </h2>
-            </div>
-            {openSections.orderDetails ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-          </button>
-
-          {openSections.orderDetails && (
-            <div className="space-y-4">
-              {/* Occasion Selection */}
-              <div>
-                <label 
-                  style={{ 
-                    fontFamily: 'Poppins, sans-serif',
-                    fontSize: '14px',
-                    fontWeight: 500,
-                    color: '#2B2B2B',
-                    display: 'block',
-                    marginBottom: '8px'
-                  }}
-                >
-                  Occasion <span style={{ color: '#C44569' }}>*</span>
-                </label>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {occasions.map(occasion => (
-                    <button
-                      key={occasion.id}
-                      onClick={() => setFormData({ ...formData, occasion: occasion.id })}
-                      className="p-3 rounded-lg border-2 transition-all"
-                      style={{
-                        borderColor: formData.occasion === occasion.id ? '#C44569' : '#E0E0E0',
-                        background: formData.occasion === occasion.id 
-                          ? 'rgba(196, 69, 105, 0.05)' 
-                          : '#FFFFFF'
-                      }}
-                    >
-                      <div style={{ fontSize: '24px', marginBottom: '4px' }}>{occasion.icon}</div>
-                      <div 
-                        style={{ 
-                          fontSize: '14px',
-                          fontWeight: formData.occasion === occasion.id ? 600 : 500,
-                          color: formData.occasion === occasion.id ? '#C44569' : '#2B2B2B'
-                        }}
-                      >
-                        {occasion.name}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-        </Card>
-
         {/* Layers Section */}
         <Card className="mb-6 p-6" style={{ background: '#FFFFFF', border: '1px solid #E0E0E0' }}>
           <button
@@ -591,7 +505,7 @@ export function OrderCreate({ onBack }: OrderCreateProps) {
                   color: '#2B2B2B'
                 }}
               >
-                3. Build Cake Layers
+                2. Build Cake Layers
               </h2>
               <span 
                 className="px-2 py-1 rounded text-xs"
@@ -605,68 +519,6 @@ export function OrderCreate({ onBack }: OrderCreateProps) {
 
           {openSections.layers && (
             <LayerBuilder layers={layers} onLayersChange={setLayers} />
-          )}
-        </Card>
-
-        {/* Design Section */}
-        <Card className="mb-6 p-6" style={{ background: '#FFFFFF', border: '1px solid #E0E0E0' }}>
-          <button
-            onClick={() => toggleSection('design')}
-            className="w-full flex items-center justify-between mb-4"
-          >
-            <div className="flex items-center gap-2">
-              <div 
-                style={{ 
-                  width: '20px',
-                  height: '20px',
-                  background: '#C44569',
-                  borderRadius: '50%'
-                }}
-              />
-              <h2 
-                style={{ 
-                  fontFamily: 'Poppins, sans-serif',
-                  fontSize: '18px',
-                  fontWeight: 600,
-                  color: '#2B2B2B'
-                }}
-              >
-                4. Design Style
-              </h2>
-            </div>
-            {openSections.design ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-          </button>
-
-          {openSections.design && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {designs.map(design => (
-                <button
-                  key={design.id}
-                  onClick={() => setFormData({ ...formData, design: design.id })}
-                  className="p-4 rounded-lg border-2 text-left transition-all"
-                  style={{
-                    borderColor: formData.design === design.id ? '#C44569' : '#E0E0E0',
-                    background: formData.design === design.id 
-                      ? 'rgba(196, 69, 105, 0.05)' 
-                      : '#FFFFFF'
-                  }}
-                >
-                  <div 
-                    style={{ 
-                      fontSize: '16px',
-                      fontWeight: formData.design === design.id ? 600 : 500,
-                      color: formData.design === design.id ? '#C44569' : '#2B2B2B',
-                      marginBottom: '4px'
-                    }}
-                  >
-                    {design.name}
-                  </div>
-                  <div style={{ fontSize: '13px', color: '#666' }}>
-                    {design.description}
-                  </div>
-                </button>
-              ))}
-            </div>
           )}
         </Card>
 
@@ -686,7 +538,7 @@ export function OrderCreate({ onBack }: OrderCreateProps) {
                   color: '#2B2B2B'
                 }}
               >
-                5. Event Information
+                3. Event Information
               </h2>
             </div>
             {openSections.eventInfo ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
@@ -788,7 +640,7 @@ export function OrderCreate({ onBack }: OrderCreateProps) {
                   color: '#C44569'
                 }}
               >
-                6. Admin Management Settings
+                4. Admin Management Settings
               </h2>
             </div>
             {openSections.adminSettings ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
@@ -889,7 +741,7 @@ export function OrderCreate({ onBack }: OrderCreateProps) {
                   color: '#2B2B2B'
                 }}
               >
-                7. Payment Information
+                5. Payment Information
               </h2>
             </div>
             {openSections.payment ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
