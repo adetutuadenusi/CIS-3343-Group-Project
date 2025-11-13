@@ -11,7 +11,6 @@ import {
   ChevronRight,
   TrendingUp,
   Kanban,
-  Mail,
   List
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -31,7 +30,6 @@ const navItems = [
   { id: 'analytics-dashboard', label: 'Dashboard', icon: TrendingUp, description: 'Role-Based Dashboard' },
   { id: 'fulfillment-board', label: 'Fulfillment Board', icon: Kanban, description: 'Visual Order Tracking' },
   { id: 'order-management', label: 'Orders', icon: List, description: 'Order Management Center' },
-  { id: 'inquiry-management', label: 'Inquiries', icon: Mail, description: 'Customer Inquiries' },
   { id: 'inventory-management', label: 'Product Catalog', icon: Cake, description: 'Product Management' },
   { id: 'customer-accounts', label: 'Customers', icon: Users, description: 'Customer Management' },
   { id: 'business-intelligence', label: 'Reports', icon: BarChart3, description: 'Business Reports' },

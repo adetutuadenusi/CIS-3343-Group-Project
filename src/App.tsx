@@ -4,7 +4,6 @@ import { WelcomeScreen } from './components/WelcomeScreen';
 import { PublicLayout } from './components/PublicLayout';
 import { AdminLayout } from './components/AdminLayout';
 import { ToastProvider } from './components/ToastContext';
-import { InquiriesProvider } from './contexts/InquiriesContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
 // Public pages - direct imports
@@ -22,7 +21,6 @@ import { OrderList } from './pages/admin/OrderList';
 import { OrderCreate } from './pages/admin/OrderCreate';
 import { Builder } from './pages/admin/Builder';
 import { AdminProducts } from './pages/admin/Products';
-import { Inquiries } from './pages/admin/Inquiries';
 import { Orders } from './pages/Orders';
 import { Customers } from './pages/Customers';
 import { Products } from './pages/Products';
@@ -197,8 +195,6 @@ export default function App() {
         return <OrderCreate onBack={() => setActivePage('order-management')} />;
       case 'design-sandbox':
         return <Builder />;
-      case 'inquiry-management':
-        return <Inquiries />;
       case 'inventory-management':
         return <AdminProducts />;
       case 'customer-accounts':
@@ -234,8 +230,6 @@ export default function App() {
         return <OrderBoard />;
       case 'order-list':
         return <OrderList onNavigate={setActivePage} />;
-      case 'inquiries':
-        return <Inquiries />;
       case 'products-new':
         return <AdminProducts />;
       case 'customers':
@@ -258,8 +252,7 @@ export default function App() {
 
   return (
     <ErrorBoundary>
-      <InquiriesProvider>
-        <ToastProvider>
+      <ToastProvider>
         <AnimatePresence>
           {showWelcome ? (
             <WelcomeScreen key="welcome" />
@@ -325,8 +318,7 @@ export default function App() {
           </motion.div>
         )}
         </AnimatePresence>
-        </ToastProvider>
-      </InquiriesProvider>
+      </ToastProvider>
     </ErrorBoundary>
   );
 }
