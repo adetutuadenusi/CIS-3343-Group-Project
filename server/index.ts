@@ -623,6 +623,51 @@ app.patch('/api/inquiries/:id/status', async (req, res) => {
   }
 });
 
+// ============ REPORTS ============
+
+// Order Summary Report
+app.get('/api/reports/order-summary', async (req, res) => {
+  try {
+    const { startDate, endDate, status } = req.query;
+    
+    // Default to last 30 days if no date range provided
+    const end = endDate ? new Date(endDate as string) : new Date();
+    const start = startDate ? new Date(startDate as string) : new Date(end.getTime() - 30 * 24 * 60 * 60 * 1000);
+    
+    // Get all orders with customers in date range
+    const ordersData = await storage.getOrdersForReport(start, end, status as string | undefined);
+    
+    // Group orders by day for bar chart
+    const ordersByDay: Record<string, number> = {};
+    ordersData.forEach(order => {
+      const day = order.createdAt.toISOString().split('T')[0];
+      ordersByDay[day] = (ordersByDay[day] || 0) + 1;
+    });
+    
+    // Convert to array format for Recharts
+    const chartData = Object.entries(ordersByDay).map(([date, count]) => ({
+      date,
+      count
+    })).sort((a, b) => a.date.localeCompare(b.date));
+    
+    // Calculate totals
+    const totalOrders = ordersData.length;
+    const totalRevenue = ordersData.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
+    
+    res.json({
+      chartData,
+      orders: ordersData,
+      totals: {
+        count: totalOrders,
+        revenue: totalRevenue
+      }
+    });
+  } catch (error) {
+    console.error('Error generating order summary report:', error);
+    res.status(500).json({ error: 'Failed to generate report' });
+  }
+});
+
 // ============ CONTACT MESSAGES ============
 
 app.get('/api/contact', async (req, res) => {

@@ -219,6 +219,38 @@ export async function updateOrder(id: number, data: Partial<NewOrder>) {
   return updated;
 }
 
+// Get orders for reports with date range and status filter
+export async function getOrdersForReport(startDate: Date, endDate: Date, status?: string) {
+  const conditions = [
+    sql`${orders.createdAt} >= ${startDate.toISOString()}`,
+    sql`${orders.createdAt} <= ${endDate.toISOString()}`,
+    isNull(orders.deletedAt)
+  ];
+  
+  if (status) {
+    conditions.push(eq(orders.status, status));
+  }
+  
+  return await db
+    .select({
+      id: orders.id,
+      customerId: orders.customerId,
+      customerName: customers.name,
+      customerEmail: customers.email,
+      customerPhone: customers.phone,
+      eventDate: orders.eventDate,
+      status: orders.status,
+      totalAmount: orders.totalAmount,
+      depositAmount: orders.depositAmount,
+      balanceDue: orders.balanceDue,
+      createdAt: orders.createdAt,
+    })
+    .from(orders)
+    .leftJoin(customers, eq(orders.customerId, customers.id))
+    .where(and(...conditions))
+    .orderBy(desc(orders.createdAt));
+}
+
 // Get order by tracking token (public endpoint - limited fields)
 export async function getOrderByTrackingToken(token: string) {
   const result = await db
