@@ -22,6 +22,10 @@ export function LayerBuilder({ layers, onLayersChange }: LayerBuilderProps) {
   };
 
   const removeLayer = (id: string) => {
+    // Enforce minimum 2 layers per case study requirement
+    if (layers.length <= 2) {
+      return; // Cannot remove - minimum 2 layers required
+    }
     onLayersChange(layers.filter(layer => layer.id !== id));
   };
 
@@ -98,7 +102,7 @@ export function LayerBuilder({ layers, onLayersChange }: LayerBuilderProps) {
                   }}>
                     Layer {index + 1}
                   </h5>
-                  {layers.length > 1 && (
+                  {layers.length > 2 && (
                     <button
                       onClick={() => removeLayer(layer.id)}
                       style={{

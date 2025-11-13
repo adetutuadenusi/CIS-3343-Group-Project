@@ -1,0 +1,313 @@
+Adetutu… you’re absolutely right to expand this.
+You’re thinking exactly like a systems analyst: **look deeper into the case study and anticipate real operational gaps.**
+
+The case study gives **implicit requirements** that aren’t explicitly listed but would *definitely* matter in a bakery that customizes cakes, deals with decorations, and handles high-touch customer requests.
+
+So I went back through the case study again, and here are the **extra fields the form MUST include** because they align with:
+
+• customer experience
+• avoiding lost orders
+• reducing risk (allergies, cancellations, decoration constraints)
+• decorating + baking workflows
+• standard bakery operations
+
+Below is the **expanded final form** with everything added that you will absolutely need.
+
+---
+
+# **WHAT’S NEW BASED ON DEEPER CASE STUDY ANALYSIS**
+
+### These features logically follow the business operations:
+
+### **1. Allergy Information**
+
+Not stated explicitly — but REQUIRED because:
+
+* They bake from scratch
+* Custom cakes often involve nuts, dairy, fruit
+* They lose customers over service issues (15%)
+* They use praline, cream cheese, buttercream, mousse, etc.
+
+### **2. Special Requests**
+
+Because:
+
+* Custom designs are highly detailed
+* They replicate photos
+* They negotiate price based on complexity
+* Decorators often have questions for customers
+
+### **3. Feasibility Notes (Decorator Decision)**
+
+Case study states:
+*“Decorators will make the final decision if a design is feasible.”*
+
+So the form MUST collect customer requests AND allow decorators to document feasibility.
+
+### **4. Pickup Time Window**
+
+Case study: cakes must be completed **4 hours before pickup**.
+This means pickup needs a time, not just a date.
+
+### **5. Approval Fields**
+
+Case study:
+
+* Only Emily or the Manager can approve completed cakes
+* So the system needs an internal approval section
+
+### **6. Cancellation & Modification Rules**
+
+Case study says:
+
+* Orders can be cancelled *before baking starts*
+* Decorations can be changed *before decorating starts*
+
+So the form needs:
+
+* Decorator start time
+* Baker start time
+* Cancellable flag
+* Editable decoration flag
+
+### **7. Status Change Reason**
+
+Because different staff touch the order and bakery loses orders today — tracking accountability is crucial.
+
+---
+
+# **FINAL VERSION — EXPANDED CUSTOM ORDER FORM (ADMIN STAFF)**
+
+### **Emily Bakes Cakes Custom Cake Order Entry Form**
+
+### Prepared for CIS 3343 – System Prototype
+
+### Updated by: **Adetutu (Tutu) Adenusi – Student ID: 2180098**
+
+---
+
+# **1. CUSTOMER INFORMATION**
+
+**Customer**: [Dropdown]
+**Customer Type:** Retail | Corporate
+**Preferred Customer:** Yes | No
+**Corporate Location:** (If applicable)
+**Phone:**
+**Email:**
+
+---
+
+# **2. PICKUP DETAILS**
+
+**Order Date:** Auto
+**Pickup Date:** Calendar
+**Pickup Time:** Dropdown: 8 AM–7 PM (30-min intervals)
+*(System auto-checks if pickup is less than 2 days away → Manager Override Required)*
+
+---
+
+# **3. ALLERGIES (NEW – Derived from Case Study Risk + Food Safety)**
+
+[Checkboxes]
+
+* No Allergies
+* Nut Allergy
+* Egg Allergy
+* Dairy Allergy
+* Gluten Allergy
+* Soy Allergy
+* Fruit Allergy
+* Other: [Textbox]
+
+*(These appear on the Baker & Decorator dashboards)*
+
+---
+
+# **4. SPECIAL REQUESTS (NEW – Supports Decorator Workflow)**
+
+[Large Text Box — customer requests, themes, colors, design notes, nonstandard instructions]
+
+---
+
+# **5. INSPIRATION IMAGES (Case study requires decorators to evaluate feasibility)**
+
+**Upload Inspiration Photos:**
+[Upload Button]
+[Add More]
+Thumbnail preview + delete option
+
+**Decorator Feasibility Notes:**
+[Textbox — for decorators only]
+*(Visible to manager; hidden from customer)*
+
+---
+
+# **6. PRODUCT SELECTION**
+
+**Product Category:** Cakes | Cupcakes | Pastries | Cookies | Seasonal
+**Standard Cake:** [Dropdown from menu]
+**Custom Flavor:** [Flavor dropdown]
+
+---
+
+# **7. CAKE SIZE**
+
+[Dropdown list with prices]
+
+---
+
+# **8. LAYERS & FILLINGS**
+
+**Number of Layers**: 2 | 3 | 4
+System enforces:
+
+* Minimum 2 layers
+* Max 2 layers of the same filling
+
+**Layer 1 Filling:** [Dropdown]
+**Layer 2 Filling:** [Dropdown]
+**Layer 3 Filling:** [Dropdown]
+**Layer 4 Filling:** [Dropdown] (if applicable)
+
+---
+
+# **9. ICING FLAVOR**
+
+[Dropdown list]
+
+---
+
+# **10. ICING & WRITING COLORS**
+
+(With swatch + HEX in dropdown)
+
+**Icing Color:**
+[Dropdown including: Red #FF0000, Royal Blue #0033A0, Pastels, Fall, Neon, etc.]
+
+**Writing Color:**
+[Same dropdown]
+
+---
+
+# **11. CAKE WRITING**
+
+**Message on Cake:**
+[Textbox]
+**Writing Style:**
+
+* Script
+* Block
+* Cursive
+* Print
+
+---
+
+# **12. DECORATIONS**
+
+(Multi-select checkboxes)
+
+* Buttercream Flowers
+* Fondant Decorations
+* Silk Flowers
+* Edible Photo
+* Ribbons (color dropdown)
+* Plastic Decorations
+* Themed Toys
+* Flags
+* Paper Parasols
+* Plastic Figures
+* Nature-themed items (trees, animals)
+* Other: [Textbox]
+
+---
+
+# **13. PRICING + DEPOSIT**
+
+**Quoted Price:**
+**Required Deposit (Auto 50%):**
+**Deposit Received:**
+**Payment Method:** Cash | Debit | Credit
+
+---
+
+# **14. INTERNAL WORKFLOW DETAILS (NEW – Required from Case Study)**
+
+### **Assigned Baker:** [Dropdown]
+
+### **Assigned Decorator:** [Dropdown]
+
+### **Baking Start Time:** Auto-set when baker marks “In Baking”
+
+### **Decorating Start Time:** Auto-set when decorator marks “In Decorating”
+
+### **Cancellation Allowed:** Yes (Before baking starts) | No
+
+### **Decoration Edits Allowed:** Yes (Before decorating starts) | No
+
+*(System sets these automatically.)*
+
+---
+
+# **15. ORDER STATUS**
+
+**Initial Status:** New
+Available statuses based on staff role:
+
+Sales Staff:
+
+* New (only)
+
+Baker:
+
+* Pending Baking
+* In Baking
+* Baked
+
+Decorator:
+
+* In Decorating
+* Decorated
+
+Manager/Owner:
+
+* Approved
+* Ready for Pickup
+* Completed
+* Cancelled
+
+---
+
+# **16. STATUS CHANGE REASON (NEW – Prevents lost orders)**
+
+Whenever staff changes a status:
+**Reason for Status Change:**
+[Textbox]
+
+---
+
+# **17. STAFF INTERNAL NOTES**
+
+For bakers/decorators only:
+[Textbox]
+
+---
+
+# **18. SUBMIT ORDER**
+
+**[ Create Order ]**
+Gold Button (#FFD700), Black Text (#000000)
+
+---
+
+# **If you want next:**
+
+I can generate ANY of the following instantly:
+
+✔ The **final ERD**, updated with: Allergies, InspoImages, Feasibility, Status Change Logs
+✔ The **DFD Level 0 + Level 1** that include decorator approval, cancellation workflow, etc.
+✔ **Use Case Diagrams** for Sales, Baker, Decorator, Manager
+✔ A **UI mockup description** for each prototype page
+✔ JSON schemas for your app
+✔ A Replit-ready version of this form in HTML or React
+
+Just tell me what you want.
