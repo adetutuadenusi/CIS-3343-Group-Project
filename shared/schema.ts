@@ -1,5 +1,8 @@
-import { pgTable, text, serial, timestamp, integer, varchar, boolean } from 'drizzle-orm/pg-core';
+import { pgTable, text, serial, timestamp, integer, varchar, boolean, pgEnum } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
+
+// TIER 3 - Report 2: Customer type classification enum
+export const customerTypeEnum = pgEnum('customer_type', ['retail', 'corporate']);
 
 export const products = pgTable('products', {
   id: serial('id').primaryKey(),
@@ -52,6 +55,10 @@ export const customers = pgTable('customers', {
   
   // Enhancement #39: Guest customer flagging
   isGuest: boolean('is_guest').default(false).notNull(),
+  
+  // Enhancement #45: Customer type classification for reports (TIER 3 - Report 2)
+  // Staff guidance: Choose 'corporate' for businesses, event planners, recurring orders >$5k annually
+  customerType: customerTypeEnum('customer_type').default('retail').notNull(),
   
   // Enhancement #12: Audit tracking
   lastModifiedBy: varchar('last_modified_by', { length: 255 }),

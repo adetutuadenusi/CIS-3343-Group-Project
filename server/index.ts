@@ -625,6 +625,60 @@ app.patch('/api/inquiries/:id/status', async (req, res) => {
 
 // ============ REPORTS ============
 
+// Customer List Report
+app.get('/api/reports/customer-list', async (req, res) => {
+  try {
+    const { minSpending, maxSpending, customerType } = req.query;
+    
+    // Get customers with order statistics
+    const customersData = await storage.getCustomersForReport(
+      minSpending ? Number(minSpending) : undefined,
+      maxSpending ? Number(maxSpending) : undefined,
+      customerType as string | undefined
+    );
+    
+    // Group customers by date for acquisition trend (by month)
+    const acquisitionByMonth: Record<string, number> = {};
+    customersData.forEach(customer => {
+      const month = customer.createdAt.toISOString().slice(0, 7); // YYYY-MM
+      acquisitionByMonth[month] = (acquisitionByMonth[month] || 0) + 1;
+    });
+    
+    // Convert to array format for Recharts and sort chronologically
+    const chartData = Object.entries(acquisitionByMonth).map(([month, count]) => ({
+      month,
+      count
+    })).sort((a, b) => a.month.localeCompare(b.month));
+    
+    // Calculate totals
+    const totalCustomers = customersData.length;
+    const totalRevenue = customersData.reduce((sum, customer) => sum + customer.totalSpent, 0);
+    const totalOrders = customersData.reduce((sum, customer) => sum + customer.orderCount, 0);
+    
+    res.json({
+      chartData,
+      customers: customersData.map(c => ({
+        id: c.id,
+        name: c.name,
+        email: c.email,
+        phone: c.phone,
+        type: c.customerType.charAt(0).toUpperCase() + c.customerType.slice(1), // Capitalize for display
+        orderCount: c.orderCount,
+        totalSpent: c.totalSpent,
+        createdAt: c.createdAt
+      })),
+      totals: {
+        customers: totalCustomers,
+        revenue: totalRevenue,
+        orders: totalOrders
+      }
+    });
+  } catch (error) {
+    console.error('Error generating customer list report:', error);
+    res.status(500).json({ error: 'Failed to generate report' });
+  }
+});
+
 // Order Summary Report
 app.get('/api/reports/order-summary', async (req, res) => {
   try {

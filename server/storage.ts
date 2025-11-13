@@ -219,6 +219,55 @@ export async function updateOrder(id: number, data: Partial<NewOrder>) {
   return updated;
 }
 
+// Get customers with order statistics for reports
+export async function getCustomersForReport(minSpending?: number, maxSpending?: number, customerType?: string) {
+  // Build WHERE conditions
+  const whereConditions = [isNull(customers.deletedAt)];
+  
+  if (customerType && customerType !== 'all') {
+    whereConditions.push(eq(customers.customerType, customerType));
+  }
+  
+  // Build HAVING conditions for spending filters (SQL-based, not client-side)
+  const havingConditions = [];
+  if (minSpending !== undefined) {
+    havingConditions.push(sql`COALESCE(SUM(${orders.totalAmount}), 0) >= ${minSpending}`);
+  }
+  if (maxSpending !== undefined) {
+    havingConditions.push(sql`COALESCE(SUM(${orders.totalAmount}), 0) <= ${maxSpending}`);
+  }
+  
+  // Build query
+  let query = db
+    .select({
+      id: customers.id,
+      name: customers.name,
+      email: customers.email,
+      phone: customers.phone,
+      customerType: customers.customerType,
+      createdAt: customers.createdAt,
+      orderCount: sql<number>`COUNT(${orders.id})::int`,
+      totalSpent: sql<number>`COALESCE(SUM(${orders.totalAmount}), 0)::int`
+    })
+    .from(customers)
+    .leftJoin(orders, and(
+      eq(orders.customerId, customers.id),
+      isNull(orders.deletedAt)
+    ))
+    .where(and(...whereConditions))
+    .groupBy(customers.id, customers.name, customers.email, customers.phone, customers.customerType, customers.createdAt);
+  
+  // Apply HAVING clause if spending filters exist
+  if (havingConditions.length > 0) {
+    query = query.having(and(...havingConditions)) as any;
+  }
+  
+  // Order by creation date
+  const customersData = await query.orderBy(desc(customers.createdAt));
+  
+  return customersData;
+}
+
 // Get orders for reports with date range and status filter
 export async function getOrdersForReport(startDate: Date, endDate: Date, status?: string) {
   const conditions = [
