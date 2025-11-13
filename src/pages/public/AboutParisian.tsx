@@ -14,7 +14,7 @@ const milestones = [
   { year: '2018', title: 'Houston Opening', description: 'Brought Parisian artistry to Texas' },
   { year: '2020', title: 'Award Recognition', description: 'Best European-Style Bakery' },
   { year: '2023', title: 'Expanded Team', description: '12 artisan bakers from across Europe' },
-  { year: '2025', title: 'Digital Innovation', description: 'Custom cake builder with Parisian flair' }
+  { year: '2025', title: 'Digital Innovation', description: 'Enhanced ordering system with personalized service' }
 ];
 
 const values = [
@@ -747,9 +747,8 @@ export function AboutParisian() {
               Let's create a masterpiece together. From Paris to your celebration—
               handcrafted with European precision and Texas heart.
             </p>
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.98 }}
+            <a
+              href="tel:555-123-4567"
               style={{
                 background: '#C44569',
                 color: 'white',
@@ -762,11 +761,13 @@ export function AboutParisian() {
                 cursor: 'pointer',
                 boxShadow: '0 6px 24px rgba(196, 69, 105, 0.4)',
                 minWidth: '240px',
-                minHeight: '56px'
+                minHeight: '56px',
+                textDecoration: 'none',
+                display: 'inline-block'
               }}
             >
-              Start Your Order
-            </motion.button>
+              📞 Call Us to Order
+            </a>
           </motion.div>
         </div>
       </section>

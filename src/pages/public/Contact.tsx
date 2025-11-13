@@ -382,13 +382,26 @@ export function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h3 className="mb-4">Prefer to Order Online?</h3>
+          <h3 className="mb-4">Ready to Order Your Cake?</h3>
           <p className="mb-8" style={{ color: 'var(--text-secondary)' }}>
-            Use our custom cake builder to design your perfect cake in minutes.
+            Call us at (555) 123-4567 or visit our shop to discuss your custom cake vision with our team.
           </p>
-          <Button className="btn-primary" style={{ minWidth: '240px', height: '56px' }}>
-            Start Building Your Cake
-          </Button>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <a 
+              href="tel:555-123-4567"
+              className="btn-primary"
+              style={{ minWidth: '200px', height: '56px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}
+            >
+              📞 Call Us
+            </a>
+            <a 
+              href="mailto:orders@emilybakes.com"
+              className="btn-secondary"
+              style={{ minWidth: '200px', height: '56px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}
+            >
+              📧 Email Us
+            </a>
+          </div>
         </motion.div>
       </div>
     </div>

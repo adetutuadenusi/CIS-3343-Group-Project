@@ -14,7 +14,7 @@ const milestones = [
   { year: '2018', title: 'Houston Opening', description: 'Brought Parisian artistry to Texas' },
   { year: '2020', title: 'Award Recognition', description: 'Best European-Style Bakery' },
   { year: '2023', title: 'Expanded Team', description: '12 artisan bakers from across Europe' },
-  { year: '2025', title: 'Digital Innovation', description: 'Custom cake builder with Parisian flair' }
+  { year: '2025', title: 'Digital Innovation', description: 'Enhanced ordering system with personalized service' }
 ];
 
 const values = [
