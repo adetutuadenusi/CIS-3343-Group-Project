@@ -32,7 +32,7 @@ The application is built with React 18.3.1, TypeScript, Vite 6.3.5, and Tailwind
 - **Design System**: Consistent border radius, shadow system, height standards, and animation timings.
 
 ### Technical Implementations
-- **Public Interface**: Marketing-only pages - home, shop (inspiration), gallery, about, contact with Google Maps embed. NO customer ordering capability. Contact page features two-column layout (40% ordering workflow, 60% contact info).
+- **Public Interface**: Marketing-only pages - home, shop (inspiration), gallery, about, contact with Google Maps embed. NO customer ordering capability. Contact page features two-column layout (50/50 split) with ordering workflow on left and contact info cards stacked vertically on right.
 - **Staff Order Creation**: Comprehensive admin form for manual order creation with unlimited layer system, dynamic pricing, status management, priority levels, internal notes, and payment tracking. Staff enter ALL orders.
 - **Staff Management System (Nov 14, 2025)**: Full employee CRUD with Manager/Owner-only access. Features: search, filters, role badges, activate/deactivate, bcrypt password hashing, JWT authentication on all endpoints.
 - **Email Notifications (Nov 14, 2025)**: Resend integration sends professional HTML emails for order confirmations and status updates. Non-blocking error handling. Templates use brand colors with tracking links.
@@ -106,11 +106,18 @@ The application is built with React 18.3.1, TypeScript, Vite 6.3.5, and Tailwind
 - **RBAC Update (Nov 14, 2025):** Accountant role now has access to ALL 6 reports (including Product Inventory) per case study requirements for financial oversight.
 - **Superseded Documents:** All other planning documents (23_MASTER, EMILY-BAKES, etc.) are outdated. Use FINAL_IMPLEMENTATION_PLAN.md only.
 
+## Business Information
+- **Location**: 2847 Westheimer Road, Houston, TX 77098
+- **Phone**: (713) 555-CAKE (713-555-2253)
+- **Email**: info@emilybakescakes.com
+
 ## Recent Major Changes (Nov 14, 2025)
 1. **Staff Management Page**: Full employee CRUD with Manager/Owner-only access, bcrypt password hashing, JWT authentication on all endpoints
 2. **Email Notifications**: Resend integration with professional HTML templates for order confirmations and status updates
 3. **Six Client Reports**: All completed with Recharts analytics, filters, CSV/PDF exports, real data from backend APIs
 4. **Reports Dashboard API**: Backend endpoint with pre-validated metrics, proper authentication, currency precision
-5. **Contact Page Enhancement**: Two-column layout (40% workflow, 60% contact info), Google Maps iframe embed
-6. **RBAC Fixes**: Accountant role granted access to all 6 reports for proper financial oversight
-7. **Comprehensive P2 Testing**: Full system testing with RBAC validation, code quality checks, production readiness verification
+5. **Contact Page Redesign**: Two-column 50/50 layout with ordering workflow (left) and 4 stacked contact info cards (right), Google Maps iframe showing Houston location
+6. **Contact Information Update**: All pages updated with Houston address (2847 Westheimer Road, Houston, TX 77098), phone (713) 555-CAKE, and email (info@emilybakescakes.com)
+7. **RBAC Fixes**: Accountant role granted access to all 6 reports for proper financial oversight
+8. **Comprehensive P2 Testing**: Full system testing with RBAC validation, code quality checks, production readiness verification
+9. **TypeScript Fixes**: Added type declarations for react-responsive-masonry, fixed navigator.share feature detection
