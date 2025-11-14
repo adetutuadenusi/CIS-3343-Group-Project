@@ -4,6 +4,8 @@ import bcrypt from 'bcryptjs';
 import * as storage from './storage.js';
 import { authenticateToken, generateToken, requireRole, type AuthRequest } from './authMiddleware.js';
 import type { NewProduct, NewOrder, NewInquiry, NewContactMessage, NewPayment } from '../shared/schema.js';
+import { getUncachableResendClient } from './resendClient.js';
+import { generateOrderConfirmationEmail, generateOrderStatusUpdateEmail } from './emailTemplates.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -390,6 +392,36 @@ app.post('/api/orders/custom', async (req, res) => {
     
     const order = await storage.createOrder(orderData);
     
+    // Send order confirmation email (non-blocking)
+    try {
+      const { client, fromEmail } = await getUncachableResendClient();
+      const emailTemplate = generateOrderConfirmationEmail({
+        customerName: customer.name,
+        orderId: order.id,
+        trackingToken: order.trackingToken || '',
+        orderDetails: {
+          flavor: order.flavor || undefined,
+          servings: order.servings || undefined,
+          eventDate: order.eventDate?.toISOString(),
+          layers: order.layers || undefined,
+          message: order.message || undefined,
+        },
+        totalAmount: order.totalAmount || undefined,
+        depositRequired: order.depositRequired || undefined,
+      });
+      
+      await client.emails.send({
+        from: fromEmail,
+        to: customer.email,
+        subject: emailTemplate.subject,
+        html: emailTemplate.html,
+      });
+      
+      console.log(`✅ Order confirmation email sent to ${customer.email} for order #${order.id}`);
+    } catch (emailError) {
+      console.error('⚠️ Failed to send order confirmation email:', emailError);
+    }
+    
     res.status(201).json({ order, customer });
   } catch (error) {
     console.error('Error creating order:', error);
@@ -407,7 +439,45 @@ app.patch('/api/orders/:id/status', async (req, res) => {
       return res.status(400).json({ error: 'Status is required' });
     }
     
+    // Get the order and customer info before updating
+    const existingOrder = await storage.getOrderById(id);
+    if (!existingOrder) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+    
+    const customer = await storage.getCustomerById(existingOrder.customerId);
+    if (!customer) {
+      return res.status(404).json({ error: 'Customer not found' });
+    }
+    
+    const oldStatus = existingOrder.status;
+    
     const order = await storage.updateOrderStatus(id, status);
+    
+    // Send status update email (non-blocking)
+    try {
+      const { client, fromEmail } = await getUncachableResendClient();
+      const emailTemplate = generateOrderStatusUpdateEmail({
+        customerName: customer.name,
+        orderId: order.id,
+        trackingToken: order.trackingToken || '',
+        oldStatus: oldStatus,
+        newStatus: status,
+        eventDate: order.eventDate?.toISOString(),
+      });
+      
+      await client.emails.send({
+        from: fromEmail,
+        to: customer.email,
+        subject: emailTemplate.subject,
+        html: emailTemplate.html,
+      });
+      
+      console.log(`✅ Order status update email sent to ${customer.email} for order #${order.id} (${oldStatus} → ${status})`);
+    } catch (emailError) {
+      console.error('⚠️ Failed to send order status update email:', emailError);
+    }
+    
     res.json(order);
   } catch (error) {
     console.error('Error updating order status:', error);
