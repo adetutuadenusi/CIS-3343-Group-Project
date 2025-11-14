@@ -5,6 +5,7 @@ import { Button } from '../../components/ui/button';
 import { Card } from '../../components/ui/card';
 import { Input } from '../../components/ui/input';
 import { Badge } from '../../components/ui/badge';
+import { productCategories, cakeFlavors, fillingFlavors } from '../../data/cakeOptions';
 
 import birthdayCake1 from '../../assets/stock_images/birthday_cake_with_c_2320daa1.jpg';
 import birthdayCake2 from '../../assets/stock_images/birthday_cake_with_c_7bc0f700.jpg';
@@ -17,7 +18,7 @@ import chocolateCake3 from '../../assets/stock_images/chocolate_cake_slice_8bbaf
 import lemonCake1 from '../../assets/stock_images/lemon_cake_cream_che_63f11bbc.jpg';
 import lemonCake2 from '../../assets/stock_images/lemon_cake_cream_che_52601daf.jpg';
 
-const categories = ['All', 'Birthday', 'Wedding', 'Anniversary', 'Corporate', 'Seasonal'];
+const categories = productCategories;
 
 interface Product {
   id: number;
@@ -35,7 +36,7 @@ const products: Product[] = [
   {
     id: 1,
     name: 'Birthday Celebration',
-    category: 'Birthday',
+    category: 'Cakes',
     description: 'Classic birthday cake with custom decorations and personalized message',
     rating: 5,
     reviews: 127,
@@ -45,7 +46,7 @@ const products: Product[] = [
   {
     id: 2,
     name: 'Elegant Wedding Tier',
-    category: 'Wedding',
+    category: 'Cakes',
     description: 'Multi-tier wedding cake with elegant details and fresh flowers',
     rating: 5,
     reviews: 89,
@@ -55,7 +56,7 @@ const products: Product[] = [
   {
     id: 3,
     name: 'Almond Delight',
-    category: 'All',
+    category: 'Cakes',
     description: 'Rich almond flavor with smooth buttercream frosting',
     rating: 5,
     reviews: 156,
@@ -65,7 +66,7 @@ const products: Product[] = [
   {
     id: 4,
     name: 'Lemon & Cream Cheese',
-    category: 'All',
+    category: 'Cakes',
     description: 'Tangy lemon with smooth cream cheese frosting',
     rating: 4.8,
     reviews: 98,
@@ -74,7 +75,7 @@ const products: Product[] = [
   {
     id: 5,
     name: 'Black Forest',
-    category: 'All',
+    category: 'Cakes',
     description: 'Chocolate cake with cherries and whipped cream',
     rating: 5,
     reviews: 143,
@@ -83,7 +84,7 @@ const products: Product[] = [
   {
     id: 6,
     name: 'German Chocolate',
-    category: 'All',
+    category: 'Cakes',
     description: 'Traditional German chocolate with coconut pecan frosting',
     rating: 4.9,
     reviews: 201,
@@ -93,7 +94,7 @@ const products: Product[] = [
   {
     id: 7,
     name: 'Anniversary Romance',
-    category: 'Anniversary',
+    category: 'Cakes',
     description: 'Romantic design with edible flowers and gold accents',
     rating: 5,
     reviews: 67,
@@ -102,7 +103,7 @@ const products: Product[] = [
   {
     id: 8,
     name: 'Corporate Logo Cake',
-    category: 'Corporate',
+    category: 'Cakes',
     description: 'Custom branded cakes for business events and celebrations',
     rating: 4.9,
     reviews: 45,
@@ -111,7 +112,7 @@ const products: Product[] = [
   {
     id: 9,
     name: 'Italian Cream',
-    category: 'All',
+    category: 'Cakes',
     description: 'Light cream cake with pecans and coconut',
     rating: 4.8,
     reviews: 112,
@@ -120,7 +121,7 @@ const products: Product[] = [
   {
     id: 10,
     name: 'Lemon Doberge',
-    category: 'All',
+    category: 'Cakes',
     description: 'New Orleans style layered lemon cake with custard filling',
     rating: 5,
     reviews: 178,
@@ -130,7 +131,7 @@ const products: Product[] = [
   {
     id: 11,
     name: 'Chocolate Doberge',
-    category: 'All',
+    category: 'Cakes',
     description: 'New Orleans style layered chocolate cake with rich pudding',
     rating: 5,
     reviews: 165,
@@ -139,7 +140,7 @@ const products: Product[] = [
   {
     id: 12,
     name: 'Seasonal Pumpkin Spice',
-    category: 'Seasonal',
+    category: 'Cakes',
     description: 'Fall-inspired pumpkin spice cake with cream cheese frosting',
     rating: 4.9,
     reviews: 92,
@@ -191,7 +192,7 @@ export function Shop({ onNavigate }: ShopProps = {}) {
           const transformedProducts = data.map((p: any) => ({
             id: p.id,
             name: p.name,
-            category: p.category,
+            category: 'Cakes', // Normalize all products to 'Cakes' category
             description: p.description,
             rating: p.rating || 5,
             reviews: p.reviews || 0,
@@ -361,87 +362,14 @@ export function Shop({ onNavigate }: ShopProps = {}) {
           </div>
         </motion.div>
 
-        {/* Search & Filter Bar */}
+        {/* Category Filters - Always Visible */}
         <motion.div
           className="glass-card p-4 md:p-5 mb-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <div className="flex flex-col lg:flex-row gap-4 items-stretch lg:items-center">
-            {/* Search */}
-            <div className="flex-1 relative">
-              <Search 
-                className="absolute left-4 top-1/2 transform -translate-y-1/2" 
-                size={20} 
-                color="var(--text-tertiary)" 
-                aria-hidden="true"
-              />
-              <Input
-                placeholder="Search cakes..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 h-12 md:h-13 rounded-xl input-field w-full"
-                style={{ fontSize: '15px' }}
-                aria-label="Search cakes"
-              />
-            </div>
-
-            {/* Sort Dropdown - Enhanced */}
-            <div className="relative" style={{ zIndex: 100 }}>
-              <select
-                value={sortBy}
-                onChange={(e) => handleSortChange(e.target.value)}
-                className="h-12 md:h-13 px-4 pr-11 rounded-xl appearance-none cursor-pointer w-full transition-all duration-200"
-                style={{
-                  background: 'var(--surface-elevated)',
-                  border: '2px solid #C44569',
-                  color: 'var(--text-primary)',
-                  fontFamily: 'Poppins',
-                  fontSize: '15px',
-                  fontWeight: 500,
-                  minWidth: '200px',
-                  boxShadow: '0 2px 4px rgba(196, 69, 105, 0.1)',
-                  paddingRight: '44px',
-                  position: 'relative',
-                  zIndex: 100,
-                  textAlign: 'left',
-                  direction: 'ltr'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(196, 69, 105, 0.05)';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(196, 69, 105, 0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'var(--surface-elevated)';
-                  e.currentTarget.style.boxShadow = '0 2px 4px rgba(196, 69, 105, 0.1)';
-                }}
-                onFocus={(e) => {
-                  e.currentTarget.style.outline = 'none';
-                  e.currentTarget.style.boxShadow = '0 0 0 3px rgba(196, 69, 105, 0.2)';
-                }}
-                onBlur={(e) => {
-                  e.currentTarget.style.boxShadow = '0 2px 4px rgba(196, 69, 105, 0.1)';
-                }}
-                aria-label="Sort products"
-              >
-                <option value="popular">Most Popular</option>
-                <option value="rating">Highest Rated</option>
-                <option value="name-az">Name: A-Z</option>
-                <option value="name-za">Name: Z-A</option>
-              </select>
-              <ChevronDown 
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none"
-                size={22}
-                color="#C44569"
-                strokeWidth={2.5}
-                aria-hidden="true"
-              />
-            </div>
-          </div>
-
-          {/* Category Filters - Centered */}
-          <div className="flex flex-wrap justify-center gap-2 md:gap-3 mt-4 md:mt-5">
+          <div className="flex flex-wrap justify-center gap-2 md:gap-3">
             {categories.map((category) => (
               <motion.button
                 key={category}
@@ -471,86 +399,386 @@ export function Shop({ onNavigate }: ShopProps = {}) {
           </div>
         </motion.div>
 
-        {/* Custom Cake CTA - Compact Section - Moved Below Filters */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="glass-card p-4 mb-6 text-center relative overflow-hidden"
-          style={{
-            background: 'linear-gradient(135deg, rgba(196, 69, 105, 0.08) 0%, rgba(248, 235, 215, 0.4) 100%)',
-            border: '2px solid rgba(196, 69, 105, 0.2)'
-          }}
-        >
+        {/* Search & Sort Bar - Only for Cakes/All */}
+        {(selectedCategory === 'All' || selectedCategory === 'Cakes') && (
           <motion.div
-            className="absolute top-2 right-2"
-            animate={{
-              rotate: [0, 10, -10, 0],
-              scale: [1, 1.1, 1]
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              repeatType: 'reverse'
-            }}
+            className="glass-card p-4 md:p-5 mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
           >
-            <Sparkles size={20} color="#C44569" fill="rgba(196, 69, 105, 0.2)" />
+            <div className="flex flex-col lg:flex-row gap-4 items-stretch lg:items-center">
+              {/* Search */}
+              <div className="flex-1 relative">
+                <Search 
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2" 
+                  size={20} 
+                  color="var(--text-tertiary)" 
+                  aria-hidden="true"
+                />
+                <Input
+                  placeholder="Search cakes..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-12 h-12 md:h-13 rounded-xl input-field w-full"
+                  style={{ fontSize: '15px' }}
+                  aria-label="Search cakes"
+                />
+              </div>
+
+              {/* Sort Dropdown - Enhanced */}
+              <div className="relative" style={{ zIndex: 100 }}>
+                <select
+                  value={sortBy}
+                  onChange={(e) => handleSortChange(e.target.value)}
+                  className="h-12 md:h-13 px-4 pr-11 rounded-xl appearance-none cursor-pointer w-full transition-all duration-200"
+                  style={{
+                    background: 'var(--surface-elevated)',
+                    border: '2px solid #C44569',
+                    color: 'var(--text-primary)',
+                    fontFamily: 'Poppins',
+                    fontSize: '15px',
+                    fontWeight: 500,
+                    minWidth: '200px',
+                    boxShadow: '0 2px 4px rgba(196, 69, 105, 0.1)',
+                    paddingRight: '44px',
+                    position: 'relative',
+                    zIndex: 100,
+                    textAlign: 'left',
+                    direction: 'ltr'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(196, 69, 105, 0.05)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(196, 69, 105, 0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'var(--surface-elevated)';
+                    e.currentTarget.style.boxShadow = '0 2px 4px rgba(196, 69, 105, 0.1)';
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.outline = 'none';
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(196, 69, 105, 0.2)';
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.boxShadow = '0 2px 4px rgba(196, 69, 105, 0.1)';
+                  }}
+                  aria-label="Sort products"
+                >
+                  <option value="popular">Most Popular</option>
+                  <option value="rating">Highest Rated</option>
+                  <option value="name-az">Name: A-Z</option>
+                  <option value="name-za">Name: Z-A</option>
+                </select>
+                <ChevronDown 
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                  size={22}
+                  color="#C44569"
+                  strokeWidth={2.5}
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
           </motion.div>
+        )}
 
-          <h2
-            className="mb-1 text-lg font-semibold"
+        {/* Custom Cake CTA - Only for Cakes/All tabs */}
+        {(selectedCategory === 'All' || selectedCategory === 'Cakes') && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="glass-card p-4 mb-6 text-center relative overflow-hidden"
             style={{
-              fontFamily: 'Playfair Display',
-              color: 'var(--text-primary)'
+              background: 'linear-gradient(135deg, rgba(196, 69, 105, 0.08) 0%, rgba(248, 235, 215, 0.4) 100%)',
+              border: '2px solid rgba(196, 69, 105, 0.2)'
             }}
           >
-            Don't See What You're Looking For?
-          </h2>
-          <p
-            className="mb-3 text-sm"
-            style={{
-              color: 'var(--text-secondary)',
-              maxWidth: '500px',
-              margin: '0 auto 12px',
-              lineHeight: 1.5
-            }}
-          >
-            Call or visit us to discuss your custom cake vision!
-          </p>
-          <Button
-            onClick={() => onNavigate?.('contact')}
-            className="btn-primary"
-            style={{
-              height: '44px',
-              fontSize: '14px',
-              fontWeight: 600,
-              padding: '0 28px',
-              fontFamily: 'Poppins'
-            }}
-          >
-            Contact Us
-          </Button>
-        </motion.div>
-
-        {/* Product Grid */}
-        <AnimatePresence mode="wait">
-          {isLoading ? (
             <motion.div
-              key="loading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              className="absolute top-2 right-2"
+              animate={{
+                rotate: [0, 10, -10, 0],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                repeatType: 'reverse'
+              }}
             >
-              <LoadingSkeleton />
+              <Sparkles size={20} color="#C44569" fill="rgba(196, 69, 105, 0.2)" />
             </motion.div>
-          ) : (
-            <motion.div
-              key="products"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+
+            <h2
+              className="mb-1 text-lg font-semibold"
+              style={{
+                fontFamily: 'Playfair Display',
+                color: 'var(--text-primary)'
+              }}
             >
+              Don't See What You're Looking For?
+            </h2>
+            <p
+              className="mb-3 text-sm"
+              style={{
+                color: 'var(--text-secondary)',
+                maxWidth: '500px',
+                margin: '0 auto 12px',
+                lineHeight: 1.5
+              }}
+            >
+              Call or visit us to discuss your custom cake vision!
+            </p>
+            <Button
+              onClick={() => onNavigate?.('contact')}
+              className="btn-primary"
+              style={{
+                height: '44px',
+                fontSize: '14px',
+                fontWeight: 600,
+                padding: '0 28px',
+                fontFamily: 'Poppins'
+              }}
+            >
+              Contact Us
+            </Button>
+          </motion.div>
+        )}
+
+        {/* Flavors Tab - Informational Cards */}
+        {selectedCategory === 'Flavors' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <div className="glass-card p-6 md:p-8 mb-6 text-center">
+              <h2
+                className="text-2xl md:text-3xl font-bold mb-3"
+                style={{
+                  fontFamily: 'Playfair Display',
+                  background: 'linear-gradient(to right, #C44569, #8B3A5E)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}
+              >
+                Our Cake Flavors
+              </h2>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '16px', maxWidth: '600px', margin: '0 auto 16px' }}>
+                Choose from our delicious selection of cake flavors to create your perfect custom cake
+              </p>
+              <div className="flex items-center justify-center gap-3 mt-4">
+                <Phone size={20} color="#C44569" />
+                <a 
+                  href="tel:555-123-4567"
+                  style={{
+                    fontFamily: 'Poppins',
+                    fontSize: '18px',
+                    fontWeight: 600,
+                    color: '#C44569',
+                    textDecoration: 'none'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#8B3A5E'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#C44569'}
+                >
+                  Call (555) 123-4567 to order with these flavors
+                </a>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              <AnimatePresence mode="popLayout">
+                {cakeFlavors.map((flavor, index) => (
+                  <motion.div
+                    key={flavor.id}
+                    layout
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05, duration: 0.4 }}
+                  >
+                    <Card 
+                      className="surface-elevated h-full transition-all duration-300 overflow-hidden group"
+                      style={{
+                        borderRadius: '20px',
+                        border: '1px solid var(--border-subtle)',
+                        background: 'var(--surface-elevated)'
+                      }}
+                    >
+                      <div 
+                        className="w-full h-48 relative overflow-hidden flex items-center justify-center"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(248, 235, 215, 0.6) 0%, rgba(232, 213, 196, 0.4) 100%)'
+                        }}
+                      >
+                        <motion.div
+                          className="text-7xl"
+                          whileHover={{ scale: 1.2, rotate: 5 }}
+                          transition={{ type: 'spring', stiffness: 300 }}
+                          style={{ filter: 'drop-shadow(0 4px 12px rgba(196, 69, 105, 0.3))' }}
+                        >
+                          🎂
+                        </motion.div>
+                      </div>
+
+                      <div className="p-5 md:p-6">
+                        <h4 
+                          className="mb-3 text-center"
+                          style={{ 
+                            fontFamily: 'Poppins', 
+                            fontWeight: 700, 
+                            fontSize: '20px', 
+                            color: 'var(--text-primary)'
+                          }}
+                        >
+                          {flavor.name}
+                        </h4>
+                        <p 
+                          className="text-center mb-4"
+                          style={{ 
+                            color: 'var(--text-secondary)', 
+                            fontSize: '14px',
+                            lineHeight: 1.6
+                          }}
+                        >
+                          Perfect for custom cakes and special occasions
+                        </p>
+                      </div>
+                    </Card>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Fillings Tab - Informational Cards */}
+        {selectedCategory === 'Fillings' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <div className="glass-card p-6 md:p-8 mb-6 text-center">
+              <h2
+                className="text-2xl md:text-3xl font-bold mb-3"
+                style={{
+                  fontFamily: 'Playfair Display',
+                  background: 'linear-gradient(to right, #C44569, #8B3A5E)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}
+              >
+                Our Filling Options
+              </h2>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '16px', maxWidth: '600px', margin: '0 auto 16px' }}>
+                Add delicious fillings to your custom cake for extra flavor and texture
+              </p>
+              <div className="flex items-center justify-center gap-3 mt-4">
+                <Phone size={20} color="#C44569" />
+                <a 
+                  href="tel:555-123-4567"
+                  style={{
+                    fontFamily: 'Poppins',
+                    fontSize: '18px',
+                    fontWeight: 600,
+                    color: '#C44569',
+                    textDecoration: 'none'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#8B3A5E'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#C44569'}
+                >
+                  Call (555) 123-4567 to order with these fillings
+                </a>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              <AnimatePresence mode="popLayout">
+                {fillingFlavors.map((filling, index) => (
+                  <motion.div
+                    key={filling.id}
+                    layout
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05, duration: 0.4 }}
+                  >
+                    <Card 
+                      className="surface-elevated h-full transition-all duration-300 overflow-hidden group"
+                      style={{
+                        borderRadius: '20px',
+                        border: '1px solid var(--border-subtle)',
+                        background: 'var(--surface-elevated)'
+                      }}
+                    >
+                      <div 
+                        className="w-full h-48 relative overflow-hidden flex items-center justify-center"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(196, 69, 105, 0.1) 0%, rgba(248, 235, 215, 0.3) 100%)'
+                        }}
+                      >
+                        <motion.div
+                          className="text-7xl"
+                          whileHover={{ scale: 1.2, rotate: -5 }}
+                          transition={{ type: 'spring', stiffness: 300 }}
+                          style={{ filter: 'drop-shadow(0 4px 12px rgba(196, 69, 105, 0.3))' }}
+                        >
+                          🍰
+                        </motion.div>
+                      </div>
+
+                      <div className="p-5 md:p-6">
+                        <h4 
+                          className="mb-3 text-center"
+                          style={{ 
+                            fontFamily: 'Poppins', 
+                            fontWeight: 700, 
+                            fontSize: '20px', 
+                            color: 'var(--text-primary)'
+                          }}
+                        >
+                          {filling.name}
+                        </h4>
+                        <p 
+                          className="text-center mb-4"
+                          style={{ 
+                            color: 'var(--text-secondary)', 
+                            fontSize: '14px',
+                            lineHeight: 1.6
+                          }}
+                        >
+                          Delicious filling option for your custom cake layers
+                        </p>
+                      </div>
+                    </Card>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Product Grid - Only for Cakes/All tabs */}
+        {(selectedCategory === 'All' || selectedCategory === 'Cakes') && (
+        <>
+          <AnimatePresence mode="wait">
+            {isLoading ? (
+              <motion.div
+                key="loading"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <LoadingSkeleton />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="products"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
               <AnimatePresence mode="popLayout">
                 {filteredProducts.map((product, index) => (
                   <motion.div
@@ -819,21 +1047,23 @@ export function Shop({ onNavigate }: ShopProps = {}) {
           )}
         </AnimatePresence>
 
-        {/* Empty State */}
-        {!isLoading && filteredProducts.length === 0 && (
-          <motion.div
-            className="text-center py-24"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <div className="text-6xl mb-4">🔍</div>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '18px', marginBottom: '16px' }}>
-              No cakes found matching your criteria.
-            </p>
-            <p style={{ color: 'var(--text-tertiary)', fontSize: '16px' }}>
-              Try adjusting your filters or search terms.
-            </p>
-          </motion.div>
+          {/* Empty State */}
+          {!isLoading && filteredProducts.length === 0 && (
+            <motion.div
+              className="text-center py-24"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <div className="text-6xl mb-4">🔍</div>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '18px', marginBottom: '16px' }}>
+                No cakes found matching your criteria.
+              </p>
+              <p style={{ color: 'var(--text-tertiary)', fontSize: '16px' }}>
+                Try adjusting your filters or search terms.
+              </p>
+            </motion.div>
+          )}
+        </>
         )}
       </div>
 

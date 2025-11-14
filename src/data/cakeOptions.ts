@@ -6,6 +6,13 @@
 // ============================================================================
 
 // ============================================================================
+// PRODUCT CATEGORIES (Case Study Alignment)
+// ============================================================================
+// Note: Shop page displays finished cakes, cake flavors, and filling options
+// for inspiration and education. Customers call to order with these options.
+export const productCategories = ['All', 'Cakes', 'Flavors', 'Fillings'];
+
+// ============================================================================
 // STANDARD CAKES (14 Options from Case Study)
 // ============================================================================
 export const standardCakes = [
