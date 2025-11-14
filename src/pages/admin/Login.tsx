@@ -250,20 +250,207 @@ export function Login({ onLogin, onBackToPublic }: LoginProps) {
           </form>
 
           <div className="mt-8 pt-6 border-t border-[var(--border-subtle)]">
-            <p className="text-center mb-3" style={{ color: 'var(--text-secondary)', fontSize: '14px', fontWeight: 600 }}>
-              Demo Credentials
-            </p>
-            <div style={{ color: 'var(--text-tertiary)', fontSize: '12px', fontFamily: 'monospace' }}>
-              <p className="mb-1"><strong style={{ color: 'var(--text-secondary)' }}>Owner:</strong> emily@emilybakes.com</p>
-              <p className="mb-1"><strong style={{ color: 'var(--text-secondary)' }}>Manager:</strong> manager@emilybakes.com</p>
-              <p className="mb-1"><strong style={{ color: 'var(--text-secondary)' }}>Sales:</strong> sales@emilybakes.com</p>
-              <p className="mb-1"><strong style={{ color: 'var(--text-secondary)' }}>Baker:</strong> baker@emilybakes.com</p>
-              <p className="mb-1"><strong style={{ color: 'var(--text-secondary)' }}>Decorator:</strong> decorator@emilybakes.com</p>
-              <p className="mb-2"><strong style={{ color: 'var(--text-secondary)' }}>Accountant:</strong> accountant@emilybakes.com</p>
-              <p className="text-center" style={{ color: '#C44569', fontSize: '11px' }}>
-                All passwords: <strong>DemoPass123!</strong>
-              </p>
+            <h3 
+              className="text-center mb-4" 
+              style={{ 
+                color: 'var(--text-primary)', 
+                fontSize: '18px', 
+                fontWeight: 700,
+                fontFamily: 'Poppins',
+                letterSpacing: '0.5px'
+              }}
+            >
+              🔑 Demo Accounts
+            </h3>
+            
+            <div 
+              className="rounded-lg p-5 mb-4"
+              style={{ 
+                background: 'rgba(196, 69, 105, 0.08)',
+                border: '2px solid rgba(196, 69, 105, 0.2)',
+                backdropFilter: 'blur(10px)'
+              }}
+            >
+              <div className="space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <span style={{ 
+                    color: 'var(--text-primary)', 
+                    fontSize: '16px', 
+                    fontWeight: 700,
+                    minWidth: '110px',
+                    fontFamily: 'Poppins'
+                  }}>
+                    Owner:
+                  </span>
+                  <code style={{ 
+                    color: 'var(--text-secondary)', 
+                    fontSize: '16px', 
+                    fontFamily: 'monospace',
+                    background: 'rgba(0,0,0,0.2)',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    userSelect: 'all'
+                  }}>
+                    emily@emilybakes.com
+                  </code>
+                </div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <span style={{ 
+                    color: 'var(--text-primary)', 
+                    fontSize: '16px', 
+                    fontWeight: 700,
+                    minWidth: '110px',
+                    fontFamily: 'Poppins'
+                  }}>
+                    Manager:
+                  </span>
+                  <code style={{ 
+                    color: 'var(--text-secondary)', 
+                    fontSize: '16px', 
+                    fontFamily: 'monospace',
+                    background: 'rgba(0,0,0,0.2)',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    userSelect: 'all'
+                  }}>
+                    manager@emilybakes.com
+                  </code>
+                </div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <span style={{ 
+                    color: 'var(--text-primary)', 
+                    fontSize: '16px', 
+                    fontWeight: 700,
+                    minWidth: '110px',
+                    fontFamily: 'Poppins'
+                  }}>
+                    Sales:
+                  </span>
+                  <code style={{ 
+                    color: 'var(--text-secondary)', 
+                    fontSize: '16px', 
+                    fontFamily: 'monospace',
+                    background: 'rgba(0,0,0,0.2)',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    userSelect: 'all'
+                  }}>
+                    sales@emilybakes.com
+                  </code>
+                </div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <span style={{ 
+                    color: 'var(--text-primary)', 
+                    fontSize: '16px', 
+                    fontWeight: 700,
+                    minWidth: '110px',
+                    fontFamily: 'Poppins'
+                  }}>
+                    Baker:
+                  </span>
+                  <code style={{ 
+                    color: 'var(--text-secondary)', 
+                    fontSize: '16px', 
+                    fontFamily: 'monospace',
+                    background: 'rgba(0,0,0,0.2)',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    userSelect: 'all'
+                  }}>
+                    baker@emilybakes.com
+                  </code>
+                </div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <span style={{ 
+                    color: 'var(--text-primary)', 
+                    fontSize: '16px', 
+                    fontWeight: 700,
+                    minWidth: '110px',
+                    fontFamily: 'Poppins'
+                  }}>
+                    Decorator:
+                  </span>
+                  <code style={{ 
+                    color: 'var(--text-secondary)', 
+                    fontSize: '16px', 
+                    fontFamily: 'monospace',
+                    background: 'rgba(0,0,0,0.2)',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    userSelect: 'all'
+                  }}>
+                    decorator@emilybakes.com
+                  </code>
+                </div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <span style={{ 
+                    color: 'var(--text-primary)', 
+                    fontSize: '16px', 
+                    fontWeight: 700,
+                    minWidth: '110px',
+                    fontFamily: 'Poppins'
+                  }}>
+                    Accountant:
+                  </span>
+                  <code style={{ 
+                    color: 'var(--text-secondary)', 
+                    fontSize: '16px', 
+                    fontFamily: 'monospace',
+                    background: 'rgba(0,0,0,0.2)',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    userSelect: 'all'
+                  }}>
+                    accountant@emilybakes.com
+                  </code>
+                </div>
+              </div>
+
+              <div 
+                className="mt-4 pt-4 border-t text-center"
+                style={{ borderColor: 'rgba(196, 69, 105, 0.3)' }}
+              >
+                <p style={{ 
+                  color: 'var(--text-primary)', 
+                  fontSize: '16px',
+                  fontWeight: 600,
+                  marginBottom: '8px',
+                  fontFamily: 'Poppins'
+                }}>
+                  All Passwords:
+                </p>
+                <code style={{ 
+                  color: '#C44569', 
+                  fontSize: '18px',
+                  fontWeight: 700,
+                  fontFamily: 'monospace',
+                  background: 'rgba(0,0,0,0.3)',
+                  padding: '8px 16px',
+                  borderRadius: '6px',
+                  display: 'inline-block',
+                  userSelect: 'all',
+                  letterSpacing: '1px'
+                }}>
+                  DemoPass123!
+                </code>
+              </div>
             </div>
+
+            <p 
+              className="text-center" 
+              style={{ 
+                color: 'var(--text-tertiary)', 
+                fontSize: '13px',
+                fontStyle: 'italic'
+              }}
+            >
+              Click credentials to select and copy
+            </p>
           </div>
         </Card>
       </motion.div>
