@@ -626,7 +626,7 @@ export function Gallery() {
             </div>
 
             {/* Share Button */}
-            {navigator.share && (
+            {'share' in navigator && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
