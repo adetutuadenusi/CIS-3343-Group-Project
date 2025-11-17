@@ -101,10 +101,6 @@ export default function Login({ onLogin, onBackToPublic, onLogout }: LoginProps)
             setPassword('');
             showToast('info', 'Cleared session — enter new credentials to switch accounts', 'Switch Account');
           }}
-          onBackToPublic={() => {
-            onBackToPublic();
-            showToast('info', 'Returning to public site', 'Back to Site');
-          }}
         />
       </div>
 
