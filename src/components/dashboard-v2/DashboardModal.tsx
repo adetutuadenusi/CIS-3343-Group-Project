@@ -8,6 +8,7 @@ interface DashboardModalProps {
   children: React.ReactNode;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   footer?: React.ReactNode;
+  disableBackdropClose?: boolean;
 }
 
 export const DashboardModal: React.FC<DashboardModalProps> = ({
@@ -17,6 +18,7 @@ export const DashboardModal: React.FC<DashboardModalProps> = ({
   children,
   size = 'md',
   footer,
+  disableBackdropClose = false,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const previousActiveElementRef = useRef<HTMLElement | null>(null);
@@ -104,10 +106,16 @@ export const DashboardModal: React.FC<DashboardModalProps> = ({
     xl: 'modal-container-xl',
   };
 
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget && !disableBackdropClose) {
+      onClose();
+    }
+  };
+
   return (
     <div 
       className="modal-backdrop" 
-      onClick={onClose}
+      onClick={handleBackdropClick}
       aria-hidden="true"
     >
       <div

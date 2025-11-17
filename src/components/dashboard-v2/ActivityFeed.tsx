@@ -1,26 +1,38 @@
-import { LucideIcon, Activity as ActivityIcon } from 'lucide-react';
+import { 
+  ShoppingCart, 
+  ArrowRight, 
+  DollarSign, 
+  MessageCircle, 
+  User,
+  Activity as ActivityIcon 
+} from 'lucide-react';
+import { Badge } from '../ui/badge';
 
-interface Activity {
-  id: string | number;
+interface ActivityEvent {
+  id: string;
+  type: 'order_created' | 'status_update' | 'payment' | 'inquiry' | 'staff_action';
   user: {
     name: string;
+    role: string;
     avatar?: string;
-    role?: string;
   };
   action: string;
   timestamp: Date | string;
-  type?: 'order' | 'customer' | 'payment' | 'system';
-  icon?: LucideIcon;
+  metadata?: {
+    orderId?: number;
+    status?: string;
+    amount?: number;
+  };
 }
 
 interface ActivityFeedProps {
-  activities: Activity[];
+  events: ActivityEvent[];
   loading?: boolean;
-  emptyMessage?: string;
   maxHeight?: string;
+  onEventClick?: (event: ActivityEvent) => void;
 }
 
-function formatTimestamp(timestamp: Date | string): string {
+function formatRelativeTime(timestamp: Date | string): string {
   const date = timestamp instanceof Date ? timestamp : new Date(timestamp);
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
@@ -31,7 +43,7 @@ function formatTimestamp(timestamp: Date | string): string {
 
   const diffInMinutes = Math.floor(diffInSeconds / 60);
   if (diffInMinutes < 60) {
-    return `${diffInMinutes} ${diffInMinutes === 1 ? 'minute' : 'minutes'} ago`;
+    return `${diffInMinutes} min ago`;
   }
 
   const diffInHours = Math.floor(diffInMinutes / 60);
@@ -40,35 +52,78 @@ function formatTimestamp(timestamp: Date | string): string {
   }
 
   const diffInDays = Math.floor(diffInHours / 24);
-  if (diffInDays === 1) {
-    return 'Yesterday';
-  }
   if (diffInDays < 7) {
-    return `${diffInDays} days ago`;
-  }
-
-  const diffInWeeks = Math.floor(diffInDays / 7);
-  if (diffInWeeks < 4) {
-    return `${diffInWeeks} ${diffInWeeks === 1 ? 'week' : 'weeks'} ago`;
+    return `${diffInDays} ${diffInDays === 1 ? 'day' : 'days'} ago`;
   }
 
   return date.toLocaleDateString('en-US', { 
     month: 'short', 
     day: 'numeric',
-    year: date.getFullYear() !== now.getFullYear() ? 'numeric' : undefined
+    year: 'numeric'
   });
 }
 
-function getExactTimestamp(timestamp: Date | string): string {
-  const date = timestamp instanceof Date ? timestamp : new Date(timestamp);
-  return date.toLocaleString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true
+function getDateKey(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
+
+function getDateLabel(dateKey: string): string {
+  const eventDate = new Date(dateKey);
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const todayKey = getDateKey(today);
+  const yesterdayKey = getDateKey(yesterday);
+
+  if (dateKey === todayKey) {
+    return 'Today';
+  } else if (dateKey === yesterdayKey) {
+    return 'Yesterday';
+  } else {
+    return eventDate.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric' 
+    });
+  }
+}
+
+interface EventGroup {
+  date: string;
+  label: string;
+  events: ActivityEvent[];
+}
+
+function groupEventsByDate(events: ActivityEvent[]): EventGroup[] {
+  const groupMap = new Map<string, ActivityEvent[]>();
+
+  events.forEach(event => {
+    const eventDate = event.timestamp instanceof Date 
+      ? event.timestamp 
+      : new Date(event.timestamp);
+    const dateKey = getDateKey(eventDate);
+
+    if (!groupMap.has(dateKey)) {
+      groupMap.set(dateKey, []);
+    }
+    groupMap.get(dateKey)!.push(event);
   });
+
+  const groups: EventGroup[] = Array.from(groupMap.entries()).map(([date, events]) => ({
+    date,
+    label: getDateLabel(date),
+    events: events.sort((a, b) => {
+      const dateA = a.timestamp instanceof Date ? a.timestamp : new Date(a.timestamp);
+      const dateB = b.timestamp instanceof Date ? b.timestamp : new Date(b.timestamp);
+      return dateB.getTime() - dateA.getTime();
+    })
+  }));
+
+  groups.sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+
+  return groups;
 }
 
 function getInitials(name: string): string {
@@ -79,45 +134,144 @@ function getInitials(name: string): string {
   return name.slice(0, 2).toUpperCase();
 }
 
-function getRoleGradient(role?: string): string {
-  const normalizedRole = role?.toLowerCase() || '';
+function getAvatarColor(name: string): string {
+  const colors = [
+    'linear-gradient(135deg, #C44569 0%, #9B3654 100%)',
+    'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
+    'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+    'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+    'linear-gradient(135deg, #5A3825 0%, #3E2618 100%)',
+    'linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)',
+  ];
   
-  if (normalizedRole.includes('owner')) {
-    return 'linear-gradient(135deg, #C44569 0%, #9B3654 100%)';
-  }
-  if (normalizedRole.includes('manager')) {
-    return 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)';
-  }
-  if (normalizedRole.includes('sales') || normalizedRole.includes('baker') || normalizedRole.includes('decorator')) {
-    return 'linear-gradient(135deg, #5A3825 0%, #3E2618 100%)';
-  }
-  if (normalizedRole.includes('accountant')) {
-    return 'linear-gradient(135deg, #10B981 0%, #059669 100%)';
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
   }
   
-  return 'linear-gradient(135deg, #6B7280 0%, #4B5563 100%)';
+  return colors[Math.abs(hash) % colors.length];
 }
 
-interface AvatarProps {
-  user: Activity['user'];
+interface StatusIconProps {
+  type: ActivityEvent['type'];
 }
 
-function Avatar({ user }: AvatarProps) {
-  const initials = getInitials(user.name);
-  const gradient = getRoleGradient(user.role);
+function StatusIcon({ type }: StatusIconProps) {
+  const getIconConfig = () => {
+    switch (type) {
+      case 'order_created':
+        return { Icon: ShoppingCart, color: 'var(--db-color-raspberry)' };
+      case 'status_update':
+        return { Icon: ArrowRight, color: 'var(--db-color-info)' };
+      case 'payment':
+        return { Icon: DollarSign, color: 'var(--db-color-success)' };
+      case 'inquiry':
+        return { Icon: MessageCircle, color: 'var(--db-color-warning)' };
+      case 'staff_action':
+        return { Icon: User, color: 'var(--db-color-chocolate)' };
+      default:
+        return { Icon: ActivityIcon, color: 'var(--db-color-gray-500)' };
+    }
+  };
+
+  const { Icon, color } = getIconConfig();
 
   return (
-    <div className="avatar">
-      {user.avatar ? (
-        <img src={user.avatar} alt={user.name} className="avatar-image" />
-      ) : (
-        <div className="avatar-initials" style={{ background: gradient }}>
-          {initials}
-        </div>
-      )}
+    <div className="status-icon">
+      <Icon size={14} color={color} strokeWidth={2} />
+      
+      <style jsx>{`
+        .status-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+      `}</style>
+    </div>
+  );
+}
+
+interface ActivityItemProps {
+  event: ActivityEvent;
+  onClick?: (event: ActivityEvent) => void;
+}
+
+function ActivityItem({ event, onClick }: ActivityItemProps) {
+  const initials = getInitials(event.user.name);
+  const avatarColor = getAvatarColor(event.user.name);
+  const isClickable = !!onClick;
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick(event);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (onClick && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      onClick(event);
+    }
+  };
+
+  return (
+    <div 
+      className="activity-item"
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      role={isClickable ? 'button' : undefined}
+      tabIndex={isClickable ? 0 : undefined}
+    >
+      <div className="activity-avatar">
+        {event.user.avatar ? (
+          <img src={event.user.avatar} alt={event.user.name} className="avatar-image" />
+        ) : (
+          <div className="avatar-placeholder" style={{ background: avatarColor }}>
+            {initials}
+          </div>
+        )}
+      </div>
+
+      <div className="activity-content">
+        <p className="activity-text">
+          <strong className="user-name">{event.user.name}</strong> {event.action}
+        </p>
+        <time className="activity-time">
+          {formatRelativeTime(event.timestamp)}
+        </time>
+      </div>
+
+      <div className="activity-indicator">
+        <StatusIcon type={event.type} />
+      </div>
 
       <style jsx>{`
-        .avatar {
+        .activity-item {
+          display: flex;
+          align-items: flex-start;
+          gap: var(--db-space-3);
+          padding: 12px;
+          border-bottom: 1px solid #E5E7EB;
+          transition: background-color var(--db-transition-base);
+          cursor: ${isClickable ? 'pointer' : 'default'};
+          outline: none;
+        }
+
+        .activity-item:last-child {
+          border-bottom: none;
+        }
+
+        .activity-item:hover {
+          background-color: rgba(196, 69, 105, 0.05);
+        }
+
+        .activity-item:focus-visible {
+          outline: 2px solid var(--db-color-raspberry);
+          outline-offset: -2px;
+        }
+
+        .activity-avatar {
           width: 32px;
           height: 32px;
           border-radius: 50%;
@@ -131,7 +285,7 @@ function Avatar({ user }: AvatarProps) {
           object-fit: cover;
         }
 
-        .avatar-initials {
+        .avatar-placeholder {
           width: 100%;
           height: 100%;
           display: flex;
@@ -142,92 +296,81 @@ function Avatar({ user }: AvatarProps) {
           font-size: var(--db-text-tiny);
           font-weight: var(--db-weight-semibold);
         }
-      `}</style>
-    </div>
-  );
-}
 
-interface IconBadgeProps {
-  icon: LucideIcon;
-  type?: Activity['type'];
-}
+        .activity-content {
+          flex: 1;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          gap: var(--db-space-1);
+        }
 
-function IconBadge({ icon: Icon, type }: IconBadgeProps) {
-  const getTypeColor = (): string => {
-    switch (type) {
-      case 'order':
-        return 'var(--db-color-raspberry)';
-      case 'customer':
-        return 'var(--db-color-info)';
-      case 'payment':
-        return 'var(--db-color-success)';
-      case 'system':
-        return 'var(--db-color-gray-500)';
-      default:
-        return 'var(--db-color-gray-500)';
-    }
-  };
+        .activity-text {
+          font-family: var(--db-font-sans);
+          font-size: var(--db-text-sm);
+          font-weight: var(--db-weight-regular);
+          color: var(--db-color-chocolate);
+          line-height: var(--db-text-sm-line-height);
+          margin: 0;
+          word-wrap: break-word;
+        }
 
-  const getTypeBackground = (): string => {
-    switch (type) {
-      case 'order':
-        return 'var(--db-color-raspberry-light)';
-      case 'customer':
-        return 'var(--db-color-info-light)';
-      case 'payment':
-        return 'var(--db-color-success-light)';
-      case 'system':
-        return 'rgba(107, 114, 128, 0.1)';
-      default:
-        return 'rgba(107, 114, 128, 0.1)';
-    }
-  };
+        .user-name {
+          font-weight: var(--db-weight-semibold);
+          color: var(--db-color-charcoal);
+        }
 
-  return (
-    <div className="icon-badge" style={{ backgroundColor: getTypeBackground() }}>
-      <Icon size={12} color={getTypeColor()} />
+        .activity-time {
+          font-family: var(--db-font-sans);
+          font-size: var(--db-text-tiny);
+          font-weight: var(--db-weight-regular);
+          color: var(--db-color-gray-500);
+          line-height: var(--db-text-tiny-line-height);
+        }
 
-      <style jsx>{`
-        .icon-badge {
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
+        .activity-indicator {
           display: flex;
           align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
+          padding-top: 2px;
+        }
+
+        @media (max-width: 639px) {
+          .activity-item {
+            padding: var(--db-space-3);
+          }
         }
       `}</style>
     </div>
   );
 }
 
-function SkeletonActivities() {
+function SkeletonEvents() {
   return (
-    <div className="skeleton-activities">
-      {Array.from({ length: 6 }).map((_, i) => (
-        <div key={i} className="skeleton-activity-item">
+    <div className="skeleton-events">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <div key={i} className="skeleton-item">
           <div className="skeleton-avatar" />
           <div className="skeleton-content">
-            <div className="skeleton-text-line" style={{ width: '80%' }} />
-            <div className="skeleton-text-line" style={{ width: '40%', height: '10px', marginTop: '4px' }} />
+            <div className="skeleton-text" style={{ width: '75%' }} />
+            <div className="skeleton-time" style={{ width: '40%' }} />
           </div>
+          <div className="skeleton-icon" />
         </div>
       ))}
 
       <style jsx>{`
-        .skeleton-activities {
+        .skeleton-events {
           padding: var(--db-space-2) 0;
         }
 
-        .skeleton-activity-item {
+        .skeleton-item {
           display: flex;
           gap: var(--db-space-3);
-          padding: var(--db-space-4);
+          padding: 12px;
           border-bottom: 1px solid #E5E7EB;
         }
 
-        .skeleton-activity-item:last-child {
+        .skeleton-item:last-child {
           border-bottom: none;
         }
 
@@ -250,9 +393,10 @@ function SkeletonActivities() {
           flex: 1;
           display: flex;
           flex-direction: column;
+          gap: var(--db-space-1);
         }
 
-        .skeleton-text-line {
+        .skeleton-text {
           height: 14px;
           background: linear-gradient(
             90deg,
@@ -263,6 +407,35 @@ function SkeletonActivities() {
           background-size: 200% 100%;
           animation: shimmer 1.5s ease-in-out infinite;
           border-radius: var(--db-radius-xs);
+        }
+
+        .skeleton-time {
+          height: 10px;
+          background: linear-gradient(
+            90deg,
+            var(--db-color-gray-100) 0%,
+            var(--db-color-gray-200) 50%,
+            var(--db-color-gray-100) 100%
+          );
+          background-size: 200% 100%;
+          animation: shimmer 1.5s ease-in-out infinite;
+          border-radius: var(--db-radius-xs);
+        }
+
+        .skeleton-icon {
+          width: 14px;
+          height: 14px;
+          border-radius: 50%;
+          background: linear-gradient(
+            90deg,
+            var(--db-color-gray-100) 0%,
+            var(--db-color-gray-200) 50%,
+            var(--db-color-gray-100) 100%
+          );
+          background-size: 200% 100%;
+          animation: shimmer 1.5s ease-in-out infinite;
+          flex-shrink: 0;
+          margin-top: 2px;
         }
 
         @keyframes shimmer {
@@ -278,20 +451,16 @@ function SkeletonActivities() {
   );
 }
 
-interface EmptyActivityStateProps {
-  message?: string;
-}
-
-function EmptyActivityState({ message = 'No recent activity' }: EmptyActivityStateProps) {
+function EmptyState() {
   return (
-    <div className="empty-activity-state">
+    <div className="empty-state">
       <div className="empty-icon">
         <ActivityIcon size={40} color="var(--db-color-gray-400)" />
       </div>
-      <p className="empty-message">{message}</p>
+      <p className="empty-message">No recent activity</p>
 
       <style jsx>{`
-        .empty-activity-state {
+        .empty-state {
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -324,52 +493,44 @@ function EmptyActivityState({ message = 'No recent activity' }: EmptyActivitySta
 }
 
 export function ActivityFeed({
-  activities,
+  events,
   loading = false,
-  emptyMessage = 'No recent activity',
-  maxHeight = '600px'
+  maxHeight = 'calc(100vh - 200px)',
+  onEventClick
 }: ActivityFeedProps) {
+  const groupedEvents = groupEventsByDate(events);
+
   return (
     <div className="activity-feed">
-      <div className="activity-feed-header">
-        <h3 className="activity-feed-title">Activity Feed</h3>
-        <span className="activity-count">
-          {activities.length} {activities.length === 1 ? 'event' : 'events'}
-        </span>
+      <div className="feed-header">
+        <h3 className="feed-title">Activity Feed</h3>
+        <Badge className="live-badge">
+          <span className="live-dot" />
+          Live
+        </Badge>
       </div>
 
-      <div className="activity-feed-body" style={{ maxHeight }}>
+      <div className="feed-events" style={{ maxHeight }}>
         {loading ? (
-          <SkeletonActivities />
-        ) : activities.length === 0 ? (
-          <EmptyActivityState message={emptyMessage} />
+          <SkeletonEvents />
+        ) : events.length === 0 ? (
+          <EmptyState />
         ) : (
-          <div className="activity-list">
-            {activities.map((activity) => (
-              <div key={activity.id} className="activity-item">
-                <Avatar user={activity.user} />
-                
-                <div className="activity-content">
-                  <p className="activity-text">
-                    <strong className="activity-user-name">{activity.user.name}</strong>
-                    {' '}
-                    <span className="activity-action">{activity.action}</span>
-                  </p>
-                  <time
-                    className="activity-time"
-                    dateTime={activity.timestamp instanceof Date 
-                      ? activity.timestamp.toISOString() 
-                      : activity.timestamp}
-                    title={getExactTimestamp(activity.timestamp)}
-                  >
-                    {formatTimestamp(activity.timestamp)}
-                  </time>
-                </div>
-
-                {activity.icon && <IconBadge icon={activity.icon} type={activity.type} />}
+          groupedEvents.map(group => (
+            <div key={group.date} className="event-group">
+              <div className="day-header">
+                <span className="day-label">{group.label}</span>
+                <span className="day-count">({group.events.length} {group.events.length === 1 ? 'event' : 'events'})</span>
               </div>
-            ))}
-          </div>
+              {group.events.map(event => (
+                <ActivityItem 
+                  key={event.id} 
+                  event={event} 
+                  onClick={onEventClick}
+                />
+              ))}
+            </div>
+          ))
         )}
       </div>
 
@@ -378,24 +539,24 @@ export function ActivityFeed({
           background: var(--db-color-white);
           border: 1px solid #E5E7EB;
           border-radius: var(--db-radius-lg);
+          padding: var(--db-space-6);
           box-shadow: var(--db-shadow-card);
-          overflow: hidden;
           display: flex;
           flex-direction: column;
           position: sticky;
-          top: var(--db-space-4);
+          top: 96px;
         }
 
-        .activity-feed-header {
+        .feed-header {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: var(--db-space-5) var(--db-space-6);
+          margin-bottom: var(--db-space-6);
+          padding-bottom: var(--db-space-4);
           border-bottom: 1px solid #E5E7EB;
-          background: var(--db-color-gray-50);
         }
 
-        .activity-feed-title {
+        .feed-title {
           font-family: var(--db-font-heading);
           font-size: var(--db-text-h5);
           font-weight: var(--db-weight-semibold);
@@ -404,120 +565,112 @@ export function ActivityFeed({
           line-height: var(--db-text-h5-line-height);
         }
 
-        .activity-count {
-          font-family: var(--db-font-sans);
-          font-size: var(--db-text-tiny);
-          font-weight: var(--db-weight-medium);
-          color: var(--db-color-gray-500);
-          padding: var(--db-space-1) var(--db-space-3);
-          background: var(--db-color-white);
-          border: 1px solid #E5E7EB;
-          border-radius: var(--db-radius-full);
-        }
-
-        .activity-feed-body {
+        .feed-events {
           overflow-y: auto;
           overflow-x: hidden;
           -webkit-overflow-scrolling: touch;
         }
 
-        .activity-feed-body::-webkit-scrollbar {
+        .event-group {
+          position: relative;
+        }
+
+        .day-header {
+          position: sticky;
+          top: 0;
+          background: linear-gradient(to bottom, var(--db-color-gray-50) 0%, var(--db-color-gray-50) 90%, rgba(243, 244, 246, 0) 100%);
+          padding: var(--db-space-3) var(--db-space-4);
+          margin-bottom: var(--db-space-2);
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          gap: var(--db-space-2);
+          border-bottom: 1px solid var(--db-color-gray-200);
+        }
+
+        .day-label {
+          font-family: var(--db-font-sans);
+          font-size: var(--db-text-xs);
+          font-weight: var(--db-weight-semibold);
+          color: var(--db-color-charcoal);
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        .day-count {
+          font-family: var(--db-font-sans);
+          font-size: var(--db-text-xs);
+          font-weight: var(--db-weight-medium);
+          color: var(--db-color-gray-500);
+        }
+
+        .feed-events::-webkit-scrollbar {
           width: 6px;
         }
 
-        .activity-feed-body::-webkit-scrollbar-track {
+        .feed-events::-webkit-scrollbar-track {
           background: var(--db-color-gray-100);
-        }
-
-        .activity-feed-body::-webkit-scrollbar-thumb {
-          background: var(--db-color-gray-300);
           border-radius: var(--db-radius-full);
         }
 
-        .activity-feed-body::-webkit-scrollbar-thumb:hover {
-          background: var(--db-color-gray-400);
+        .feed-events::-webkit-scrollbar-thumb {
+          background: var(--db-color-raspberry);
+          border-radius: var(--db-radius-full);
         }
 
-        .activity-list {
-          display: flex;
-          flex-direction: column;
+        .feed-events::-webkit-scrollbar-thumb:hover {
+          background: var(--db-color-raspberry-hover);
         }
 
-        .activity-item {
-          display: flex;
-          align-items: flex-start;
-          gap: var(--db-space-3);
-          padding: var(--db-space-4);
-          border-bottom: 1px solid #E5E7EB;
-          transition: background-color var(--db-transition-base);
-        }
-
-        .activity-item:last-child {
-          border-bottom: none;
-        }
-
-        .activity-item:hover {
-          background-color: rgba(196, 69, 105, 0.05);
-        }
-
-        .activity-content {
-          flex: 1;
-          min-width: 0;
-          display: flex;
-          flex-direction: column;
-          gap: var(--db-space-1);
-        }
-
-        .activity-text {
-          font-family: var(--db-font-sans);
-          font-size: var(--db-text-sm);
-          line-height: var(--db-text-sm-line-height);
-          margin: 0;
-          word-wrap: break-word;
-        }
-
-        .activity-user-name {
-          font-weight: var(--db-weight-semibold);
-          color: var(--db-color-charcoal);
-        }
-
-        .activity-action {
-          font-weight: var(--db-weight-regular);
-          color: var(--db-color-chocolate);
-        }
-
-        .activity-time {
-          font-family: var(--db-font-sans);
-          font-size: var(--db-text-tiny);
-          font-weight: var(--db-weight-regular);
-          color: var(--db-color-gray-500);
-          line-height: var(--db-text-tiny-line-height);
-        }
-
-        @media (max-width: 639px) {
+        @media (max-width: 1024px) {
           .activity-feed {
             position: static;
             top: auto;
           }
+        }
 
-          .activity-feed-header {
-            padding: var(--db-space-4) var(--db-space-5);
+        @media (max-width: 639px) {
+          .activity-feed {
+            padding: var(--db-space-5);
           }
 
-          .activity-feed-title {
+          .feed-header {
+            margin-bottom: var(--db-space-5);
+          }
+
+          .feed-title {
             font-size: var(--db-text-h6);
           }
+        }
+      `}</style>
 
-          .activity-item {
-            padding: var(--db-space-3);
+      <style jsx global>{`
+        .live-badge {
+          background-color: var(--db-color-success-light) !important;
+          border-color: var(--db-color-success-border) !important;
+          color: var(--db-color-success) !important;
+          font-size: var(--db-text-tiny);
+          font-weight: var(--db-weight-semibold);
+          padding: 4px 8px;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .live-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background-color: var(--db-color-success);
+          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
           }
-
-          .activity-text {
-            font-size: var(--db-text-xs);
-          }
-
-          .activity-time {
-            font-size: 11px;
+          50% {
+            opacity: 0.5;
           }
         }
       `}</style>

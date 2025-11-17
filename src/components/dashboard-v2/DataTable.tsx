@@ -159,34 +159,63 @@ export function DataTable<T extends Record<string, any>>({
     return 'none';
   };
 
+  // Helper to extract text from React node for CSV export
+  const extractTextFromReactNode = (node: React.ReactNode): string => {
+    if (node === null || node === undefined) return '';
+    if (typeof node === 'string' || typeof node === 'number') return String(node);
+    if (Array.isArray(node)) return node.map(extractTextFromReactNode).join(' ');
+    if (typeof node === 'object' && 'props' in node) {
+      const element = node as any;
+      if (element.props && element.props.children) {
+        return extractTextFromReactNode(element.props.children);
+      }
+    }
+    return '';
+  };
+
   // Export to CSV
   const exportToCSV = () => {
-    // Create CSV header
+    // Build CSV content
     const headers = columns.map(col => col.header).join(',');
     
-    // Create CSV rows
     const rows = sortedData.map(row => {
       return columns.map(col => {
-        const value = col.render ? '' : getCellValue(row, col.accessor);
-        const formatted = formatCellValue(value, col.format);
-        // Escape commas and quotes
-        const escaped = String(formatted).replace(/"/g, '""');
+        let exportValue: string;
+        
+        // If column has custom render function, use it and extract text
+        if (col.render) {
+          const renderedNode = col.render(row);
+          exportValue = extractTextFromReactNode(renderedNode);
+        } else {
+          // Get the raw value
+          const rawValue = getCellValue(row, col.accessor);
+          
+          // Apply formatting (currency, date, number) for CSV export
+          if (col.format) {
+            exportValue = String(formatCellValue(rawValue, col.format));
+          } else {
+            // For non-formatted columns, convert to string
+            exportValue = String(rawValue ?? '');
+          }
+        }
+        
+        // Escape commas and quotes for CSV
+        const escaped = exportValue.replace(/"/g, '""');
         return `"${escaped}"`;
       }).join(',');
     });
-
-    // Combine header and rows
+    
     const csv = [headers, ...rows].join('\n');
-
-    // Create blob and download
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    
+    // Download
+    const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${exportFilename}.csv`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${exportFilename}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
 
