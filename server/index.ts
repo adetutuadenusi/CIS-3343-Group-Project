@@ -1079,8 +1079,11 @@ app.get('/api/reports/dashboard', authenticateToken, requireRole('accountant', '
     const completedOrders = validOrders.filter(o => 
       o.status === 'completed' && 
       o.createdAt && 
-      o.updatedAt &&
-      new Date(o.updatedAt) > new Date(o.createdAt)
+      ('updatedAt' in o) &&
+      // @ts-ignore - some records may not have updatedAt typed
+      (o as any).updatedAt &&
+      // compare
+      new Date((o as any).updatedAt) > new Date(o.createdAt)
     );
 
     const dayOfWeekHours: Record<string, { total: number; count: number }> = {
@@ -1095,7 +1098,7 @@ app.get('/api/reports/dashboard', authenticateToken, requireRole('accountant', '
 
     completedOrders.forEach(order => {
       const created = new Date(order.createdAt);
-      const completed = new Date(order.updatedAt);
+      const completed = new Date((order as any).updatedAt);
       const hours = (completed.getTime() - created.getTime()) / (1000 * 60 * 60);
       
       if (hours > 0 && hours < 720) {
