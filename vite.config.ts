@@ -51,6 +51,7 @@ export default defineConfig({
       "@radix-ui/react-alert-dialog@1.1.6": "@radix-ui/react-alert-dialog",
       "@radix-ui/react-accordion@1.2.3": "@radix-ui/react-accordion",
       "@": path.resolve(__dirname, "./src"),
+      "@assets": path.resolve(__dirname, "./attached_assets"),
     },
   },
   build: {
@@ -58,21 +59,19 @@ export default defineConfig({
     outDir: "build",
   },
   server: {
-    host: "0.0.0.0", // ⭐ ADDED: Allow Replit proxy access
-    port: 5000, // ✅ REQUIRED: Port 5000 for Replit webview
-    strictPort: true, // ⭐ ADDED: Enforce port 5000
+    host: "0.0.0.0",
+    port: 5000,
+    strictPort: true,
     hmr: {
-      clientPort: 443, // ⭐ ADDED: Fix Hot Module Reload over HTTPS
-      protocol: "wss", // ⭐ ADDED: WebSocket secure protocol
+      clientPort: 443,
+      protocol: "wss",
     },
     allowedHosts: [
-      // ⭐⭐ THE MAIN FIX ⭐⭐
-      ".replit.dev", // All Replit preview domains
-      ".repl.co", // Legacy Replit domains
-      "localhost", // Local development
+      ".replit.dev",
+      ".repl.co",
+      "localhost",
     ],
     headers: {
-      // ⭐ CACHE BUSTING: Prevent browser from caching old broken JavaScript
       'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
       'Pragma': 'no-cache',
       'Expires': '0',
@@ -85,6 +84,5 @@ export default defineConfig({
         secure: false,
       }
     },
-    // ❌ REMOVED: open: true (doesn't work in Replit)
   },
 });
