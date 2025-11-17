@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowLeft, Lock, User as UserIcon } from 'lucide-react';
+import { Lock, User as UserIcon } from 'lucide-react';
 import CredentialsToggle from '../../components/CredentialsToggle';
+import BackToSiteDropdown from '../../components/BackToSiteDropdown';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Card } from '../../components/ui/card';
@@ -10,9 +11,10 @@ import { useToast } from '../../components/ToastContext';
 interface LoginProps {
   onLogin: () => void;
   onBackToPublic: () => void;
+  onLogout?: () => void;
 }
 
-export default function Login({ onLogin, onBackToPublic }: LoginProps) {
+export default function Login({ onLogin, onBackToPublic, onLogout }: LoginProps) {
   const { showToast } = useToast();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -85,16 +87,26 @@ export default function Login({ onLogin, onBackToPublic }: LoginProps) {
         />
       </div>
 
-      <motion.button
-        onClick={onBackToPublic}
-        className="absolute top-8 left-8 flex items-center gap-2 text-[var(--text-secondary)] hover:text-[#C44569] transition-colors"
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.2 }}
-      >
-        <ArrowLeft size={20} />
-        <span style={{ fontFamily: 'Poppins', fontSize: '14px' }}>Back to Site</span>
-      </motion.button>
+      {/* Back to Site dropdown (logout / switch account) */}
+      <div className="absolute top-8 left-8">
+        <BackToSiteDropdown
+          onLogout={() => {
+            onLogout?.();
+            showToast('info', 'You have been logged out', 'Logged Out');
+          }}
+          onSwitchAccount={() => {
+            // Clear any local session state and notify user
+            localStorage.removeItem('token');
+            setUsername('');
+            setPassword('');
+            showToast('info', 'Cleared session — enter new credentials to switch accounts', 'Switch Account');
+          }}
+          onBackToPublic={() => {
+            onBackToPublic();
+            showToast('info', 'Returning to public site', 'Back to Site');
+          }}
+        />
+      </div>
 
       <motion.div
         className="relative z-10 w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8"

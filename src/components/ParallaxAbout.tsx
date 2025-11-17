@@ -18,7 +18,7 @@ export function ParallaxAbout() {
   const [activeSection, setActiveSection] = useState(0);
 
   // Section 1: Portrait parallax
-  const portrait ForegroundY = useTransform(scrollYProgress, [0, 0.2], [0, -50]);
+  const portraitForegroundY = useTransform(scrollYProgress, [0, 0.2], [0, -50]);
   const portraitBackgroundY = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
 
   // Section 3: Split screen arrow

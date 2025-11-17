@@ -161,7 +161,8 @@ export function HeadingContainer({
   };
 
   const spacing = defaultSpacing[level];
-  const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+  // cast to any to avoid TS complaining about dynamic tag types
+  const Tag: any = `h${level}`;
 
   return (
     <Tag

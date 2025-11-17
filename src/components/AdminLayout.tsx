@@ -6,7 +6,6 @@ import {
   Settings as SettingsIcon,
   Menu,
   X,
-  LogOut,
   ChevronLeft,
   ChevronRight,
   TrendingUp,
@@ -14,7 +13,7 @@ import {
   List
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Button } from './ui/button';
+// Button is not used in AdminLayout; remove to satisfy type-check
 import BackToSiteDropdown from './BackToSiteDropdown';
 
 interface AdminLayoutProps {
