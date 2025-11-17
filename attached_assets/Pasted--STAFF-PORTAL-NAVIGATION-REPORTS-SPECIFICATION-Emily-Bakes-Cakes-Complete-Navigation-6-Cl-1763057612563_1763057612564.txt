@@ -1,0 +1,634 @@
+# STAFF PORTAL NAVIGATION & REPORTS SPECIFICATION
+## Emily Bakes Cakes | Complete Navigation & 6 Client Reports
+## Thursday, November 13, 2025
+
+---
+
+## 🎯 QUICK SUMMARY
+
+**Main Navigation Bar (Same for ALL staff portals):**
+- Logo + Bakery Name
+- Role-based navigation menu
+- User profile + Logout
+- Time/Date display (optional)
+- Mobile hamburger menu
+
+**Each Role has DIFFERENT nav items** based on permissions
+
+**6 Required Reports** (for rubric - each team member creates 2):
+1. Daily Order Summary
+2. Revenue Report (Daily/Weekly/Monthly)
+3. Customer List with Order History
+4. Pending Orders (Not Yet Complete)
+5. Completed Orders (Finished Work)
+6. Staff Performance / Inventory
+
+---
+
+# 📱 COMMON HEADER BAR (ALL STAFF PAGES)
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂] Emily Bakes │ [Nav Menu] │ [User] │[Logout]│
+│ Time: 12:03 PM │ Thursday, Nov 13          │
+└─────────────────────────────────────────────────┘
+```
+
+**Header Components (Always Present):**
+- Logo (links to role dashboard on click)
+- Bakery name: "Emily Bakes"
+- Navigation menu (role-specific)
+- User profile icon
+- Logout button
+- Current time/date (updates live)
+- Mobile hamburger icon (< 768px)
+
+---
+
+# 🗂️ ROLE-BASED NAVIGATION MENUS
+
+## SALES STAFF NAVIGATION
+
+**Main Menu Items:**
+1. **Dashboard** → `/staff/dashboard/sales` (default home)
+2. **Create Order** → `/staff/orders/create` (NEW ORDER WIZARD)
+3. **Orders** → `/staff/orders/list` (VIEW ALL ORDERS)
+4. **Customers** → `/staff/customers/list` (VIEW/MANAGE CUSTOMERS)
+5. **Reports** → `/staff/reports` (SALES REPORTS)
+6. **Help** → `/staff/help` (FAQs, Documentation)
+
+**Sub-menu (under Reports):**
+- Daily Order Summary
+- Customer List
+- Pending Orders
+
+**NOT visible to Sales:**
+- ❌ Revenue/Financial reports
+- ❌ Staff management
+- ❌ Analytics
+- ❌ System settings
+
+**Wireframe:**
+```
+┌────────────────────────────┐
+│ [🎂] Emily Bakes           │
+│ [Dashboard] [Create Order] │
+│ [Orders] [Customers]       │
+│ [Reports] [Help] [Logout]  │
+├────────────────────────────┤
+│ 
+│ SUBMENU (if Reports clicked):
+│ ├─ Daily Order Summary
+│ ├─ Customer List
+│ └─ Pending Orders
+```
+
+---
+
+## BAKER NAVIGATION
+
+**Main Menu Items:**
+1. **Dashboard** → `/staff/dashboard/baker` (default home)
+2. **My Queue** → `/staff/orders/baking` (ORDERS TO BAKE)
+3. **Schedule** → `/staff/schedule/baker` (WEEK VIEW)
+4. **Completed** → `/staff/orders/completed-baking` (MY FINISHED)
+5. **Products** → `/staff/products` (CAKE/FLAVOR OPTIONS)
+6. **Help** → `/staff/help`
+
+**Sub-menu (under Schedule):**
+- Today
+- This Week
+- Next Week
+
+**NOT visible to Baker:**
+- ❌ Customer info/contacts
+- ❌ Pricing/payments
+- ❌ Other staff's work
+- ❌ Financial data
+
+**Wireframe:**
+```
+┌────────────────────────────┐
+│ [🎂] Emily Bakes           │
+│ [Dashboard] [My Queue]     │
+│ [Schedule] [Completed]     │
+│ [Products] [Help] [Logout] │
+├────────────────────────────┤
+│
+│ SUBMENU (if Schedule clicked):
+│ ├─ Today
+│ ├─ This Week
+│ └─ Next Week
+```
+
+---
+
+## DECORATOR NAVIGATION
+
+**Main Menu Items:**
+1. **Dashboard** → `/staff/dashboard/decorator` (default home)
+2. **My Queue** → `/staff/orders/decorating` (READY FOR DECORATION)
+3. **Design Gallery** → `/staff/gallery/decorator` (MY FINISHED WORK)
+4. **Schedule** → `/staff/schedule/decorator` (WEEK VIEW)
+5. **Completed** → `/staff/orders/completed-decorating` (FINISHED)
+6. **Help** → `/staff/help`
+
+**Sub-menu (under Design Gallery):**
+- All (sorted by date)
+- By Category (Birthday, Wedding, etc.)
+- Favorites (marked)
+
+**NOT visible to Decorator:**
+- ❌ Customer contacts
+- ❌ Pricing/payments
+- ❌ Baker's work
+- ❌ Financial data
+
+**Wireframe:**
+```
+┌────────────────────────────┐
+│ [🎂] Emily Bakes           │
+│ [Dashboard] [My Queue]     │
+│ [Design Gallery] [Schedule]│
+│ [Completed] [Help] [Logout]│
+├────────────────────────────┤
+│
+│ SUBMENU (if Gallery clicked):
+│ ├─ All
+│ ├─ By Category
+│ └─ Favorites
+```
+
+---
+
+## ACCOUNTANT NAVIGATION
+
+**Main Menu Items:**
+1. **Dashboard** → `/staff/dashboard/accountant` (default home)
+2. **Orders** → `/staff/orders/list` (VIEW ALL ORDERS)
+3. **Reports** → `/staff/reports/accountant` (FINANCIAL REPORTS)
+4. **Analytics** → `/staff/analytics` (CHARTS + TRENDS)
+5. **Payments** → `/staff/payments/tracking` (OUTSTANDING BALANCES)
+6. **Settings** → `/staff/settings/accountant` (REPORT PREFERENCES)
+
+**Sub-menu (under Reports):**
+- Daily Revenue Summary
+- Weekly Report
+- Monthly Report
+- Customer Spending
+- Outstanding Balances
+- Staff Performance
+
+**Visible ONLY to Accountant:**
+- ✅ Revenue figures
+- ✅ Payment tracking
+- ✅ Financial KPIs
+- ✅ Export to CSV/PDF
+
+**NOT visible:**
+- ❌ Order creation
+- ❌ Decoration/baking details
+- ❌ Customer photos
+
+**Wireframe:**
+```
+┌────────────────────────────┐
+│ [🎂] Emily Bakes           │
+│ [Dashboard] [Orders]       │
+│ [Reports] [Analytics]      │
+│ [Payments] [Settings]      │
+│ [Help] [Logout]            │
+├────────────────────────────┤
+│
+│ SUBMENU (if Reports clicked):
+│ ├─ Daily Revenue
+│ ├─ Weekly Report
+│ ├─ Monthly Report
+│ ├─ Customer Spending
+│ ├─ Outstanding Balances
+│ └─ Staff Performance
+```
+
+---
+
+## MANAGER/OWNER NAVIGATION
+
+**Main Menu Items:**
+1. **Dashboard** → `/staff/dashboard/manager` (default home)
+2. **Orders** → `/staff/orders/list` (ALL ORDERS - FULL CONTROL)
+3. **Customers** → `/staff/customers/list` (ALL CUSTOMERS)
+4. **Staff** → `/staff/staff/list` (MANAGE TEAM)
+5. **Reports** → `/staff/reports/manager` (ALL REPORTS)
+6. **Analytics** → `/staff/analytics/manager` (FULL DATA)
+7. **Settings** → `/staff/settings` (SYSTEM CONFIG)
+8. **Audit** → `/staff/audit/logs` (ACTIVITY LOG)
+
+**Sub-menu (under Reports):**
+- ALL 6 REPORTS visible
+- Daily Order Summary
+- Revenue Report (all-time view)
+- Customer List + Spending
+- Pending Orders (across all staff)
+- Completed Orders (all-time)
+- Staff Performance / Utilization
+
+**Sub-menu (under Analytics):**
+- Revenue Trends (line chart)
+- Orders by Status (pie chart)
+- Staff Workload (bar chart)
+- Customer Acquisition
+- Top Customers
+- Forecast/Projections
+
+**Visible ONLY to Manager:**
+- ✅ All data
+- ✅ Staff assignments
+- ✅ System settings
+- ✅ Activity logs
+- ✅ Revenue reports
+- ✅ Exception alerts
+
+**Wireframe:**
+```
+┌────────────────────────────────────┐
+│ [🎂] Emily Bakes                   │
+│ [Dashboard] [Orders] [Customers]   │
+│ [Staff] [Reports] [Analytics]      │
+│ [Settings] [Audit] [Help] [Logout] │
+├────────────────────────────────────┤
+│
+│ SUBMENU (if Reports clicked):
+│ ├─ Daily Order Summary
+│ ├─ Revenue Report
+│ ├─ Customer List
+│ ├─ Pending Orders
+│ ├─ Completed Orders
+│ └─ Staff Performance
+│
+│ SUBMENU (if Analytics clicked):
+│ ├─ Revenue Trends
+│ ├─ Orders by Status
+│ ├─ Staff Workload
+│ ├─ Customer Acquisition
+│ ├─ Top Customers
+│ └─ Forecast
+```
+
+---
+
+# 📊 6 REQUIRED REPORTS (FOR RUBRIC)
+
+**Case Study requirement:** "Each team member must create 2 unique client reports"
+**Total needed:** 6 reports for 3 team members
+
+---
+
+## REPORT 1: DAILY ORDER SUMMARY
+**Access:** Sales, Manager  
+**Route:** `/staff/reports/daily-summary`
+**Purpose:** Show all orders for selected day
+
+### Features:
+- Date picker (default: today)
+- Table with columns:
+  - Order #
+  - Customer Name
+  - Cake Type
+  - Pickup Time
+  - Status (badge)
+  - Price
+  - Deposit Paid
+  - Balance Due
+- Action buttons: View, Edit, Send Email
+- Export: CSV, PDF
+- Totals row: Total orders, Total revenue, Total deposits
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ Daily Order Summary                         │
+│ Date: [Nov 13, 2025] [< Prev] [Next >]     │
+│                                             │
+│ ┌──────────────────────────────────────────┐ │
+│ │#    │Customer│Cake     │Pickup│Status   │ │
+│ │1234 │Jane    │Birthday │2pm   │Ready    │ │
+│ │1235 │Corp    │Event    │3pm   │Baking   │ │
+│ │1236 │John    │Wedding  │4pm   │Pending  │ │
+│ ├──────────────────────────────────────────┤ │
+│ │TOTAL: 3 orders | $2,450 | $1,200 deposit │ │
+│ └──────────────────────────────────────────┘ │
+│                                             │
+│ [Export CSV] [Export PDF] [Print]          │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## REPORT 2: REVENUE REPORT
+**Access:** Accountant, Manager  
+**Route:** `/staff/reports/revenue`
+**Purpose:** Financial summary (daily/weekly/monthly)
+
+### Features:
+- Time period selector: Day / Week / Month / Custom range
+- KPI cards:
+  - Total Revenue
+  - Total Deposits Collected
+  - Outstanding Balances
+  - Payment Collection Rate %
+- Revenue breakdown by:
+  - Cake size
+  - Order type (birthday, wedding, etc.)
+  - Payment method (cash, card, etc.)
+- Charts (Recharts):
+  - Line chart: Revenue over time
+  - Pie chart: Revenue by type
+- Table with transaction details
+- Export: CSV, PDF, Excel
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ Revenue Report                              │
+│ Period: [Today] [Week] [Month] [Custom]    │
+│                                             │
+│ ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐  │
+│ │Revenue│ │Deposits│ │Pending│ │Collect│  │
+│ │$12.4k │ │ $8.1k  │ │$2.3k  │ │ 88%   │  │
+│ └───────┘ └───────┘ └───────┘ └───────┘  │
+│                                             │
+│ ╔═══════════════════════╗ ╔═════════════╗ │
+│ ║ Revenue Trend (Chart) ║ ║By Type(Pie) ║ │
+│ ╚═══════════════════════╝ ╚═════════════╝ │
+│                                             │
+│ Revenue by Cake Size:                      │
+│ ┌───────────────────────────────────────┐  │
+│ │6"  small: $1,200                      │  │
+│ │8"  medium: $3,450                     │  │
+│ │10" large: $4,200                      │  │
+│ │12" XL: $3,550                         │  │
+│ └───────────────────────────────────────┘  │
+│                                             │
+│ [Export CSV] [Export PDF] [Print]          │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## REPORT 3: CUSTOMER LIST & SPENDING
+**Access:** Sales, Manager  
+**Route:** `/staff/reports/customers`
+**Purpose:** Customer database with order history
+
+### Features:
+- Sortable table:
+  - Customer Name
+  - Email
+  - Phone
+  - Total Orders
+  - Total Spent
+  - Last Order Date
+  - Status (Active, Inactive)
+- Search box (name, email, phone)
+- Filters:
+  - By date range
+  - By total spent (>$500, <$500, etc.)
+  - Status (active/inactive)
+- Export: CSV, PDF
+- Actions: View details, Send email, Edit
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ Customer List                               │
+│ Search: [____________] Filter: [v] [Apply] │
+│                                             │
+│ ┌──────────────────────────────────────────┐ │
+│ │Name    │Email          │Orders│Spent   │ │
+│ │Jane    │jane@...       │3     │$850    │ │
+│ │Corp    │corp@...       │12    │$4,200  │ │
+│ │John    │john@...       │2     │$400    │ │
+│ │Mary    │mary@...       │5     │$1,250  │ │
+│ └──────────────────────────────────────────┘ │
+│                                             │
+│ [Export CSV] [Export PDF] [Print]          │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## REPORT 4: PENDING ORDERS (NOT YET COMPLETE)
+**Access:** Sales, Baker, Manager  
+**Route:** `/staff/reports/pending`
+**Purpose:** Orders in progress, not yet ready
+
+### Features:
+- Table showing:
+  - Order #
+  - Customer
+  - Status (breakdown by stage)
+  - Days pending (how long in current status)
+  - Pickup date (if late, highlight red)
+  - Assigned to (which staff)
+  - Actions: Rush, Escalate, Contact customer
+- Status breakdown:
+  - Pending (waiting to start)
+  - Baking (in progress)
+  - Decorating (in progress)
+  - Quality check (final stage before ready)
+- Sorting: By pickup date, by days pending, by status
+- Color coding:
+  - 🟢 On track (pickup >2 days away)
+  - 🟡 Watch (pickup 24-48 hours)
+  - 🔴 Rush (pickup <24 hours)
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ Pending Orders (In Progress)                │
+│ Filter: [All] [Baking] [Decorating] [Check]│
+│                                             │
+│ ┌──────────────────────────────────────────┐ │
+│ │ #   │Customer │Status       │Pickup  │ │
+│ │1235 │Corp     │🟢 Baking    │11/15   │ │
+│ │1238 │Mary     │🟡 Decorating│11/14   │ │
+│ │1239 │Bob      │🔴 Q-Check   │11/13   │ │
+│ │1240 │Sarah    │🟢 Pending   │11/16   │ │
+│ └──────────────────────────────────────────┘ │
+│                                             │
+│ [Rush Order] [Contact] [Escalate]          │
+│ [Export CSV] [Export PDF]                  │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## REPORT 5: COMPLETED ORDERS (FINISHED WORK)
+**Access:** Baker, Decorator, Manager  
+**Route:** `/staff/reports/completed`
+**Purpose:** Historical record of finished cakes
+
+### Features:
+- Table with columns:
+  - Order #
+  - Customer
+  - Cake Type
+  - Pickup Date (actual)
+  - Completed Date
+  - Final Price
+  - Deposit vs Balance Paid
+  - Quality Rating (5-star)
+- Filters:
+  - Date range
+  - By staff (who made it)
+  - By rating
+- Search: Customer name, order #
+- Gallery view (optional): Show photos of completed cakes
+- Stats:
+  - Total completed
+  - Average rating
+  - Most popular cake type
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ Completed Orders                            │
+│ Date Range: [Nov 1] - [Nov 13] [Custom]    │
+│ Search: [____________] Filter: [v] [Apply] │
+│                                             │
+│ ┌──────────────────────────────────────────┐ │
+│ │#    │Customer│Type    │Pickup │Rating  │ │
+│ │1234 │Jane    │Birthday│11/12  │⭐⭐⭐⭐⭐ │ │
+│ │1231 │Corp    │Event   │11/10  │⭐⭐⭐⭐  │ │
+│ │1230 │John    │Wedding │11/09  │⭐⭐⭐⭐⭐ │ │
+│ └──────────────────────────────────────────┘ │
+│                                             │
+│ Stats: 127 orders | Avg rating: 4.7/5      │
+│                                             │
+│ [Export CSV] [View Gallery] [Print]        │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## REPORT 6: STAFF PERFORMANCE & INVENTORY
+**Access:** Manager ONLY  
+**Route:** `/staff/reports/performance`
+**Purpose:** Team workload, utilization, available inventory
+
+### Features:
+
+**Part A: Staff Workload:**
+- Table:
+  - Staff name & role
+  - Orders assigned (this week)
+  - Orders completed (this week)
+  - Avg time per order
+  - Quality rating (avg)
+  - Utilization % (assigned/capacity)
+- Charts:
+  - Bar chart: Orders by staff
+  - Heatmap: Workload distribution
+
+**Part B: Inventory:**
+- Available ingredients:
+  - Flavors (chocolate, vanilla, etc.)
+  - Fillings (buttercream, mousse, etc.)
+  - Icings & colors
+  - Cake sizes available
+- Stock levels (low/medium/high)
+- Reorder alerts (if <5 available)
+
+**Part C: Alerts:**
+- Staff with >80% utilization (overloaded)
+- Inventory items running low
+- Quality issues flagged
+
+### Wireframe:
+```
+┌─────────────────────────────────────────────┐
+│ Staff Performance & Inventory               │
+│ Week of: Nov 10-16                          │
+│                                             │
+│ 👥 STAFF WORKLOAD                           │
+│ ┌──────────────────────────────────────────┐ │
+│ │Staff    │Assigned │Completed│Utilization│ │
+│ │Baker 1  │8        │7        │ 85% 🟡    │ │
+│ │Baker 2  │6        │6        │ 60% 🟢    │ │
+│ │Decorator│5        │4        │ 75% 🟡    │ │
+│ └──────────────────────────────────────────┘ │
+│                                             │
+│ 📦 INVENTORY LEVELS                         │
+│ Chocolate Flavor: ████████░ (8/10)          │
+│ Vanilla Flavor:   ██░░░░░░░░ (2/10) ⚠️     │
+│ Buttercream:      ██████░░░░ (6/10)         │
+│ Fondant:          ████████░░ (8/10)         │
+│                                             │
+│ ⚠️ ALERTS:                                  │
+│ • Vanilla running low - reorder soon!       │
+│ • Baker 1 at 85% capacity                   │
+│                                             │
+│ [Export CSV] [Export PDF] [Print]           │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+# 📋 NAVIGATION SUMMARY TABLE
+
+| Role | Dashboard | Orders | Customers | Reports | Other |
+|------|-----------|--------|-----------|---------|-------|
+| **Sales** | ✅ | Create, List | View, List | Daily Summary, Customer List, Pending | Help |
+| **Baker** | ✅ | Queue, My Work | ❌ | ❌ | Schedule, Products |
+| **Decorator** | ✅ | Queue, My Work | ❌ | ❌ | Gallery, Schedule |
+| **Accountant** | ✅ | View All | ❌ | ALL 6 Reports | Analytics, Payments |
+| **Manager** | ✅ | All (CRUD) | All (CRUD) | ALL 6 Reports | Staff, Analytics, Audit |
+
+---
+
+# 🔐 DATA VISIBILITY MATRIX
+
+| Data | Sales | Baker | Decorator | Accountant | Manager |
+|------|-------|-------|-----------|------------|---------|
+| Customer info | ✅ | ❌ | ❌ | ✅ | ✅ |
+| Order details | ✅ | Own only | Own only | ✅ | ✅ |
+| Pricing | ✅ | ❌ | ❌ | ✅ | ✅ |
+| Revenue | ❌ | ❌ | ❌ | ✅ | ✅ |
+| Staff performance | ❌ | ❌ | ❌ | Limited | ✅ |
+| System settings | ❌ | ❌ | ❌ | ❌ | ✅ |
+
+---
+
+# 🎯 IMPLEMENTATION NOTES
+
+## Navigation Component
+```typescript
+// Example: Role-based nav items
+const navItems = {
+  sales: [
+    { label: 'Dashboard', path: '/staff/dashboard/sales' },
+    { label: 'Create Order', path: '/staff/orders/create' },
+    { label: 'Orders', path: '/staff/orders/list' },
+    { label: 'Customers', path: '/staff/customers/list' },
+    { label: 'Reports', submenu: [...] },
+  ],
+  baker: [
+    { label: 'Dashboard', path: '/staff/dashboard/baker' },
+    { label: 'My Queue', path: '/staff/orders/baking' },
+    { label: 'Schedule', submenu: [...] },
+    // ... more items
+  ],
+  // ... more roles
+};
+```
+
+## Report Generation
+- All reports query the same database
+- Filter by role (which data is visible)
+- Support CSV/PDF export (use library: pdfkit or pdf-lib)
+- Create data tables with sorting/filtering UI
+
+---
+
+*Staff Portal Navigation & Reports | Created Nov 13, 2025*  
+*Status: COMPLETE - Ready for Replit AI Implementation*

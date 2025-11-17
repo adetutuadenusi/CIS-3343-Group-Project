@@ -1,0 +1,101 @@
+You are Replit AI acting as the primary developer for Emily Bakes Cakes (CIS 3343). Execute TIER 2: Admin Portal Improvements sequentially with full validation. Assume TIER 1 (critical fixes) is complete.
+
+TIER 2 DELIVERABLES (~1 hour) - Fix login and admin UX:
+
+Add demo credentials display to LoginPage.tsx:
+
+Above or below login form, display prominently:
+
+DEMO CREDENTIALS FOR TESTING:
+
+Sales: sales@emilybakes.com / DemoPass123!
+Baker: baker@emilybakes.com / DemoPass123!
+Decorator: decorator@emilybakes.com / DemoPass123!
+Manager: manager@emilybakes.com / DemoPass123!
+Accountant: accountant@emilybakes.com / DemoPass123!
+Owner: emily@emilybakes.com / DemoPass123!
+
+text
+- Style with light background box, clear typography, easily visible
+
+Fix login validation error handling:
+
+Currently invalid credentials may accept any input - add proper error message
+
+Show: "Invalid credentials. Try demo credentials above."
+
+Only allow login with valid email/password combinations
+
+Ensure error displays clearly to user
+
+Fix admin menu labels:
+
+Sales role: Menu should show "Sales Dashboard" (not "Business Analytics")
+
+Baker role: Menu should show "Baker Dashboard"
+
+Decorator role: Menu should show "Decorator Dashboard"
+
+Accountant role: Menu should show "Accountant Dashboard"
+
+Manager role: Menu should show "Manager Dashboard"
+
+Update src/components/ProtectedRoute.tsx or navigation logic
+
+Test all 6 demo accounts:
+
+Login as: sales@emilybakes.com with DemoPass123!
+
+Verify: Sales Dashboard displays correctly
+
+Login as: baker@emilybakes.com with DemoPass123!
+
+Verify: Baker Dashboard displays + has Sales access tab
+
+Login as: decorator@emilybakes.com with DemoPass123!
+
+Verify: Decorator Dashboard displays + has Sales access tab
+
+Login as: manager@emilybakes.com with DemoPass123!
+
+Verify: Manager Dashboard displays + all options visible
+
+Login as: accountant@emilybakes.com with DemoPass123!
+
+Verify: Accountant Dashboard displays + financial focus
+
+Login as: emily@emilybakes.com with DemoPass123!
+
+Verify: Owner/highest access dashboard displays
+
+Verify session persistence:
+
+Login with any demo account
+
+Refresh page (F5 or Cmd+R)
+
+Verify: Still logged in with correct role
+
+Verify: Correct dashboard still displayed
+
+No flash/redirect to login
+
+VALIDATION: Run npm run dev and test each item:
+
+✅ Demo credentials visible on login page
+
+✅ Invalid credentials rejected with error message
+
+✅ All 6 demo accounts login successfully
+
+✅ Each role sees correct dashboard
+
+✅ Menu labels correct per role
+
+✅ Sessions persist on page refresh
+
+✅ No console errors
+
+✅ All redirects working properly
+
+Create TIER2-COMPLETION-LOG.txt with all items checked. When complete, generate TIER 3 MASTER PROMPT for building 6 client reports.

@@ -1,0 +1,51 @@
+🚨 CRITICAL BUG: Persistent UI Failure & Unresponsiveness
+STATUS: The site is loading a partial, broken shell on the external URL. The core issues are:
+
+Invisible/Missing Content: Only a few basic elements (main heading, button, lines) are visible. The main component lists, images, and full structure are missing.
+
+Unclickable/Unresponsive: The menu and other elements are non-functional, and the page eventually becomes unresponsive and fails to fully load.
+
+Scrollable Screen: The viewport scrolls, but the lack of content confirms a rendering or asset failure.
+
+MANDATORY INSTRUCTION: DO NOT STOP until the entire application is fully functional, all elements are visible, and all interactions are responsive in ALL views (Replit Preview, Desktop External URL, and Mobile View).
+
+🔍 PHASE 1: Asset and Styling Build Diagnosis
+Tailwind CSS Check (Highest Priority):
+
+Diagnosis: The lack of styling and components strongly suggests Tailwind CSS is not loading or is not being correctly processed/built.
+
+Action:
+
+Confirm the Tailwind build script is running before the server starts.
+
+Check the Network tab on the external URL for a 404 error on the main CSS bundle (e.g., main.css).
+
+Inspect the <head> of index.html to ensure the CSS link is correct and points to the right build directory, likely /assets/index.css.
+
+External URL Asset Path Re-Verification:
+
+Action: Re-audit vite.config.ts. Ensure the base property is correctly set to handle the Replit environment's dynamic URL structure. Test setting base: './' again, which often forces relative pathing for all assets and resolves this issue.
+
+💻 PHASE 2: Performance and Interaction Fixes
+Console Error Root Cause:
+
+Diagnosis: The "unresponsive" error indicates a severe CPU/Memory spike, usually an Infinite Rendering Loop or a Resource Hog.
+
+Action: Isolate the component that is failing to load (e.g., the product list or carousel component). Add a temporary console.time('Component Render') to key components and check the logs on the external URL to pinpoint which one is running excessively or failing completely.
+
+Interaction/Clickability Test:
+
+Diagnosis: If a component or div is overlapping the entire screen with a high z-index, it can block clicks.
+
+Action: Use browser Dev Tools (Elements/Styles tab) to temporarily disable any high z-index rules or position: absolute/fixed elements applied globally to the main app container that might be causing an invisible overlay.
+
+✅ PHASE 3: Functional Verification
+The AI MUST confirm the following after the fix before stopping:
+
+Full Visibility: All components, text, and images are fully visible and styled correctly.
+
+Responsiveness: All menu links, buttons, and tabs are clickable and respond instantly.
+
+Stability: The page never shows the "unresponsive" error and loads fully within 5 seconds.
+
+Cross-View Check: Site is 100% functional on the Replit Preview, the Desktop External URL, and Mobile Device Emulation.

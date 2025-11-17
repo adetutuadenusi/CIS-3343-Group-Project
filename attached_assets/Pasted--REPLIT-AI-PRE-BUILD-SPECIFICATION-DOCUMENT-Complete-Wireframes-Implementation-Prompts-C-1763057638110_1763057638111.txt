@@ -1,0 +1,1089 @@
+# 📋 REPLIT AI PRE-BUILD SPECIFICATION DOCUMENT
+## Complete Wireframes + Implementation Prompts + Clarifying Questions
+
+**Project:** Emily Bakes Cakes  
+**Deadline:** Saturday, November 15, 2025  
+**Status:** Ready for Developer Handoff  
+**Created:** November 13, 2025, 11:46 AM CST
+
+---
+
+## TABLE OF CONTENTS
+
+1. [Architecture Overview](#architecture-overview)
+2. [Page-by-Page Wireframes & Specs](#page-by-page-wireframes--specs)
+3. [Implementation Prompts (Copy/Paste for Replit AI)](#implementation-prompts-copypaste-for-replit-ai)
+4. [Clarifying Questions (ANSWER BEFORE BUILDING)](#clarifying-questions-answer-before-building)
+5. [Technical Dependencies & APIs](#technical-dependencies--apis)
+
+---
+
+## ARCHITECTURE OVERVIEW
+
+### 4-Tier System Architecture
+
+```
+TIER 1: PUBLIC WEBSITE (Customer-Facing)
+├── Homepage (Gallery + Hero)
+├── About Page
+├── Menu Page (Product Display)
+├── Contact Page (Google Maps + Form)
+├── Gallery Page (Photo Grid)
+└── Customer Login (Optional, for account tracking history)
+
+TIER 2: STAFF PORTAL (Role-Based Internal)
+├── /staff-login (Secure entry point)
+├── Sales Dashboard (Create orders, manage customers)
+├── Baker Dashboard (Queue, mark stages)
+├── Decorator Dashboard (Design specs, mark complete)
+├── Accountant Dashboard (Financial reports, KPIs)
+└── Manager Dashboard (Full visibility + approvals)
+
+TIER 3: CUSTOMER TRACKING (Public, Anonymous)
+├── /track/{unique-token} (Email link destination)
+├── Order Status Progress Bar (Auto-cycles every 2 min for demo)
+├── Pickup Info Display
+└── Status Timeline
+
+TIER 4: DATABASE (PostgreSQL)
+├── Customers table
+├── Orders table
+├── Order_Layer table
+├── Staff/Employees table
+├── Order_Status_History table
+└── Products/Inventory table
+```
+
+---
+
+# PAGE-BY-PAGE WIREFRAMES & SPECS
+
+---
+
+## PAGE 1: PUBLIC HOMEPAGE
+
+### Wireframe (ASCII)
+```
+┌─────────────────────────────────────────────────────┐
+│                   EMILY BAKES CAKES                  │
+│                  🍰 Beautiful Custom Cakes           │
+├─────────────────────────────────────────────────────┤
+│  [HOME] [MENU] [GALLERY] [ABOUT] [CONTACT]  [☰]    │
+├─────────────────────────────────────────────────────┤
+│                                                      │
+│              ┌─────────────────────────┐             │
+│              │   HERO SECTION          │             │
+│              │   Background Image      │             │
+│              │   Call-to-Action Text   │             │
+│              │   [ORDER NOW] Button    │             │
+│              │   (redirects to phone)  │             │
+│              └─────────────────────────┘             │
+│                                                      │
+├─────────────────────────────────────────────────────┤
+│  FEATURED CAKES (3 Columns Grid)                    │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐          │
+│  │ Birthday │  │ Almond   │  │ Lemon    │          │
+│  │Celebration
+│  │ Delight  │  │& Cream   │          │
+│  │ $45      │  │ $50      │  │ $48      │          │
+│  └──────────┘  └──────────┘  └──────────┘          │
+├─────────────────────────────────────────────────────┤
+│  INSTAGRAM FEED / GALLERY PREVIEW (4-6 images)      │
+│  Lazy load images                                   │
+├─────────────────────────────────────────────────────┤
+│  FOOTER: Contact info, social links, hours         │
+└─────────────────────────────────────────────────────┘
+```
+
+### Specifications
+
+| Element | Details | Implementation Notes |
+|---------|---------|----------------------|
+| **Hero Section** | Full-width background image (bakery/cakes), overlay with text | Responsive: 100vh on desktop, 60vh on mobile |
+| **CTA Button** | "ORDER NOW" or "CALL TO ORDER" | Links to phone dialer (tel:) or email |
+| **Featured Cakes** | 3-card grid showing top cakes | Use product images from teammate + mock data |
+| **Gallery Preview** | 6 images grid, click = go to full gallery | Images lazy-load, Tailwind grid responsive |
+| **Navbar** | Fixed or sticky, logo + nav links | Mobile hamburger menu |
+| **Footer** | Hours, address, phone, social links | Sticky or traditional |
+
+### Key Questions for This Page
+- [ ] Should the "ORDER NOW" button open a phone dialer, email, or modal?
+- [ ] How many featured cakes? (Suggested: 3-6)
+- [ ] Should gallery images be from your photo shoot or placeholder images?
+- [ ] Do you want customer testimonials on this page?
+- [ ] Should there be an "About Us" mini-section on homepage?
+
+---
+
+## PAGE 2: MENU PAGE
+
+### Wireframe (ASCII)
+```
+┌─────────────────────────────────────────────────────┐
+│                    MENU                              │
+├─────────────────────────────────────────────────────┤
+│  FILTER BY: [All] [Birthday] [Chocolate] [Fruit]   │
+│  SORT BY: [Price Low→High] [Popularity]             │
+├─────────────────────────────────────────────────────┤
+│  CAKE GRID (3-4 columns)                            │
+│  ┌──────────────┐  ┌──────────────┐               │
+│  │  Cake Image  │  │  Cake Image  │               │
+│  │              │  │              │               │
+│  │ Birthday     │  │ Almond       │               │
+│  │ Celebration  │  │ Delight      │               │
+│  │ $45-$95      │  │ $50-$110     │               │
+│  │ [VIEW DETAILS] [VIEW DETAILS] │               │
+│  └──────────────┘  └──────────────┘               │
+│                                                      │
+│  [Load More] or [See All]                           │
+├─────────────────────────────────────────────────────┤
+│  FLAVORS SECTION (Informational)                   │
+│  Vanilla, Chocolate, Red Velvet, Lemon, etc.       │
+│  (Not orderable directly - customers call)         │
+└─────────────────────────────────────────────────────┘
+```
+
+### Specifications
+
+| Element | Details |
+|---------|---------|
+| **Product Cards** | Image, name, base price range, "View Details" button |
+| **Filter/Sort** | By type, by price, by popularity |
+| **Detail Modal/Page** | When clicking "View Details": show full description, available sizes, common customizations |
+| **Responsive Grid** | 4 cols desktop, 2 cols tablet, 1 col mobile |
+
+### Key Questions
+- [ ] Should prices be ranges (e.g., "$45-$95") or single price?
+- [ ] Do you want to show available sizes on the card or in a detail modal?
+- [ ] Should customers be able to click "Add to Cart" (even if not ordering online) for educational purposes?
+
+---
+
+## PAGE 3: GALLERY PAGE
+
+### Wireframe (ASCII)
+```
+┌─────────────────────────────────────────────────────┐
+│                    GALLERY                           │
+│          SHOWCASE OF PAST CREATIONS                  │
+├─────────────────────────────────────────────────────┤
+│  FILTER: [All] [Wedding] [Birthday] [Special]      │
+│  SORT: [Newest] [Most Popular]                      │
+├─────────────────────────────────────────────────────┤
+│  MASONRY GRID (Varying image sizes)                 │
+│  ┌──────┐  ┌────────┐  ┌──────┐                    │
+│  │ Cake │  │ Cake   │  │ Cake │                    │
+│  │  1   │  │   2    │  │  3   │                    │
+│  └──────┘  └────────┘  └──────┘                    │
+│  ┌────────┐  ┌──────┐  ┌────────┐                  │
+│  │ Cake   │  │ Cake │  │ Cake   │                  │
+│  │   4    │  │  5   │  │   6    │                  │
+│  └────────┘  └──────┘  └────────┘                  │
+│                                                      │
+│  [Load More Images]                                 │
+│  Pagination: 1 [2] 3 4                              │
+├─────────────────────────────────────────────────────┤
+│  LIGHTBOX on image click (view full size)           │
+│  Navigation arrows, close button                    │
+└─────────────────────────────────────────────────────┘
+```
+
+### Specifications
+
+| Element | Details |
+|---------|---------|
+| **Grid Layout** | Masonry (Pinterest-style) using CSS Grid or Tailwind |
+| **Image Optimization** | Lazy load, responsive images (srcset) |
+| **Lightbox** | Click image → full-screen modal with arrows, counter |
+| **Metadata** | Hover to see: cake type, date created, description |
+
+### Key Questions
+- [ ] How many images in initial load? (Suggested: 12)
+- [ ] Should each image have a description/story?
+- [ ] Do you want a "Request Similar Cake" button on each image?
+
+---
+
+## PAGE 4: CONTACT PAGE
+
+### Wireframe (ASCII)
+```
+┌─────────────────────────────────────────────────────┐
+│                    CONTACT US                        │
+├─────────────────────────────────────────────────────┤
+│  GET IN TOUCH                                        │
+│  ┌─────────────────────────────────────────────┐   │
+│  │  Left 50%: MAP                               │   │
+│  │  ┌─────────────────────────────────────────┐│   │
+│  │  │                                          ││   │
+│  │  │     GOOGLE MAPS EMBEDDED                 ││   │
+│  │  │     (Bakery Location + Pin)              ││   │
+│  │  │                                          ││   │
+│  │  └─────────────────────────────────────────┘│   │
+│  │                                              │   │
+│  │  Right 50%: CONTACT INFO + FORM              │   │
+│  │  ┌─────────────────────────────────────────┐│   │
+│  │  │ PHONE: (555) 123-4567                   ││   │
+│  │  │ EMAIL: info@emilybakes.com              ││   │
+│  │  │ ADDRESS: 123 Baker St, City, State     ││   │
+│  │  │ HOURS: Mon-Fri 8am-5pm, Sat 10am-3pm   ││   │
+│  │  │                                          ││   │
+│  │  │ Name: [________________]                ││   │
+│  │  │ Email: [________________]               ││   │
+│  │  │ Phone: [________________]               ││   │
+│  │  │ Message: [__________________]           ││   │
+│  │  │ [SEND MESSAGE]                          ││   │
+│  │  └─────────────────────────────────────────┘│   │
+│  └─────────────────────────────────────────────┘   │
+│                                                      │
+│  SOCIAL LINKS: Facebook, Instagram, TikTok         │
+└─────────────────────────────────────────────────────┘
+```
+
+### Specifications
+
+| Element | Details | Implementation |
+|---------|---------|-----------------|
+| **Google Maps** | Embedded map showing bakery location with marker | Use Google Maps Embed API (no API key required for embed) or Leaflet (open-source) |
+| **Contact Form** | Name, Email, Phone, Message (optional: cake interest) | Form validation, success message, sends to email (Resend) |
+| **Business Info** | Hours, phone, address, email | Hardcoded or from database |
+| **Social Links** | Icons linking to Facebook, Instagram, TikTok | Click-to-visit |
+| **Layout** | 2-column on desktop (map left, form right), stacked on mobile | Responsive design |
+
+### Key Questions - ⚠️ CRITICAL
+- [ ] **Google Maps API Setup:** Do you want:
+  - **Option A:** Embedded map (no API key, free, read-only) ✅ RECOMMENDED
+  - **Option B:** Full Google Maps API (requires API key, more features)
+  - **Option C:** Alternative (Leaflet/OpenStreetMap - free, open-source)
+  
+- [ ] **Contact Form Behavior:**
+  - Where should messages be sent? (Your email? Database? Both?)
+  - Should we store messages in database for staff to review?
+  - Auto-reply email to customer after submission?
+  
+- [ ] **Hours Display:**
+  - Hardcoded in component or fetched from database?
+  - Show "OPEN NOW" / "CLOSED" indicator based on current time?
+
+---
+
+## PAGE 5: STAFF LOGIN PAGE
+
+### Wireframe (ASCII)
+```
+┌─────────────────────────────────────────────────────┐
+│                                                      │
+│                   EMILY BAKES CAKES                  │
+│                  🍰 Staff Portal 🍰                  │
+│                                                      │
+│            ┌──────────────────────────┐             │
+│            │   STAFF LOGIN            │             │
+│            ├──────────────────────────┤             │
+│            │ Email: [________________] │             │
+│            │ Password: [____________]  │             │
+│            │ [Remember Me]            │             │
+│            │                          │             │
+│            │ [LOGIN]                  │             │
+│            │                          │             │
+│            │ [Forgot Password?]       │             │
+│            └──────────────────────────┘             │
+│                                                      │
+│            Authorized staff only                    │
+└─────────────────────────────────────────────────────┘
+```
+
+### Specifications
+
+| Element | Details |
+|---------|---------|
+| **Form Fields** | Email (text), Password (masked) |
+| **Validation** | Email format check, password length (min 8 chars) |
+| **Remember Me** | Optional checkbox, stores JWT in localStorage |
+| **Error Messages** | "Invalid credentials", "Account locked" (after 3 attempts?) |
+| **Success Flow** | JWT token → stored in localStorage → redirect to role-based dashboard |
+| **Demo Credentials** | emily@emilybakes.com, manager@emilybakes.com, etc. (all DemoPass123!) |
+
+### Key Questions
+- [ ] Account lockout after failed attempts? (Suggested: 3 attempts → 15 min lockout)
+- [ ] Show/hide password toggle?
+- [ ] "Remember Me" duration? (Suggested: 7 days)
+
+---
+
+## PAGE 6: SALES DASHBOARD
+
+### Wireframe (ASCII)
+```
+┌─────────────────────────────────────────────────────┐
+│  EMILY BAKES CAKES | Sales Dashboard | [Logout]    │
+├─────────────────────────────────────────────────────┤
+│  Welcome, Alex Sales (Sales Staff)                  │
+├─────────────────────────────────────────────────────┤
+│  KPIs ROW:                                          │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐         │
+│  │ Today's  │  │ This Week│  │ Pending  │         │
+│  │ Orders   │  │ Revenue  │  │ Deposits │         │
+│  │   4      │  │  $450    │  │   $200   │         │
+│  └──────────┘  └──────────┘  └──────────┘         │
+├─────────────────────────────────────────────────────┤
+│  ACTIONS:                                           │
+│  [+ NEW ORDER]  [View My Orders]  [Customers]      │
+├─────────────────────────────────────────────────────┤
+│  ORDERS TABLE:                                      │
+│  ┌─────┬──────────┬────────┬─────────┬──────────┐  │
+│  │ ID  │ Customer │ Status │ Amount  │ Actions  │  │
+│  ├─────┼──────────┼────────┼─────────┼──────────┤  │
+│  │ #1  │ John Doe │ Baking │ $50 dep │[View]   │  │
+│  │ #2  │ Jane S.  │ Ready  │ $60 dep │[View]   │  │
+│  │ #3  │ Mike J.  │ Pending│ $45 dep │[View]   │  │
+│  └─────┴──────────┴────────┴─────────┴──────────┘  │
+├─────────────────────────────────────────────────────┤
+│  CHART: Revenue Last 7 Days (Bar chart)             │
+│  [Recharts Line chart]                              │
+└─────────────────────────────────────────────────────┘
+```
+
+### Specifications
+
+| Element | Details |
+|---------|---------|
+| **KPIs** | Today's orders count, this week revenue, pending deposits |
+| **Orders Table** | ID, Customer name, Status, Amount, View/Edit buttons |
+| **Filters/Search** | Search by customer, filter by status, date range |
+| **New Order Button** | Opens order creation wizard (4-step form) |
+| **Chart** | Recharts bar/line chart showing revenue last 7 days |
+| **Responsive** | Full-width table on desktop, card layout on mobile |
+
+### Key Questions
+- [ ] Should sales staff see ALL orders or only their own?
+- [ ] Should KPIs show "My Orders Only" or bakery-wide?
+
+---
+
+## PAGE 7: BAKER DASHBOARD
+
+### Wireframe (ASCII)
+```
+┌─────────────────────────────────────────────────────┐
+│  EMILY BAKES CAKES | Baker Queue | [Logout]        │
+├─────────────────────────────────────────────────────┤
+│  Welcome, Casey Baker (Baker)                       │
+├─────────────────────────────────────────────────────┤
+│  MY QUEUE:                                          │
+│  ┌─────────────────────────────────────────────┐   │
+│  │ Order #1 - John Doe                         │   │
+│  │ Due: Tomorrow, 2:00 PM                      │   │
+│  │ 3 Layers: Vanilla, Chocolate, Red Velvet   │   │
+│  │ [START BAKING]                              │   │
+│  └─────────────────────────────────────────────┘   │
+│  ┌─────────────────────────────────────────────┐   │
+│  │ Order #3 - Mike Johnson                     │   │
+│  │ Due: Nov 18, 1:00 PM                        │   │
+│  │ 2 Layers: German Chocolate, Almond         │   │
+│  │ [START BAKING]                              │   │
+│  └─────────────────────────────────────────────┘   │
+│                                                      │
+│  BAKING STATUS:                                     │
+│  In Progress: 2 cakes                               │
+│  Ready for Decorator: 1 cake                        │
+│  [View All Assigned]                                │
+│                                                      │
+│  CHART: Cakes Baked This Week                       │
+│  [Recharts area chart]                              │
+└─────────────────────────────────────────────────────┘
+```
+
+### Specifications
+
+| Element | Details |
+|---------|---------|
+| **Queue** | Cards showing orders assigned to this baker, sorted by due date |
+| **Order Card** | Order ID, customer, layers, due time, layer details |
+| **Status Button** | "Start Baking" → updates order status → moves to "In Progress" |
+| **Baking Counter** | How many currently baking, how many ready for decorator |
+| **Chart** | Area chart: cakes baked per day this week |
+
+### Key Questions
+- [ ] Should baker be able to mark 50% done (mid-baking) or just start/finish?
+- [ ] Show all orders or only assigned to them?
+
+---
+
+## PAGE 8: DECORATOR DASHBOARD
+
+### Wireframe (ASCII)
+```
+┌─────────────────────────────────────────────────────┐
+│  EMILY BAKES CAKES | Decorator Queue | [Logout]    │
+├─────────────────────────────────────────────────────┤
+│  Welcome, Morgan Decorator (Decorator)              │
+├─────────────────────────────────────────────────────┤
+│  DESIGN QUEUE:                                      │
+│  ┌─────────────────────────────────────────────┐   │
+│  │ Order #1 - John Doe                         │   │
+│  │ Flavor: Vanilla | Icing: Cream Cheese      │   │
+│  │ Colors: Pink, Gold, White                   │   │
+│  │ Special: "Happy 30th Birthday!"             │   │
+│  │ [DESIGN NOTES] [START DECORATING]           │   │
+│  └─────────────────────────────────────────────┘   │
+│                                                      │
+│  DECORATING STATUS:                                 │
+│  In Progress: 1                                     │
+│  Ready for Pickup: 2                                │
+│  [View Timeline]                                    │
+│                                                      │
+│  CHART: Designs Completed (Weekly)                  │
+│  [Recharts column chart]                            │
+└─────────────────────────────────────────────────────┘
+```
+
+### Specifications
+
+| Element | Details |
+|---------|---------|
+| **Design Queue** | Cards with order details, icing/colors, special notes |
+| **View Notes** | Click "Design Notes" to see customer decoration requests |
+| **Status Flow** | "Start Decorating" → "Ready for Pickup" |
+| **Decorating Counter** | In Progress, Ready for Pickup |
+
+### Key Questions
+- [ ] Should decorator see customer photos for decoration reference (if provided)?
+- [ ] Ability to add decorator notes/changes?
+
+---
+
+## PAGE 9: ACCOUNTANT DASHBOARD
+
+### Wireframe (ASCII)
+```
+┌─────────────────────────────────────────────────────┐
+│  EMILY BAKES CAKES | Financial Reports | [Logout]  │
+├─────────────────────────────────────────────────────┤
+│  Welcome, Dan Accountant (Accountant)               │
+├─────────────────────────────────────────────────────┤
+│  FINANCIAL OVERVIEW (This Month):                   │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐         │
+│  │ Total    │  │ Deposits │  │ Balance  │         │
+│  │ Revenue  │  │ Collected│  │ Due      │         │
+│  │ $2,450   │  │ $1,500   │  │ $950     │         │
+│  └──────────┘  └──────────┘  └──────────┘         │
+├─────────────────────────────────────────────────────┤
+│  PENDING DEPOSITS:                                  │
+│  ┌─────┬──────────┬──────────┬─────────────────┐   │
+│  │ ID  │ Customer │ Amount   │ Days Pending    │   │
+│  ├─────┼──────────┼──────────┼─────────────────┤   │
+│  │ #1  │ John Doe │ $25 (50%)│ 3 days          │   │
+│  │ #3  │ Mike J.  │ $45 (50%)│ 1 day           │   │
+│  └─────┴──────────┴──────────┴─────────────────┘   │
+│  [GENERATE PAYMENT REMINDER]                        │
+├─────────────────────────────────────────────────────┤
+│  MONTHLY REVENUE CHART:                             │
+│  [Recharts line chart: Revenue trend]               │
+│                                                      │
+│  [VIEW ALL REPORTS] [EXPORT CSV]                    │
+└─────────────────────────────────────────────────────┘
+```
+
+### Specifications
+
+| Element | Details |
+|---------|---------|
+| **KPIs** | Total revenue, deposits collected, balance due |
+| **Pending Table** | Orders with unpaid balances, days pending |
+| **Chart** | Revenue trend over 30 days |
+| **Export** | Button to download data as CSV |
+
+---
+
+## PAGE 10: MANAGER DASHBOARD
+
+### Wireframe (ASCII)
+```
+┌─────────────────────────────────────────────────────┐
+│  EMILY BAKES CAKES | Manager Dashboard | [Logout]  │
+├─────────────────────────────────────────────────────┤
+│  Welcome, James Manager (Manager)                   │
+│  All Staff Performance | Full Financial Visibility  │
+├─────────────────────────────────────────────────────┤
+│  DAILY KPIs:                                        │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐         │
+│  │ Orders   │  │ Revenue  │  │ Avg Order│         │
+│  │ Today    │  │ Today    │  │ Value    │         │
+│  │   12     │  │ $1,200   │  │ $100     │         │
+│  └──────────┘  └──────────┘  └──────────┘         │
+│                                                      │
+│  STAFF ASSIGNMENTS:                                 │
+│  ┌─────┬─────────┬─────────────┬──────────────┐    │
+│  │Name │ Role    │ Orders Done │ Efficiency % │    │
+│  ├─────┼─────────┼─────────────┼──────────────┤    │
+│  │Alex │ Sales   │ 8           │ 95%          │    │
+│  │Case │ Baker   │ 6           │ 88%          │    │
+│  │Morg │Decorator│ 6           │ 92%          │    │
+│  └─────┴─────────┴─────────────┴──────────────┘    │
+├─────────────────────────────────────────────────────┤
+│  CHARTS (2 side-by-side):                           │
+│  ┌────────────────────┐  ┌────────────────────┐    │
+│  │Revenue Trend       │  │Orders by Status    │    │
+│  │(Line chart)        │  │(Pie chart)         │    │
+│  │Last 30 days        │  │Pending/Baking/Etc  │    │
+│  └────────────────────┘  └────────────────────┘    │
+│                                                      │
+│  [APPROVE ORDERS] [VIEW REPORTS] [SETTINGS]        │
+└─────────────────────────────────────────────────────┘
+```
+
+### Specifications
+
+| Element | Details |
+|---------|---------|
+| **KPIs** | Today's orders, revenue, avg order value |
+| **Staff Table** | Name, role, orders completed, efficiency % |
+| **Charts** | Revenue trend (line) + Orders by status (pie/donut) |
+| **Admin Actions** | Approve deposits, override status, view all reports |
+
+---
+
+## PAGE 11: ORDER TRACKING PAGE (Public, No Login)
+
+### Wireframe (ASCII)
+```
+┌─────────────────────────────────────────────────────┐
+│                 EMILY BAKES CAKES                    │
+│              Your Order is Being Made! 🍰            │
+├─────────────────────────────────────────────────────┤
+│                                                      │
+│  ORDER #Q1-001                                      │
+│  Customer: John Doe                                 │
+│  Pickup Time: Tomorrow, 2:00 PM                     │
+│                                                      │
+├─────────────────────────────────────────────────────┤
+│  STATUS PROGRESS BAR:                               │
+│                                                      │
+│  ⚪ → ◉ → ⚪ → ⚪ → ⚪                             │
+│  RECEIVED | BAKING | DECORATING | QUALITY | READY  │
+│                                                      │
+│  Current: Baking (started 11:23 AM)                 │
+│  Next step: Decorating (est. 1:30 PM)               │
+│                                                      │
+│  ⏱️  Time Elapsed: 45 minutes                        │
+│  ⏳  Est. Time to Completion: 2 hours 15 min        │
+│                                                      │
+├─────────────────────────────────────────────────────┤
+│  ORDER DETAILS:                                     │
+│  Cake Type: Birthday Celebration (3 layers)        │
+│  Flavors: Vanilla, Chocolate, Red Velvet           │
+│  Icing: Cream Cheese Frosting                       │
+│  Colors: Pink, Gold, White                          │
+│  Special Notes: "Happy 30th Birthday!"              │
+│  Price: $95 (Deposit: $50 paid, Balance: $45 due)  │
+│                                                      │
+├─────────────────────────────────────────────────────┤
+│  [REFRESH]  [CONTACT BAKERY]  [PRINT RECEIPT]      │
+└─────────────────────────────────────────────────────┘
+```
+
+### Specifications
+
+| Element | Details | Behavior |
+|---------|---------|----------|
+| **URL** | `/track/{unique-token}` | Public, no login required |
+| **Status Bar** | 5 circular nodes (Received → Baking → Decorating → QC → Ready) | Current status: filled circle, completed: filled, upcoming: empty |
+| **Auto-Cycle** | Updates every 2 minutes for demo | Cycles through statuses: Received (2 min) → Baking (2 min) → Decorating (2 min) → QC (1 min) → Ready (stays) |
+| **Timers** | Shows time elapsed + estimated time to completion | Updates in real-time |
+| **Order Details** | All cake specs, price breakdown, payment status | Read-only |
+| **Actions** | Refresh, contact bakery (email), print | Contact = mailto: link |
+
+### Key Questions - ⚠️ CRITICAL
+- [ ] **Auto-Cycle Duration:** 2 minutes per status (total 9 min cycle) - correct?
+- [ ] **Time Display:** Should it show real time or simulated countdown?
+- [ ] **Payment Status:** Should unpaid balance show warning?
+- [ ] **Refresh Button:** Manual only or auto-refresh every 30 sec?
+
+---
+
+## PAGE 12: ORDER CREATION WIZARD (4-Step Form)
+
+### STEP 1: Select Customer
+
+```
+┌─────────────────────────────────────────────────────┐
+│  NEW ORDER - STEP 1 OF 4: SELECT CUSTOMER          │
+├─────────────────────────────────────────────────────┤
+│  Search for customer:                               │
+│  [________________] (type name or email)            │
+│                                                      │
+│  Recent Customers:                                  │
+│  [John Doe] [Jane Smith] [Mike Johnson]            │
+│                                                      │
+│  OR                                                 │
+│                                                      │
+│  [+ ADD NEW CUSTOMER]                               │
+│  Name: [______________]                             │
+│  Email: [______________]                            │
+│  Phone: [______________]                            │
+│                                                      │
+│  [BACK] [NEXT: CAKE DETAILS]                        │
+└─────────────────────────────────────────────────────┘
+```
+
+### STEP 2: Cake Configuration
+
+```
+┌─────────────────────────────────────────────────────┐
+│  NEW ORDER - STEP 2 OF 4: CAKE CONFIGURATION        │
+├─────────────────────────────────────────────────────┤
+│  Cake Size:     [6" ▼] (serves 8-12)               │
+│  Cake Type:     [Birthday Celebration ▼]          │
+│  Number of Layers: [2 ▼]                           │
+│  Delivery Date: [Nov 20, 2025 ▼]                   │
+│  Pickup Time:   [2:00 PM ▼]                        │
+│                                                      │
+│  LAYER DETAILS:                                     │
+│  Layer 1:                                           │
+│  - Flavor: [Vanilla ▼]                             │
+│  - Filling: [Cream Cheese ▼]                       │
+│  - Icing: [Buttercream ▼]                          │
+│  - Color: [Pink ▼]                                 │
+│                                                      │
+│  Layer 2:                                           │
+│  - Flavor: [Chocolate ▼]                           │
+│  - Filling: [Ganache ▼]                            │
+│  - Icing: [Buttercream ▼]                          │
+│  - Color: [Gold ▼]                                 │
+│                                                      │
+│  [+ ADD ANOTHER LAYER]                              │
+│  [BACK] [NEXT: CUSTOMIZATION]                       │
+└─────────────────────────────────────────────────────┘
+```
+
+### STEP 3: Customization & Notes
+
+```
+┌─────────────────────────────────────────────────────┐
+│  NEW ORDER - STEP 3 OF 4: CUSTOMIZATION             │
+├─────────────────────────────────────────────────────┤
+│  Special Instructions:                              │
+│  [_________________________]                         │
+│  Example: "Happy 30th Birthday!" text on top        │
+│                                                      │
+│  Decoration Notes:                                  │
+│  [_________________________]                         │
+│  Example: "Include flowers around the base"        │
+│                                                      │
+│  Allergy Information:                               │
+│  [_________________________]                         │
+│                                                      │
+│  Reference Images (optional):                       │
+│  [📎 ATTACH FILES]  (Teammate will handle)          │
+│                                                      │
+│  Deposit Information:                               │
+│  Estimated Total Price: $95                         │
+│  Deposit Required (50%): $47.50                     │
+│  Deposit Paid: [_$] [Cash] [Card]                   │
+│  Balance Due: $47.50                                │
+│                                                      │
+│  [BACK] [NEXT: REVIEW]                              │
+└─────────────────────────────────────────────────────┘
+```
+
+### STEP 4: Review & Confirm
+
+```
+┌─────────────────────────────────────────────────────┐
+│  NEW ORDER - STEP 4 OF 4: REVIEW & CONFIRM          │
+├─────────────────────────────────────────────────────┤
+│  CUSTOMER:       John Doe | john@email.com         │
+│  CAKE TYPE:      Birthday Celebration              │
+│  SIZE:           10"                               │
+│  DELIVERY:       Nov 20, 2025 at 2:00 PM          │
+│                                                      │
+│  LAYERS:                                            │
+│  1. Vanilla + Cream Cheese + Pink                   │
+│  2. Chocolate + Ganache + Gold                      │
+│                                                      │
+│  SPECIAL NOTES:  "Happy 30th Birthday!"            │
+│  DECORATION:     "Include flowers around base"      │
+│                                                      │
+│  TOTAL PRICE:    $95.00                             │
+│  DEPOSIT PAID:   $50.00                             │
+│  BALANCE DUE:    $45.00                             │
+│                                                      │
+│  ✅ Send confirmation email with tracking link?    │
+│                                                      │
+│  [BACK] [CANCEL] [✓ CONFIRM & CREATE ORDER]        │
+│                                                      │
+│  Success message:                                   │
+│  ✓ Order #Q1-001 created!                          │
+│  📧 Email sent to john@email.com                    │
+│  🔗 Tracking link: emilybakes.com/track/TRK-Q1-001 │
+│  💾 Order saved to dashboard                        │
+└─────────────────────────────────────────────────────┘
+```
+
+### Key Questions
+- [ ] Should all layers be same cake type or can they vary?
+- [ ] Max number of layers? (Suggested: 7)
+- [ ] Should deposit auto-calculate or be editable?
+
+---
+
+## PAGE 13: ADMIN REPORTS (6 Report Pages)
+
+### Report 1: Daily Revenue Summary
+
+```
+┌─────────────────────────────────────────────────────┐
+│  REPORT 1: DAILY REVENUE SUMMARY                    │
+├─────────────────────────────────────────────────────┤
+│  Date Range: [Nov 1 ▼] to [Nov 13 ▼] [APPLY]      │
+│                                                      │
+│  ┌──────┬───────────┬──────────┬────────────────┐   │
+│  │ Date │ Orders    │ Revenue  │ Avg Order      │   │
+│  ├──────┼───────────┼──────────┼────────────────┤   │
+│  │Nov 13│ 4 orders  │ $450     │ $112.50        │   │
+│  │Nov 12│ 3 orders  │ $320     │ $106.67        │   │
+│  │Nov 11│ 6 orders  │ $680     │ $113.33        │   │
+│  └──────┴───────────┴──────────┴────────────────┘   │
+│                                                      │
+│  TOTALS (13 days):                                  │
+│  Total Orders: 42                                   │
+│  Total Revenue: $4,200                              │
+│  Average per Day: $323.08                           │
+│                                                      │
+│  [EXPORT CSV] [PRINT]                               │
+└─────────────────────────────────────────────────────┘
+```
+
+### Report 2-6: Other Reports
+
+- **Report 2:** Pending Orders by Status
+- **Report 3:** Staff Performance (Orders completed, efficiency)
+- **Report 4:** Outstanding Deposits (Unpaid balances)
+- **Report 5:** Product Popularity (Top sellers)
+- **Report 6:** Monthly Trend Analysis
+
+---
+
+# IMPLEMENTATION PROMPTS (Copy/Paste for Replit AI)
+
+## PROMPT TEMPLATE: Complete Architecture Setup
+
+```
+YOU ARE BUILDING: Emily Bakes Cakes
+
+4-TIER SYSTEM:
+
+TIER 1: PUBLIC WEBSITE
+Pages: Homepage, Menu, Gallery, Contact, Customer Login (optional)
+NO ordering functionality, NO staff login visible
+Static content + embedded Google Maps on Contact page
+Responsive design (mobile-first)
+
+TIER 2: STAFF PORTAL  
+Access: /staff-login (hidden from public, use hardcoded URL)
+Authentication: JWT tokens, localStorage
+5 Role-Based Dashboards:
+- Sales: Create orders, manage customers
+- Baker: View queue, mark cake baking status
+- Decorator: Design specs, mark decoration complete
+- Accountant: Financial reports, pending deposits
+- Manager: Full visibility, all KPIs, 2 charts
+
+TIER 3: CUSTOMER TRACKING
+URL: /track/{unique-token}
+No login required
+Shows real-time order progress with auto-cycling status bar
+Updates every 2 minutes for demo (not live system)
+Responsive, mobile-friendly
+
+TIER 4: DATABASE
+PostgreSQL with these tables:
+- customers (id, name, email, phone, address)
+- employees (id, email, password_hash, role, name)
+- orders (id, customer_id, delivery_date, status, firm_price, deposit_amount, balance_due)
+- order_layer (order_id, layer_number, flavor_id, filling_id, icing_id, color_id)
+- order_status_history (id, order_id, status, updated_by, created_at)
+- products (id, name, category, base_price)
+
+KEY DECISION: Same codebase for all tiers (monolith), different routes/permissions
+
+DEMO CREDENTIALS (6 staff):
+emily@emilybakes.com / DemoPass123! (Owner)
+manager@emilybakes.com / DemoPass123! (Manager - James)
+sales@emilybakes.com / DemoPass123! (Sales - Alex)
+baker@emilybakes.com / DemoPass123! (Baker - Casey)
+decorator@emilybakes.com / DemoPass123! (Decorator - Morgan)
+accountant@emilybakes.com / DemoPass123! (Accountant - Dan)
+
+TECHNICAL STACK:
+Frontend: React + TypeScript + Tailwind CSS
+Backend: Node.js + Express
+Database: PostgreSQL
+Email: Resend (for confirmation emails)
+Charts: Recharts (already installed)
+Maps: Google Maps Embed API (no API key for embed)
+
+DELIVERABLES BY SATURDAY:
+✅ Public website fully functional
+✅ Staff portal (all 5 dashboards working)
+✅ Order creation wizard (4-step form)
+✅ Customer tracking page (auto-cycling demo)
+✅ Email notifications with tracking links
+✅ 6 staff reports (2 with charts, 4 as tables)
+✅ Mobile responsive everywhere
+✅ 6 demo staff accounts working
+✅ Demo data seeded
+
+START WITH: Database setup (migrations + seed data) → Backend API → Frontend → Integration
+```
+
+---
+
+# CLARIFYING QUESTIONS (ANSWER BEFORE BUILDING)
+
+## ⚠️ CRITICAL QUESTIONS REQUIRING YOUR DECISION
+
+### 1️⃣ GOOGLE MAPS ON CONTACT PAGE
+
+**Question:** Which map implementation do you want?
+
+- [ ] **Option A: Google Maps Embed** (Recommended)
+  - No API key required for embed
+  - Free tier
+  - Simple iframe
+  - Shows bakery location + marker
+  - ✅ FASTEST to implement
+  
+- [ ] **Option B: Full Google Maps API**
+  - Requires API key (generate in Google Cloud Console)
+  - More features (directions, street view)
+  - More customizable
+  - ❌ Need to set up API key first
+  
+- [ ] **Option C: Leaflet/OpenStreetMap**
+  - Completely free, no API key
+  - Open-source alternative
+  - Fewer features than Google
+  - Good privacy alternative
+
+**ACTION:** Choose one, or I'll default to **Option A (Embed)**
+
+---
+
+### 2️⃣ CONTACT FORM MESSAGE STORAGE
+
+**Question:** Where should contact form submissions go?
+
+- [ ] **Option A: Email Only**
+  - Form submission → sent to your email via Resend
+  - No database storage
+  - Simpler, faster
+  
+- [ ] **Option B: Database + Email**
+  - Submitted to database
+  - Also emailed to you
+  - Staff can review in admin panel
+  - More features
+  
+- [ ] **Option C: Database Only**
+  - Stored in database, no email notification
+  - Staff check manually
+
+**ACTION:** Choose one, or I'll default to **Option B (Database + Email)**
+
+---
+
+### 3️⃣ CUSTOMER TRACKING AUTO-CYCLE BEHAVIOR
+
+**Question:** How should the tracking page auto-cycle through statuses for demo?
+
+- [ ] **Option A: 2 Minutes Each Status** (Total 10-minute cycle)
+  - Received (2 min) → Baking (2 min) → Decorating (2 min) → QC (2 min) → Ready (stays)
+  - ✅ Recommended
+  
+- [ ] **Option B: Custom Durations**
+  - Received (1 min) → Baking (3 min) → Decorating (2 min) → QC (1 min) → Ready (stays)
+  - Specify your durations
+  
+- [ ] **Option C: Manual Demo Mode**
+  - Skip auto-cycle, add manual "Next Status" button instead
+  - Click button to advance to next status
+
+**ACTION:** Choose one, or I'll default to **Option A (2 minutes each)**
+
+---
+
+### 4️⃣ ORDER TRACKING TIMER DISPLAY
+
+**Question:** What time information should show on tracking page?
+
+- [ ] **Option A: Realistic Timers** (Recommended)
+  - Show actual time when order was placed
+  - Show estimated completion based on current status
+  - "Elapsed time: 45 minutes" / "Est. completion: 2:30 PM"
+  
+- [ ] **Option B: Simple Countdown**
+  - Just show "Time until ready: 2 hours"
+  - No elapsed time
+  
+- [ ] **Option C: No Timers**
+  - Just show status, no time information
+
+**ACTION:** Choose one, or I'll default to **Option A (Realistic)**
+
+---
+
+### 5️⃣ STAFF PERMISSIONS & VISIBILITY
+
+**Question:** What can each role see/edit?
+
+| Role | Create Orders | View All Orders | Edit Status | See Revenue | Assign Staff |
+|------|---|---|---|---|---|
+| **Sales** | ✅ Yes | ❓ | ❌ No | ❓ | ❌ No |
+| **Baker** | ❌ No | ❓ | ⚠️ Own | ❌ No | ❌ No |
+| **Decorator** | ❌ No | ❓ | ⚠️ Own | ❌ No | ❌ No |
+| **Accountant** | ❌ No | ✅ Yes | ❌ No | ✅ Yes | ❌ No |
+| **Manager** | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
+
+**Answer These:**
+- [ ] Should Sales see ALL orders or only their own?
+- [ ] Should Baker/Decorator see revenue KPIs?
+- [ ] Can baker/decorator override status or only forward it?
+- [ ] Should manager see employee passwords or just names?
+
+---
+
+### 6️⃣ EMAIL NOTIFICATION TIMING
+
+**Question:** When should emails be sent?
+
+- [ ] **Option A: On Order Creation** (Recommended)
+  - Sales staff creates order → Customer email sent immediately
+  - Subject: "Your Emily Bakes Cakes Order Confirmed"
+  - Includes: Order details, pickup time, tracking link
+  
+- [ ] **Option B: Automatic Status Changes**
+  - Email on each status change (Received → Baking → Decorating → Ready)
+  - 4 separate emails per order
+  
+- [ ] **Option C: Both**
+  - Creation email + status change emails
+  - More emails but more updates
+  
+- [ ] **Option D: Manual**
+  - Staff manually sends from portal
+  - More control, more work
+
+**ACTION:** Choose one, or I'll default to **Option A (On Creation)**
+
+---
+
+### 7️⃣ ORDER LAYERS FLEXIBILITY
+
+**Question:** What are the rules for cake layers?
+
+- [ ] **Option A: Flexible** (Recommended)
+  - Each layer can be different flavor/filling/icing/color
+  - Max 7 layers
+  - All combinations allowed
+  
+- [ ] **Option B: Restricted**
+  - Some flavor combinations not allowed
+  - Icing must match certain flavors
+  - Manager-approved custom combinations only
+  
+- [ ] **Option C: Standardized**
+  - Use pre-built "layer combinations"
+  - Customers choose combo, not individual layers
+
+**ACTION:** Choose one, or I'll default to **Option A (Flexible)**
+
+---
+
+### 8️⃣ PAYMENT DEPOSIT RULES
+
+**Question:** How should deposits work?
+
+- [ ] **Option A: Auto-Calculate 50%** (Recommended)
+  - Total price set by staff → Deposit auto-calc'd at 50%
+  - Can be overridden manually
+  - Balance auto-calculated
+  
+- [ ] **Option B: Manual Entry**
+  - Staff enters deposit amount directly
+  - Validation: must be >= 50% of total
+  
+- [ ] **Option C: Percentage Selector**
+  - Dropdown: 25%, 50%, 75%, 100%
+  - Auto-calc based on selection
+
+**ACTION:** Choose one, or I'll default to **Option A (Auto 50%)**
+
+---
+
+### 9️⃣ PHOTO UPLOAD HANDLING
+
+**Question:** How should customer decoration photos be handled?
+
+- [ ] **Option A: URL Only** (Recommended for MVP)
+  - Staff pastes Google Drive link or external URL
+  - Displays as embed in order details
+  - Teammate doesn't need to build upload system
+  
+- [ ] **Option B: File Upload**
+  - Actual file upload to cloud storage (AWS S3 / Cloudinary)
+  - More complex, more time
+  
+- [ ] **Option C: Disable for Now**
+  - Document "Photos: Phase 2" in notes
+  - Just text field for description
+
+**ACTION:** Choose one, or I'll default to **Option A (URL Only)**
+
+---
+
+### 🔟 MOBILE RESPONSIVENESS REQUIREMENTS
+
+**Question:** Which devices must it work on?
+
+- [ ] **Option A: Desktop + Tablet** (Recommended for staff app)
+  - Optimize for: Desktop (1920px), Tablet (1024px)
+  - Mobile: basic functionality OK
+  
+- [ ] **Option B: Full Mobile Support**
+  - Desktop + Tablet + Mobile (375px)
+  - Full responsive, touch-optimized
+  - Takes +6-8 hours
+  
+- [ ] **Option C: Desktop Only**
+  - Optimized for desktop, may break on mobile
+  - Fastest, least testing
+
+**NOTE:** Public website MUST be fully responsive. Clarifying: staff app requirements only.
+
+**ACTION:** Choose one, or I'll default to **Option A (Desktop + Tablet)**
+
+---
+
+## SUMMARY: YOUR ANSWERS CHECKLIST
+
+Before Replit AI starts building, please confirm:
+
+- [ ] Maps: (A) Embed / (B) API / (C) Leaflet
+- [ ] Contact Form: (A) Email / (B) Email+DB / (C) DB Only
+- [ ] Tracking Auto-Cycle: (A) 2 min each / (B) Custom / (C) Manual
+- [ ] Timers: (A) Realistic / (B) Countdown / (C) None
+- [ ] Sales sees: Own orders only OR all orders?
+- [ ] Email timing: (A) On creation / (B) On status change / (C) Both / (D) Manual
+- [ ] Layers: (A) Flexible / (B) Restricted / (C) Standardized
+- [ ] Deposits: (A) Auto 50% / (B) Manual / (C) Selector
+- [ ] Photos: (A) URL / (B) Upload / (C) Disabled
+- [ ] Mobile: (A) Desktop+Tablet / (B) Full / (C) Desktop only
+
+**Once answered, proceed to build phase.**
+
+---
+
+*Document Complete. Ready for Developer Handoff.*  
+*Created: November 13, 2025*  
+*Deadline: November 15, 2025 (2 days)*

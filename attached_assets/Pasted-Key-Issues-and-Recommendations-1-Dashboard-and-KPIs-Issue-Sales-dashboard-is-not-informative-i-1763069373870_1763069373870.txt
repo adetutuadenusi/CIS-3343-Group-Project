@@ -1,0 +1,96 @@
+Key Issues and Recommendations:
+1. Dashboard and KPIs
+Issue: Sales dashboard is not informative; important quick actions and system overview are hidden or below the fold.
+
+Recommendation: Redesign dashboards to prioritize critical KPIs, show quick action buttons prominently, and provide a clear system overview at the top or sidebar for instant navigation.
+
+2. Menu and Page Title Mismatch
+Issue: Admin menu labels (e.g., "Business Analytics") don't match page titles (e.g., Sales Dashboard), causing confusion and poor UX.
+
+Recommendation: Update menu labels to be professional and consistent with page content, e.g., rename “Business Analytics” to “Sales Dashboard” for sales role, “Order Management” instead of generic terms.
+
+3. Orders Categorized by Occasion
+Issue: Orders are categorized by occasion, but “Occasion” should not exist in the system per case study.
+
+Recommendation: Remove "Occasion" field from order management and custom cake builder interfaces to comply with case study parameters.
+
+4. Custom Cake Builder Layers and Design Styles
+Issue: Custom build cake layers allow selecting only 1 layer; “Design Style” is also present but not part of case study.
+
+Recommendation: Enforce minimum of 2 layers for cakes built; remove “Design Style” option entirely to align with case study specifications.
+
+5. Breadcrumb Navigation
+Issue: No breadcrumb trail for easy navigation back to previous pages.
+
+Recommendation: Implement breadcrumb navigation on all staff portal pages for better user orientation and navigation flow.
+
+6. Sales Staff Permissions and Workflow
+Issue: Sales staff moving orders to "Pending" status may not be in scope or role permissions.
+
+Recommendation: Confirm that order status changes by Sales are restricted if out of scope; ensure only authorized roles (e.g., Baker, Decorator, Manager) can move orders to pending or in-production.
+
+7. Order Management Dropdowns and UI Controls
+Issue: Dropdown lists and icons in Order Management are poorly aligned, with icons and text confusingly placed.
+
+Recommendation: Redesign dropdown controls with improved alignment, consistent spacing, and clear iconography following standard UI best practices.
+
+8. Viewing Orders and Customers Popup
+Issue: Order and customer details popups are too large, cut off, with no easy way to exit, and missing cancel icons.
+
+Recommendation: Optimize popup size to fit well within screen bounds, add clear cancel/close icons, and ensure popups can be easily dismissed.
+
+9. Inquiry Management and "Rush Orders"
+Issue: No inquiries visible; unclear where rush orders are handled.
+
+Recommendation: Confirm inquiry management functionality is complete; if "rush orders" are part of business logic, specify handling and visibility in inquiry system or add separate rush order feature.
+
+10. Inventory Management Scope
+Issue: Staff handling inventory though inventory out of scope; product catalog expected but incorrect.
+
+Recommendation: Rename “Inventory Management” to “Product Catalog” or “Products” to reflect case study; limit staff functions to CRUD on products only, no inventory adjustment.
+
+11. Customer and Order Management Fixes
+Issue: General issues with customer and order management views and usability.
+
+Recommendation: Ensure all customer and order management pages are properly sized, responsive, and user-friendly with consistent UI elements.
+
+12. Business Intelligence & Reports UX
+Issue: Business Intelligence page is the same for Sales and Owner, poor design, lacks role-specific views.
+
+Recommendation: Implement role-specific dashboards or reports views, tailoring analytics shown to role responsibilities.
+
+13. Settings and System Configuration Naming
+Issue: Settings and system configuration pages have inconsistent or unclear names.
+
+Recommendation: Align naming (e.g., “Settings”) consistently across UI and navigation menus for clarity.
+
+14. Ability to Switch Accounts Without Logout
+Issue: No option to switch users/accounts without logging out.
+
+Recommendation: Add feature for quick user account switching to improve workflow for multiple staff users on single machines.
+
+15. Manager Account Branding
+Issue: All users have “eb” icon despite different names, causing confusion.
+
+Recommendation: Use personalized icons or user avatars instead of generic branding to differentiate users clearly.
+
+16. Dashboards are Repetitive and Basic
+Issue: Dashboards largely repeat same data, not tailored or actionable.
+
+Recommendation: Redesign dashboards to be more dynamic, actionable, role-specific, and summarize meaningful metrics prominently.
+
+17. Admin Menu Not Reflecting Actual Page State
+Issue: Admin menu often doesn’t correspond to current page, confusing navigation.
+
+Recommendation: Synchronize menu highlighting and state with actual content and route for accurate navigation feedback.
+
+Summary
+These issues mainly stem from mismatched UI/UX design to business needs, incorrect or incomplete role-based access differentiation, and inconsistent navigation patterns. The focus should be on:
+
+Aligning features strictly to case study scope and requirements.
+
+Ensuring all role-based permissions and UI views are accurate and functional.
+
+Improving navigation, usability, and dashboard relevance for end users.
+
+Fixing these will vastly improve staff productivity and system usability in the Emily Bakes Cakes admin portal.

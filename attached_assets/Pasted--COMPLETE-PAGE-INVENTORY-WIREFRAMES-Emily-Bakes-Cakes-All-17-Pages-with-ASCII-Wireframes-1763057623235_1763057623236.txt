@@ -1,0 +1,1091 @@
+# 📑 COMPLETE PAGE INVENTORY & WIREFRAMES
+## Emily Bakes Cakes - All 17 Pages with ASCII Wireframes
+
+**Project:** CIS 3343 Case Study Implementation  
+**Deadline:** November 15, 2025  
+**Status:** Final Specification  
+**Total Pages:** 17 (6 Public + 11 Staff Portal)
+
+---
+
+## SECTION 1: PUBLIC WEBSITE (6 Pages)
+
+---
+
+### PAGE 1: HOME PAGE (Existing - Keep)
+**Status:** ✅ LOCKED - No changes  
+**Purpose:** Welcome visitors, showcase bakery  
+**Access:** Public (no login)
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] Emily Bakes Cakes                    │
+│ [Home] [Gallery] [Menu] [About] [Contact]      │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ ╔═══════════════════════════════════════════╗  │
+│ ║         HERO IMAGE - BAKERY              ║  │
+│ ║    "Every Cake Tells a Story"            ║  │
+│ ║    [ORDER CUSTOM CAKE] [GALLERY]         ║  │
+│ ╚═══════════════════════════════════════════╝  │
+│                                                  │
+│ About Emily - European Baking Master            │
+│ Since 2003 | Trained in Paris | Custom Designs │
+│                                                  │
+│ Featured Products                               │
+│ ┌─────────┐ ┌─────────┐ ┌─────────┐           │
+│ │ Birthday│ │ Almond  │ │ Lemon   │           │
+│ │Celebration
+│ │ Delight │ │ & Cream │           │
+│ │ $45     │ │ $50     │ │ $48     │           │
+│ └─────────┘ └─────────┘ └─────────┘           │
+│                                                  │
+│ Customer Testimonials                           │
+│ ★★★★★ "Amazing!" - Jane Smith                  │
+│ ★★★★★ "Perfect event!" - Bob Wilson            │
+│                                                  │
+│ 📞 Call to Order: (713) 555-CAKE              │
+│ 📍 Location | 🕒 Hours | 📧 Email             │
+│                                                  │
+│ [Instagram] [Facebook] [TikTok]                 │
+└─────────────────────────────────────────────────┘
+```
+
+---
+
+### PAGE 2: GALLERY PAGE (Existing - Keep)
+**Status:** ✅ Existing, minimal changes  
+**Purpose:** Showcase past cake designs  
+**Access:** Public
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] Emily Bakes Cakes [Navigation]       │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Gallery - Our Past Creations                    │
+│                                                  │
+│ [Filter: All] [Birthday] [Wedding] [Special]   │
+│ [Sort: Newest] [Popular]                        │
+│                                                  │
+│ Masonry Grid (Pinterest-style):                 │
+│ ┌───────┐ ┌──────────┐ ┌───────┐              │
+│ │ Cake1 │ │  Cake 2  │ │ Cake3 │              │
+│ │       │ │          │ │       │              │
+│ └───────┘ └──────────┘ └───────┘              │
+│ ┌──────────┐ ┌───────┐ ┌──────────┐           │
+│ │  Cake 4  │ │ Cake5 │ │  Cake 6  │           │
+│ │          │ │       │ │          │           │
+│ └──────────┘ └───────┘ └──────────┘           │
+│                                                  │
+│ [Load More]                                     │
+│ Pagination: 1 [2] 3 4                           │
+│                                                  │
+│ Lightbox: Click image → Full-screen modal      │
+│                                                  │
+│ [Footer]                                        │
+└─────────────────────────────────────────────────┘
+```
+
+---
+
+### PAGE 3: MENU/SHOP PAGE (Existing - Keep)
+**Status:** ✅ Existing, minimal changes  
+**Purpose:** Display products and pricing  
+**Access:** Public
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] Emily Bakes Cakes [Navigation]       │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Our Menu - Standard Cakes                       │
+│                                                  │
+│ [Filter: All] [Chocolate] [Fruit] [Specialty]  │
+│ [Sort: Price] [Popularity] [New]                │
+│                                                  │
+│ Product Grid (3-4 columns):                     │
+│ ┌──────────────┐ ┌──────────────┐             │
+│ │  Cake Image  │ │  Cake Image  │             │
+│ │              │ │              │             │
+│ │ Birthday     │ │ Almond       │             │
+│ │ Celebration  │ │ Delight      │             │
+│ │ $45-$95      │ │ $50-$110     │             │
+│ │ [View Details] [View Details]  │             │
+│ └──────────────┘ └──────────────┘             │
+│                                                  │
+│ More cakes...                                   │
+│ [Load More] or pagination                       │
+│                                                  │
+│ Flavor Information Section                      │
+│ Available: Vanilla, Chocolate, Red Velvet...   │
+│ (Not orderable - call to customize)            │
+│                                                  │
+│ [Footer]                                        │
+└─────────────────────────────────────────────────┘
+```
+
+---
+
+### PAGE 4: ABOUT PAGE (Existing - Keep)
+**Status:** ✅ Existing, no changes  
+**Purpose:** Tell Emily's story  
+**Access:** Public
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] Emily Bakes Cakes [Navigation]       │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ About Emily                                     │
+│                                                  │
+│ ┌─────────────────────────────────────────┐   │
+│ │ Emily's Story                           │   │
+│ │ With profile image...                   │   │
+│ │                                         │   │
+│ │ Born in France, trained in Paris,      │   │
+│ │ brought European tradition to Houston  │   │
+│ │ since 2003...                          │   │
+│ │                                         │   │
+│ │ [Full biography and team info]         │   │
+│ └─────────────────────────────────────────┘   │
+│                                                  │
+│ Team Members                                    │
+│ ┌─────────┐ ┌─────────┐ ┌─────────┐          │
+│ │ Emily   │ │ James   │ │ Baker1  │          │
+│ │(Owner)  │ │(Manager)│ │(Baker)  │          │
+│ └─────────┘ └─────────┘ └─────────┘          │
+│                                                  │
+│ Our Mission                                     │
+│ "Every cake is a masterpiece..."               │
+│                                                  │
+│ [Footer]                                        │
+└─────────────────────────────────────────────────┘
+```
+
+---
+
+### PAGE 5: CONTACT PAGE (Enhanced) ⭐
+**Status:** ✅ ENHANCED with Google Maps  
+**Purpose:** Contact form + location map  
+**Access:** Public
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] Emily Bakes Cakes [Navigation]       │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Contact Us                                      │
+│                                                  │
+│ ┌────────────────────┬──────────────────────┐  │
+│ │  CONTACT FORM      │  BUSINESS INFO       │  │
+│ │                    │                      │  │
+│ │  Name: [_____]     │  📍 123 Galleria Dr  │  │
+│ │  Email: [_____]    │  Houston, TX 77056   │  │
+│ │  Phone: [_____]    │                      │  │
+│ │  Message:          │  📞 (713) 555-CAKE   │  │
+│ │  [_______         │  ✉️ info@emily...    │  │
+│ │   _______         │  cakes.com            │  │
+│ │   _____]           │                      │  │
+│ │                    │  🕒 Hours:            │  │
+│ │  [Send Message]    │  Mon-Fri: 8am-5pm    │  │
+│ │                    │  Sat: 10am-3pm       │  │
+│ │  ✅ Message sent!  │  Sun: Closed         │  │
+│ └────────────────────┴──────────────────────┘  │
+│                                                  │
+│ ╔═══════════════════════════════════════════╗  │
+│ ║     GOOGLE MAPS EMBED                    ║  │
+│ ║     (Shows bakery location + marker)     ║  │
+│ ║     Interactive map, no API key needed  ║  │
+│ ║                                          ║  │
+│ ║     [Interactive map content]           ║  │
+│ ╚═══════════════════════════════════════════╝  │
+│                                                  │
+│ Social Media Links                              │
+│ 📘 Facebook | 📷 Instagram | 🎬 TikTok        │
+│                                                  │
+│ [Footer]                                        │
+└─────────────────────────────────────────────────┘
+```
+
+**Implementation Notes:**
+- Contact form: POST to `/api/contact` → Save to `contact_messages` table → Email via Resend
+- Google Maps: Use iframe embed (no API key required)
+- Validation: All fields required, email format check
+- Success message: "✓ Message sent! We'll be in touch soon."
+
+---
+
+### PAGE 6: TRACK ORDER PAGE ⭐ NEW (Public, No Login)
+**Status:** ✅ NEW - Public tracking  
+**URL:** `/track/{TOKEN}` (e.g., `/track/TRK-Q1-001`)  
+**Purpose:** Customer order progress tracking  
+**Access:** Public (anyone with link, NO login)  
+**Mobile:** FULL responsive
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] Emily Bakes Cakes | Track Order      │
+│                                                  │
+│ Order Status Tracking                           │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ ORDER #TRK-Q1-001                               │
+│ ╔═══════════════════════════════════════════╗  │
+│ ║ Customer: John Doe                       ║  │
+│ ║ Product: 3-Layer Birthday Celebration    ║  │
+│ ║ Pickup: Saturday, Nov 16 at 2:00 PM      ║  │
+│ ║ Price: $95.00 (Deposit: $50 | Due: $45)  ║  │
+│ ╚═══════════════════════════════════════════╝  │
+│                                                  │
+│ Status Progress (Updates every 2 minutes):      │
+│                                                  │
+│ ● ━━ ● ━━ ● ━━ ● ━━ ● ━━ ● ━━ ● ━━ ● ━━ ● ━  │
+│ │     │     │     │     │     │     │     │    │
+│ ✓     ✓     ✓     ⟳     ○     ○     ○     ○   │
+│       Current                                   │
+│ Received                                        │
+│ Confirmed                                       │
+│ Baking Layer 1 ← Status: "Baking Layer 2"     │
+│ Baking Layer 2                                  │
+│ Baking Layer 3                                  │
+│ Assembling Layers                               │
+│ Decorating                                      │
+│ Quality Check                                   │
+│ Packaging                                       │
+│ Ready for Pickup                                │
+│                                                  │
+│ ⏱️  Time Information:                           │
+│ Started: 10:15 AM                               │
+│ ⏱️  Elapsed: 4 hours 23 minutes                 │
+│ 📅 Estimated Completion: 6:00 PM               │
+│ ⏳ Time Remaining: 1 hour 37 minutes            │
+│                                                  │
+│ Order Details:                                  │
+│ ┌─────────────────────────────────────────┐   │
+│ │ Layers:                                 │   │
+│ │ 1. Vanilla + Cream Cheese + Pink       │   │
+│ │ 2. Chocolate + Ganache + Gold          │   │
+│ │ 3. Red Velvet + Raspberry + White      │   │
+│ │                                         │   │
+│ │ Special Text: "Happy 30th Birthday!"   │   │
+│ │ Decoration Notes: "Add flower bouquet" │   │
+│ │ Reference Image: [Customer link]       │   │
+│ └─────────────────────────────────────────┘   │
+│                                                  │
+│ 🔔 Notifications:                               │
+│ ✓ Order received confirmation                   │
+│ ✓ Started baking (email sent)                   │
+│ ⏳ Decorating status (coming soon)              │
+│ ⏳ Ready for pickup (coming soon)               │
+│                                                  │
+│ Questions? Call (713) 555-CAKE                  │
+│ Or reply to your confirmation email             │
+│                                                  │
+│ [Refresh] [Print] [Share] [Contact]             │
+│                                                  │
+│ [Footer]                                        │
+└─────────────────────────────────────────────────┘
+```
+
+**Key Features:**
+- Auto-cycles through 11 statuses (2 min each)
+- Real-time elapsed + estimated completion
+- Order detail summary
+- Mobile responsive
+- No login required
+- Refreshes every 30 seconds (optional auto-refresh)
+
+**Auto-Cycle Timeline (Loops continuously):**
+1. Order Received (2 min)
+2. Order Confirmed (2 min)
+3. Baking Layer 1 (2 min)
+4. Baking Layer 2 (2 min)
+5. Baking Layer 3 (2 min)
+6. Assembling Layers (2 min)
+7. Decorating (2 min)
+8. Quality Check (2 min)
+9. Packaging (1 min)
+10. Ready for Pickup (stays indefinitely)
+
+---
+
+## SECTION 2: STAFF PORTAL (11 Pages)
+
+### PAGE 7: STAFF LOGIN PAGE ⭐ NEW
+**Status:** ✅ NEW - Secure entry  
+**URL:** `/staff-login` (hidden from public)  
+**Purpose:** Authenticate staff  
+**Access:** Public URL (password protected)
+
+```
+┌─────────────────────────────────────────────────┐
+│                                                  │
+│                                                  │
+│              Emily Bakes Cakes                   │
+│              🍰 Staff Portal 🍰                  │
+│                                                  │
+│        ┌──────────────────────────┐             │
+│        │   STAFF LOGIN            │             │
+│        ├──────────────────────────┤             │
+│        │ Email: [____________]    │             │
+│        │                          │             │
+│        │ Password: [____________] │             │
+│        │                          │             │
+│        │ ☐ Remember Me (7 days)  │             │
+│        │                          │             │
+│        │ [ LOGIN ]                │             │
+│        │                          │             │
+│        │ [Forgot Password?]       │             │
+│        └──────────────────────────┘             │
+│                                                  │
+│ Demo Accounts (for testing):                    │
+│ sales@emilybakes.com                            │
+│ baker@emilybakes.com                            │
+│ decorator@emilybakes.com                        │
+│ accountant@emilybakes.com                       │
+│ manager@emilybakes.com                          │
+│ emily@emilybakes.com                            │
+│ All passwords: DemoPass123!                     │
+│                                                  │
+│ Authorized Staff Only                           │
+│ For support: (713) 555-CAKE                     │
+│                                                  │
+└─────────────────────────────────────────────────┘
+```
+
+**Features:**
+- Email validation
+- Password hashed (bcryptjs)
+- JWT token on successful login
+- "Remember Me" stores token for 7 days
+- Error messages for invalid credentials
+- Account lockout after 3 failed attempts (15 min)
+
+---
+
+### PAGE 8: SALES DASHBOARD ⭐ NEW
+**Status:** ✅ NEW - Sales staff home  
+**Login:** `sales@emilybakes.com / DemoPass123!`  
+**Role:** Sales  
+**Access:** Staff only (sales role)
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] Emily Staff Portal                   │
+│ [Dashboard] [Orders] [Customers] [Products]    │
+│ [Reports] [Settings]   👤 Alex Sales [Logout]  │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Sales Dashboard                                 │
+│ Welcome, Alex! Here's today's overview.         │
+│                                                  │
+│ Quick Actions:                                  │
+│ ┌─────────────────┐ ┌──────────────────┐      │
+│ │ 🆕 NEW ORDER    │ │ 📊 TODAY'S STATS │      │
+│ │ [+ Create]      │ │                  │      │
+│ │                 │ │ Orders: 4        │      │
+│ │ Takes 3 minutes │ │ Revenue: $380    │      │
+│ └─────────────────┘ └──────────────────┘      │
+│                                                  │
+│ 📅 Today's Pickups (5 scheduled)               │
+│ ┌──────────────────────────────────────────┐   │
+│ │ 10:00 AM │ Jane Smith      │ Birthday   │   │
+│ │ 2:00 PM  │ Corp Client     │ Event      │   │
+│ │ 4:00 PM  │ John Doe        │ Wedding    │   │
+│ │ 5:30 PM  │ Mary Jones      │ Baby       │   │
+│ │ 6:00 PM  │ Bob Wilson      │ Anniversary│   │
+│ └──────────────────────────────────────────┘   │
+│ [View Details] [Call Customer] [Confirm]       │
+│                                                  │
+│ 📋 Recent Orders (This Week)                   │
+│ ┌──────────────────────────────────────────┐   │
+│ │ #Q1-001 │ John Doe    │ Processing │ Due:15 │
+│ │ #Q1-002 │ Jane Smith  │ Baking     │ Due:16 │
+│ │ #Q1-003 │ Mike Wilson │ Decorating │ Due:17 │
+│ │ #Q1-004 │ Lisa Chen   │ Ready      │ Due:15 │
+│ └──────────────────────────────────────────┘   │
+│ [View All Orders]                               │
+│                                                  │
+│ 👥 Frequently Repeat Customers                 │
+│ [John Doe] [Jane Smith] [Corp Client]          │
+│ [Quick Reorder]                                 │
+│                                                  │
+│ 📞 Pending Follow-Ups (3)                      │
+│ - Sarah Johnson (wants update)                  │
+│ - Michael Price (payment reminder)              │
+│ - Emma Davis (dietary question)                 │
+│                                                  │
+│ [Footer - Help, Settings, Logout]               │
+└─────────────────────────────────────────────────┘
+```
+
+**Features:**
+- No revenue/financial KPIs shown (only to accountant/manager)
+- Can see ALL orders (for coordination)
+- Quick create order button
+- Today's pickup list with customer actions
+- Recent orders with status
+- Pending follow-ups list
+
+---
+
+### PAGE 9: BAKER DASHBOARD ⭐ NEW
+**Status:** ✅ NEW - Baker's queue  
+**Login:** `baker@emilybakes.com / DemoPass123!`  
+**Role:** Baker  
+**Access:** Staff only (baker role)
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] Emily Staff Portal                   │
+│ [Dashboard] [My Orders] [Products]              │
+│ [Schedule] [Gallery]    👤 Casey Baker [Logout] │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Baker Dashboard                                 │
+│ Welcome, Casey! Here's your baking queue.      │
+│                                                  │
+│ 🔥 URGENT - Assigned to You (4)                │
+│                                                  │
+│ ┌─────────────────────────────────────────┐   │
+│ │ ⚡ PRIORITY - Due TODAY                 │   │
+│ │ Order #Q1-001                           │   │
+│ │ Customer: Jane Smith                    │   │
+│ │ Pickup: Today 2:00 PM                   │   │
+│ │                                         │   │
+│ │ Cake Details:                           │   │
+│ │ 3-Layer Birthday Cake                   │   │
+│ │ Sizes: 10", 8", 6"                      │   │
+│ │                                         │   │
+│ │ Layer 1: Vanilla + Buttercream (✓ Done)│   │
+│ │ Layer 2: Chocolate + Ganache (⏳ Baking)│   │
+│ │ Layer 3: Red Velvet + Cream Ch (○ Todo)│   │
+│ │                                         │   │
+│ │ Special Notes:                          │   │
+│ │ "Must be vanilla bean, not extract"    │   │
+│ │                                         │   │
+│ │ Status: [▓▓▓▓░░░░░░░] 40% Complete    │   │
+│ │                                         │   │
+│ │ [Update Progress] [Mark Complete]       │   │
+│ │ [Contact Decorator] [Request Approval]  │   │
+│ └─────────────────────────────────────────┘   │
+│                                                  │
+│ 📅 Tomorrow's Schedule (3)                     │
+│ ┌─────────────────────────────────────────┐   │
+│ │ #Q1-005 - 2-Layer Chocolate │ Start 8am│   │
+│ │ #Q1-006 - 4-Layer Wedding   │ Start 9am│   │
+│ │ #Q1-007 - 24 Cupcakes       │ Start 2pm│   │
+│ └─────────────────────────────────────────┘   │
+│                                                  │
+│ ✅ Completed This Week (7 orders)              │
+│ Successfully baked and passed quality control   │
+│                                                  │
+│ 📊 Weekly Stats:                                │
+│ - Orders assigned: 12                           │
+│ - Completed: 9                                  │
+│ - Efficiency: 92%                               │
+│                                                  │
+│ 💡 Tips for Better Production:                 │
+│ - Set oven temperature 15 min before starting  │
+│ - Use kitchen timer for consistency             │
+│                                                  │
+└─────────────────────────────────────────────────┘
+```
+
+**Features:**
+- Only sees ASSIGNED orders (not all orders)
+- Queue sorted by due date/priority
+- Layer-by-layer progress tracking
+- Mark complete → goes to decorator
+- No revenue KPIs (bakery-internal focus)
+- Weekly stats on dashboard
+
+---
+
+### PAGE 10: DECORATOR DASHBOARD ⭐ NEW
+**Status:** ✅ NEW - Decorator's queue  
+**Login:** `decorator@emilybakes.com / DemoPass123!`  
+**Role:** Decorator  
+**Access:** Staff only (decorator role)
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] Emily Staff Portal                   │
+│ [Dashboard] [My Orders] [Gallery] [Design Tips]│
+│ [References]    👤 Morgan Decorator [Logout]   │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Decorator Dashboard                             │
+│ Welcome, Morgan! Let's create beautiful cakes!  │
+│                                                  │
+│ 🎨 DECORATION QUEUE (3)                        │
+│                                                  │
+│ ┌─────────────────────────────────────────┐   │
+│ │ ⚡ PRIORITY - Wedding Cake              │   │
+│ │ Order #Q1-001                           │   │
+│ │ Customer: Jane Smith                    │   │
+│ │ Pickup: Today 2:00 PM                   │   │
+│ │                                         │   │
+│ │ Cake Spec:                              │   │
+│ │ 3 Layers (10", 8", 6")                  │   │
+│ │                                         │   │
+│ │ Design Brief:                           │   │
+│ │ Icing: White Buttercream                │   │
+│ │ Colors: Blush Pink, Gold                │   │
+│ │ Decorations: Fondant flowers, pearls    │   │
+│ │ Text: "J & M" monogram on top tier      │   │
+│ │                                         │   │
+│ │ 📸 Customer References:                 │   │
+│ │ [Pinterest link: example wedding cake]  │   │
+│ │ [Drive folder with inspiration images]  │   │
+│ │                                         │   │
+│ │ 📝 Special Notes:                       │   │
+│ │ "Bride wants soft romantic look"        │   │
+│ │ "Groom prefers gold accents"            │   │
+│ │                                         │   │
+│ │ Progress: [▓▓▓▓▓░░░░░░░░] 45% Done    │   │
+│ │                                         │   │
+│ │ [Update Progress] [Mark Complete]       │   │
+│ │ [Request Approval] [Contact Customer]   │   │
+│ │ [Email Reference Photos to Printer]     │   │
+│ └─────────────────────────────────────────┘   │
+│                                                  │
+│ 📋 Next in Queue (2)                           │
+│ #Q1-002 - Birthday (start after #Q1-001)      │
+│ #Q1-003 - Anniversary (due Nov 18)             │
+│                                                  │
+│ ✅ Completed This Week (5)                     │
+│ All decorated and ready for pickup              │
+│                                                  │
+│ 🎨 Design Gallery (My Work)                    │
+│ [Show past designs completed by this decorator] │
+│                                                  │
+│ 📖 Design Tips & Techniques                    │
+│ - Fondant working in humidity                   │
+│ - Piping consistency troubleshooting           │
+│ - Color mixing guide                           │
+│                                                  │
+│ 💬 [Message Bakers] [Team Chat] [Gallery Help] │
+│                                                  │
+└─────────────────────────────────────────────────┘
+```
+
+**Features:**
+- Only sees ASSIGNED orders
+- Full design specification displayed
+- Customer reference images/links
+- Progress bar for decoration completion
+- No revenue data (decorator-internal focus)
+- My work gallery (previous designs)
+
+---
+
+### PAGE 11: ACCOUNTANT DASHBOARD ⭐ NEW
+**Status:** ✅ NEW - Financial oversight  
+**Login:** `accountant@emilybakes.com / DemoPass123!`  
+**Role:** Accountant  
+**Access:** Staff only (accountant role)
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] Emily Staff Portal                   │
+│ [Dashboard] [Orders] [Reports] [Analytics]     │
+│ [Taxes] [Payments]  👤 Dan CPA [Logout]        │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Accountant Dashboard (Financial Reports)        │
+│ Welcome, Dan! Monthly financial overview.       │
+│                                                  │
+│ 💰 Financial KPIs (This Month)                  │
+│ ┌──────────┐ ┌──────────┐ ┌──────────┐        │
+│ │ Revenue  │ │Outstanding│ │Deposits │        │
+│ │ $12,450 │ │ $2,300   │ │$8,100  │        │
+│ │ +15% ↗ │ │ 18 orders│ │Collected│        │
+│ └──────────┘ └──────────┘ └──────────┘        │
+│                                                  │
+│ 📊 Revenue Chart (Recharts - Last 30 Days)    │
+│ ╔═══════════════════════════════════════════╗ │
+│ ║ $ │                                       ║ │
+│ ║15k│     ╱╲                                ║ │
+│ ║12k│    ╱  ╲  ╱╲                          ║ │
+│ ║ 9k│   ╱    ╲╱  ╲    ╱╲                   ║ │
+│ ║ 6k│  ╱          ╲  ╱  ╲  ╱              ║ │
+│ ║ 3k│ ╱            ╲╱    ╲╱               ║ │
+│ ║  0└────────────────────────────────────── ║ │
+│ ║   Oct 1    Oct 10   Oct 20   Oct 30    ║ │
+│ ║                                         ║ │
+│ ║ [Export CSV] [Print] [Compare Period]  ║ │
+│ ╚═══════════════════════════════════════════╝ │
+│                                                  │
+│ ⚠️  OUTSTANDING BALANCES (8 orders)            │
+│ ┌────────────────────────────────────────┐    │
+│ │ ID  │ Customer    │ Amount │ Days │Pay│    │
+│ ├────────────────────────────────────────┤    │
+│ │ #1  │ John Doe    │ $25    │ 5d  │[✓]│    │
+│ │ #2  │ Jane Smith  │ $150   │ 3d  │[✓]│    │
+│ │ #3  │ Corp Client │ $450   │ 7d  │[✓]│    │
+│ │ #4  │ Mary Jones  │ $75    │ 1d  │[✓]│    │
+│ └────────────────────────────────────────┘    │
+│ [Send Payment Reminder] [Email Invoice]        │
+│                                                  │
+│ 📋 Transaction History                         │
+│ ┌────────────────────────────────────────┐    │
+│ │ Date │ Order  │ Amount │ Method │Paid │    │
+│ ├────────────────────────────────────────┤    │
+│ │ Today│ #Q1-001│ $50    │ Cash   │ ✓   │    │
+│ │ Today│ #Q1-002│ $60    │ Card   │ ✓   │    │
+│ │ -1d  │ #Q1-003│ $45    │ Check  │ ○   │    │
+│ └────────────────────────────────────────┘    │
+│                                                  │
+│ 🔗 Quick Links:                                 │
+│ [All Reports] [Tax Records] [Invoices]         │
+│ [Weekly Summary] [Monthly Totals]              │
+│                                                  │
+│ 📞 Need Help? Contact: (713) 555-CAKE         │
+│                                                  │
+└─────────────────────────────────────────────────┘
+```
+
+**Features:**
+- Full financial visibility (all orders, revenue)
+- Outstanding balance tracking
+- Revenue trends chart (Recharts)
+- Payment reminder email
+- Transaction history
+- Access to all 6 reports
+- No staff salary data (sensitive)
+
+---
+
+### PAGE 12: MANAGER DASHBOARD ⭐ NEW
+**Status:** ✅ NEW - Full visibility  
+**Login:** `manager@emilybakes.com / DemoPass123!`  
+**Role:** Manager  
+**Access:** Staff only (manager role)
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] Emily Staff Portal                   │
+│ [Dashboard] [All Orders] [Staff] [Reports]     │
+│ [Analytics] [Settings]  👤 James Manager [Logout]│
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Manager Dashboard - Full Business Overview      │
+│ Your decisions drive success. Here's the status.│
+│                                                  │
+│ 📊 DAILY KPIs                                   │
+│ ┌──────────┐ ┌──────────┐ ┌──────────┐        │
+│ │ Orders   │ │ Revenue  │ │Avg Order │        │
+│ │ Today    │ │ Today    │ │ Value    │        │
+│ │   12     │ │ $1,200   │ │ $100     │        │
+│ │ +10%↗    │ │ +25%↗    │ │ +5%↗     │        │
+│ └──────────┘ └──────────┘ └──────────┘        │
+│                                                  │
+│ 👥 STAFF PERFORMANCE (6 team members)         │
+│ ┌─────────────────────────────────────────┐   │
+│ │Name    │ Role      │Orders│Efficiency│   │
+│ ├─────────────────────────────────────────┤   │
+│ │Alex    │ Sales     │  8   │ 95%      │   │
+│ │Casey   │ Baker     │  6   │ 88%      │   │
+│ │Morgan  │ Decorator │  6   │ 92%      │   │
+│ │Emily   │ Owner     │  -   │ N/A      │   │
+│ │James   │ Manager   │  4   │ 98%      │   │
+│ │Dan     │ Accountant│  -   │ N/A      │   │
+│ └─────────────────────────────────────────┘   │
+│ [Assign Staff] [Performance Details]          │
+│                                                  │
+│ 📈 CHARTS (2 Advanced Visualizations)          │
+│ ┌─────────────────────┬──────────────────────┐ │
+│ │Revenue Trend (Line) │Orders by Status (Pie)│ │
+│ │                     │                      │ │
+│ │ $   ╱╲╱╲            │ ◐ Ready: 3          │ │
+│ │    ╱  ╲  ╲          │ ◒ Decorating: 2     │ │
+│ │   ╱    ╲  ╲         │ ◒ Baking: 4         │ │
+│ │ ────────╲─ ╲       │ ◐ Pending: 3        │ │
+│ │(Last 30) ╲  ╲      │                      │ │
+│ └─────────────────────┴──────────────────────┘ │
+│                                                  │
+│ ⚙️  MANAGER ACTIONS:                           │
+│ [Approve Orders] [Assign Staff] [Override]    │
+│ [View All Reports] [Settings] [Team Chat]     │
+│                                                  │
+│ 🎯 ALERTS & NOTIFICATIONS:                    │
+│ ⚠️  3 orders overdue for pickup (contact sent)│
+│ ℹ️  Weekly payroll processing due Friday       │
+│ ℹ️  Inventory low: Red velvet cake mix (4 bags)│
+│                                                  │
+│ 📞 Support: admin@emily.com | (713) 555-CAKE  │
+│                                                  │
+└─────────────────────────────────────────────────┘
+```
+
+**Features:**
+- ALL orders visible (coordination view)
+- ALL revenue data (financial oversight)
+- Staff performance metrics
+- 2 Advanced charts (Recharts): Revenue trend + Orders by status
+- Alert system (overdue, inventory, payroll)
+- Can override status, assign staff, approve orders
+- Full team visibility
+
+---
+
+### PAGE 13: ORDERS LIST PAGE ⭐ NEW
+**Status:** ✅ NEW - Order management  
+**Access:** Sales, Manager (role-filtered)
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] Emily Staff Portal > Orders          │
+│ [Dashboard] [Orders] [Customers] [Products]    │
+│ [Reports]    👤 User [Logout]                  │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Orders List                                     │
+│ [Search: "John" OR "#Q1-"]  [Filters ▼]        │
+│ Filter by: [All Status ▼] [Date Range ▼]      │
+│ Sort: [Newest First ▼]                         │
+│                                                  │
+│ ┌──────────────────────────────────────────┐   │
+│ │ ID   │ Customer │Status │Due Date │Price │   │
+│ ├──────────────────────────────────────────┤   │
+│ │ Q1-01│John Doe  │Ready  │ Nov 15  │$95   │   │
+│ │ Q1-02│Jane Smith│Decor. │ Nov 16  │$120  │   │
+│ │ Q1-03│Corp Clnt │Baking │ Nov 17  │$200  │   │
+│ │ Q1-04│Mary Jones│Pend.  │ Nov 18  │$85   │   │
+│ │ Q1-05│Bob Wilson│Received│ Nov 19 │$110  │   │
+│ └──────────────────────────────────────────┘   │
+│                                                  │
+│ [View Details] [Edit] [Print] [Delete]         │
+│                                                  │
+│ Pagination: [<] 1 [2] 3 [>]  Showing 5-10 of 47│
+│                                                  │
+│ [Export to CSV] [Print All] [Archive]          │
+│                                                  │
+│ Legend:                                         │
+│ ✓ Ready | ⏳ Baking | 🎨 Decorating           │
+│ ○ Pending | ✗ Cancelled                        │
+│                                                  │
+└─────────────────────────────────────────────────┘
+```
+
+---
+
+### PAGE 14: ORDER FORM (Create/Edit) ⭐ NEW
+**Status:** ✅ NEW - 4-step wizard  
+**Access:** Sales, Manager
+
+**STEP 1: Select Customer**
+```
+┌─────────────────────────────────────────────────┐
+│ NEW ORDER - STEP 1/4: SELECT CUSTOMER          │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Search customer:                                │
+│ [Search box - type name or email...]           │
+│                                                  │
+│ Recent Customers:                               │
+│ [John Doe] [Jane Smith] [Corp Client]         │
+│                                                  │
+│ OR CREATE NEW:                                  │
+│ Name: [________________]                        │
+│ Email: [________________]                       │
+│ Phone: [________________]                       │
+│ Address: [________________]                     │
+│                                                  │
+│ [BACK] [NEXT: CAKE CONFIG →]                   │
+└─────────────────────────────────────────────────┘
+```
+
+**STEP 2: Cake Configuration**
+```
+┌─────────────────────────────────────────────────┐
+│ NEW ORDER - STEP 2/4: CAKE CONFIGURATION       │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Basic Details:                                  │
+│ Cake Size: [6" ▼] (serves 8-12)               │
+│ Cake Type: [Birthday Celebration ▼]           │
+│ Number of Layers: [2 ▼]                        │
+│ Delivery Date: [Nov 20, 2025 ▼]               │
+│ Pickup Time: [2:00 PM ▼]                       │
+│                                                  │
+│ LAYER CONFIGURATION:                            │
+│                                                  │
+│ Layer 1:                                        │
+│ - Flavor: [Vanilla ▼]                          │
+│ - Filling: [Cream Cheese ▼]                    │
+│ - Icing: [Buttercream ▼]                       │
+│ - Color: [Pink ▼]                              │
+│ - Notes: [________________]                     │
+│                                                  │
+│ Layer 2:                                        │
+│ - Flavor: [Chocolate ▼]                        │
+│ - Filling: [Ganache ▼]                         │
+│ - Icing: [Buttercream ▼]                       │
+│ - Color: [Gold ▼]                              │
+│ - Notes: [________________]                     │
+│                                                  │
+│ [+ ADD ANOTHER LAYER (up to 7)]                │
+│                                                  │
+│ [← BACK] [NEXT: CUSTOMIZATION →]              │
+└─────────────────────────────────────────────────┘
+```
+
+**STEP 3: Customization & Notes**
+```
+┌─────────────────────────────────────────────────┐
+│ NEW ORDER - STEP 3/4: CUSTOMIZATION            │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Special Text on Cake:                           │
+│ [________________________________]             │
+│ Example: "Happy 30th Birthday!"                 │
+│                                                  │
+│ Decoration Notes:                               │
+│ [_________________________________]            │
+│ [_________________________________]            │
+│ Example: "Add flower bouquet around base"       │
+│                                                  │
+│ Allergy Information:                            │
+│ [_________________________________]            │
+│ Example: "No nuts (guest has allergy)"          │
+│                                                  │
+│ Customer Reference Image (optional):            │
+│ [📎 Paste URL] e.g., Pinterest link             │
+│ https://...                                     │
+│                                                  │
+│ PRICING:                                        │
+│ Estimated Total Price: $95.00                   │
+│ Deposit Required (50%): $47.50                  │
+│ ┌─────────────────────────────────────┐        │
+│ │ Actual Deposit Paid: $[______]      │        │
+│ │ Payment Method: [Cash] [Card]       │        │
+│ │ Balance Due: $47.50 (auto-calc)     │        │
+│ └─────────────────────────────────────┘        │
+│                                                  │
+│ [← BACK] [NEXT: REVIEW →]                      │
+└─────────────────────────────────────────────────┘
+```
+
+**STEP 4: Review & Confirm**
+```
+┌─────────────────────────────────────────────────┐
+│ NEW ORDER - STEP 4/4: REVIEW & CONFIRM         │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ ORDER SUMMARY:                                  │
+│                                                  │
+│ Customer:      John Doe | john@email.com       │
+│ Cake Type:     Birthday Celebration            │
+│ Size:          10"                              │
+│ Delivery:      Nov 20, 2025 at 2:00 PM         │
+│                                                  │
+│ LAYERS:                                         │
+│ 1. Vanilla + Cream Cheese + Pink              │
+│ 2. Chocolate + Ganache + Gold                  │
+│                                                  │
+│ Special Text:  "Happy 30th Birthday!"          │
+│ Decorations:   "Flowers around base"           │
+│                                                  │
+│ PRICING:                                        │
+│ Total Price:   $95.00                          │
+│ Deposit Paid:  $50.00                          │
+│ Balance Due:   $45.00                          │
+│                                                  │
+│ ☐ Send confirmation email with tracking link? │
+│   (Recommended: Customer gets order #TRK-...) │
+│                                                  │
+│ [← BACK] [CANCEL] [✓ CONFIRM & CREATE]        │
+│                                                  │
+│ Success Message (after submit):                 │
+│ ✓ Order #Q1-001 Created!                       │
+│ 📧 Email sent to john@email.com                │
+│ 🔗 Tracking: emilybakes.com/track/TRK-Q1-001  │
+│ 💾 Assigned to: Sales (Alex Sales)             │
+│                                                  │
+└─────────────────────────────────────────────────┘
+```
+
+---
+
+### PAGE 15: CUSTOMERS LIST PAGE ⭐ NEW
+**Status:** ✅ NEW - Customer management  
+**Access:** Sales, Manager
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] > Customers List                     │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Customers                                       │
+│ [Search: "John" OR "john@"]   [+ Add New]      │
+│ Filter: [All ▼] | Sort: [Name A-Z ▼]          │
+│                                                  │
+│ ┌───────────────────────────────────────────┐  │
+│ │Name        │Email           │Orders │ LO │  │
+│ ├───────────────────────────────────────────┤  │
+│ │John Doe    │john@email.com  │  3   │ *  │  │
+│ │Jane Smith  │jane@email.com  │  5   │ *  │  │
+│ │Corp Client │corp@biz.com    │  1   │    │  │
+│ │Mary Jones  │mary@email.com  │  2   │ *  │  │
+│ │Bob Wilson  │bob@email.com   │  1   │    │  │
+│ └───────────────────────────────────────────┘  │
+│ * = Loyal (3+ orders)                          │
+│                                                  │
+│ [View Profile] [Edit] [New Order] [Delete]     │
+│                                                  │
+│ Pagination: [<] 1 [2] 3 [>]  Page 1-10 of 45  │
+│                                                  │
+│ [Export List] [Print] [Email Campaign]         │
+│                                                  │
+└─────────────────────────────────────────────────┘
+```
+
+---
+
+### PAGE 16: CUSTOMER FORM (Add/Edit) ⭐ NEW
+**Status:** ✅ NEW - Customer management
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] > Add/Edit Customer                  │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Customer Form                                   │
+│                                                  │
+│ Name: [________________]                        │
+│ Email: [________________]                       │
+│ Phone: [________________]                       │
+│ Address: [________________]                     │
+│         [________________] City, State ZIP      │
+│                                                  │
+│ ☐ Subscribe to Email Updates                   │
+│                                                  │
+│ Preferences:                                    │
+│ Favorite Cake: [Birthday Celebration ▼]       │
+│ Dietary Restrictions: [None ▼]                 │
+│                                                  │
+│ Order History: (if editing)                    │
+│ - Order #1: Birthday, Nov 2023                 │
+│ - Order #2: Anniversary, May 2024              │
+│ - Order #3: Baby, Oct 2024                     │
+│                                                  │
+│ [SAVE] [CANCEL]                                │
+│                                                  │
+│ ✓ Customer saved successfully!                 │
+│                                                  │
+└─────────────────────────────────────────────────┘
+```
+
+---
+
+### PAGE 17: REPORTS & ANALYTICS ⭐ NEW
+**Status:** ✅ NEW - Business intelligence  
+**Access:** Accountant, Manager
+
+```
+┌─────────────────────────────────────────────────┐
+│ [🎂 LOGO] > Reports & Analytics                │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│ Business Reports                                │
+│                                                  │
+│ [Report Category ▼] [Date Range ▼] [Generate]  │
+│                                                  │
+│ Available Reports:                              │
+│                                                  │
+│ 1. 📊 DAILY REVENUE SUMMARY                    │
+│    Revenue by day, avg order value, trends     │
+│    [View] [Export CSV] [Print]                 │
+│                                                  │
+│ 2. 📋 PENDING ORDERS BY STATUS                │
+│    Count of: Received, Baking, Decorating...  │
+│    [View] [Export CSV] [Print]                 │
+│                                                  │
+│ 3. 👥 STAFF PERFORMANCE                       │
+│    Orders completed per staff member           │
+│    [View] [Export CSV] [Print]                 │
+│                                                  │
+│ 4. 💳 OUTSTANDING DEPOSITS                     │
+│    Unpaid balances, days pending               │
+│    [View] [Export CSV] [Email Reminders]      │
+│                                                  │
+│ 5. 🍰 PRODUCT POPULARITY                      │
+│    Most ordered cake types & flavors           │
+│    [View] [Export CSV] [Print]                 │
+│                                                  │
+│ 6. 📈 MONTHLY TREND ANALYSIS                  │
+│    Revenue, orders, customer acquisition       │
+│    [View] [Export CSV] [Print]                 │
+│                                                  │
+│ [Schedule Automated Reports] [Email Setup]     │
+│                                                  │
+└─────────────────────────────────────────────────┘
+```
+
+---
+
+## SUMMARY: ALL 17 PAGES
+
+| # | Page | Status | Access | Mobile |
+|---|------|--------|--------|--------|
+| 1 | Home | ✓ Exists | Public | ✓ Full |
+| 2 | Gallery | ✓ Exists | Public | ✓ Full |
+| 3 | Menu | ✓ Exists | Public | ✓ Full |
+| 4 | About | ✓ Exists | Public | ✓ Full |
+| 5 | Contact | 🔄 Enhanced | Public | ✓ Full |
+| 6 | Track Order | ⭐ NEW | Public (link) | ✓ Full |
+| 7 | Staff Login | ⭐ NEW | Staff only | ✓ Full |
+| 8 | Sales Dashboard | ⭐ NEW | Sales role | ✓ Full |
+| 9 | Baker Dashboard | ⭐ NEW | Baker role | ✓ Full |
+| 10 | Decorator Dashboard | ⭐ NEW | Decorator role | ✓ Full |
+| 11 | Accountant Dashboard | ⭐ NEW | Accountant role | ✓ Full |
+| 12 | Manager Dashboard | ⭐ NEW | Manager role | ✓ Full |
+| 13 | Orders List | ⭐ NEW | Sales/Manager | ✓ Full |
+| 14 | Order Form (Wizard) | ⭐ NEW | Sales/Manager | ✓ Full |
+| 15 | Customers List | ⭐ NEW | Sales/Manager | ✓ Full |
+| 16 | Customer Form | ⭐ NEW | Sales/Manager | ✓ Full |
+| 17 | Reports | ⭐ NEW | Accountant/Manager | ✓ Full |
+
+**Status:**
+- ✓ Exists: Keep as-is
+- 🔄 Enhanced: Add Google Maps
+- ⭐ NEW: Build from scratch
+
+**Total NEW pages to build:** 12  
+**Total pages to enhance:** 1  
+**Total pages to keep:** 4
+
+---
+
+## IMPLEMENTATION ORDER (Priority)
+
+**Phase 1 (Critical):**
+1. Page 7 - Staff Login
+2. Page 8 - Sales Dashboard  
+3. Page 14 - Order Form (Wizard)
+4. Page 6 - Track Order Page
+5. Page 5 - Contact (Google Maps)
+
+**Phase 2 (High Priority):**
+6. Page 9 - Baker Dashboard
+7. Page 10 - Decorator Dashboard
+8. Page 12 - Manager Dashboard
+9. Page 13 - Orders List
+
+**Phase 3 (Medium Priority):**
+10. Page 11 - Accountant Dashboard
+11. Page 15 - Customers List
+12. Page 16 - Customer Form
+13. Page 17 - Reports
+
+**Phase 4 (Public Website):**
+- Pages 1-4: Keep existing (no changes)
+
+---
+
+*Document Complete - Ready for Development*  
+*All 17 pages specified with ASCII wireframes*  
+*Ready to send to Replit AI for implementation*

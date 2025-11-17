@@ -1,0 +1,461 @@
+Adetutu, you’re doing amazing with this. I’m going to give you **exactly what you asked for** in a way that hits your deliverables, stays aligned to the case study, and matches the CIS 3343 expectations.
+
+Here are **two things** in this message:
+
+1. **A full list of everything the Admin Section must contain** and exactly how it ties back to the case study deliverables.
+2. **A brand-new, case-study-accurate Custom Cake Order Form**, designed with the **Emily Bakes Cakes color palette** and **real system logic** (no “occasion,” no extra nonsense).
+
+Your tone guidelines are applied: encouraging, clear, detail-building, and Gen Z-friendly but still professional.
+
+---
+
+# **1. ADMIN SYSTEM – FULL FEATURE LIST + HOW IT FITS THE DELIVERABLES**
+
+### For: CIS 3343 Group 4 – Emily Bakes Cakes
+
+### Prepared by: **Adetutu (Tutu) Adenusi – Student ID: 2180098**
+
+This list matches **every required deliverable**:
+ERD, DFD, Requirements, Use Cases, Prototype, Data Dictionary, System Architecture, and Written System Proposal.
+
+I'm laying it out **exactly the way a professor would want it represented**.
+
+---
+
+# **A. ADMIN SECTION – WHAT MUST EXIST (Based on Case Study Scope)**
+
+## **1. Dashboard (Role-Based)**
+
+### Why: Ties to *Order Tracking*, *Customer Retention*, *Operational Efficiency*
+
+**Admin Dashboard must include:**
+
+* Today’s orders
+* Orders due in next 48 hours
+* Orders behind schedule
+* Customers with upcoming pickups
+* Quick Actions:
+
+  * Create Customer
+  * Create Custom Order
+  * View All Orders
+* System Overview:
+
+  * Total Orders Today
+  * Total Custom Orders In Production
+  * Staff Logged In
+  * Revenue This Week
+
+**Case Study Alignment:**
+
+* Reduces lost orders
+* Improves tracking
+* Increases customer retention
+
+**Deliverables Impact:**
+
+* DFD Level 1: “Retrieve KPIs,” “View Order Status,” “Track Production”
+* ERD: Uses Orders, Customers, Employees, Status tables
+* Prototype: Dashboard screen
+
+---
+
+## **2. Customer Management (Mandatory Requirement #1)**
+
+### Why: Sponsor says this is highest priority
+
+Admin must be able to:
+
+* Create customer
+* Edit customer
+* Mark customer as Corporate, Retail, or Preferred
+* Add multiple corporate locations
+* View full customer history and spending
+* Export email list / phone list
+
+**Case Study Alignment:**
+
+* Increase retention
+* Reduce miscommunication
+* Capture customer data
+
+**Deliverables Impact:**
+
+* ERD: Customer, CustomerType, CustomerLocation
+* Use Case: Create Customer, View Customer History
+* Data Dictionary
+
+---
+
+## **3. Order Management (Mandatory Requirement #2)**
+
+This is the core of the system.
+
+Admin must be able to:
+
+* Create new custom cake order
+* Select customer
+* Select product (standard or custom)
+* Select cake size
+* Select fillings for each layer
+* Select icing
+* Add decorations
+* Attach customer-provided photos
+* Require a minimum 50% deposit
+* Track status:
+
+  * New
+  * Pending Baking
+  * In Baking
+  * In Decorating
+  * Ready for Pickup
+  * Completed
+  * Cancelled
+* Track last employee working on the order
+
+**Case Study Alignment:**
+
+* Eliminates lost orders
+* Replaces paper system
+* Reduces operational cost
+
+**Deliverables Impact:**
+
+* DFD: Create Order, Update Order, Approve Order
+* ERD: Order, Product, Filling, Icing, Decoration, Employee, Status
+* Prototype: Order creation form, Order detail page
+
+---
+
+## **4. Product Catalog (Mandatory Requirement #3)**
+
+**NOT inventory.**
+Just product definitions.
+
+Admin must be able to:
+
+* Manage product list
+* Edit pricing
+* Add/remove cake sizes
+* Edit icing/filling options
+
+**Deliverables Impact:**
+
+* ERD: ProductCategory, Product
+* DFD: Update Products
+* Prototype screen for Products
+
+---
+
+## **5. Staff & Permissions**
+
+Role-based access must match case study.
+
+**Roles & Abilities:**
+
+### Sales Staff
+
+* Can create orders
+* Can create/edit customers
+* Cannot change order status after creation
+
+### Bakers
+
+* Can see orders assigned to baking
+* Can set status to “In Baking,” “Baked,” “Ready for Decoration”
+
+### Decorators
+
+* Can update decorating status
+* Can upload images of completed design
+
+### Manager / Emily
+
+* Full access
+* Approves completed cakes
+* Changes prices
+* Handles cancellations
+
+**Deliverables Impact:**
+
+* DFD: Role-based flows
+* Prototype: Role-specific dashboards
+* ERD: Employee table with RoleID
+
+---
+
+## **6. Inquiries (Optional but expected)**
+
+Since Emily wants more web interaction, Admin should see:
+
+* Name
+* Email
+* Message
+* Convert Inquiry → Order
+* Mark as Rush
+
+**Deliverables Impact:**
+
+* DFD: Manage Inquiries
+* Prototype page
+
+---
+
+## **7. Reports / Business Intelligence**
+
+Role-based reporting.
+
+Owner / Manager should see:
+
+* Sales trends
+* Customer retention
+* Popular cake sizes/flavors
+* Top customers
+* Revenue this month
+
+Sales Staff should see:
+
+* Daily orders
+* Customer lists
+
+**Deliverables Impact:**
+
+* System Proposal
+* Business Requirements
+* Prototype (optional charts)
+
+---
+
+## **8. Settings**
+
+* System configuration
+* Payment types (cash, debit, credit card)
+* Profile settings
+* Switch account
+
+---
+
+# **SUMMARY: WHAT THE ADMIN PORTAL MUST INCLUDE FOR DELIVERABLES**
+
+1. Dashboard (role-based)
+2. Customer Management
+3. Order Management
+4. Product Catalog
+5. Staff & Permissions
+6. Inquiry Management
+7. Reporting
+8. Settings
+
+This is your final list for:
+
+* Presentation
+* Prototype
+* Use Cases
+* DFD
+* ERD
+* Requirements
+* System Proposal
+
+Perfectly aligned with the case study.
+
+---
+
+# **2. BRAND-NEW CUSTOM ORDER FORM (Case-Study Accurate + Emily’s Colors)**
+
+### Designed in a clean format for your front-end / prototype.
+
+### **Emily Bakes Cakes – Custom Order Form (Admin Only)**
+
+### **Color Palette**
+
+Primary: **Pink #FFC0CB**
+Accent: **White #FFFFFF**
+Headers: **Black #000000**
+Buttons: **#0000FF (Blue)** or **#FFD700 (Gold)**
+
+---
+
+# **CUSTOM ORDER FORM**
+
+## **1. Customer Information**
+
+**Customer Name:**
+**Phone Number:**
+**Email:**
+**Customer Type:** Retail | Corporate
+**Preferred Customer:** Yes | No
+**Corporate Location (if applicable):**
+
+---
+
+## **2. Order Details**
+
+**Order Date (Today):**
+**Pickup Date:**
+*(Must be 2+ days ahead unless manager override)*
+
+**Product Type:**
+
+* Cake
+* Cupcake
+* Pastry
+* Cookie
+* Petit Four
+* Seasonal Product
+
+**Standard Cake Selection (if applicable):**
+
+* Birthday Celebration
+* Almond Delight
+* Lemon & Cream Cheese
+* Black Forest
+* German Chocolate
+* Italian Cream
+* Lemon Doberge
+* Chocolate Doberge
+* Half/Half Doberge
+* Cookies & Cream
+* Strawberry Delight
+
+---
+
+## **3. Cake Size (Required for Cakes)**
+
+* 6” Round ($20)
+* 8” Round ($30)
+* 10” Round ($60)
+* 12” Round ($100)
+* 14” Round ($140)
+* 16” Round ($180)
+* ¼ Sheet ($40)
+* ½ Sheet ($100)
+* Full Sheet ($200)
+
+---
+
+## **4. Layers & Fillings**
+
+**Number of Layers:** (Minimum 2 for custom cakes)
+2 | 3 | 4
+
+### **Layer 1 (Bottom Layer)**
+
+Filling Options:
+
+* None
+* White Buttercream
+* Chocolate Buttercream
+* Almond Buttercream
+* Cream Cheese
+* Lemon Curd
+* Strawberry
+* Raspberry
+* Chocolate Mousse
+* Mango Mousse
+  *(Max 2 layers of the SAME filling per case study rule)*
+
+### **Layer 2**
+
+(Same list)
+
+### **Layer 3 & 4**
+
+(If applicable)
+
+---
+
+## **5. Icing Selection**
+
+* White Buttercream
+* Chocolate Buttercream
+* Almond Buttercream
+* White Chocolate Buttercream
+* Cream Cheese
+* Chocolate Ganache
+
+**Icing Color:**
+Red (#FF0000)
+Blue (#0000FF)
+Pink (#FFC0CB)
+Purple (#800080)
+Gold (#FFD700)
+Silver (#C0C0C0)
+Yellow (#FFFF00)
+White (#FFFFFF)
+Green (#008000)
+Black (#000000)
+
+---
+
+## **6. Writing on Cake**
+
+**Text:**
+**Writing Color:** Choose from icing color palette
+
+---
+
+## **7. Decorations (Select All That Apply)**
+
+* Buttercream Flowers
+* Fondant Decorations
+* Silk Flowers
+* Edible Sugar-Based Photos
+* Toy Trains
+* Plastic Dinosaurs
+* Dolls
+* Graduation Cap
+* Plastic Balloons
+* Plastic Sports Equipment
+* Rainbows
+* Ribbon (choose color)
+* Other: __________________
+
+---
+
+## **8. Attach Customer Photo (Optional)**
+
+[ Upload File ]
+
+---
+
+## **9. Pricing & Deposit**
+
+**Quoted Price:** $________
+**Required Deposit (50%):** Automatically generated
+**Amount Paid:**
+**Payment Type:** Cash | Debit | Credit
+
+---
+
+## **10. Staff Notes**
+
+**Internal Notes for Bakers/Decorators:**
+
+---
+
+---
+
+## **11. Status**
+
+**Initial Status:** New
+(Only Sales can set this. All other statuses controlled by Bakers/Decorators/Manager.)
+
+---
+
+## **12. Submit Button**
+
+**[ Create Order ]**
+Button Color: Gold (#FFD700) on Black text
+
+---
+
+# **If you want, I can now generate:**
+
+* The updated ERD for this form
+* The DFD Level 0 and Level 1
+* A matching Data Dictionary
+* A UI layout mockup description (for Replit or Figma)
+* A clean printable PDF version of the form
+* A “Developer Spec Document” for your dev teammate
+
+Just tell me which one you want next!

@@ -1,0 +1,883 @@
+Skip to content
+
+
+
+
+EmilyBakesCakes
+
+
+
+
+Republish
+
+
+Files
+
+
+
+Commands
+Search
+
+npm run server:dev
+
+Ask Agent…
+48m
+ • 
+49 minutes ago
+
+
+npm run dev
+
+Ask Agent…
+5m
+ • 
+5 minutes ago
+
+
+
+
+/
+
+
+
+🎯 EMILY BAKES CAKES - FINAL IMPLEMENTATION PLAN
+Single Source of Truth - CIS 3343 Case Study Compliance
+Created: November 13, 2025
+Updated: November 13, 2025 (Architecture clarified to pure staff-only)
+Status: ✅ AUTHORITATIVE - All other documents superseded
+Deadline: Saturday, November 15, 2025 (Prefinal Draft)
+Architecture: Pure Staff-Only System (NO customer e-commerce)
+
+📑 TABLE OF CONTENTS
+Executive Summary
+What Already Exists
+What Must Be Added
+Complete Page Inventory
+Role-Based Permissions
+Database Schema
+6 Required Client Reports
+Technical Stack
+Implementation Checklist
+Demo Credentials
+1. EXECUTIVE SUMMARY
+Project Scope
+"Emily Bakes Cakes" is a pure staff-only internal order management system for CIS 3343 case study:
+
+Public marketing website (NO customer e-commerce - marketing/awareness only)
+Staff-only order management portal (ALL orders entered by staff)
+Public order tracking (auto-cycling demo page)
+Email notifications (Resend integration)
+Key Architecture Decision
+Pure staff-only system - customers CANNOT order online. This approach:
+
+✅ Meets case study requirement: staff enter ALL orders
+✅ Public pages serve marketing/awareness purposes only
+✅ Customers call, email, or visit in person to place orders
+✅ Staff portal handles complete order lifecycle
+Critical Business Rule (Case Study)
+"Bakers and Decorators, if not busy, can also serve as sales staff."
+
+Meaning: Baker and Decorator roles have FULL Sales permissions + their specialized functions.
+
+2. WHAT ALREADY EXISTS ✅
+Public Website (5 pages - MARKETING ONLY)
+Page	Route	Status	Notes
+Home	/	⚠️ Needs CTA fixes	Hero with invalid "Start Building" buttons
+Shop	/shop	⚠️ Needs restructure	Must remove inquiry forms, convert to inspiration only
+Gallery	/gallery	⚠️ Needs CTA fixes	Remove "Start Custom Builder" button
+About	/about	✅ Complete	Parisian-themed story page
+Contact	/contact	⚠️ Needs enhancement	Add Google Maps, ordering workflow, remove Builder references
+CRITICAL: Public pages must have ALL customer ordering CTAs removed. Customers call/email/visit to order.
+
+Staff Portal (11 pages - BUILT, JWT auth completed)
+Page	Route	Status	Notes
+Login	/admin/login	✅ Complete	JWT auth with 6 demo staff accounts
+5 Dashboards	/admin/analytics-dashboard	✅ Complete	Role-based (Sales, Baker, Decorator, Accountant, Manager)
+OrderBoard	/admin/fulfillment-board	✅ Complete	Kanban drag-and-drop
+OrderList	/admin/order-management	✅ Complete	Table view with filtering
+OrderCreate	/admin/order-create	✅ Complete	Manual order form (staff enter ALL orders)
+Inquiries	/admin/inquiry-management	✅ Complete	Customer inquiry management
+Products	/admin/inventory-management	✅ Complete	Product CRUD
+Customers	/admin/customer-accounts	✅ Complete	Customer CRUD with search
+Reports	/admin/business-intelligence	⚠️ In Progress	Needs 6 specific reports with Recharts
+Settings	/admin/system-configuration	✅ Complete	System config
+Tracking	/track/:token	✅ Complete	Public tracking with 11-stage auto-cycling (2-min loop)
+Database (Drizzle ORM - WORKING)
+Existing Tables:
+
+✅ products - Full product catalog
+✅ customers - Customer records with VIP status
+✅ orders - Orders with JSON layers field, tracking_token, assigned staff
+✅ employees - Staff with roles, passwords, JWT auth
+✅ order_status_history - Status change tracking
+✅ inquiries - Customer inquiries (NOT orders)
+✅ contact_messages - Contact form submissions
+✅ payments - Payment tracking
+Tech Stack (WORKING)
+✅ React 18.3.1 + TypeScript
+✅ Vite 6.3.5
+✅ Drizzle ORM (PostgreSQL)
+✅ Express backend
+✅ Recharts (analytics working)
+✅ Tailwind CSS 4.1
+✅ Radix UI components
+✅ Motion (Framer Motion)
+3. WHAT MUST BE ADDED 🆕
+Remaining Tasks for Case Study Compliance
+A. ✅ COMPLETED
+✅ employees table - Staff with roles, JWT auth (6 demo accounts)
+✅ Order tracking tokens - tracking_token field added to orders
+✅ Order status history - Tracking table with timestamps
+✅ Public Tracking Page (/track/:token) - Auto-cycling demo (11 stages, 2-min loop)
+✅ JWT Authentication - Login, token validation, protected routes
+✅ 5 Role-Based Dashboards - Sales, Baker (+ Sales tab), Decorator (+ Sales tab), Accountant, Manager
+B. ⚠️ IN PROGRESS
+6 Client Reports - Order Summary, Customer List, Revenue, Pending Orders, Completed Orders, Product Inventory
+Critical UI Fixes - Remove all customer ordering CTAs from public pages
+C. 🔜 PENDING
+Email Notifications - Resend integration for order tracking
+Google Maps - Contact page embed
+Final Testing - All role permissions, workflows, mobile responsiveness
+E. Six Client Reports (with Recharts)
+Order Summary Report
+Customer List Report
+Revenue Report (Accountant/Manager only)
+Pending Orders Report
+Completed Orders Report
+Product Inventory Report (Manager only)
+F. Email Service
+Resend integration
+Order creation notification
+Tracking link in email
+G. Google Maps Integration
+Embed map in Contact page (no API key needed)
+4. COMPLETE PAGE INVENTORY
+Final Page Count: 16 Pages Total (Pure Staff-Only System)
+PUBLIC MARKETING WEBSITE (5 pages - NO customer ordering)
+Home - / ⚠️ (remove "Start Building" CTAs)
+Shop - /shop ⚠️ (convert to inspiration-only, remove inquiry forms)
+Gallery - /gallery ⚠️ (remove "Start Custom Builder" button)
+About - /about ✅ (complete)
+Contact - /contact ⚠️ (add Google Maps, ordering workflow)
+CRITICAL: All public pages must emphasize phone/email/visit ordering only. NO customer online ordering capability.
+
+PUBLIC TRACKING (1 page)
+Track Order - /track/:token ✅ (auto-cycling 11 stages, 2-min loop)
+STAFF PORTAL (10 pages - JWT authenticated)
+Staff Login - /admin/login ✅ (JWT complete)
+Role-Based Dashboards - /admin/analytics-dashboard ✅ (ONE page with 5 role views)
+Sales Dashboard (role: sales)
+Baker Dashboard (role: baker + Sales tab)
+Decorator Dashboard (role: decorator + Sales tab)
+Accountant Dashboard (role: accountant)
+Manager Dashboard (role: manager/owner)
+Fulfillment Board - /admin/fulfillment-board ✅ (Kanban)
+Orders List - /admin/order-management ✅ (table with filters)
+Order Create - /admin/order-create ✅ (staff enter ALL orders)
+Customers - /admin/customer-accounts ✅ (CRM)
+Products - /admin/inventory-management ✅ (product CRUD)
+Reports - /admin/business-intelligence ⚠️ (needs 6 reports with Recharts)
+Inquiries - /admin/inquiry-management ✅ (from public contact forms)
+Settings - /admin/system-configuration ✅ (system config)
+5. ROLE-BASED PERMISSIONS
+Permission Matrix
+Permission	Sales	Baker	Decorator	Accountant	Manager
+ORDERS					
+Create orders	✅	✅	✅	❌	✅
+View all orders	✅	✅	✅	✅ (read)	✅
+Edit orders	✅	✅	✅	❌	✅
+Update status (own area)	Limited	✅ Baking	✅ Decorating	❌	✅ All
+Cancel orders	❌	❌	❌	❌	✅
+Assign to staff	❌	❌	❌	❌	✅
+CUSTOMERS					
+View all	✅	✅	✅	✅ (read)	✅
+Add/edit	✅	✅	✅	❌	✅
+Mark VIP	❌	❌	❌	❌	✅
+PRODUCTS					
+View	✅	✅	✅	✅	✅
+Edit	❌	❌	❌	❌	✅
+FINANCIAL					
+View revenue/KPIs	❌	❌	❌	✅	✅
+Update payments	❌	❌	❌	✅	✅
+REPORTS					
+Order Summary	✅	✅	✅	❌	✅
+Customer List	✅	✅	✅	❌	✅
+Revenue Report	❌	❌	❌	✅	✅
+Pending Orders	✅	✅	✅	❌	✅
+Completed Orders	❌	✅	✅	❌	✅
+Product Inventory	❌	❌	❌	❌	✅
+Dashboard Features by Role
+Sales Dashboard
+Quick action: Create new order
+Today's pickups (5-item list)
+Pending customer follow-ups
+Recent orders (all orders for coordination)
+Recent customers
+Baker Dashboard ⚠️ CRITICAL
+My Baking Queue (top priority - orders assigned to them)
+FULL SALES ACCESS when not busy:
+Create orders
+Manage customers
+View all orders
+Layer-by-layer progress tracking
+Tomorrow's schedule preview
+Decorator Dashboard ⚠️ CRITICAL
+My Decoration Queue (orders ready for decoration)
+FULL SALES ACCESS when not busy:
+Create orders
+Manage customers
+View all orders
+Customer photo references
+Design gallery
+Accountant Dashboard
+Financial KPIs (revenue, deposits, outstanding)
+Revenue trend chart (Recharts line)
+Outstanding balances tracker
+Access to all 6 reports
+Payment status updates
+Manager Dashboard
+Complete system overview
+All KPIs + charts
+Staff performance tracking
+Order pipeline (Kanban view)
+Full CRUD on all entities
+6. DATABASE SCHEMA
+New Table: employees
+export const employees = pgTable('employees', {
+  id: serial('id').primaryKey(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  passwordHash: varchar('password_hash', { length: 255 }).notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  role: varchar('role', { length: 20 }).notNull(), // 'sales', 'baker', 'decorator', 'accountant', 'manager', 'owner'
+  isActive: boolean('is_active').default(true).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+Updated Table: orders (add tracking)
+// Add these fields to existing orders table:
+trackingToken: varchar('tracking_token', { length: 50 }).unique(),
+assignedBaker: integer('assigned_baker').references(() => employees.id),
+assignedDecorator: integer('assigned_decorator').references(() => employees.id),
+
+New Table: order_status_history
+export const orderStatusHistory = pgTable('order_status_history', {
+  id: serial('id').primaryKey(),
+  orderId: integer('order_id').references(() => orders.id).notNull(),
+  oldStatus: varchar('old_status', { length: 50 }),
+  newStatus: varchar('new_status', { length: 50 }).notNull(),
+  updatedBy: integer('updated_by').references(() => employees.id),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+7. SIX REQUIRED CLIENT REPORTS
+Report 1: Order Summary Report
+Access: Sales, Baker, Decorator, Manager
+Route: /staff/reports/order-summary
+
+Features:
+
+Date range picker (default: today)
+Filter by status, assigned staff
+Table: Order#, Customer, Product, Pickup, Status, Price, Deposit, Balance
+Chart: Bar chart - Order volume by day (Recharts)
+Export: CSV, PDF
+Totals row
+Implementation:
+
+// Use existing Recharts infrastructure
+<BarChart data={ordersByDay}>
+  <Bar dataKey="count" fill="#C44569" />
+</BarChart>
+
+Report 2: Customer List Report
+Access: Sales, Baker, Decorator, Manager
+Route: /staff/reports/customer-list
+
+Features:
+
+Columns: Name, Email, Phone, Type, Total Orders, Total Spent
+Filters: Type (Retail/Corporate), spending range, VIP only
+Chart: Line chart - Customer acquisition over time (Recharts)
+Export: Email list, Phone list, Full CSV, PDF
+Report 3: Revenue Report ⭐
+Access: Accountant, Manager ONLY
+Route: /staff/reports/revenue
+
+Features:
+
+Time periods: Day / Week / Month / Custom
+KPI cards: Total Revenue, Deposits, Outstanding, Collection Rate
+3 Charts (Recharts):
+Revenue trend (line chart)
+Revenue by product type (pie chart)
+Monthly comparison (bar chart)
+Breakdown by cake size, order type, payment method
+Export: CSV, PDF, Excel
+Report 4: Pending Orders Report
+Access: Sales, Baker, Decorator, Manager
+Route: /staff/reports/pending-orders
+
+Features:
+
+Statuses: Quote, Pending, Confirmed, In Production
+Columns: Order#, Customer, Pickup Date, Days Until Due, Staff, Status
+Chart: Funnel chart - Orders by status (Recharts)
+Color coding: 🟢 Green (>2 days), 🟡 Yellow (24-48h), 🔴 Red (<24h)
+Report 5: Completed Orders Report
+Access: Baker, Decorator, Manager
+Route: /staff/reports/completed-orders
+
+Features:
+
+Columns: Completion Date, Customer, Baker, Decorator, Days to Complete, Rating, Price
+Chart: Bar chart - Avg completion time by order type (Recharts)
+Filters: Date range, staff, satisfaction rating
+Report 6: Product Inventory Report
+Access: Manager ONLY
+Route: /staff/reports/product-inventory
+
+Features:
+
+Columns: Product, Category, Price, Times Ordered, Revenue, Trending
+Chart: Horizontal bar chart - Top 10 products by revenue (Recharts)
+Filters: Category, popularity, date range
+8. TECHNICAL STACK
+Confirmed Technologies (Keep Existing)
+✅ Frontend: React 18.3.1 + TypeScript
+✅ Build Tool: Vite 6.3.5
+✅ Styling: Tailwind CSS 4.1
+✅ UI Components: Radix UI
+✅ Animation: Motion (Framer Motion)
+✅ Charts: Recharts
+✅ Forms: React Hook Form
+✅ Icons: Lucide React
+✅ Toast: Sonner
+✅ Backend: Node.js + Express (TypeScript)
+✅ Database: PostgreSQL (Replit Neon)
+✅ ORM: Drizzle ORM
+New Integrations (Add)
+🆕 Authentication: jsonwebtoken + bcryptjs
+🆕 Email Service: Resend (simple, no SMTP)
+🆕 Maps: Google Maps embed (no API key)
+Configuration
+Port: 5000 (frontend + backend proxy)
+Host: 0.0.0.0 (Replit requirement)
+CORS: Enabled for all origins
+9. IMPLEMENTATION CHECKLIST
+Phase 1: Database & Auth (Tasks 1-3)
+ Add employees table to schema
+ Add order_status_history table
+ Update orders table (add tracking_token, assigned_baker, assigned_decorator)
+ Seed 6 demo staff accounts
+ Implement JWT authentication (login endpoint)
+ Create auth middleware for protected routes
+Phase 2: Public Tracking Page (Task 2)
+ Create /track/:token route
+ Build TrackingPage component with 11-stage auto-cycling
+ Implement 2-minute interval timer
+ Add progress bar and status timeline UI
+ Make mobile-responsive
+11 Tracking Stages (2-min cycle, loops forever):
+
+Order Placed
+Design Approved
+Pending Baking
+Baking in Progress
+Cooling
+Ready for Decorating
+Decorating
+Decorated Complete
+Quality Check
+Ready for Pickup
+Picked Up → loops back to #1
+Phase 3: Role-Based Dashboards (Tasks 4-5)
+ Create SalesDashboard component
+ Create BakerDashboard component (with Sales access)
+ Create DecoratorDashboard component (with Sales access)
+ Create AccountantDashboard component
+ Create ManagerDashboard component
+ Implement role-based navigation menus
+ Add role-based permission checks
+Phase 4: Six Client Reports (Task 6)
+ Report 1: Order Summary (with bar chart)
+ Report 2: Customer List (with line chart)
+ Report 3: Revenue Report (with 3 charts)
+ Report 4: Pending Orders (with funnel chart)
+ Report 5: Completed Orders (with bar chart)
+ Report 6: Product Inventory (with horizontal bar chart)
+ Add CSV/PDF export functionality
+Phase 5: Email Integration (Task 7)
+ Set up Resend integration
+ Create email template for order tracking
+ Send email on order creation with tracking link
+ Test email delivery
+Phase 6: Contact Page Enhancement (Task 9)
+ Add Google Maps iframe embed
+ Test map responsiveness
+Phase 7: Testing & Polish
+ Test all role-based permissions
+ Test tracking page auto-cycling
+ Verify all 6 reports work
+ Test email notifications
+ Mobile responsiveness check
+ Update replit.md
+10. DEMO CREDENTIALS
+6 Staff Accounts (All passwords: DemoPass123!)
+Emily (Owner)
+
+Email: emily@emilybakes.com
+Role: owner
+Access: Full system access
+James (Manager)
+
+Email: manager@emilybakes.com
+Role: manager
+Access: Full system access, all 6 reports
+Sarah (Sales)
+
+Email: sales@emilybakes.com
+Role: sales
+Access: Orders, customers, 4 reports
+Tom (Baker)
+
+Email: baker@emilybakes.com
+Role: baker
+Access: FULL SALES + Baking queue, 4 reports
+Lisa (Decorator)
+
+Email: decorator@emilybakes.com
+Role: decorator
+Access: FULL SALES + Decoration queue, 4 reports
+Dan (Accountant)
+
+Email: accountant@emilybakes.com
+Role: accountant
+Access: View-only orders/customers, all 6 reports, financial KPIs
+11. PUBLIC TRACKING PAGE SPECIFICATION
+Route: /track/:token
+Purpose: Public order tracking (no login required)
+
+Features:
+
+Auto-cycling status (changes every 2 minutes)
+Continuous loop (never stops)
+Order details (customer, pickup date/time, price, deposit)
+Progress bar (fills as status advances)
+Vertical status timeline
+Elapsed time + estimated completion
+Mobile-responsive
+Auto-Cycling Logic:
+
+// Calculate current stage based on time
+const startTime = new Date(order.created_at);
+const now = new Date();
+const elapsedMinutes = (now - startTime) / 1000 / 60;
+const currentStage = Math.floor(elapsedMinutes / 2) % 11;
+// Stages array (11 total)
+const stages = [
+  'Order Placed',
+  'Design Approved',
+  'Pending Baking',
+  'Baking in Progress',
+  'Cooling',
+  'Ready for Decorating',
+  'Decorating',
+  'Decorated Complete',
+  'Quality Check',
+  'Ready for Pickup',
+  'Picked Up'
+];
+// Update UI every 10 seconds
+setInterval(() => updateStatus(), 10000);
+
+Email Workflow:
+
+Staff creates order in dashboard
+System generates unique tracking token
+Email sent via Resend with link: /track/{token}
+Customer clicks → sees tracking page
+Page auto-advances every 2 minutes (loops forever)
+12. API ENDPOINTS
+Authentication
+POST /api/auth/staff-login - Staff login (returns JWT)
+POST /api/auth/logout - Logout
+Staff
+GET /api/staff - Get all staff (Manager only)
+GET /api/staff/me - Get current user info
+Orders (Enhanced)
+GET /api/orders - Get all orders (filtered by role)
+POST /api/orders - Create order (generates tracking token, sends email)
+PATCH /api/orders/:id/status - Update order status
+GET /api/orders/track/:token - Public tracking (no auth)
+Reports (New)
+GET /api/reports/order-summary?date=2025-11-13
+GET /api/reports/customer-list
+GET /api/reports/revenue?period=month
+GET /api/reports/pending-orders
+GET /api/reports/completed-orders
+GET /api/reports/product-inventory
+13. NAVIGATION STRUCTURE
+Public Navigation
+[Logo] Emily Bakes Cakes
+[Home] [Shop] [Gallery] [About] [Contact]
+
+Staff Navigation (Role-Based)
+Sales:
+
+[Dashboard] [Create Order] [Orders] [Customers] [Products] [Reports] [Logout]
+
+Baker:
+
+[Dashboard] [My Queue] [Create Order] [Orders] [Customers] [Reports] [Logout]
+
+Decorator:
+
+[Dashboard] [My Queue] [Create Order] [Orders] [Customers] [Gallery] [Reports] [Logout]
+
+Accountant:
+
+[Dashboard] [Orders] [Customers] [Reports] [Analytics] [Payments] [Logout]
+
+Manager:
+
+[Dashboard] [Orders] [Customers] [Products] [Staff] [Reports] [Analytics] [Settings] [Logout]
+
+✅ FINAL ARCHITECTURE SUMMARY
+Total Functional Pages: 16 (5 public marketing + 1 tracking + 10 staff portal)
+
+Pure Staff-Only System:
+
+Public pages: Marketing/awareness only, NO customer online ordering
+Staff portal: Role-based dashboards with JWT authentication
+Order entry: Staff manually create ALL orders through admin portal
+Customer ordering: Call/email/visit in person only
+Public tracking: Auto-cycling demo (11 stages, 2-min loop)
+Email notifications: Resend integration for order tracking
+Reports: 6 client reports with Recharts visualization
+System Compliance:
+
+✅ Pure staff-only ordering (no customer e-commerce)
+✅ Baker/Decorator have FULL Sales permissions (case study requirement)
+✅ 5 role-based dashboards with session management
+✅ JWT authentication with 6 demo staff accounts
+✅ PostgreSQL database with complete schema
+✅ Public tracking with auto-cycling demonstration
+⚠️ Need to remove all customer ordering CTAs from public pages
+⚠️ Need to build 6 client reports with Recharts
+⚠️ Need Resend email integration
+⚠️ Need Google Maps on Contact page
+Status: ✅ AUTHORITATIVE - Single Source of Truth
+Last Updated: November 13, 2025
+All Other Documents: Superseded by this plan
+
+
+Improve toast component accessibility and behavior for better user feedback
+
+Agent 3
+
+Match menu labels to page titles
+0 / 5
+
+Show previous events
+🎂 URGENT: Admin Portal UX/Functionality Emergency Fixes
+I've created a comprehensive action plan to address all 17 issues you identified. This is now your PRIMARY PRIORITY because the system is functionally built but has severe UX problems that break usability.
+
+What's in the Emergency Fix Document :
+The prompt is organized into 8 strategic batches that systematically fix the problems you identified:
+
+Remove Out-of-Scope Fields (Occasion, Design Style, enforce 2-layer minimum)
+
+Menu & Navigation Fixes (Labels matching pages, active states, breadcrumbs, user avatars)
+
+Dashboard Content & Layout (KPIs prominent, quick actions visible, business-focused)
+
+Popup & Modal UX (Proper sizing, close buttons, screen-fit optimization)
+
+Order Management Permissions (Sales role restrictions, dropdown redesign)
+
+Inquiry & Rush Order Management (System verification, inquiry display)
+
+Business Intelligence/Reports (Role-specific access control)
+
+Account Switching (Quick user switch without logout)
+
+Key Points Addressed:
+✅ Occasion field - Completely removed (was out of scope)
+✅ Design Style - Removed (not in case study)
+✅ Cake layers - Minimum 2 enforced (1 layer impossible logic)
+✅ Menu labels - Now match page titles (Sales Dashboard ≠ Business Analytics)
+✅ User avatars - Replace "eb" with initials (S, T, L, etc.)
+✅ Dashboard redesign - KPIs top, quick actions visible, system overview prominent
+✅ Popups - Optimized sizing, clear cancel buttons, screen-fit guarantee
+✅ Breadcrumbs - Navigation trail on all pages
+✅ Sales permissions - No order status changes (baker/decorator only)
+✅ Dropdown UI - Fixed alignment, clear iconography
+✅ Inquiry system - Verified and documented
+✅ Reports access - Role-specific filtering enforced
+✅ Account switch - Quick switch feature without logout
+
+23 minutes ago
+
+Show less
+
+Decided on UX issue prioritization (11 seconds)
+I understand! You've done a comprehensive UX audit and identified critical usability issues that need immediate attention. This is now my PRIMARY PRIORITY. Let me systematically address these 8 batches of emergency fixes.
+
+I'll create a structured task list and start with the highest-impact fixes:
+
+
+Decided on task removal process
+Perfect! I've created a comprehensive task list for all 8 batches. Let me start with BATCH 1 - the highest priority fixes that remove out-of-scope fields.
+
+
+Decided on "Occasion" removal strategy
+Let me search for where "Occasion" and "Design Style" appear in the codebase:
+
+
+Show 3 more
+
+Decided on occasion, design style (4 seconds)
+Now let me examine the key files where these out-of-scope fields appear:
+
+
+Show 3 more
+
+Decided on using search_codebase
+Good point! Let me use search_codebase to get a comprehensive view:
+
+
+Show 2 more
+
+Read schema, Builder, OrderCreate files
+Let me read the specific files where these fields are defined:
+
+
+Show 4 more
+
+Decided on inventory management renaming (11 seconds)
+Perfect! I can see exactly where these fields are defined. Let me continue reading the Builder and OrderCreate files to see all their uses:
+
+
+Show 4 more
+
+Decided on field removals and renaming (8 seconds)
+Perfect! Now I have the complete picture. Let me start implementing BATCH 1 fixes. I'll work on removing out-of-scope fields and making the required updates:
+
+
+Show 3 more
+
+Planned batch fix organization
+You're absolutely right! Let me step back and get help from the architect to create a clear, efficient plan for these UX fixes:
+
+
+Executed emergency UX fixes for staff portal
+
+Decided on database schema changes (6 seconds)
+Perfect plan! Let me execute this systematically. I'll start with Step 1: Database schema changes:
+
+
+Edited shared/schema.ts
+
+Planned database schema adjustments
+Good! Now let me remove the domain constants from cakeOptions.ts:
+
+
+Edited src/data/cakeOptions.ts
+
+Decided on UI field removal strategy (6 seconds)
+Perfect! Now I'll delegate the complex refactoring of Builder.tsx and OrderCreate.tsx to efficiently handle all the UI changes:
+
+
+Refactored cake builder and order forms
+pLEASE CONSIDER CASE STUDY IN ALL IMPROVEMENTS COUNTINUE WITH 15 TASKS
+
+16 minutes ago
+
+24 messages & 52 actions
+I understand! Let me check the LSP errors and continue systematically with all 15 UX emergency fixes, ensuring complete case study compliance.
+Checkpoint made
+5 minutes ago
+Improve admin portal usability and streamline order management processes
+
+Rollback here
+
+Changes
+
+Preview
+11 minutes of work
+REPORT 4: Pending Orders (/staff/reports/pending-orders)
+
+Access: Sales, Baker, Decorator, Manager
+Funnel chart: By status
+Table: Order #, Customer, Pickup, Days Until Due, Status, Assigned Staff
+Color code: 🟢 >2d, 🟡 24-48h, 🔴 <24h
+5 minutes ago
+Checkpoint made
+5 minutes ago
+Add standard menu, color chart, and custom order form details
+
+Rollback here
+
+Changes
+
+Preview
+8 seconds of work
+4 minutes ago
+
+6 messages & 14 actions
+I'll implement **Report 4: Pending Orders** with the funnel chart, data table, and color-coded urgency indicators. Let me first check the existing report structure:
+MY RUSH ORDER STUFF IS NOT THERE, MY PAGES DO NOT MATCH NAV ADMIN MENU
+
+2 minutes ago
+FOCUS ON UX FIXES THAT ARE URGENT
+
+2 minutes ago
+
+Show less
+
+Planned navigation menu adjustments (4 seconds)
+I understand there are mismatches between the navigation menu and actual pages, and rush order functionality is missing. Let me investigate and fix these issues immediately.
+
+
+Show less
+
+Executed rg -A 3 -n 'navItems|menuItems' src/components/AdminLayout.tsx
+
+Executed rg -n 'case.*:|getRoleDashboard' src/App.tsx
+Searched for "Find rush order functionality, rush order flags, or rush order handling in the codebase"
+THE ADMIN SITE IS SO IMPORTANT AND THE REPORTS WONT MATTER UNLESS THAT IS PERFECT
+
+1 minute ago
+
+Decided on urgent UX fixes (8 seconds)
+I understand. Let me focus on the URGENT UX fixes immediately. I'll create a prioritized task list and fix the critical navigation and rush order issues now:
+
+
+Decided on admin site priorities (4 seconds)
+You're absolutely right. Let me focus on fixing the admin site navigation and rush order functionality NOW. I'll fix the critical navigation mismatch first, then add rush order detection.
+
+
+Show 2 more
+
+Decided on navigation label alignment (5 seconds)
+I'll fix the navigation labels NOW and add rush order detection. Let me start:
+
+
+Show 3 more
+
+Decided on rush order detection strategy (6 seconds)
+Now adding rush order detection to the database schema and order displays:
+
+
+Show 4 more
+
+Planned UX fix strategy
+Perfect! Database updated with rush order fields. Now let me call the architect to create a comprehensive plan for all remaining critical UX fixes:
+
+Working.
+
+Scroll to latest
+
+Queue
+(15 messages)
+
+Make, test, iterate…
+
+Build
+
+Build
+
+
+
+EmilyBakesCakes - Replit
+
+Pasted-Key-Issues-and-Recommendations-1-Dashboard-and-KPIs-Issue-Sales-dashboard-is-not-informative-i-1763069373870_1763069373870.txt
+Key Issues and Recommendations:
+1. Dashboard and KPIs
+Issue: Sales dashboard is not informative; important quick actions and system overview are hidden or below the fold.
+
+Recommendation: Redesign dashboards to prioritize critical KPIs, show quick action buttons prominently, and provide a clear system overview at the top or sidebar for instant navigation.
+
+2. Menu and Page Title Mismatch
+Issue: Admin menu labels (e.g., "Business Analytics") don't match page titles (e.g., Sales Dashboard), causing confusion and poor UX.
+
+Recommendation: Update menu labels to be professional and consistent with page content, e.g., rename “Business Analytics” to “Sales Dashboard” for sales role, “Order Management” instead of generic terms.
+
+3. Orders Categorized by Occasion
+Issue: Orders are categorized by occasion, but “Occasion” should not exist in the system per case study.
+
+Recommendation: Remove "Occasion" field from order management and custom cake builder interfaces to comply with case study parameters.
+
+4. Custom Cake Builder Layers and Design Styles
+Issue: Custom build cake layers allow selecting only 1 layer; “Design Style” is also present but not part of case study.
+
+Recommendation: Enforce minimum of 2 layers for cakes built; remove “Design Style” option entirely to align with case study specifications.
+
+5. Breadcrumb Navigation
+Issue: No breadcrumb trail for easy navigation back to previous pages.
+
+Recommendation: Implement breadcrumb navigation on all staff portal pages for better user orientation and navigation flow.
+
+6. Sales Staff Permissions and Workflow
+Issue: Sales staff moving orders to "Pending" status may not be in scope or role permissions.
+
+Recommendation: Confirm that order status changes by Sales are restricted if out of scope; ensure only authorized roles (e.g., Baker, Decorator, Manager) can move orders to pending or in-production.
+
+7. Order Management Dropdowns and UI Controls
+Issue: Dropdown lists and icons in Order Management are poorly aligned, with icons and text confusingly placed.
+
+Recommendation: Redesign dropdown controls with improved alignment, consistent spacing, and clear iconography following standard UI best practices.
+
+8. Viewing Orders and Customers Popup
+Issue: Order and customer details popups are too large, cut off, with no easy way to exit, and missing cancel icons.
+
+Recommendation: Optimize popup size to fit well within screen bounds, add clear cancel/close icons, and ensure popups can be easily dismissed.
+
+9. Inquiry Management and "Rush Orders"
+Issue: No inquiries visible; unclear where rush orders are handled.
+
+Recommendation: Confirm inquiry management functionality is complete; if "rush orders" are part of business logic, specify handling and visibility in inquiry system or add separate rush order feature.
+
+10. Inventory Management Scope
+Issue: Staff handling inventory though inventory out of scope; product catalog expected but incorrect.
+
+Recommendation: Rename “Inventory Management” to “Product Catalog” or “Products” to reflect case study; limit staff functions to CRUD on products only, no inventory adjustment.
+
+11. Customer and Order Management Fixes
+Issue: General issues with customer and order management views and usability.
+
+Recommendation: Ensure all customer and order management pages are properly sized, responsive, and user-friendly with consistent UI elements.
+
+12. Business Intelligence & Reports UX
+Issue: Business Intelligence page is the same for Sales and Owner, poor design, lacks role-specific views.
+
+Recommendation: Implement role-specific dashboards or reports views, tailoring analytics shown to role responsibilities.
+
+13. Settings and System Configuration Naming
+Issue: Settings and system configuration pages have inconsistent or unclear names.
+
+Recommendation: Align naming (e.g., “Settings”) consistently across UI and navigation menus for clarity.
+
+14. Ability to Switch Accounts Without Logout
+Issue: No option to switch users/accounts without logging out.
+
+Recommendation: Add feature for quick user account switching to improve workflow for multiple staff users on single machines.
+
+15. Manager Account Branding
+Issue: All users have “eb” icon despite different names, causing confusion.
+
+Recommendation: Use personalized icons or user avatars instead of generic branding to differentiate users clearly.
+
+16. Dashboards are Repetitive and Basic
+Issue: Dashboards largely repeat same data, not tailored or actionable.
+
+Recommendation: Redesign dashboards to be more dynamic, actionable, role-specific, and summarize meaningful metrics prominently.
+
+17. Admin Menu Not Reflecting Actual Page State
+Issue: Admin menu often doesn’t correspond to current page, confusing navigation.
+
+Recommendation: Synchronize menu highlighting and state with actual content and route for accurate navigation feedback.
+
+Summary
+These issues mainly stem from mismatched UI/UX design to business needs, incorr...

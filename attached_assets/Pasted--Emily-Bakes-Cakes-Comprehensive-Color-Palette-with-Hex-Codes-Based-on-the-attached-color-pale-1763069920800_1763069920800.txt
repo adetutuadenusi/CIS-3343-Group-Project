@@ -1,0 +1,91 @@
+# Emily Bakes Cakes – Comprehensive Color Palette with Hex Codes
+
+Based on the attached color palette image, here is the complete extracted color reference for the custom order form and all UI components:
+
+***
+
+## PRIMARY COLORS
+
+| Color Name || Color Name | Hex Code |
+|---|---|
+| Red | #C41E3A |
+| Royal Blue | #003DA5 |
+| Green | #1F7F1F |
+| Yellow | #FFD600 |
+| Orange | #FF6B35 |
+
+***
+
+## PASTEL COLORS
+
+| Color Name || Color Name | Hex Code |
+|---|---|
+| Baby Pink | #FFB6D9 |
+| Baby Blue | #ADD8E6 |
+| Pastel Green | #98FF98 |
+| Pastel Yellow | #FFFFCC |
+| Lavender | #E6E6FA |
+
+***
+
+## NEON COLORS
+
+| Color Name || Color Name | Hex Code |
+|---|---|
+| Hot Pink | #FF1493 |
+| Sky Blue | #00BFFF |
+| Neon Green | #39FF14 |
+| Neon Yellow | #FFFF00 |
+| Neon Orange | #FF6600 |
+| Neon Purple | #9D00FF |
+
+***
+
+## FALL COLORS
+
+| Color Name || Color Name | Hex Code |
+|---|---|
+| Fall Red | #8B0000 |
+| Fall Green | #355E3B |
+| Fall Yellow | #FFA500 |
+| Fall Orange | #CC5500 |
+| Brown | #654321 |
+
+***
+
+## SPECIALTY/ACCENT COLORS
+
+| Color Name| Color Name | Hex Code |
+|---|---|
+| Ivory | #FFFFF0 |
+| Golden Yellow | #FFD700 |
+| Gold | #FFD700 |
+| Fuchsia | #FF00FF |
+| Maroon | #800000 |
+| Burgundy | #800020 |
+| Burnt Orange | #CC5500 |
+| Turquoise | #40E0D0 |
+| Navy Blue | #000080 |
+| Gray / Silver | #C0C0C0 |
+| Black | #000000 |
+| White | #FFFFFF |
+
+***
+
+## RECOMMENDED APPLICATION TO CUSTOM ORDER FORM
+
+**Primary Buttons & CTAs:** Royal Blue (#003DA5) or Red (#C41E3A)  
+**Form Field Borders:** Gray / Silver (#C0C0C0) or Lavender (#E6E6FA)  
+**Success/Validation:** Green (#1F7F1F)  
+**Error/Alert:** Red (#C41E3A)  
+**Warnings:** Fall Yellow (#FFA500)  
+**Accents & Highlights:** Hot Pink (#FF1493) or Gold (#FFD700)  
+**Backgrounds:** Ivory (#FFFFF0) or White (#FFFFFF)  
+**Text:** Black (#000000) or Navy Blue (#000080)  
+**Disabled States:** Gray / Silver (#C0C0C0)
+
+***
+
+**This palette provides flexibility for creating an attractive, accessible, and professional order entry experience while maintaining consistency across all staff portal pages and the case study brand identity.**
+
+[1](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/images/111054656/60c4b892-8d0f-4ab0-a818-c976a174db53/image.jpg?AWSAccessKeyId=ASIA2F3EMEYE5SA2HXYY&Signature=TVWDXEfSQXBP4LL7P7WCbAZnbVM%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEI7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQC1tGSKWoqOwP7cCxnOK16lwr6RbFCxog7D7lZ2fa3nhgIgDAsJ%2BlSUqyUNRKLM7kOhaNTkPibFjqBvpjjhGEhJpJ0q8wQIVxABGgw2OTk3NTMzMDk3MDUiDNckj0JrFS66S0FgxSrQBFW%2FYKob7amU%2FnVGSe%2Fgnp4f3yxApvYBIusvJFmk9vfwAUwRu5olurqj52otRtAN9lQOd051rZtbFTCyMJ2h2lSqr6VMIlZNqNLFZasWAeK%2FVRG5D8mj3MyBecyvbC%2F7gFDh9ZHC0mHvZZC6kRL0yVVs5%2BuvjNmw%2B%2Fbmv6rjU3St4xIEGJdDS%2BTCV8htM4P62DJtZ4HsI4vSEWwI9IoX4M5I2k1plBheQyHEWqn7f9czsxb6u5YQJ8ryat8Xioq3PzbHJeUC%2FhAP8NUvmHttyHS8XSLZnp9KyD7YjhhDKaPgJQiOg%2FKFAOd8BE65%2F97DdmyMC8hHW50eT6LS7wNjlDU6s7KX9DvAXxMkkwgNpJVX3Kl6WvH48vY3ti4qgyNS5BUI5Ds7eH2pTJ3Ry%2Fi4CKl0rY1W9TB67AKwX%2BKurXAEfzsCopwGWbgT6UMy0wg8XmDZAD02z%2B%2F8rfS7PoA9H7972N2dcIPXjV6WWzNVwT3AEAwRDXiap%2F1ARS2lhoFGceILII78jSJt6sTuAau0ORr%2FBrfn30%2BNha90tpEObQB1WrVqCh6GJbX%2F9D0IOA0bqVAcRqbTTG1mHwq1luQefXRzo0fwHpSog85QmVsOwPn37rV6azFX3%2BUPF6lfwO1GCg2hk%2FSXEsjt7dLkG1q3HPL5BnP21uYx7Yt2oahXVsz0h%2FBFQggcSYfnVkYt5yaxWTdmewTjRVmBEjXIcisf8ZwzfU5LE4JHC1SRTZjwFMqUa0tyHVEYUQyTD4I2ddsvEwz9BdrT6GcaF%2BPlkjxzdskw9prZyAY6mAHO6qv7jeriovzw80w6QQJ%2FXg6ku%2B6xe0S2T1aimmtp9X0jCwDIaRFhr%2FM5Xu7s%2F2PdbisZdKYEvwMlJvEeRRpwEkM1ZBLTIebbsHZdMDhE%2FHxj9deypZOj72yx%2BePu7pusY5vSrVIBhjXh7fxr7BtoTc%2F26Sg%2FhEvHnSryjA8RQUgLbfy6F3x1lNSoYXlaabCfqT%2BXHnYt0w%3D%3D&Expires=1763070484)

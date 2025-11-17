@@ -1,0 +1,96 @@
+🧠 CONTEXT:
+This React + Vite + TypeScript project (Emily Bakes Cakes System) is running on Replit.  
+The site shows the **Welcome animation** correctly, but when it finishes, the screen stays blank (only the cream #F8EBD7 background).  
+We’ve already fixed vite.config.ts (allowedHosts, HMR, etc.) — now the issue is inside the **React render logic**, likely involving **Framer Motion AnimatePresence**, component structure, or missing render conditions.
+
+🎯 GOAL:
+Diagnose and fix the rendering logic so that:
+1. After the welcome animation, the full app (navbar + main content) loads correctly in **both Replit preview and external new tab**.
+2. No blank screen occurs.
+3. All layout transitions (public, login, admin) work properly.
+4. No new TypeScript or import errors appear.
+
+---
+
+🧩 STEP-BY-STEP TASKS FOR THE AI AGENT:
+
+### **PHASE 1: STRUCTURAL CHECKS**
+1. Scan `src/App.tsx` for any `<AnimatePresence>` usage.
+2. Detect whether multiple conditional children exist inside one AnimatePresence with `mode="wait"`.
+3. If yes, **refactor** so only ONE root `<motion.div>` child is passed, keyed dynamically as `key={appMode}`.
+4. Verify `appMode` values (public, login, admin) are correctly defined and initialized.
+
+### **PHASE 2: WELCOME ANIMATION LOGIC**
+1. Inspect the `showWelcome` useState + useEffect logic:
+   - It should hide the welcome screen after ~2.5 seconds.
+   - Add `sessionStorage.setItem("welcomeDone", "true")` when finished.
+   - Use this to ensure it doesn’t replay when reloading or opening in a new tab.
+2. Confirm that after `showWelcome` is false, the app renders `<PublicLayout>` or the main content.
+
+### **PHASE 3: FRAMER MOTION / ANIMATEPRESENCE FIX**
+1. Ensure Framer Motion import is correct: `import { motion, AnimatePresence } from "framer-motion";`
+2. Check that AnimatePresence isn’t nested unnecessarily.
+3. If needed, wrap your main content section inside one AnimatePresence block like:
+   ```tsx
+   <AnimatePresence mode="wait">
+     <motion.div key={appMode} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+       {appMode === 'public' && <PublicLayout><PublicHome /></PublicLayout>}
+       {appMode === 'login' && <Login />}
+       {appMode === 'admin' && <AdminLayout />}
+     </motion.div>
+   </AnimatePresence>
+   ```
+
+### **PHASE 4: COMPONENT INTEGRITY AUDIT**
+1. Check that all components imported into `App.tsx` actually exist and export correctly:
+   - `/src/components/WelcomeScreen.tsx`
+   - `/src/components/PublicLayout.tsx`
+   - `/src/pages/public/Home.tsx`
+   - `/src/pages/admin/Login.tsx`
+   - `/src/components/ToastContext.tsx`
+2. If any are missing or broken, recreate minimal placeholder components so the app never fails to render.
+
+### **PHASE 5: STYLE & VISIBILITY VALIDATION**
+1. Verify that `index.css`, `global.css`, or `App.css` doesn’t hide main content (`display: none`, `opacity: 0`, etc.).
+2. Add a visible fallback color (`background: #F8EBD7`) to the `body` and `#root`.
+3. Ensure `min-height: 100vh` and `overflow` are correctly applied.
+
+### **PHASE 6: SANITY CHECK & TEST**
+1. Run the app locally (npm run dev).
+2. Wait for Welcome animation.
+3. Confirm full content appears after transition.
+4. Test again by expanding to external tab.
+5. Verify console shows no red errors.
+6. If the screen remains blank, automatically log `console.log` statements in App.tsx to confirm which conditional branch is active.
+7. If animation still fails, remove AnimatePresence temporarily to confirm static render works, then reintroduce correctly.
+
+---
+
+🧠 REPORT FORMAT (after completion)
+After making all necessary changes, produce this final structured report:
+
+**FILES MODIFIED:**
+- [List all files changed]
+
+**MAIN FIX:**
+- Explain what was wrong (e.g., “AnimatePresence was rendering multiple children; refactored into single keyed motion.div.”)
+- Describe all adjustments (e.g., added sessionStorage logic, fixed missing components, ensured Framer Motion import path)
+- Include confirmation of successful render after animation.
+
+**VALIDATION RESULTS:**
+- ✅ Welcome screen displays
+- ✅ Navigation + main content loads
+- ✅ No blank screen on new tab
+- ✅ No console errors
+- ✅ Works in both Preview and Network Host URLs
+
+---
+
+⚡ FINAL COMMAND:
+Execute all phases automatically.  
+Fix missing or misconfigured components.  
+Test the full render flow.  
+Ensure consistent app visibility after welcome animation.  
+Generate your natural-language summary report at the end.
+
+START NOW.

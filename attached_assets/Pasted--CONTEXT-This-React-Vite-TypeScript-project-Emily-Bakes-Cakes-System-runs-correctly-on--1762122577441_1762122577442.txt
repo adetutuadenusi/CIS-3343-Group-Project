@@ -1,0 +1,145 @@
+🧠 CONTEXT:
+This React + Vite + TypeScript project (Emily Bakes Cakes System) runs correctly on:
+- ✅ Localhost (manual dev)
+- ✅ Replit preview panel (iframe)
+But shows a blank cream background (no content) when:
+- ❌ Opened via Network Host URL (.replit.dev / .repl.co)
+- ❌ Opened in new browser tab
+
+The animation completes, but no navigation bar or main content appears.  
+We must identify *why the app fails in Replit's external HTTPS proxy environment.*
+
+---
+
+🎯 GOAL:
+Diagnose and fix all causes preventing the site from rendering fully when opened externally.
+
+Perform a **full 360° investigation and repair** across these layers:
+1. Replit configuration (.replit, deployment, ports, HTTPS)
+2. Vite configuration (server + base path + HMR + allowedHosts)
+3. React build delivery (index.html base, asset paths)
+4. Browser console errors (CORS, mixed content, blocked scripts)
+5. Network and proxy behavior (port mismatch, certificate issues)
+6. Application rendering verification (AnimatePresence transition, component visibility)
+
+---
+
+🔍 STEP-BY-STEP FIX STRATEGY:
+
+### 🧩 **PHASE 1: ENVIRONMENT & PROXY AUDIT**
+1. Detect the assigned Replit domain (process.env.REPL_SLUG + process.env.REPL_OWNER).  
+2. Check which port the dev server is actually listening on (3000, 5000, etc.).
+3. Verify that `.replit` and `vite.config.ts` are both aligned with the proxy port and protocol.
+4. Ensure `https: true` and correct `hmr.host` mapping for Replit.
+
+### ⚙️ **PHASE 2: CONFIGURATION HARDENING**
+1. Open and verify `.replit` file — if missing or incomplete, create:
+   ```toml
+   run = "npm run dev"
+
+   [nix]
+   channel = "stable-22_11"
+
+   [deployment]
+   run = ["sh", "-c", "npm run build && npm run preview"]
+   ```
+2. Update vite.config.ts to guarantee compatibility with Replit's external HTTPS proxy:
+
+   ```ts
+   server: {
+     host: '0.0.0.0',
+     port: process.env.PORT || 3000,
+     strictPort: false,
+     https: true,                 // Force HTTPS for external Replit link
+     open: false,                 // Disable auto-preview loop
+     hmr: {
+       protocol: 'wss',
+       host: process.env.REPL_SLUG
+         ? `${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`
+         : 'localhost',
+       clientPort: 443,
+     },
+     allowedHosts: [
+       '.replit.dev',
+       '.repl.co',
+       'localhost',
+     ],
+   },
+   base: './',                    // Ensures relative asset paths in proxy
+   ```
+3. Verify that no duplicate or conflicting vite.config files exist.
+
+### 🧠 **PHASE 3: CLIENT-SIDE RENDERING VERIFICATION**
+1. Inspect `src/App.tsx` for `AnimatePresence` and `showWelcome` logic:
+   - Confirm sessionStorage skip works (`welcomeDone` key)
+   - Ensure main layout renders correctly after animation
+2. Add temporary fallback logic:
+   ```ts
+   if (!showWelcome && !mainContentLoaded) {
+     return <div>🚨 Fallback Loaded: React rendering confirmed.</div>;
+   }
+   ```
+3. If fallback appears externally but not in preview, the issue is external proxy — not your React logic.
+
+### 🌐 **PHASE 4: NETWORK & CONSOLE CHECKS**
+1. Programmatically open a headless browser in Replit to capture console errors:
+   - Look for blocked assets (404 / blocked by CORS / Mixed Content)
+   - Log exact URLs failing to load
+2. If assets are blocked:
+   - Force rebuild (`npm run build`)
+   - Serve via Vite preview (`npm run preview`)
+   - Adjust `base` path until all scripts resolve correctly
+
+### 🧰 **PHASE 5: MULTI-MODE VERIFICATION**
+Run automatic tests in **all three modes**:
+| Mode | Command | Expected Result |
+|------|----------|-----------------|
+| Localhost | npm run dev | Full site renders |
+| Preview | Replit iframe | Full site renders |
+| External | .replit.dev URL | Full site renders |
+
+If external mode fails:
+- Temporarily deploy with `vite preview` to ensure static build works
+- If success, issue is Replit proxy port mapping → force `PORT` variable fix
+
+### 🧩 **PHASE 6: FINAL STABILIZATION**
+1. Add a `console.log(window.location.href)` in App.tsx to confirm environment detection.
+2. Auto-detect environment:
+   ```ts
+   const isReplitExternal = window.location.hostname.includes('replit.dev');
+   if (isReplitExternal) {
+     console.log('Running in Replit external view');
+   }
+   ```
+3. Adjust runtime configuration dynamically (if needed).
+
+---
+
+🧪 **VALIDATION CHECKLIST**
+Run the app and confirm:
+- ✅ No blank screen after animation
+- ✅ Navbar and home page visible in `.replit.dev` tab
+- ✅ No blocked requests in browser console
+- ✅ HMR connected successfully (wss://)
+- ✅ Same behavior across localhost, preview, and network modes
+
+---
+
+📋 **REPORT BACK AFTER FIX**
+At the end, produce a summary:
+- What config lines were changed (file + line)
+- Why the change fixed the issue
+- Confirmation screenshots or test logs
+- Verification of external accessibility (✅ Works in new tab)
+
+---
+
+⚡ **INSTRUCTIONS**
+Execute all diagnostic phases automatically.  
+Modify `.replit` and `vite.config.ts` as needed.  
+Test all run modes.  
+Fix any issues with HTTPS, ports, or HMR.  
+Ensure website loads fully after animation in **external new tab view**.  
+Generate a final natural-language report summarizing what was done, why it works, and validation proof.
+
+START NOW.

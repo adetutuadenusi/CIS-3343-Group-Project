@@ -1,0 +1,514 @@
+# 🚀 FINAL BUILD PROMPT FOR REPLIT AI
+## Emily Bakes Cakes - All Decisions Made, Ready to Execute
+
+**Status:** ✅ READY TO BUILD  
+**Deadline:** Saturday, November 15, 2025, 11:59 PM CST  
+**Time Available:** 48 hours  
+**Created:** November 13, 2025, 11:52 AM CST  
+
+---
+
+## COMPLETE PROJECT SPECIFICATION
+
+### 🎯 YOUR 4-TIER SYSTEM (All Decisions Confirmed)
+
+```
+TIER 1: PUBLIC WEBSITE
+- Homepage (hero + featured cakes)
+- Menu (product grid)
+- Gallery (masonry grid, lightbox)
+- Contact (Google Maps Embed + form + database storage)
+- Customer Login (optional, for account tracking history)
+- Mobile: FULL responsive support
+
+TIER 2: STAFF PORTAL
+- /staff-login (hidden from public)
+- 5 Role-Based Dashboards:
+  ✓ Sales: Create orders, view ALL orders (need coordination), manage customers
+  ✓ Baker: View assigned orders + queue, mark baking status, NO revenue KPIs
+  ✓ Decorator: View assigned orders, see design specs, mark decoration complete, NO revenue KPIs
+  ✓ Accountant: Financial reports, pending deposits, revenue KPIs, 6 reports
+  ✓ Manager: Full visibility (all orders, all revenue, all staff performance, 2 advanced charts)
+- Mobile: FULL responsive support
+
+TIER 3: CUSTOMER TRACKING (Public, No Login)
+- URL: /track/{unique-token}
+- Real order progress with:
+  ✓ Auto-cycling status bar (2 min per status)
+  ✓ Real elapsed time + estimated completion time
+  ✓ Order details (layers, icing, colors, special notes)
+  ✓ Pickup day/time
+  ✓ Payment status (deposit paid, balance due)
+- Mobile: FULL responsive support
+
+TIER 4: DATABASE
+PostgreSQL with tables:
+- customers (id, name, email, phone, address, created_at)
+- employees (id, email, password_hash, name, role, created_at)
+- products (id, name, category, base_price, is_active)
+- orders (id, customer_id, delivery_date, delivery_time, firm_price, 
+          deposit_amount, balance_due, status, tracking_token, decoration_notes,
+          created_at, updated_at)
+- order_layer (order_id, layer_number, flavor_id, filling_id, icing_id, color_id, special_notes)
+- order_status_history (id, order_id, old_status, new_status, updated_by, created_at)
+- contact_messages (id, name, email, phone, message, created_at)
+```
+
+---
+
+## 📋 DETAILED SPECIFICATIONS PER DECISION
+
+### 1. GOOGLE MAPS ON CONTACT PAGE
+**Decision:** Embed (no API key, fastest)
+```html
+<iframe 
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.1234567890!2d-118.2437!3d34.0522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27d001%3A0x0!2sEmily%20Bakes%20Cakes!5e0!3m2!1sen!2sus!4v..."
+  width="100%" 
+  height="400" 
+  style="border:0;" 
+  allowFullScreen="" 
+  loading="lazy"
+/>
+```
+**Replace coordinates with:** Your actual bakery address (or hardcode: "123 Baker St, Your City")
+
+### 2. CONTACT FORM STORAGE
+**Decision:** Email + Database
+```typescript
+// On form submit:
+1. Validate all fields
+2. Save to database: contact_messages table
+3. Send email via Resend to: your-email@gmail.com
+4. Show success message: "✓ Message sent! We'll be in touch."
+5. Optionally: Enable staff to view messages in /admin/contact-messages page
+```
+
+### 3. TRACKING PAGE AUTO-CYCLE
+**Decision:** 2 minutes per status
+```
+Timeline:
+Received (0:00-2:00) → 
+Baking (2:00-4:00) → 
+Decorating (4:00-6:00) → 
+Quality Check (6:00-7:00) → 
+Ready for Pickup (7:00+)
+
+Total cycle: ~7 minutes, then stays at "Ready"
+Refresh on page: Show current status based on time calculation
+```
+
+### 4. TRACKING PAGE TIMERS
+**Decision:** Real elapsed time + estimated completion
+```
+Display format:
+"⏱️ Elapsed: 45 minutes
+ ⏳ Estimated Complete: 2:30 PM (1 hour 15 min remaining)"
+
+Logic:
+- Start time: When baker clicked "Start Baking" (from database)
+- Est. completion: based on cake size + layer count (hardcoded estimates)
+- Update every 10 seconds in real-time
+```
+
+### 5. STAFF PERMISSIONS
+**Decision:** 
+- Sales sees ALL orders (for coordination)
+- Baker/Decorator NO revenue KPIs (only see their assigned orders)
+- Accountant/Manager see everything
+
+```typescript
+// Permission Matrix:
+Permission              | Sales | Baker | Decorator | Accountant | Manager
+Create Orders           | ✓     | ✗     | ✗         | ✗          | ✓
+View All Orders         | ✓     | ✗     | ✗         | ✓          | ✓
+View Own Orders Only    | -     | ✓     | ✓         | -          | -
+Edit Order Status       | ✗     | ✓*    | ✓*        | ✗          | ✓
+(*own only)
+View Revenue/KPIs       | ✗     | ✗     | ✗         | ✓          | ✓
+Manage Staff/Products   | ✗     | ✗     | ✗         | ✗          | ✓
+```
+
+### 6. EMAIL NOTIFICATIONS
+**Decision:** On order creation
+```
+Trigger: When Sales staff clicks "Confirm & Create Order"
+
+Email to customer:
+From: noreply@emilybakes.com
+Subject: "Your Emily Bakes Cakes Order Confirmed - #Q1-001"
+Body:
+  Order #Q1-001 Confirmed!
+  Customer: John Doe
+  Pickup: Tomorrow, 2:00 PM
+  
+  Cake Details:
+  - Size: 10"
+  - Layers: 3 (Vanilla, Chocolate, Red Velvet)
+  - Icing: Cream Cheese Frosting
+  - Colors: Pink, Gold, White
+  - Special: "Happy 30th Birthday!"
+  
+  Price: $95.00
+  Deposit Paid: $50.00
+  Balance Due: $45.00
+  
+  📍 Track Your Order:
+  [emilybakes.com/track/TRK-Q1-001]
+  
+  Questions? Call (555) 123-4567
+
+Method: Resend API (already installed in your project)
+```
+
+### 7. CAKE LAYER FLEXIBILITY
+**Decision:** Completely flexible (any combination)
+```
+Rules:
+- Min layers: 1
+- Max layers: 7 (no limit per case study, but 7 is practical max)
+- Each layer can be different:
+  * Flavor: (Vanilla, Chocolate, Red Velvet, Lemon, Almond, German Chocolate)
+  * Filling: (Cream Cheese, Chocolate Ganache, Raspberry Jam, Buttercream)
+  * Icing: (Buttercream, Fondant, Ganache, Cream Cheese)
+  * Color: (White, Pink, Blue, Gold, Green, Purple, Red, Yellow)
+- No restrictions (manager can override if needed)
+- All combinations allowed
+```
+
+### 8. DEPOSIT CALCULATION
+**Decision:** Auto-calculate 50% (enforces business rule)
+```typescript
+// Logic:
+firmPrice = user_entered_value (e.g., $95)
+depositRequired = firmPrice * 0.5  // Auto-calculated: $47.50
+balanceDue = firmPrice - depositRequired
+
+// Can be overridden by manager, but default is 50%
+// Validation: Customer must pay at least 50% before confirming order
+
+// On payment form:
+- Deposit Amount: [_$_] (editable, but highlights 50% suggestion)
+- Validation error if: depositAmount < (firmPrice * 0.5)
+- Balance calculated automatically
+```
+
+### 9. CUSTOMER PHOTOS
+**Decision:** URL/link only (teammate handles upload later)
+```typescript
+// In order form, Step 3 (Customization):
+Label: "Reference Images (optional)"
+Field: Text input for URL
+Example: "https://drive.google.com/file/d/1ABC123/view"
+         OR "https://pinterest.com/pin/12345/"
+
+// Storage: Save URL as TEXT in orders table
+// Display: In order details, show as clickable link
+// Phase 2: Replace with actual file upload to AWS S3 / Cloudinary
+```
+
+### 10. MOBILE RESPONSIVENESS
+**Decision:** FULL mobile support (not just desktop/tablet)
+```
+Breakpoints:
+- Mobile: 375px - 768px (Tailwind: sm, md)
+- Tablet: 768px - 1024px (Tailwind: md, lg)
+- Desktop: 1024px+ (Tailwind: lg, xl)
+
+All pages must work on:
+✓ iPhone 12/13/14 (375px width)
+✓ iPad (768px width)
+✓ Desktop (1920px)
+
+Key mobile considerations:
+- Hamburger menu for navigation
+- Stacked forms (no 2-column on mobile)
+- Touch-friendly buttons (min 44x44px)
+- Images: responsive with srcset
+- Tables: card layout on mobile
+- Test: Use Chrome DevTools device emulation
+```
+
+---
+
+## 🔐 DEMO CREDENTIALS (6 Staff Accounts)
+
+```
+All passwords: DemoPass123!
+
+1. emily@emilybakes.com (Owner/Admin)
+   Role: owner
+   Full Name: Emily
+
+2. manager@emilybakes.com (Manager - James)
+   Role: manager
+   Full Name: James
+
+3. sales@emilybakes.com (Sales Staff - Alex)
+   Role: sales
+   Full Name: Alex Sales
+
+4. baker@emilybakes.com (Baker - Casey)
+   Role: baker
+   Full Name: Casey Baker
+
+5. decorator@emilybakes.com (Decorator - Morgan)
+   Role: decorator
+   Full Name: Morgan Decorator
+
+6. accountant@emilybakes.com (Accountant - Dan)
+   Role: accountant
+   Full Name: Dan Accountant
+```
+
+---
+
+## 🎯 TECH STACK (Confirmed)
+
+**Frontend:**
+- React 18+ (TypeScript)
+- Tailwind CSS (responsive design)
+- Recharts (charts for Manager dashboard)
+- React Router (page navigation)
+- Axios (API calls)
+
+**Backend:**
+- Node.js + Express
+- PostgreSQL (database)
+- JWT (authentication)
+- Resend (email service)
+- bcryptjs (password hashing)
+
+**APIs/Services:**
+- Google Maps Embed (no API key needed)
+- Resend email (free tier, 100 emails/day)
+
+**Deployment:**
+- Replit (single codebase)
+
+---
+
+## 📅 BUILD TIMELINE (48 Hours)
+
+### DAY 1: TODAY (Thursday, Nov 13) — 12 Hours
+**Morning (12:00 PM - 4:00 PM):**
+- [ ] Database setup: Run PostgreSQL migrations from doc 20_COMPLETE_DATABASE_SETUP.md
+- [ ] Seed 6 staff accounts (with hashed passwords)
+- [ ] Seed 3 demo customers
+- [ ] Seed products (cakes, flavors, fillings, icings, colors)
+- [ ] Test: Verify all tables created, data seeded
+
+**Afternoon (4:00 PM - 8:00 PM):**
+- [ ] Backend API - Authentication: POST /auth/login → return JWT token
+- [ ] Backend API - Customers: GET/POST/PATCH/DELETE /api/customers
+- [ ] Backend API - Products: GET /api/products (read-only)
+- [ ] Test with Postman: Login works, JWT token stored
+
+**Evening (8:00 PM - Midnight):**
+- [ ] Backend API - Orders: POST /api/orders (create with layers), GET /api/orders
+- [ ] Backend API - Order Status: PATCH /api/orders/:id/status
+- [ ] Generate unique tracking_token on order creation
+- [ ] Test: Create order → tracking link generated
+
+**Checkpoint:** ✓ All backend API endpoints working
+
+---
+
+### DAY 2: FRIDAY (Nov 14) — 14 Hours
+**Morning (8:00 AM - 12:00 PM):**
+- [ ] Frontend: React app setup, Tailwind configured
+- [ ] Frontend: Public pages skeleton (Home, Menu, Gallery, Contact, About)
+- [ ] Frontend: Responsive navbar with mobile hamburger
+
+**Afternoon (12:00 PM - 6:00 PM):**
+- [ ] Frontend: Contact page with embedded Google Maps + form
+- [ ] Contact form integration: Save to database + send email via Resend
+- [ ] Frontend: Staff login page (/staff-login)
+- [ ] Staff login: Form validation, JWT token storage, redirect to dashboard
+
+**Evening (6:00 PM - Midnight):**
+- [ ] Frontend: Sales Dashboard (KPIs, orders table, search, new order button)
+- [ ] Frontend: Start Order Wizard (Step 1-2: Customer + Cake Config)
+- [ ] Test: Staff login → Sales dashboard → orders display
+
+**Checkpoint:** ✓ Public site looks good, staff can login
+
+---
+
+### DAY 3: SATURDAY (Nov 15) — 10 Hours
+**Morning (8:00 AM - 12:00 PM):**
+- [ ] Frontend: Finish Order Wizard (Step 3-4: Customization + Review)
+- [ ] Frontend: Baker/Decorator/Accountant Dashboards
+- [ ] Frontend: Manager Dashboard with 2 Recharts charts
+
+**Afternoon (12:00 PM - 4:00 PM):**
+- [ ] Frontend: Tracking page (/track/:token) with auto-cycling status
+- [ ] Tracking page: Real timers (elapsed + estimated completion)
+- [ ] Frontend: 6 Reports pages (at least 2 with real data)
+
+**Evening (4:00 PM - 8:00 PM):**
+- [ ] Mobile responsiveness: Test all pages on 375px width
+- [ ] Fix responsive issues: Hamburger menu, stacked forms, card layouts
+- [ ] End-to-end testing: Full workflow (login → create order → see tracking)
+
+**Final 2 Hours (6:00 PM - 8:00 PM):**
+- [ ] Bug fixes & polish
+- [ ] Create demo script (10-min walkthrough)
+- [ ] Deploy to Replit
+- [ ] Test live demo
+
+**Checkpoint:** ✓ Everything working, ready for professor demo
+
+---
+
+## ✅ DELIVERABLES CHECKLIST (Saturday, 11:59 PM)
+
+### Public Website
+- [ ] Homepage with hero + featured cakes gallery
+- [ ] Menu page (product grid, searchable)
+- [ ] Gallery page (masonry grid, lightbox on click)
+- [ ] Contact page (Google Maps + contact form stored in DB + emailed)
+- [ ] All pages responsive (mobile, tablet, desktop)
+- [ ] Navigation hamburger on mobile
+
+### Staff Portal
+- [ ] /staff-login page (hidden from public)
+- [ ] 6 working demo accounts (all passwords: DemoPass123!)
+- [ ] Sales Dashboard (all orders, create new, revenue KPIs, chart)
+- [ ] Baker Dashboard (assigned orders, start baking button)
+- [ ] Decorator Dashboard (assigned orders, design specs, mark complete)
+- [ ] Accountant Dashboard (revenue, pending deposits, 2+ reports, chart)
+- [ ] Manager Dashboard (full visibility, 2 advanced charts)
+- [ ] Order Creation Wizard (4 steps: customer → cake config → customization → review)
+- [ ] Order workflow (status updates flow through all dashboards)
+
+### Customer Tracking
+- [ ] Public tracking page (/track/{token})
+- [ ] Auto-cycling status bar (2 min per status)
+- [ ] Real elapsed time + estimated completion display
+- [ ] Order details (layers, icing, colors, notes, price)
+- [ ] Responsive on mobile/tablet/desktop
+
+### Database & Backend
+- [ ] PostgreSQL migrations complete
+- [ ] 6 staff accounts seeded with hashed passwords
+- [ ] 3 demo customers seeded
+- [ ] Products (cakes, flavors, fillings, icings, colors) seeded
+- [ ] All API endpoints functional
+- [ ] JWT authentication working
+- [ ] Email on order creation (Resend)
+- [ ] Contact form messages saved to DB + emailed
+
+### Reports
+- [ ] 6 report pages accessible
+- [ ] Report 1: Daily Revenue Summary (chart)
+- [ ] Report 2: Pending Orders by Status (table)
+- [ ] Reports 3-6: At least 2 have real data
+
+### Documentation
+- [ ] README with demo credentials
+- [ ] Instructions for running locally
+- [ ] API endpoint documentation
+- [ ] GitHub commit history showing 2-day build
+
+---
+
+## 🎬 10-MINUTE DEMO SCRIPT (For Saturday)
+
+```
+DEMO WALKTHROUGH (10 minutes)
+
+INTRO (30 sec):
+"This is Emily Bakes Cakes - a complete order management system 
+for bakeries. Customers call or visit → staff enters orders → 
+customer tracks online."
+
+1. PUBLIC WEBSITE (2 min)
+   - Show homepage (hero + featured cakes)
+   - Browse menu (show product details)
+   - View gallery (click image for lightbox)
+   - Contact page (show Google Maps + form)
+
+2. STAFF LOGIN (1 min)
+   - Navigate to /staff-login (mention: hidden from customers)
+   - Login as sales@emilybakes.com / DemoPass123!
+   - Show Sales Dashboard (KPIs, orders table)
+
+3. CREATE ORDER (2 min)
+   - Click "New Order" button
+   - Step 1: Select customer "John Doe"
+   - Step 2: 10" birthday cake, tomorrow 2pm, 3 layers
+   - Step 3: Special message "Happy 30th Birthday!", $95 price
+   - Step 4: Review and confirm
+   - Show: Order created, confirmation email sent to customer
+
+4. OTHER DASHBOARDS (2 min)
+   - Logout, login as baker@emilybakes.com
+   - Show Baker Queue (see assigned orders)
+   - Back to manager@emilybakes.com
+   - Show Manager Dashboard (all orders + 2 charts)
+
+5. CUSTOMER TRACKING (2 min)
+   - Share tracking link with audience
+   - Show tracking page: status progress bar
+   - Watch it auto-cycle every 2 minutes
+   - Show: "Baking" → "Decorating" → "Ready"
+
+CLOSING (30 sec):
+"Phase 2 features coming soon: 
+- Staff photo galleries
+- SMS notifications  
+- Advanced scheduling
+- Mobile app for staff"
+
+Q&A (if time)
+```
+
+---
+
+## 🚨 CRITICAL SUCCESS FACTORS
+
+1. **Parallel Work:** Backend dev builds API while frontend builds UI (don't wait)
+2. **Test Early:** Use Postman for API testing, Chrome DevTools for frontend
+3. **Commit Frequently:** GitHub commits every 2 hours (professor sees progress)
+4. **Mobile First:** Build responsive from start, don't add at end
+5. **Use Libraries:** Recharts, Resend, bcryptjs - don't build from scratch
+6. **Mock Data:** If database slow, use mock data for frontend testing
+7. **Focus on Demo:** Skip perfection, focus on happy path for walkthrough
+
+---
+
+## 📞 IF YOU GET STUCK
+
+**Reference Documents:**
+- Schema: `20_COMPLETE_DATABASE_SETUP.md` (SQL migrations + seed scripts)
+- API Spec: `17_DEVELOPER_IMPLEMENTATION_SPEC.md` (endpoint contracts)
+- Wireframes: `21_FIRST_Complete-Page-Wireframes.md` (exact page layouts)
+- UI Guide: `03_UI_STYLE_GUIDE_COMPONENTS.md` (colors, fonts, components)
+
+**Quick Help:**
+- JWT auth issue? → Use bcryptjs + jsonwebtoken libraries
+- Responsive CSS issue? → Tailwind breakpoints (sm, md, lg, xl)
+- Email not sending? → Check Resend API key in .env, test with test email first
+- Database won't connect? → Verify PostgreSQL running, DATABASE_URL in .env
+
+---
+
+## 🎉 YOU'VE GOT THIS!
+
+**Summary:**
+- ✅ All 10 decisions made
+- ✅ All specifications clear
+- ✅ Wireframes complete
+- ✅ 48-hour timeline
+- ✅ 6 demo accounts ready
+- ✅ Database schema final
+
+**What's left:** Write the code. You have everything you need.
+
+**Time to build: NOW** 🚀
+
+---
+
+*Last Updated: November 13, 2025, 11:52 AM CST*  
+*Deadline: November 15, 2025, 11:59 PM CST*  
+*Status: READY TO BUILD*

@@ -1,0 +1,79 @@
+## ⚠️ YES - I Have 3 Potential Concerns. Let Me Be Direct:
+
+***
+
+### **CONCERN #1: Time Estimate is TIGHT** ⏰
+
+**Your plan says:** 24-33 hours of work, 32-hour deadline = 1-8 hour buffer
+
+**The math is real, BUT:**
+- If Replit AI takes 4 hours to set up databases/auth, you're already down to ~28 hours left
+- 6 reports with Recharts could slip to 8-9 hours if there are API/data issues
+- Testing typically takes longer than estimated (bugs, fixes, re-testing)
+- **Real buffer:** Probably 0-4 hours, not 1-8 hours
+
+**Recommendation:** Start Phase 1 NOW (database + auth). Don't wait. Those 4-6 hours are critical.
+
+---
+
+### **CONCERN #2: Baker/Decorator "FULL Sales Access"** ⚡
+
+**Your rule is clear:** Baker and Decorator can create orders + manage customers
+
+**But watch out for:**
+- They need to see the same order creation form as Sales
+- They need to search for customers just like Sales
+- The UI needs to show "Sales Mode" vs "Baking/Decoration Mode" 
+- Their specialized queue (baking/decoration) must NOT interfere with Sales functions
+
+**If Replit AI implements this wrong:** Baker clicks "Create Order" but gets stuck in Baking Queue view = broke.
+
+**Recommendation:** Explicitly tell Replit AI:
+- "Baker Dashboard shows 2 sections: (1) My Baking Queue, (2) FULL Sales Section"
+- "Same order creation flow as Sales staff"
+- "Same customer search/selection as Sales staff"
+
+***
+
+### **CONCERN #3: Tracking Page Logic** 📍
+
+**Your spec says:** 11 stages, 2 minutes each, loops forever
+
+**Potential issue:**
+- Stages change based on `Math.floor(elapsedMinutes / 2) % 11`
+- If order was created at 12:00 PM, at 12:02 it's stage 1, at 12:04 it's stage 2, etc.
+- **This is correct UNLESS** someone later needs to manually set a stage
+- If Baker manually changes status to "Baking in Progress" mid-cycle, the tracking page will ignore it and keep auto-cycling based on elapsed time
+
+**Is this the behavior you want?** If not, tracking page needs to check the actual `orders.status` field instead of just elapsed time.
+
+**Recommendation:** Clarify with Replit AI:
+- Does tracking page **ALWAYS auto-cycle** regardless of actual order status?
+- Or should it **CHECK actual status** but use elapsed time for progress within that stage?
+
+***
+
+## ✅ WHAT'S GOOD ABOUT YOUR PLAN
+
+✅ **Hybrid approach is smart** - Preserves all your e-commerce work  
+✅ **Clear permissions matrix** - No ambiguity  
+✅ **Realistic scope** - 24-33 hours is doable  
+✅ **All 6 reports specified** - No guessing  
+✅ **Demo credentials clear** - Easy to test  
+✅ **Tracking page is specific** - 11 stages defined  
+
+***
+
+## 🎯 MY HONEST ASSESSMENT
+
+**Your plan is 85% ready. The 3 concerns are:**
+
+1. **Time buffer is tighter than it looks** → Start Phase 1 immediately
+2. **Baker/Decorator UI needs careful implementation** → Spell it out for Replit AI
+3. **Tracking page auto-cycle behavior** → Confirm with team if this is correct
+
+**Fix these 3 things, and you're solid.** ✅
+
+***
+
+**Should I flag these 3 concerns in a note for Replit AI, or are you comfortable with them as-is?**

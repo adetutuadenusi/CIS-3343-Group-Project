@@ -1,0 +1,119 @@
+# Emily Bakes Cakes – Custom Order Form (Aligned to CIS 3343 Fall 2025 Case Study)
+
+**This design follows the latest case study rules, workflow, and visual identity for the internal staff application. All fields, options, and constraints reflect only in-scope requirements for efficient, compliant order entry.**
+
+***
+
+### FORM BRAND COLORS
+- **Raspberry:** #C44569    **Chocolate:** #563120   **Vanilla:** #F8EBD7   **Cream:** #FAF5F0
+- **Core accent fields:** 
+  - Red #FF0000 
+  - Blue #0000FF
+  - Pink #FFC0CB 
+  - Purple #800080 
+  - Gold #FFD700 
+  - Silver #C0C0C0 
+  - Yellow #FFFF00 
+  - White #FFFFFF 
+  - Green #008000 
+  - Black #000000
+
+***
+
+## NEW CUSTOM ORDER – WIZARD FORM
+
+### Step 1: Customer
+- Search and select existing customer by name, phone, or email
+- *or* Create New Customer (Full Name, Email, Phone, Address, Customer Type: Retail/Corporate, Preferred checkbox)
+
+### Step 2: Base Cake and Size
+- **Base Product:** Dropdown with case study cakes (e.g., Birthday Celebration, Almond Delight, Lemon & Cream Cheese, etc.)
+- **Size:** 
+  - 6” Round Double Layer (4–6) - $20
+  - 8” Round Double Layer (12–15) - $30
+  - 10” Round Double Layer (25–30) - $60
+  - 12” Round Double Layer (35) - $100
+  - 14” Round Double Layer (40) - $140
+  - 16” Round Double Layer (85) - $180
+  - ¼ Sheet (15–20) - $40
+  - ½ Sheet (30–50) - $100
+  - Full Sheet (90–100) - $200
+
+### Step 3: Cake Layers (2–7, each configurable)
+- **Layer (repeater, minimum 2):**  
+  For each:
+  - Layer number (auto: bottom to top)
+  - Cake Flavor (Vanilla, Almond, Yellow, Devils Food Chocolate, Chocolate, Strawberry)
+  - Filling (White Buttercream, Chocolate Buttercream, Almond Buttercream, Cream Cheese, Lemon Curd, Strawberry, Rum/Strawberry, Raspberry, Pecan Praline, Chocolate Mousse, Lemon Mousse, Strawberry Mousse, Raspberry Mousse, White Chocolate Mousse, Mango Mousse)
+  - Icing (White Buttercream, Chocolate Buttercream, Almond Buttercream, White Chocolate Buttercream, Cream Cheese, Chocolate Ganache)
+  - Writing Color (dropdown with color swatch; values: Red, Blue, Pink, etc.)
+  - Special Notes (optional, per layer; e.g., nut allergy, picture upload of design inspiration)
+  - Image upload (optional)
+
+### Step 4: Decorations & Extras
+- **Available Decorations** (multi-select):
+  Buttercream Flowers, Fondant Decorations, Silk Flowers (Iris, Rose, Daisy, Lily), Silk Butterflies, Edible Sugar Photos, Toy Trains, Dinosaurs, Dolls, Construction Toys, Plastic Animals, Camping Tents, Race Cars, Ballet Slippers, Baby Items, Fish, Trees, Fleur-de-Lis, Rock Candy, Graduation Cap, Balloons, Firework Explosions, Ribbons (Red, Blue, Pink, etc.), Star Explosions, Parasols, Flamingos, Flags, Sports Equipment, Rainbows…
+
+### Step 5: Pickup Details
+- **Pickup Date (required, minimum 2 days in advance)**
+- **Pickup Time (optional, default: business hours)**
+- **Special Instructions for Baker/Decorator (multiline text)**
+- **Upload Reference Image(s) (optional, e.g., customer-provided inspiration photo)**
+
+### Step 6: Pricing & Deposit
+- **Firm Price** (manual, required; pricing guidance displayed)
+- **Deposit** (required, min 50% of Firm Price)
+- **Balance Due (auto-calc)**
+- **Discount** (preferred customer only, auto 10% if checked)
+- **Payment Type:** Cash, Debit, Visa, MasterCard, AmEx
+
+### Step 7: Review & Confirmation
+- Display all selections and price breakdown
+- Confirm details, editable via "Back" among steps
+- Upon Submit:
+    - System assigns order number/status ("To Be Created")
+    - Email confirmation is sent to customer (includes tracking link)
+    - Prompt payment collection for deposit
+
+***
+
+## VALIDATIONS & CONSTRAINTS
+- Minimum 2 layers required (enforced in Layer step, “Add Layer/Remove Layer” always leaves ≥2)
+- Pickup must be at least 2 days from today (unless manager override/“Rush Order” flow)
+- Deposit field must be ≥50% of price, required entry
+- All required fields must be entered to proceed
+- Decorations and icing color choices limited to case study palette/options
+
+***
+
+## ACCESSIBILITY & LAYOUT
+- Inputs: Large, high-contrast (using core brand palette and accent edge colors)
+- "Next" and "Back" buttons in Raspberry (#C44569)
+- Field labels in Chocolate (#563120), canvas/section backgrounds in Cream/Vanilla (#FAF5F0/#F8EBD7)
+- Color dropdowns swatch-enabled
+- Stepped progress bar with section heading for each stage
+- Inline error validation messages in Red (#FF0000)
+- Optional “Print Production Sheet” option after save
+
+***
+
+## Example Form Section (Step 3 – Cake Layers)
+
+| Layer | Cake Flavor  | Filling (1–2 allowed/layer) | Icing Type        | Writing Color  | Notes/Image            |
+|-------|--------------|-----------------------------|-------------------|---------------|------------------------|
+| 1     | Chocolate    | Ganache                     | Buttercream White | Red           | “Extra ganache; nut free” |
+| 2     | Vanilla      | Vanilla Buttercream         | Cream Cheese      | Gold          | Upload: [CakeRef.jpg]  |
+| …     | …            | …                           | …                 | …             | …                      |
+
+***
+
+**This specification may be used as a prompt, handoff, or reference for any digital development team (Figma, Replit AI, React). It is fully compliant with the CIS 3343 case study, color palette, and user role/business process rules.**[1][2][3][4]
+
+[1](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_af659f7c-1b34-4d88-a2c2-7833cc82dd9b/fc5088e0-ca62-4a17-b32c-94593dec4861/16_COMPLETE_SOLUTIONS_FROM_CASE_STUDY.md)
+[2](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_af659f7c-1b34-4d88-a2c2-7833cc82dd9b/58dfc896-61c7-46ff-b6e3-20fedde557c5/02_INFORMATION_ARCHITECTURE.md)
+[3](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_af659f7c-1b34-4d88-a2c2-7833cc82dd9b/d6534f3f-e5df-4f5b-8619-5d640d6b9e8b/04_PAGES_AND_WIREFRAME_SPECS.md)
+[4](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_af659f7c-1b34-4d88-a2c2-7833cc82dd9b/798218f9-f6e2-402f-8b02-b4110b78c144/21_FIRST_Complete-Page-Wireframes.md)
+[5](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_af659f7c-1b34-4d88-a2c2-7833cc82dd9b/ac6fe23a-15d3-46c0-b7a1-e24875b918ba/CIS-3343-Fall-2025-Case-Study-Emily-Bakes-as-of-Sept-15th-2025-3.pdf)
+[6](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_af659f7c-1b34-4d88-a2c2-7833cc82dd9b/ff3e0e99-aab7-4a1d-91ba-91059585c83a/DELIVERABLES_ALIGNMENT.md)
+[7](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_af659f7c-1b34-4d88-a2c2-7833cc82dd9b/2e8e4865-d1da-43c1-9d8d-eb34fe0bd20a/01_SCOPE_AND_NON_GOALS.md)
+[8](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/collection_af659f7c-1b34-4d88-a2c2-7833cc82dd9b/edc0c9e0-db46-46a8-bcb9-af5797075090/17_DEVELOPER_IMPLEMENTATION_SPEC.md)
