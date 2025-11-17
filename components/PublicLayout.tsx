@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { ShoppingBag, User, Heart } from 'lucide-react';
+import { ShoppingBag, Heart } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Button } from './ui/button';
 import { HamburgerIcon } from './HamburgerIcon';
 import { MobileNav } from './MobileNav';
 import { StickyBottomCTA } from './StickyBottomCTA';
+import CompactStaffLoginCTA from './CompactStaffLoginCTA';
 
 interface PublicLayoutProps {
   children: React.ReactNode;
@@ -137,37 +138,8 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
               >
                 <ShoppingBag size={22} />
               </Button>
-              <button
-                onClick={onAdminAccess}
-                style={{
-                  background: '#FFFFFF',
-                  color: '#C44569',
-                  fontFamily: 'Poppins, sans-serif',
-                  fontWeight: 600,
-                  fontSize: '14px',
-                  padding: '12px 24px',
-                  borderRadius: '8px',
-                  border: 'none',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
-                  transition: 'all 200ms ease',
-                  minHeight: '44px'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
-                }}
-              >
-                <User size={18} />
-                Staff Login
-              </button>
+              {/* Use compact, brand-colored Staff Login CTA for visibility balance */}
+              <CompactStaffLoginCTA onClick={onAdminAccess} />
             </div>
 
             {/* Mobile/Tablet Actions */}

@@ -19,6 +19,9 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { SkeletonCard } from '../components/Loading/SkeletonCard';
+import PickupOrderCard from '../components/PickupOrderCard';
+import DashboardFooter from '../components/DashboardFooter';
+import { EmptyState } from '../components/EmptyState';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { LineChart, Line, ResponsiveContainer } from 'recharts';
@@ -161,78 +164,18 @@ function DraggableOrder({ order, columnId }: DraggableOrderProps) {
   };
 
   return (
-    <div
-      ref={drag}
-      style={{
-        opacity: isDragging ? 0.5 : 1,
-        cursor: 'move',
-        padding: '24px', // Updated to match design system standard
-        background: 'white',
-        borderRadius: '12px', // Updated to match design system
-        marginBottom: '12px',
-        border: '1px solid rgba(90, 56, 37, 0.15)',
-        boxShadow: '0 2px 4px rgba(90, 56, 37, 0.08)',
-        transition: 'all 300ms ease'
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.boxShadow = '0 4px 12px rgba(90, 56, 37, 0.15)';
-        e.currentTarget.style.transform = 'translateY(-2px)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.boxShadow = '0 2px 4px rgba(90, 56, 37, 0.08)';
-        e.currentTarget.style.transform = 'translateY(0)';
-      }}
-    >
-      <div className="flex items-start justify-between mb-2">
-        <span style={{ 
-          fontFamily: 'Poppins', 
-          fontWeight: 600, 
-          fontSize: '14px', 
-          color: '#2B2B2B' 
-        }}>
-          {order.id}
-        </span>
-        <Badge 
-          style={{ 
-            backgroundColor: `${priorityColors[order.priority]}20`,
-            color: priorityColors[order.priority],
-            border: `1px solid ${priorityColors[order.priority]}40`,
-            fontSize: '10px',
-            textTransform: 'uppercase',
-            padding: '2px 8px'
-          }}
-        >
-          {order.priority}
-        </Badge>
-      </div>
-      <p style={{ 
-        fontFamily: 'Poppins', 
-        fontWeight: 500, 
-        fontSize: '15px', 
-        color: '#2B2B2B',
-        marginBottom: '8px'
-      }}>
-        {order.cake}
-      </p>
-      <div className="flex items-center justify-between" style={{ fontSize: '13px' }}>
-        <span style={{ fontFamily: 'Open Sans', color: '#5A3825', opacity: 0.8 }}>
-          {order.customer}
-        </span>
-        <span style={{ 
-          fontFamily: 'Poppins', 
-          fontWeight: 600, 
-          color: '#C44569',
-          fontSize: '14px'
-        }}>
-          ${order.value}
-        </span>
-      </div>
-      <div className="mt-2 pt-2" style={{ borderTop: '1px solid rgba(90, 56, 37, 0.1)' }}>
-        <div className="flex items-center gap-1" style={{ fontSize: '12px', color: '#5A3825', opacity: 0.7 }}>
-          <Calendar size={12} />
-          <span style={{ fontFamily: 'Open Sans' }}>Pickup: {order.pickup}</span>
-        </div>
-      </div>
+    <div ref={drag} style={{ opacity: isDragging ? 0.5 : 1, marginBottom: 12, cursor: 'move' }}>
+      <PickupOrderCard
+        id={order.id}
+        customer={order.customer}
+        cake={order.cake}
+        pickup={order.pickup}
+        priority={order.priority}
+        value={order.value}
+        onView={(id) => console.log('View', id)}
+        onUpdate={(id) => console.log('Update', id)}
+        onMarkPicked={(id) => console.log('Picked', id)}
+      />
     </div>
   );
 }
@@ -304,11 +247,13 @@ export function Dashboard() {
   const [orders, setOrders] = useState(initialOrders);
   const [newOrdersCount, setNewOrdersCount] = useState(22);
   const [isLoading, setIsLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
   // Simulate initial data load
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
+      setLastUpdated(new Date().toLocaleTimeString());
     }, 800);
     return () => clearTimeout(timer);
   }, []);
@@ -338,6 +283,11 @@ export function Dashboard() {
           Real-time operational intelligence
         </p>
       </div>
+
+      {/* Empty handling: show friendly empty state when there are no orders */}
+      {(!orders.new.length && !orders.inProgress.length && !orders.decorating.length && !orders.ready.length) && (
+        <EmptyState type="orders" onAction={() => console.log('Create order')} />
+      )}
 
       {/* KPI Cards - Top Row with Sparklines */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -381,6 +331,14 @@ export function Dashboard() {
           >
             <div className="flex items-start justify-between mb-3">
               <div>
+
+              <DashboardFooter lastUpdated={lastUpdated || undefined} onRefresh={async () => {
+                setIsLoading(true);
+                // Simulate refresh
+                await new Promise((res) => setTimeout(res, 800));
+                setIsLoading(false);
+                setLastUpdated(new Date().toLocaleTimeString());
+              }} />
                 <p style={{ 
                   fontFamily: 'Open Sans', 
                   fontSize: '13px', 

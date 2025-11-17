@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowLeft, Lock, User as UserIcon } from 'lucide-react';
+import CredentialsToggle from '../../components/CredentialsToggle';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Card } from '../../components/ui/card';
@@ -68,12 +69,13 @@ export function Login({ onLogin, onBackToPublic }: LoginProps) {
 
       {/* Login Card */}
       <motion.div
-        className="relative z-10 w-full max-w-md"
+        className="relative z-10 w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
       >
-        <Card className="glass-card p-8 md:p-12">
+        {/* Left: Login Card */}
+        <Card className="glass-card p-8 md:p-10">
           <div className="text-center mb-8">
             <motion.div
               className="w-16 h-16 mx-auto mb-6 rounded-2xl flex items-center justify-center"
@@ -215,7 +217,11 @@ export function Login({ onLogin, onBackToPublic }: LoginProps) {
             </p>
           </div>
         </Card>
+        </Card>
+
+        {/* Right: Demo Credentials Toggle (collapsed by default) */}
+        <div className="flex items-start">
+          <CredentialsToggle />
+        </div>
+
       </motion.div>
-    </div>
-  );
-}

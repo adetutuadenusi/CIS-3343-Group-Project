@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Button } from './ui/button';
+import BackToSiteDropdown from './BackToSiteDropdown';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -83,7 +84,7 @@ export function AdminLayout({ children, activePage, onNavigate, onLogout }: Admi
           </span>
         </div>
 
-        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4">
           <div className="hidden md:flex items-center gap-3">
             <div 
               className="w-10 h-10 rounded-full flex items-center justify-center"
@@ -112,18 +113,9 @@ export function AdminLayout({ children, activePage, onNavigate, onLogout }: Admi
               </p>
             </div>
           </div>
-          <Button
-            onClick={onLogout}
-            variant="ghost"
-            className="p-2 hover:bg-white/10"
-            style={{ 
-              color: 'rgba(255, 255, 255, 0.8)',
-              minWidth: '44px',
-              minHeight: '44px'
-            }}
-          >
-            <LogOut size={20} />
-          </Button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <BackToSiteDropdown onLogout={onLogout} onSwitchAccount={() => onNavigate('login')} />
+          </div>
         </div>
       </header>
 
