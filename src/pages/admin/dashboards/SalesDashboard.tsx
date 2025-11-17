@@ -6,6 +6,7 @@ import { OrderQueueCard } from '../../../components/dashboard/OrderQueueCard';
 import { QuickActionCard } from '../../../components/dashboard/QuickActionCard';
 import { PickupSearchSection } from '../../../components/dashboard/PickupSearchSection';
 import { SectionHeader } from '../../../components/dashboard/SectionHeader';
+import { BakeryPattern } from '../../../components/dashboard/BakeryPattern';
 
 interface SalesDashboardProps {
   onNavigate?: (page: string) => void;
@@ -92,12 +93,16 @@ export function SalesDashboard({ onNavigate }: SalesDashboardProps) {
   }
 
   return (
-    <div className="h-full overflow-auto" style={{ background: '#F8EBD7', padding: 'clamp(20px, 4vw, 40px)' }}>
+    <div className="h-full overflow-auto" style={{ background: '#F8EBD7', padding: 'clamp(20px, 4vw, 40px)', position: 'relative' }}>
+      {/* Bakery Pattern Overlay */}
+      <BakeryPattern />
+
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="mb-6"
+        style={{ position: 'relative', zIndex: 2 }}
       >
         <h1 style={{
           fontFamily: 'Playfair Display, serif',

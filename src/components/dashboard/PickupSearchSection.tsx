@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Search, X, Cake } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { getStatusColor, getBorderStripeStyle } from '../../utils/orderColors';
 
 interface Order {
   id: number;
@@ -52,24 +53,6 @@ export function PickupSearchSection({ orders, onOrderClick }: PickupSearchSectio
     setIsSearching(false);
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'ready': return '#10B981';
-      case 'baking': return '#F97316';
-      case 'decorating': return '#8B5CF6';
-      case 'pending': return '#F59E0B';
-      default: return '#6B7280';
-    }
-  };
-
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'high': return '#EF4444';
-      case 'medium': return '#F59E0B';
-      case 'low': return '#9CA3AF';
-      default: return '#6B7280';
-    }
-  };
 
   return (
     <div style={{
@@ -250,16 +233,7 @@ export function PickupSearchSection({ orders, onOrderClick }: PickupSearchSectio
                     }}
                   >
                     {/* Priority Stripe */}
-                    <div style={{
-                      position: 'absolute',
-                      left: 0,
-                      top: 0,
-                      bottom: 0,
-                      width: '4px',
-                      background: getPriorityColor(order.priority),
-                      borderTopLeftRadius: '12px',
-                      borderBottomLeftRadius: '12px'
-                    }} />
+                    <div style={getBorderStripeStyle(order.status, order.priority)} />
 
                     {/* Order Info */}
                     <div style={{ marginLeft: '8px' }}>
