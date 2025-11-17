@@ -87,17 +87,38 @@ export default function Login({ onLogin, onBackToPublic, onLogout }: LoginProps)
       </div>
 
       {/* Back to Public Site Button */}
-      <button
+      <motion.button
         onClick={onBackToPublic}
-        className="absolute top-6 left-6 md:top-8 md:left-8 z-50 flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-rose-700 to-rose-600 text-white font-bold shadow-lg hover:shadow-xl hover:from-rose-800 hover:to-rose-700 transition-all"
+        className="absolute top-8 left-8 flex items-center gap-2"
         style={{
+          background: 'rgba(196, 69, 105, 0.15)',
+          border: '2px solid rgba(196, 69, 105, 0.4)',
+          borderRadius: 10,
+          padding: '12px 20px',
+          color: '#FFFFFF',
           fontFamily: 'Poppins, sans-serif',
-          fontSize: '22px'
+          fontSize: 16,
+          fontWeight: 600,
+          cursor: 'pointer',
+          backdropFilter: 'blur(8px)',
+          boxShadow: '0 4px 12px rgba(196, 69, 105, 0.3)',
+          transition: 'all 200ms ease',
+          zIndex: 100
         }}
+        whileHover={{ 
+          background: 'rgba(196, 69, 105, 0.25)',
+          borderColor: 'rgba(196, 69, 105, 0.6)',
+          boxShadow: '0 6px 16px rgba(196, 69, 105, 0.4)',
+          scale: 1.02
+        }}
+        whileTap={{ scale: 0.98 }}
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.2, duration: 0.4 }}
       >
-        <ArrowLeft size={20} />
+        <ArrowLeft size={18} strokeWidth={2.5} />
         <span>Back to Site</span>
-      </button>
+      </motion.button>
 
       <motion.div
         className="relative z-10 w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8"
