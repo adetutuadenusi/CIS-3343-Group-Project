@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Plus, Users, Clock, Package, DollarSign } from 'lucide-react';
+import { Plus, Users, Clock, Package, DollarSign, Zap, ListOrdered, Target } from 'lucide-react';
 import { KPICard } from '../../../components/dashboard/KPICard';
 import { OrderQueueCard } from '../../../components/dashboard/OrderQueueCard';
 import { QuickActionCard } from '../../../components/dashboard/QuickActionCard';
 import { PickupSearchSection } from '../../../components/dashboard/PickupSearchSection';
+import { SectionHeader } from '../../../components/dashboard/SectionHeader';
 
 interface SalesDashboardProps {
   onNavigate?: (page: string) => void;
@@ -162,11 +163,21 @@ export function SalesDashboard({ onNavigate }: SalesDashboardProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Quick Actions */}
         <div className="lg:col-span-1">
+          <SectionHeader 
+            icon={Zap} 
+            title="Quick Actions" 
+            count={quickActions.length}
+          />
           <QuickActionCard title="Quick Actions" actions={quickActions} />
         </div>
 
         {/* Recent Orders */}
         <div className="lg:col-span-2">
+          <SectionHeader 
+            icon={ListOrdered} 
+            title="Recent Orders" 
+            count={recentOrders.length}
+          />
           <OrderQueueCard
             title="Recent Orders"
             orders={recentOrders}
@@ -179,6 +190,11 @@ export function SalesDashboard({ onNavigate }: SalesDashboardProps) {
       {/* Today's Pickups */}
       {todayPickups.length > 0 && (
         <div className="mt-6" id="todays-pickups">
+          <SectionHeader 
+            icon={Target} 
+            title="Today's Pickups - Priority" 
+            count={todayPickups.length}
+          />
           <OrderQueueCard
             title="🎯 Today's Pickups - Priority"
             orders={todayPickups.slice(0, 5).map(o => ({

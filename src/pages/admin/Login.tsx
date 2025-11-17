@@ -113,12 +113,13 @@ export function Login({ onLogin, onBackToPublic }: LoginProps) {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+        style={{ maxHeight: '90vh', overflowY: 'auto' }}
       >
-        <Card className="glass-card p-8 md:p-12">
-          <div className="text-center mb-8">
+        <Card className="glass-card" style={{ padding: '32px 40px' }}>
+          <div className="text-center" style={{ marginBottom: '20px' }}>
             <motion.div
-              className="w-16 h-16 mx-auto mb-6 rounded-2xl flex items-center justify-center"
-              style={{ background: 'rgba(196, 69, 105, 0.1)' }}
+              className="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center"
+              style={{ marginBottom: '20px', background: 'rgba(196, 69, 105, 0.1)' }}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
@@ -141,7 +142,7 @@ export function Login({ onLogin, onBackToPublic }: LoginProps) {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div>
               <label 
                 htmlFor="username"
