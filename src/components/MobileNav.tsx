@@ -126,19 +126,6 @@ export function MobileNav({ isOpen, onClose, activePage, onNavigate, onAdminAcce
                 </h3>
               </div>
 
-              {/* Staff Login Button - First Item */}
-              {onAdminAccess && (
-                <div className="mb-4 flex-shrink-0">
-                  <StaffLoginCTA 
-                    onClick={() => {
-                      onAdminAccess();
-                      onClose();
-                    }}
-                    variant="mobile"
-                  />
-                </div>
-              )}
-
               {/* Navigation Links */}
               <nav className="space-y-1 mb-6 flex-shrink-0">
                 {navItems.map((item, index) => (

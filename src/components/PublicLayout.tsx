@@ -109,11 +109,6 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
                   )}
                 </button>
               ))}
-              
-              {/* Staff Login Button - Desktop */}
-              <div style={{ marginLeft: '12px' }}>
-                <StaffLoginCTA onClick={onAdminAccess} variant="desktop" />
-              </div>
             </div>
 
             {/* Right Section - Icons */}
@@ -332,12 +327,15 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
             </div>
           </div>
 
-          {/* Copyright */}
+          {/* Copyright & Staff Login */}
           <div
             className="mt-8 pt-5"
             style={{
               borderTop: '1px solid rgba(255, 255, 255, 0.15)',
-              textAlign: 'center'
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '16px'
             }}
           >
             <p
@@ -350,29 +348,11 @@ export function PublicLayout({ children, activePage, onNavigate, onAdminAccess }
             >
               © {new Date().getFullYear()} Emily Bakes Cakes. All rights reserved.
             </p>
-            <button
-              onClick={onAdminAccess}
-              style={{
-                fontFamily: 'Open Sans, sans-serif',
-                fontSize: '11px',
-                color: 'rgba(255, 255, 255, 0.4)',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                padding: '8px',
-                marginTop: '8px',
-                textDecoration: 'underline',
-                transition: 'color 200ms ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'rgba(255, 255, 255, 0.4)';
-              }}
-            >
-              Staff Login
-            </button>
+            
+            {/* Staff Login Button - Footer */}
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <StaffLoginCTA onClick={onAdminAccess} variant="desktop" />
+            </div>
           </div>
         </div>
       </footer>
