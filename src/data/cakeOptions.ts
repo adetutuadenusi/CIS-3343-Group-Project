@@ -13,23 +13,177 @@
 export const productCategories = ['All', 'Cakes', 'Flavors', 'Fillings'];
 
 // ============================================================================
-// STANDARD CAKES (14 Options from Case Study)
+// STANDARD CAKES (14 Options from Case Study) with Pre-defined Recipes
 // ============================================================================
-export const standardCakes = [
-  { id: 'birthday-celebration', name: 'Birthday Celebration', basePrice: 30 },
-  { id: 'almond-delight', name: 'Almond Delight', basePrice: 35 },
-  { id: 'lemon-cream-cheese', name: 'Lemon & Cream Cheese', basePrice: 35 },
-  { id: 'black-forest', name: 'Black Forest', basePrice: 40 },
-  { id: 'german-chocolate', name: 'German Chocolate', basePrice: 38 },
-  { id: 'cream-cheese-chocolate', name: 'Cream Cheese Chocolate', basePrice: 38 },
-  { id: 'italian-cream', name: 'Italian Cream', basePrice: 40 },
-  { id: 'lemon-doberge', name: 'Lemon Doberge', basePrice: 45 },
-  { id: 'chocolate-doberge', name: 'Chocolate Doberge', basePrice: 45 },
-  { id: 'half-half-doberge', name: '½ & ½ Doberge (Lemon + Chocolate)', basePrice: 48 },
-  { id: 'pecan-praline', name: 'Pecan Praline Cream Cheese', basePrice: 42 },
-  { id: 'chocolate-banana', name: 'Chocolate Banana', basePrice: 36 },
-  { id: 'strawberry-delight', name: 'Strawberry Delight', basePrice: 36 },
-  { id: 'cookies-cream', name: 'Cookies & Cream Cake', basePrice: 35 }
+export interface StandardCakeRecipe {
+  id: string;
+  name: string;
+  basePrice: number;
+  description?: string;
+  category?: string;
+  layers: Array<{
+    flavor: string;
+    fillings: string[];
+    icing: string;
+    notes?: string;
+  }>;
+}
+
+export const standardCakes: StandardCakeRecipe[] = [
+  {
+    id: 'birthday-celebration',
+    name: 'Birthday Celebration',
+    basePrice: 30,
+    description: 'Classic yellow cake with white buttercream - perfect for any celebration',
+    category: 'Classic',
+    layers: [
+      { flavor: 'yellow', fillings: ['white-buttercream'], icing: 'white-buttercream' },
+      { flavor: 'yellow', fillings: ['white-buttercream'], icing: 'white-buttercream' }
+    ]
+  },
+  {
+    id: 'almond-delight',
+    name: 'Almond Delight',
+    basePrice: 35,
+    description: 'Rich almond cake with almond buttercream filling',
+    category: 'Premium',
+    layers: [
+      { flavor: 'almond', fillings: ['almond-buttercream'], icing: 'almond-buttercream' },
+      { flavor: 'almond', fillings: ['almond-buttercream'], icing: 'almond-buttercream' }
+    ]
+  },
+  {
+    id: 'lemon-cream-cheese',
+    name: 'Lemon & Cream Cheese',
+    basePrice: 35,
+    description: 'Tangy lemon cake with smooth cream cheese icing',
+    category: 'Fruity',
+    layers: [
+      { flavor: 'yellow', fillings: ['lemon-curd'], icing: 'cream-cheese' },
+      { flavor: 'yellow', fillings: ['lemon-curd'], icing: 'cream-cheese' }
+    ]
+  },
+  {
+    id: 'black-forest',
+    name: 'Black Forest',
+    basePrice: 40,
+    description: 'Chocolate cake with cherry filling and chocolate ganache',
+    category: 'Premium',
+    layers: [
+      { flavor: 'chocolate', fillings: ['chocolate-mousse'], icing: 'chocolate-ganache' },
+      { flavor: 'chocolate', fillings: ['chocolate-mousse'], icing: 'chocolate-ganache' }
+    ]
+  },
+  {
+    id: 'german-chocolate',
+    name: 'German Chocolate',
+    basePrice: 38,
+    description: 'Rich chocolate cake with pecan praline filling',
+    category: 'Premium',
+    layers: [
+      { flavor: 'chocolate', fillings: ['pecan-praline'], icing: 'chocolate-buttercream' },
+      { flavor: 'chocolate', fillings: ['pecan-praline'], icing: 'chocolate-buttercream' }
+    ]
+  },
+  {
+    id: 'cream-cheese-chocolate',
+    name: 'Cream Cheese Chocolate',
+    basePrice: 38,
+    description: 'Decadent chocolate cake with cream cheese frosting',
+    category: 'Premium',
+    layers: [
+      { flavor: 'devils-food-chocolate', fillings: ['chocolate-buttercream'], icing: 'cream-cheese' },
+      { flavor: 'devils-food-chocolate', fillings: ['chocolate-buttercream'], icing: 'cream-cheese' }
+    ]
+  },
+  {
+    id: 'italian-cream',
+    name: 'Italian Cream',
+    basePrice: 40,
+    description: 'Light vanilla cake with cream cheese and pecans',
+    category: 'Premium',
+    layers: [
+      { flavor: 'vanilla', fillings: ['cream-cheese', 'pecan-praline'], icing: 'cream-cheese' },
+      { flavor: 'vanilla', fillings: ['cream-cheese', 'pecan-praline'], icing: 'cream-cheese' }
+    ]
+  },
+  {
+    id: 'lemon-doberge',
+    name: 'Lemon Doberge',
+    basePrice: 45,
+    description: 'Multi-layered lemon cake with lemon mousse',
+    category: 'Signature',
+    layers: [
+      { flavor: 'yellow', fillings: ['lemon-curd'], icing: 'white-buttercream' },
+      { flavor: 'yellow', fillings: ['lemon-mousse'], icing: 'white-buttercream' }
+    ]
+  },
+  {
+    id: 'chocolate-doberge',
+    name: 'Chocolate Doberge',
+    basePrice: 45,
+    description: 'Multi-layered chocolate cake with chocolate mousse',
+    category: 'Signature',
+    layers: [
+      { flavor: 'chocolate', fillings: ['chocolate-mousse'], icing: 'chocolate-buttercream' },
+      { flavor: 'chocolate', fillings: ['chocolate-mousse'], icing: 'chocolate-buttercream' }
+    ]
+  },
+  {
+    id: 'half-half-doberge',
+    name: '½ & ½ Doberge (Lemon + Chocolate)',
+    basePrice: 48,
+    description: 'Half lemon, half chocolate - best of both worlds',
+    category: 'Signature',
+    layers: [
+      { flavor: 'yellow', fillings: ['lemon-mousse'], icing: 'white-buttercream', notes: 'Lemon half' },
+      { flavor: 'chocolate', fillings: ['chocolate-mousse'], icing: 'chocolate-buttercream', notes: 'Chocolate half' }
+    ]
+  },
+  {
+    id: 'pecan-praline',
+    name: 'Pecan Praline Cream Cheese',
+    basePrice: 42,
+    description: 'Yellow cake with pecan praline and cream cheese',
+    category: 'Premium',
+    layers: [
+      { flavor: 'yellow', fillings: ['pecan-praline'], icing: 'cream-cheese' },
+      { flavor: 'yellow', fillings: ['pecan-praline'], icing: 'cream-cheese' }
+    ]
+  },
+  {
+    id: 'chocolate-banana',
+    name: 'Chocolate Banana',
+    basePrice: 36,
+    description: 'Chocolate cake with banana cream filling',
+    category: 'Classic',
+    layers: [
+      { flavor: 'chocolate', fillings: ['white-buttercream'], icing: 'chocolate-buttercream', notes: 'Banana flavor' },
+      { flavor: 'chocolate', fillings: ['white-buttercream'], icing: 'chocolate-buttercream', notes: 'Banana flavor' }
+    ]
+  },
+  {
+    id: 'strawberry-delight',
+    name: 'Strawberry Delight',
+    basePrice: 36,
+    description: 'Strawberry cake with strawberry mousse filling',
+    category: 'Fruity',
+    layers: [
+      { flavor: 'strawberry', fillings: ['strawberry-mousse'], icing: 'white-buttercream' },
+      { flavor: 'strawberry', fillings: ['strawberry-mousse'], icing: 'white-buttercream' }
+    ]
+  },
+  {
+    id: 'cookies-cream',
+    name: 'Cookies & Cream Cake',
+    basePrice: 35,
+    description: 'Vanilla cake with cookies and cream filling',
+    category: 'Classic',
+    layers: [
+      { flavor: 'vanilla', fillings: ['white-buttercream'], icing: 'white-buttercream', notes: 'Crushed Oreos' },
+      { flavor: 'vanilla', fillings: ['white-buttercream'], icing: 'white-buttercream', notes: 'Crushed Oreos' }
+    ]
+  }
 ];
 
 // ============================================================================

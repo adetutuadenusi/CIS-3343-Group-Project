@@ -1,21 +1,47 @@
-import { Cake, Sparkles } from 'lucide-react';
+import { Cake, Sparkles, Info } from 'lucide-react';
 import { Card } from '../../../../components/ui/card';
 import { useWizard } from '../WizardContext';
 import { standardCakes } from '../../../../data/cakeOptions';
+import { useToast } from '../../../../components/ToastContext';
 
 export function Step2CakeType() {
   const { formData, updateFormData } = useWizard();
+  const { showToast } = useToast();
 
   const handleCakeTypeChange = (type: 'standard' | 'custom') => {
     updateFormData({
       cakeType: type,
-      standardCakeId: type === 'standard' ? '' : formData.standardCakeId,
+      standardCakeId: '',
       // Reset layers with fresh IDs when switching type
       layers: [
         { id: `layer-${Date.now()}-1`, flavor: '', fillings: [], icing: '', notes: '' },
         { id: `layer-${Date.now()}-2`, flavor: '', fillings: [], icing: '', notes: '' }
       ]
     });
+  };
+
+  const handleStandardCakeSelection = (cakeId: string) => {
+    const selectedCake = standardCakes.find((cake) => cake.id === cakeId);
+
+    if (selectedCake) {
+      // Pre-populate layers from standard cake recipe
+      const preFilledLayers = selectedCake.layers.map((layer, index) => ({
+        id: `layer-${Date.now()}-${index + 1}`,
+        flavor: layer.flavor,
+        fillings: layer.fillings,
+        icing: layer.icing,
+        notes: layer.notes || ''
+      }));
+
+      updateFormData({
+        standardCakeId: cakeId,
+        layers: preFilledLayers
+      });
+
+      showToast('success', 'Layers pre-filled from recipe. You can edit them in Step 3.');
+    } else {
+      updateFormData({ standardCakeId: cakeId });
+    }
   };
 
   return (
@@ -50,10 +76,10 @@ export function Step2CakeType() {
           className="text-left transition-all"
         >
           <Card
-            className="p-6 h-full"
+            className="p-6 h-full hover:shadow-lg transition-shadow"
             style={{
               borderColor: formData.cakeType === 'standard' ? '#C44569' : '#E0E0E0',
-              borderWidth: formData.cakeType === 'standard' ? '2px' : '1px',
+              borderWidth: formData.cakeType === 'standard' ? '3px' : '1px',
               background:
                 formData.cakeType === 'standard'
                   ? 'rgba(196, 69, 105, 0.05)'
@@ -62,7 +88,7 @@ export function Step2CakeType() {
           >
             <div className="flex items-start gap-4">
               <div
-                className="w-12 h-12 rounded-lg flex items-center justify-center"
+                className="w-14 h-14 rounded-lg flex items-center justify-center flex-shrink-0"
                 style={{
                   background:
                     formData.cakeType === 'standard'
@@ -71,14 +97,14 @@ export function Step2CakeType() {
                   color: formData.cakeType === 'standard' ? '#FFFFFF' : '#C44569'
                 }}
               >
-                <Cake size={24} />
+                <Cake size={28} />
               </div>
               <div className="flex-1">
                 <h3
                   style={{
                     fontFamily: 'Poppins, sans-serif',
-                    fontSize: '18px',
-                    fontWeight: 600,
+                    fontSize: '20px',
+                    fontWeight: 700,
                     color: '#2B2B2B',
                     marginBottom: '8px'
                   }}
@@ -89,14 +115,14 @@ export function Step2CakeType() {
                   Choose from our pre-designed signature cakes
                 </p>
                 <ul className="space-y-1">
-                  <li style={{ fontSize: '12px', color: '#999' }}>
+                  <li style={{ fontSize: '13px', color: '#999' }}>
                     ✓ Faster preparation time
                   </li>
-                  <li style={{ fontSize: '12px', color: '#999' }}>
+                  <li style={{ fontSize: '13px', color: '#999' }}>
                     ✓ Proven customer favorites
                   </li>
-                  <li style={{ fontSize: '12px', color: '#999' }}>
-                    ✓ Fixed pricing
+                  <li style={{ fontSize: '13px', color: '#999' }}>
+                    ✓ Pre-filled recipe layers
                   </li>
                 </ul>
               </div>
@@ -109,10 +135,10 @@ export function Step2CakeType() {
           className="text-left transition-all"
         >
           <Card
-            className="p-6 h-full"
+            className="p-6 h-full hover:shadow-lg transition-shadow"
             style={{
               borderColor: formData.cakeType === 'custom' ? '#C44569' : '#E0E0E0',
-              borderWidth: formData.cakeType === 'custom' ? '2px' : '1px',
+              borderWidth: formData.cakeType === 'custom' ? '3px' : '1px',
               background:
                 formData.cakeType === 'custom'
                   ? 'rgba(196, 69, 105, 0.05)'
@@ -121,7 +147,7 @@ export function Step2CakeType() {
           >
             <div className="flex items-start gap-4">
               <div
-                className="w-12 h-12 rounded-lg flex items-center justify-center"
+                className="w-14 h-14 rounded-lg flex items-center justify-center flex-shrink-0"
                 style={{
                   background:
                     formData.cakeType === 'custom'
@@ -130,14 +156,14 @@ export function Step2CakeType() {
                   color: formData.cakeType === 'custom' ? '#FFFFFF' : '#C44569'
                 }}
               >
-                <Sparkles size={24} />
+                <Sparkles size={28} />
               </div>
               <div className="flex-1">
                 <h3
                   style={{
                     fontFamily: 'Poppins, sans-serif',
-                    fontSize: '18px',
-                    fontWeight: 600,
+                    fontSize: '20px',
+                    fontWeight: 700,
                     color: '#2B2B2B',
                     marginBottom: '8px'
                   }}
@@ -148,13 +174,13 @@ export function Step2CakeType() {
                   Design a completely unique cake layer by layer
                 </p>
                 <ul className="space-y-1">
-                  <li style={{ fontSize: '12px', color: '#999' }}>
+                  <li style={{ fontSize: '13px', color: '#999' }}>
                     ✓ Unlimited customization
                   </li>
-                  <li style={{ fontSize: '12px', color: '#999' }}>
+                  <li style={{ fontSize: '13px', color: '#999' }}>
                     ✓ Choose flavors per layer
                   </li>
-                  <li style={{ fontSize: '12px', color: '#999' }}>
+                  <li style={{ fontSize: '13px', color: '#999' }}>
                     ✓ Personalized designs
                   </li>
                 </ul>
@@ -166,11 +192,11 @@ export function Step2CakeType() {
 
       {/* Standard Cake Selection */}
       {formData.cakeType === 'standard' && (
-        <Card className="p-6">
+        <Card className="p-6 animate-in fade-in duration-300">
           <label
             style={{
               fontFamily: 'Poppins, sans-serif',
-              fontSize: '15px',
+              fontSize: '16px',
               fontWeight: 600,
               display: 'block',
               marginBottom: '12px',
@@ -181,84 +207,137 @@ export function Step2CakeType() {
           </label>
           <select
             value={formData.standardCakeId}
-            onChange={(e) => updateFormData({ standardCakeId: e.target.value })}
-            className="w-full p-3 border-2 rounded-lg"
+            onChange={(e) => handleStandardCakeSelection(e.target.value)}
+            className="w-full p-3 border-2 rounded-lg transition-colors"
             style={{
               borderColor: !formData.standardCakeId ? '#C44569' : '#E0E0E0',
-              fontSize: '14px',
+              fontSize: '15px',
               fontFamily: 'Open Sans, sans-serif'
             }}
           >
             <option value="">Choose a cake...</option>
             {standardCakes.map((cake) => (
               <option key={cake.id} value={cake.id}>
-                {cake.name} (Base Price: ${cake.basePrice})
+                {cake.name} (Base: ${cake.basePrice}) - {cake.category}
               </option>
             ))}
           </select>
 
+          {!formData.standardCakeId && (
+            <p style={{ fontSize: '12px', color: '#C44569', marginTop: '8px' }}>
+              Please select a standard cake to continue
+            </p>
+          )}
+
+          {/* Selected Cake Details */}
           {formData.standardCakeId && (
-            <div className="mt-4 p-4 rounded-lg" style={{ background: '#F9F9F9' }}>
+            <div className="mt-4 space-y-3 animate-in slide-in-from-top duration-300">
               {standardCakes
                 .filter((c) => c.id === formData.standardCakeId)
                 .map((cake) => (
                   <div key={cake.id}>
-                    <h4
-                      style={{
-                        fontWeight: 600,
-                        fontSize: '16px',
-                        color: '#2B2B2B',
-                        marginBottom: '8px'
-                      }}
+                    {/* Cake Info Card */}
+                    <div
+                      className="p-4 rounded-lg"
+                      style={{ background: 'rgba(196, 69, 105, 0.05)' }}
                     >
-                      {cake.name}
-                    </h4>
-                    <p style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>
-                      {cake.description}
-                    </p>
-                    <div className="grid grid-cols-2 gap-4 mt-4">
-                      <div>
-                        <p
-                          style={{
-                            fontSize: '12px',
-                            color: '#999',
-                            marginBottom: '4px'
-                          }}
-                        >
-                          Base Price
-                        </p>
-                        <p
-                          style={{
-                            fontSize: '20px',
-                            fontWeight: 700,
-                            color: '#C44569'
-                          }}
-                        >
-                          ${cake.basePrice}
-                        </p>
-                      </div>
-                      {cake.category && (
-                        <div>
-                          <p
+                      <div className="flex items-start gap-3 mb-3">
+                        <Cake size={24} style={{ color: '#C44569', flexShrink: 0 }} />
+                        <div className="flex-1">
+                          <h4
                             style={{
-                              fontSize: '12px',
-                              color: '#999',
+                              fontWeight: 700,
+                              fontSize: '18px',
+                              color: '#2B2B2B',
                               marginBottom: '4px'
                             }}
                           >
-                            Category
-                          </p>
+                            {cake.name}
+                          </h4>
                           <p
                             style={{
                               fontSize: '14px',
-                              fontWeight: 600,
-                              color: '#2B2B2B'
+                              color: '#666',
+                              marginBottom: '12px'
                             }}
                           >
-                            {cake.category}
+                            {cake.description}
                           </p>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <p
+                                style={{
+                                  fontSize: '11px',
+                                  color: '#999',
+                                  marginBottom: '4px',
+                                  textTransform: 'uppercase',
+                                  letterSpacing: '0.5px'
+                                }}
+                              >
+                                Base Price
+                              </p>
+                              <p
+                                style={{
+                                  fontSize: '24px',
+                                  fontWeight: 700,
+                                  color: '#C44569'
+                                }}
+                              >
+                                ${cake.basePrice}
+                              </p>
+                            </div>
+                            {cake.category && (
+                              <div>
+                                <p
+                                  style={{
+                                    fontSize: '11px',
+                                    color: '#999',
+                                    marginBottom: '4px',
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.5px'
+                                  }}
+                                >
+                                  Category
+                                </p>
+                                <span
+                                  className="inline-block px-3 py-1 rounded-full text-sm"
+                                  style={{
+                                    background: '#C44569',
+                                    color: '#FFFFFF',
+                                    fontWeight: 600
+                                  }}
+                                >
+                                  {cake.category}
+                                </span>
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      )}
+                      </div>
+                    </div>
+
+                    {/* Layers Pre-filled Notice */}
+                    <div
+                      className="p-4 rounded-lg flex items-start gap-3"
+                      style={{ background: '#E8F5E9', border: '1px solid #81C784' }}
+                    >
+                      <Info size={20} style={{ color: '#2E7D32', flexShrink: 0 }} />
+                      <div>
+                        <p
+                          style={{
+                            fontSize: '14px',
+                            fontWeight: 600,
+                            color: '#1B5E20',
+                            marginBottom: '4px'
+                          }}
+                        >
+                          Layers pre-filled from recipe
+                        </p>
+                        <p style={{ fontSize: '13px', color: '#2E7D32' }}>
+                          This cake comes with {cake.layers.length} pre-configured layers. You
+                          can review and edit them in Step 3 if needed.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -269,11 +348,30 @@ export function Step2CakeType() {
 
       {/* Custom Cake Notice */}
       {formData.cakeType === 'custom' && (
-        <Card className="p-4" style={{ background: 'rgba(196, 69, 105, 0.05)' }}>
-          <p style={{ fontSize: '14px', color: '#666' }}>
-            You'll design your custom cake layer by layer in the next step. Minimum 2 layers
-            required.
-          </p>
+        <Card
+          className="p-5 animate-in fade-in duration-300"
+          style={{ background: 'rgba(196, 69, 105, 0.05)', border: '2px dashed #C44569' }}
+        >
+          <div className="flex items-start gap-3">
+            <Sparkles size={24} style={{ color: '#C44569', flexShrink: 0 }} />
+            <div>
+              <p
+                style={{
+                  fontFamily: 'Poppins, sans-serif',
+                  fontSize: '16px',
+                  fontWeight: 600,
+                  color: '#2B2B2B',
+                  marginBottom: '6px'
+                }}
+              >
+                Build your cake layer-by-layer in Step 3
+              </p>
+              <p style={{ fontSize: '14px', color: '#666' }}>
+                You'll have complete control to choose cake flavors, fillings, and icing for
+                each layer. Minimum 2 layers required.
+              </p>
+            </div>
+          </div>
         </Card>
       )}
     </div>
