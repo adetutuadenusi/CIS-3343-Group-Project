@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: emily
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: emily_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - emily_db_data:/var/lib/postgresql/data
+
+volumes:
+  emily_db_data:
+    name: emily_db_data

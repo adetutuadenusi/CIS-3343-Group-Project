@@ -2,6 +2,8 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
+const apiTarget = process.env.VITE_API_TARGET || 'http://localhost:3000';
+
 export default defineConfig({
   plugins: [react()],
   base: '/',
@@ -79,7 +81,9 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'http://localhost:4000',
+        // Use VITE_API_TARGET to point to deployed API (Vercel) in development,
+        // otherwise default to local `server/index.ts` on port 3000.
+        target: apiTarget,
         changeOrigin: true,
         secure: false,
       }
