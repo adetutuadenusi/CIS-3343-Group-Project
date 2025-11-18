@@ -131,18 +131,33 @@ export function AccountantDashboard({ onNavigate }: AccountantDashboardProps) {
           },
         });
         
-        // Set mock order data for accountant view
-        const accountantOrders = SAMPLE_ORDERS.filter(o => parseFloat(o.balanceDue.toString()) > 0).map(order => ({
-          id: parseInt(order.id.replace('ord-', '')),
-          customerName: order.customerName,
-          customerEmail: '',
-          totalAmount: Math.round(order.totalAmount * 100),
-          depositAmount: Math.round(order.depositAmount * 100),
-          balanceDue: Math.round(order.balanceDue * 100),
-          paymentStatus: order.balanceDue === 0 ? 'paid' : 'partial',
-          eventDate: order.pickupDate,
-          createdAt: order.orderDate,
-        }));
+        // Set mock order data for accountant view - optimized to single iteration
+        const accountantOrders = SAMPLE_ORDERS.reduce<Array<{
+          id: number;
+          customerName: string;
+          customerEmail: string;
+          totalAmount: number;
+          depositAmount: number;
+          balanceDue: number;
+          paymentStatus: string;
+          eventDate: string;
+          createdAt: string;
+        }>>((acc, order) => {
+          if (parseFloat(order.balanceDue.toString()) > 0) {
+            acc.push({
+              id: parseInt(order.id.replace('ord-', '')),
+              customerName: order.customerName,
+              customerEmail: '',
+              totalAmount: Math.round(order.totalAmount * 100),
+              depositAmount: Math.round(order.depositAmount * 100),
+              balanceDue: Math.round(order.balanceDue * 100),
+              paymentStatus: order.balanceDue === 0 ? 'paid' : 'partial',
+              eventDate: order.pickupDate,
+              createdAt: order.orderDate,
+            });
+          }
+          return acc;
+        }, []);
         setModalData(accountantOrders);
       }
     } catch (error) {
@@ -167,17 +182,33 @@ export function AccountantDashboard({ onNavigate }: AccountantDashboardProps) {
         },
       });
       
-      const accountantOrders = SAMPLE_ORDERS.filter(o => parseFloat(o.balanceDue.toString()) > 0).map(order => ({
-        id: parseInt(order.id.replace('ord-', '')),
-        customerName: order.customerName,
-        customerEmail: '',
-        totalAmount: Math.round(order.totalAmount * 100),
-        depositAmount: Math.round(order.depositAmount * 100),
-        balanceDue: Math.round(order.balanceDue * 100),
-        paymentStatus: order.balanceDue === 0 ? 'paid' : 'partial',
-        eventDate: order.pickupDate,
-        createdAt: order.orderDate,
-      }));
+      // Optimized to single iteration using reduce instead of chained filter().map()
+      const accountantOrders = SAMPLE_ORDERS.reduce<Array<{
+        id: number;
+        customerName: string;
+        customerEmail: string;
+        totalAmount: number;
+        depositAmount: number;
+        balanceDue: number;
+        paymentStatus: string;
+        eventDate: string;
+        createdAt: string;
+      }>>((acc, order) => {
+        if (parseFloat(order.balanceDue.toString()) > 0) {
+          acc.push({
+            id: parseInt(order.id.replace('ord-', '')),
+            customerName: order.customerName,
+            customerEmail: '',
+            totalAmount: Math.round(order.totalAmount * 100),
+            depositAmount: Math.round(order.depositAmount * 100),
+            balanceDue: Math.round(order.balanceDue * 100),
+            paymentStatus: order.balanceDue === 0 ? 'paid' : 'partial',
+            eventDate: order.pickupDate,
+            createdAt: order.orderDate,
+          });
+        }
+        return acc;
+      }, []);
       setModalData(accountantOrders);
     } finally {
       setLoading(false);
