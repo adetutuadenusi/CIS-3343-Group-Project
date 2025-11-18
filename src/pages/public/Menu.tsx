@@ -27,6 +27,25 @@ interface GalleryCardProps {
 }
 
 function GalleryCard({ title, description, imagePlaceholder, colorHex }: GalleryCardProps) {
+  const isImageUrl = typeof imagePlaceholder === 'string' && imagePlaceholder.startsWith('/');
+
+  const imageSectionStyle: React.CSSProperties = isImageUrl
+    ? {
+        height: '240px',
+        width: '100%',
+        backgroundImage: `url(${imagePlaceholder})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        borderRadius: '12px 12px 0 0'
+      }
+    : {
+        height: '240px',
+        width: '100%',
+        background: colorHex || imagePlaceholder || 'linear-gradient(135deg, #F8EBD7 0%, #FAF5F0 100%)',
+        borderRadius: '12px 12px 0 0'
+      };
+
   return (
     <div
       className="gallery-card"
@@ -48,14 +67,7 @@ function GalleryCard({ title, description, imagePlaceholder, colorHex }: Gallery
       }}
     >
       {/* Image Section */}
-      <div
-        style={{
-          height: '240px',
-          width: '100%',
-          background: colorHex || imagePlaceholder || 'linear-gradient(135deg, #F8EBD7 0%, #FAF5F0 100%)',
-          borderRadius: '12px 12px 0 0'
-        }}
-      />
+      <div style={imageSectionStyle} />
 
       {/* Content Section */}
       <div style={{ padding: '16px', background: '#FAF5F0' }}>
@@ -148,7 +160,7 @@ export default function Menu() {
           return {
             title: filling.name,
             description: descriptions[filling.name] || `Premium ${filling.name.toLowerCase()} filling crafted to perfection.`,
-            imagePlaceholder: 'linear-gradient(135deg, #F5E5D5 0%, #FFF5ED 100%)'
+            imagePlaceholder: filling.image_path || 'linear-gradient(135deg, #F5E5D5 0%, #FFF5ED 100%)'
           };
         });
         break;
