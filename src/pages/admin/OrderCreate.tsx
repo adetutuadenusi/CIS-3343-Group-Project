@@ -12,7 +12,8 @@ import {
   AlertCircle,
   Palette,
   Sparkles,
-  Cake
+  Cake,
+  CheckCircle2
 } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Card } from '../../components/ui/card';
@@ -357,6 +358,22 @@ export function OrderCreate({ onBack, onNavigate }: OrderCreateProps) {
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
   };
 
+  // Check completion status for each section
+  const isCustomerComplete = () => selectedCustomer !== null;
+  const isCakeTypeComplete = () => cakeType === 'standard' ? !!selectedStandardCake : true;
+  const isSizeComplete = () => !!selectedCakeSize;
+  const areLayersComplete = () => {
+    if (cakeType !== 'custom') return true;
+    return layers.length >= 2 && 
+           layers.every(layer => layer.flavor && layer.icing) &&
+           !layers.some(layer => layer.fillings.length > 2);
+  };
+  const isEventInfoComplete = () => !!formData.eventDate;
+  const isPaymentComplete = () => {
+    const depositEntered = formData.depositAmount ? parseFloat(formData.depositAmount) * 100 : depositRequired;
+    return depositEntered >= depositRequired;
+  };
+
   // Handle cake type change with state reset to prevent pollution
   const handleCakeTypeChange = (type: 'standard' | 'custom') => {
     setCakeType(type);
@@ -427,6 +444,54 @@ export function OrderCreate({ onBack, onNavigate }: OrderCreateProps) {
           >
             Manually create a custom cake order for a customer
           </p>
+          
+          {/* Progress Summary */}
+          {selectedCustomer && (
+            <div 
+              className="mt-4 p-4 rounded-lg"
+              style={{ background: 'rgba(196, 69, 105, 0.05)', border: '1px solid rgba(196, 69, 105, 0.2)' }}
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <p style={{ fontSize: '13px', fontWeight: 600, color: '#2B2B2B', marginBottom: '4px' }}>
+                    Order Progress
+                  </p>
+                  <div className="flex items-center gap-3 text-xs">
+                    <span style={{ color: isCustomerComplete() ? '#10B981' : '#999' }}>
+                      ✓ Customer
+                    </span>
+                    <span style={{ color: isCakeTypeComplete() ? '#10B981' : '#999' }}>
+                      {isCakeTypeComplete() ? '✓' : '○'} Cake Type
+                    </span>
+                    <span style={{ color: isSizeComplete() ? '#10B981' : '#999' }}>
+                      {isSizeComplete() ? '✓' : '○'} Size
+                    </span>
+                    {cakeType === 'custom' && (
+                      <span style={{ color: areLayersComplete() ? '#10B981' : '#999' }}>
+                        {areLayersComplete() ? '✓' : '○'} Layers
+                      </span>
+                    )}
+                    <span style={{ color: isEventInfoComplete() ? '#10B981' : '#999' }}>
+                      {isEventInfoComplete() ? '✓' : '○'} Event Date
+                    </span>
+                    <span style={{ color: isPaymentComplete() ? '#10B981' : '#999' }}>
+                      {isPaymentComplete() ? '✓' : '○'} Payment
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  {isRush && (
+                    <span 
+                      className="px-3 py-1 rounded-full text-xs"
+                      style={{ background: '#DC2626', color: 'white', fontWeight: 600 }}
+                    >
+                      RUSH ORDER
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Customer Selection Section */}
@@ -448,16 +513,19 @@ export function OrderCreate({ onBack, onNavigate }: OrderCreateProps) {
                 1. Customer Selection
               </h2>
               {selectedCustomer && (
-                <span 
-                  className="px-3 py-1 rounded-full text-xs"
-                  style={{ 
-                    background: 'rgba(196, 69, 105, 0.1)',
-                    color: '#C44569',
-                    fontWeight: 600
-                  }}
-                >
-                  {selectedCustomer.name}
-                </span>
+                <>
+                  <CheckCircle2 size={18} color="#10B981" />
+                  <span 
+                    className="px-3 py-1 rounded-full text-xs"
+                    style={{ 
+                      background: 'rgba(196, 69, 105, 0.1)',
+                      color: '#C44569',
+                      fontWeight: 600
+                    }}
+                  >
+                    {selectedCustomer.name}
+                  </span>
+                </>
               )}
             </div>
             {openSections.customer ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
@@ -661,6 +729,7 @@ export function OrderCreate({ onBack, onNavigate }: OrderCreateProps) {
               <h2 style={{ fontFamily: 'Poppins, sans-serif', fontSize: '18px', fontWeight: 600, color: '#2B2B2B' }}>
                 2. Cake Type
               </h2>
+              {isCakeTypeComplete() && <CheckCircle2 size={18} color="#10B981" />}
             </div>
             {openSections.cakeType ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
           </button>
@@ -728,9 +797,12 @@ export function OrderCreate({ onBack, onNavigate }: OrderCreateProps) {
                 3. Cake Size <span style={{ color: '#C44569' }}>*</span>
               </h2>
               {selectedCakeSize && (
-                <span className="px-3 py-1 rounded-full text-xs" style={{ background: 'rgba(196, 69, 105, 0.1)', color: '#C44569', fontWeight: 600 }}>
-                  {cakeSizes.find(s => s.id === selectedCakeSize)?.name}
-                </span>
+                <>
+                  <CheckCircle2 size={18} color="#10B981" />
+                  <span className="px-3 py-1 rounded-full text-xs" style={{ background: 'rgba(196, 69, 105, 0.1)', color: '#C44569', fontWeight: 600 }}>
+                    {cakeSizes.find(s => s.id === selectedCakeSize)?.name}
+                  </span>
+                </>
               )}
             </div>
             {openSections.size ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
@@ -774,6 +846,7 @@ export function OrderCreate({ onBack, onNavigate }: OrderCreateProps) {
                 <h2 style={{ fontFamily: 'Poppins, sans-serif', fontSize: '18px', fontWeight: 600, color: '#2B2B2B' }}>
                   4. Build Cake Layers
                 </h2>
+                {areLayersComplete() && <CheckCircle2 size={18} color="#10B981" />}
               <span 
                 className="px-2 py-1 rounded text-xs"
                 style={{ background: '#F0F0F0', color: '#666' }}
@@ -946,6 +1019,7 @@ export function OrderCreate({ onBack, onNavigate }: OrderCreateProps) {
               >
                 7. Event Information
               </h2>
+              {isEventInfoComplete() && <CheckCircle2 size={18} color="#10B981" />}
             </div>
             {openSections.eventInfo ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
           </button>
@@ -1149,6 +1223,7 @@ export function OrderCreate({ onBack, onNavigate }: OrderCreateProps) {
               >
                 5. Payment Information
               </h2>
+              {isPaymentComplete() && <CheckCircle2 size={18} color="#10B981" />}
             </div>
             {openSections.payment ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
           </button>
