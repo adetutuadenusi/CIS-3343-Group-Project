@@ -47,6 +47,3 @@ coverage/
 # Supabase
 supabase/.branches
 supabase/.temp
-
-pages/
-src/pages/
