@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { exportOrdersToCSV, formatDate as formatDateUtil } from '../../utils/csvExport';
 import { Card } from '../../components/ui/card';
@@ -40,6 +40,7 @@ import {
 import { useToast } from '../../components/ToastContext';
 import type { CakeLayer } from '../../../shared/schema';
 import { Tooltip, TooltipTrigger, TooltipContent } from '../../components/ui/tooltip';
+import { useDebounce } from '../../hooks/useDebounce';
 
 interface Order {
   id: number;
@@ -72,7 +73,6 @@ interface OrderListProps {
 export function OrderList({ onNavigate }: OrderListProps = {}) {
   const { showToast } = useToast();
   const [orders, setOrders] = useState<Order[]>([]);
-  const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [sortBy, setSortBy] = useState<'date' | 'customer' | 'status'>('date');
@@ -112,6 +112,9 @@ export function OrderList({ onNavigate }: OrderListProps = {}) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 25;
 
+  // Debounce search query to reduce unnecessary filtering
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -123,7 +126,6 @@ export function OrderList({ onNavigate }: OrderListProps = {}) {
       if (response.ok) {
         const data = await response.json();
         setOrders(data);
-        setFilteredOrders(data);
       }
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -133,13 +135,13 @@ export function OrderList({ onNavigate }: OrderListProps = {}) {
     }
   };
 
-  // Apply filters and sorting
-  useEffect(() => {
+  // Optimize filtering and sorting with useMemo to prevent recalculation on every render
+  const filteredOrders = useMemo(() => {
     let filtered = [...orders];
 
     // Search filter
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
+    if (debouncedSearchQuery.trim()) {
+      const query = debouncedSearchQuery.toLowerCase();
       filtered = filtered.filter(order =>
         order.customerName?.toLowerCase().includes(query) ||
         order.customerEmail?.toLowerCase().includes(query) ||
@@ -172,8 +174,8 @@ export function OrderList({ onNavigate }: OrderListProps = {}) {
       return sortOrder === 'asc' ? comparison : -comparison;
     });
 
-    setFilteredOrders(filtered);
-  }, [orders, searchQuery, statusFilter, sortBy, sortOrder]);
+    return filtered;
+  }, [orders, debouncedSearchQuery, statusFilter, sortBy, sortOrder]);
 
   const handleCancelOrder = async () => {
     if (!orderToCancel || !cancellationReason.trim()) {
