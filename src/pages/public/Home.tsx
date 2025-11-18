@@ -3,7 +3,8 @@ import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { ArrowRight, Heart, Award, Clock, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Card, CardContent } from '../../components/ui/card';
 import { LazyImage } from '../../components/Loading/LazyImage';
-import heroImage from '../../assets/hero-image.jpeg';
+// import heroImage from '../../assets/hero-image.jpeg';
+const heroImage = "https://images.unsplash.com/photo-1626803775151-61d756612fbd?q=80&w=2070&auto=format&fit=crop";
 
 // Weekly Spotlight Cakes
 const spotlightCakes = [

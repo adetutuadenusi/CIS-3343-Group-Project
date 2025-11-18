@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Open_Sans, Playfair_Display, Poppins } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import '../src/styles/globals.css'
+import { NextNav } from '../components/NextNav'
 
 const openSans = Open_Sans({ 
   subsets: ["latin"],
@@ -46,6 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${openSans.variable} ${playfairDisplay.variable} ${poppins.variable} antialiased`}>
+        <NextNav />
         {children}
         <Analytics />
       </body>
