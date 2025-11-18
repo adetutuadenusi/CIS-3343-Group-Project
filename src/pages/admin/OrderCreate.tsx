@@ -66,7 +66,7 @@ export function OrderCreate({ onBack, onNavigate }: OrderCreateProps) {
   const [isRush, setIsRush] = useState(false);
   const [managerApproval, setManagerApproval] = useState(false);
   
-  // Collapsible sections
+  // Collapsible sections - Payment now open by default for visibility
   const [openSections, setOpenSections] = useState({
     customer: true,
     cakeType: true,
@@ -76,7 +76,7 @@ export function OrderCreate({ onBack, onNavigate }: OrderCreateProps) {
     decorations: false,
     eventInfo: true,
     adminSettings: true,
-    payment: false
+    payment: true // Changed to true for better visibility of deposit requirements
   });
 
   // New customer form
@@ -254,6 +254,13 @@ export function OrderCreate({ onBack, onNavigate }: OrderCreateProps) {
 
     if (!formData.eventDate) {
       showToast('error', 'Please provide event date');
+      return;
+    }
+    
+    // Validate deposit amount (must be at least 50%)
+    const depositEntered = formData.depositAmount ? parseFloat(formData.depositAmount) * 100 : depositRequired;
+    if (depositEntered < depositRequired) {
+      showToast('error', `Deposit must be at least 50% of total ($${(depositRequired / 100).toFixed(2)})`);
       return;
     }
     
@@ -1168,6 +1175,26 @@ export function OrderCreate({ onBack, onNavigate }: OrderCreateProps) {
                   </p>
                 </div>
               </div>
+              
+              {/* Deposit validation warning */}
+              {formData.depositAmount && parseFloat(formData.depositAmount) * 100 < depositRequired && (
+                <div 
+                  className="p-3 rounded-lg flex items-start gap-2"
+                  style={{ background: '#FEE2E2', border: '1px solid #DC2626' }}
+                >
+                  <AlertCircle size={20} color="#DC2626" style={{ flexShrink: 0, marginTop: '2px' }} />
+                  <div>
+                    <p style={{ fontSize: '14px', fontWeight: 600, color: '#DC2626', marginBottom: '4px' }}>
+                      Insufficient Deposit
+                    </p>
+                    <p style={{ fontSize: '13px', color: '#991B1B' }}>
+                      Minimum deposit of ${(depositRequired / 100).toFixed(2)} (50%) is required. 
+                      Current amount: ${parseFloat(formData.depositAmount).toFixed(2)}
+                    </p>
+                  </div>
+                </div>
+              )}
+              
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label 
@@ -1185,11 +1212,11 @@ export function OrderCreate({ onBack, onNavigate }: OrderCreateProps) {
                     value={formData.depositAmount}
                     onChange={(e) => setFormData({ ...formData, depositAmount: e.target.value })}
                     placeholder={(depositRequired / 100).toFixed(2)}
-                    min="0"
+                    min={(depositRequired / 100).toFixed(2)}
                     step="0.01"
                   />
                   <p style={{ fontSize: '12px', color: '#999', marginTop: '4px' }}>
-                    Leave blank to use default 50% deposit
+                    Leave blank to use default 50% deposit (${(depositRequired / 100).toFixed(2)})
                   </p>
                 </div>
                 <div>
