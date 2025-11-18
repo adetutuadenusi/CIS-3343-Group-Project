@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Badge } from '../../components/ui/badge';
 import { useToast } from '../../components/ToastContext';
+import { useDebounce } from '../../hooks/useDebounce';
 import {
   Users,
   RefreshCw,
@@ -49,19 +50,17 @@ export function CustomerManagementEnhanced() {
   const [retentionStats, setRetentionStats] = useState<RetentionStats | null>(null);
   const [filter, setFilter] = useState<FilterType>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // Debounce search term to avoid excessive API calls while typing
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-  useEffect(() => {
-    fetchCustomers();
-    fetchRetentionStats();
-  }, [filter, searchTerm]);
-
-  const fetchCustomers = async () => {
+  const fetchCustomers = useCallback(async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
       const params = new URLSearchParams();
       if (filter !== 'all') params.append('filter', filter);
-      if (searchTerm) params.append('search', searchTerm);
+      if (debouncedSearchTerm) params.append('search', debouncedSearchTerm);
 
       const response = await fetch(`/api/customers?${params.toString()}`, {
         headers: {
@@ -81,9 +80,9 @@ export function CustomerManagementEnhanced() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filter, debouncedSearchTerm, showToast]);
 
-  const fetchRetentionStats = async () => {
+  const fetchRetentionStats = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       const response = await fetch('/api/customers/retention-stats', {
@@ -99,7 +98,12 @@ export function CustomerManagementEnhanced() {
     } catch (error) {
       console.error('Error fetching retention stats:', error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchCustomers();
+    fetchRetentionStats();
+  }, [fetchCustomers, fetchRetentionStats]);
 
   const handleMarkAsPreferred = async (customerId: number) => {
     try {

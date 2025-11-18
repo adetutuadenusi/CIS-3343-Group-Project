@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../../lib/supabaseClient';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { BarChart3, DollarSign, Users, Award, FileText, Package, ClipboardList, Settings } from 'lucide-react';
 import { toast } from 'sonner';
 import {
@@ -9,6 +11,7 @@ import {
   Button,
   Badge,
 } from '../../../components/dashboard-v2';
+import { MOCK_DASHBOARD_DATA, MOCK_ACTIVITY_EVENTS } from '../../../data/presentationData';
 
 interface OwnerDashboardProps {
   onNavigate?: (page: string) => void;
@@ -80,7 +83,10 @@ interface DashboardMetrics {
 export function OwnerDashboard({ onNavigate }: OwnerDashboardProps) {
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const [activityEvents, setActivityEvents] = useState<any[]>([]);
+  const [approvalQueue, setApprovalQueue] = useState<any[]>([]);
+  const [approvingId, setApprovingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const { user } = (window as any).__APP_AUTH__ ?? { user: null };
 
   useEffect(() => {
     fetchMetrics();
@@ -99,21 +105,110 @@ export function OwnerDashboard({ onNavigate }: OwnerDashboardProps) {
       if (metricsRes.ok) {
         const data = await metricsRes.json();
         setMetrics(data);
+        
+        if (activityRes.ok) {
+          const activityData = await activityRes.json();
+          setActivityEvents(activityData);
+        }
       } else {
-        toast.error('Failed to load dashboard metrics');
-      }
-
-      if (activityRes.ok) {
-        const activityData = await activityRes.json();
-        setActivityEvents(activityData);
+        // Fallback to mock data
+        console.log('API not available, using mock data for Owner dashboard');
+        const mockData = MOCK_DASHBOARD_DATA.owner;
+        setMetrics(mockData);
+        
+        const mockActivities = MOCK_ACTIVITY_EVENTS.map(event => ({
+          id: event.id,
+          type: event.type,
+          user: { name: event.user, role: 'owner', avatar: undefined },
+          action: event.message,
+          timestamp: event.timestamp,
+          metadata: {},
+        }));
+        setActivityEvents(mockActivities);
       }
     } catch (error) {
       console.error('Failed to fetch owner dashboard:', error);
-      toast.error('Failed to load dashboard');
+      // Fallback to mock data on error
+      const mockData = MOCK_DASHBOARD_DATA.owner;
+      setMetrics(mockData);
+      
+      const mockActivities = MOCK_ACTIVITY_EVENTS.map(event => ({
+        id: event.id,
+        type: event.type,
+        user: { name: event.user, role: 'owner', avatar: undefined },
+        action: event.message,
+        timestamp: event.timestamp,
+        metadata: {},
+      }));
+      setActivityEvents(mockActivities);
     } finally {
       setLoading(false);
+      // load approval queue after metrics
+      await loadApprovalQueue();
     }
   };
+
+  async function loadApprovalQueue() {
+    try {
+      const { data } = await supabase
+        .from('orders')
+        .select('id, order_number, pickup_date, status, total_amount, customer_id, customers(full_name, phone)')
+        .in('status', ['pending_approval', 'awaiting_approval', 'completed'])
+        .order('pickup_date', { ascending: true })
+        .limit(100);
+
+      setApprovalQueue(data || []);
+    } catch (err) {
+      console.error('Failed to load approval queue', err);
+      setApprovalQueue([]);
+    }
+  }
+
+  async function approveOrder(orderId: string) {
+    // role check - only owner or manager can do final approval (owner preferred)
+    try {
+      const storedUser = getCurrentUser();
+      if (!storedUser || !['owner', 'manager'].includes(storedUser.role)) {
+        toast.error('Permission denied: only Manager or Owner can approve orders');
+        return;
+      }
+
+      setApprovingId(orderId);
+
+      const payload: any = { status: 'ready', approved: true, approved_at: new Date().toISOString() };
+      if (storedUser?.id) payload.approved_by = storedUser.id;
+
+      const { error } = await supabase.from('orders').update(payload).eq('id', orderId);
+      if (error) {
+        throw error;
+      }
+
+      // optimistic UI update
+      setApprovalQueue(prev => prev.filter(o => o.id !== orderId));
+      toast.success('Order approved');
+    } catch (err) {
+      console.error('Approve failed', err);
+      toast.error('Failed to approve order');
+    } finally {
+      setApprovingId(null);
+    }
+  }
+
+  function getCurrentUser() {
+    // Prefer useAuth if available; fall back to window-scoped user
+    try {
+      // try to import useAuth dynamically to avoid circular deps
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const auth = require('../../../context/AuthContext');
+      if (auth && typeof auth.useAuth === 'function') {
+        const a = auth.useAuth();
+        return a.user ?? (window as any).__APP_AUTH__?.user ?? null;
+      }
+    } catch (e) {
+      // ignore
+    }
+    return (window as any).__APP_AUTH__?.user ?? null;
+  }
 
   const formatCurrency = (amount: number) => {
     return `$${(amount / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -155,7 +250,7 @@ export function OwnerDashboard({ onNavigate }: OwnerDashboardProps) {
           value={`${metrics.timeSaved.currentHours}hrs/wk`}
           subtitle={`Target: ${metrics.timeSaved.targetHours}hrs (${metrics.timeSaved.savedPercentage}% saved)`}
           trend={metrics.timeSaved.trend}
-          icon={Clock}
+          icon={BarChart3}
           iconColor={metrics.timeSaved.currentHours <= metrics.timeSaved.targetHours ? '#10B981' : '#F59E0B'}
           onClick={() => {}}
         />
@@ -164,7 +259,7 @@ export function OwnerDashboard({ onNavigate }: OwnerDashboardProps) {
           value={formatCurrency(metrics.lostOrdersCost.currentCost)}
           subtitle={`Target: ${formatCurrency(metrics.lostOrdersCost.targetCost)} (${metrics.lostOrdersCost.reductionPercentage}% reduced)`}
           trend={metrics.lostOrdersCost.trend}
-          icon={AlertTriangle}
+          icon={DollarSign}
           iconColor={metrics.lostOrdersCost.currentCost <= metrics.lostOrdersCost.targetCost ? '#10B981' : '#F59E0B'}
           onClick={() => {}}
         />

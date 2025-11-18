@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import heroImage from 'figma:asset/208dd57666cc04d301e0ec0f70d0f9c9a2c8b203.png';
+const heroImage = '/elegant-custom-wedding-cake-with-pink-flowers.jpg';
 
 /**
  * Enhanced Hero Section with Parallax Scrolling
@@ -51,7 +51,7 @@ export function EnhancedHero() {
         }}
       >
         <img
-          src={heroImage}
+          src={heroImage || "/placeholder.svg"}
           alt="Elegant custom wedding cake with pink flowers"
           loading="eager"
           onLoad={() => setImageLoaded(true)}

@@ -58,10 +58,23 @@ export function CompletedOrdersReport() {
 
       setOrders(completedOrders);
 
-      // Calculate average completion time by order type
+      // Calculate average completion time by order type - optimized to single iteration
+      const customStats = { sum: 0, count: 0 };
+      const standardStats = { sum: 0, count: 0 };
+      
+      completedOrders.forEach((o: CompletedOrder) => {
+        if (o.totalAmount > 50) {
+          customStats.sum += o.daysToComplete;
+          customStats.count++;
+        } else {
+          standardStats.sum += o.daysToComplete;
+          standardStats.count++;
+        }
+      });
+
       const avgByType = [
-        { type: 'Custom Cakes', avgDays: completedOrders.filter((o: CompletedOrder) => o.totalAmount > 50).reduce((sum: number, o: CompletedOrder) => sum + o.daysToComplete, 0) / Math.max(completedOrders.filter((o: CompletedOrder) => o.totalAmount > 50).length, 1) },
-        { type: 'Standard Cakes', avgDays: completedOrders.filter((o: CompletedOrder) => o.totalAmount <= 50).reduce((sum: number, o: CompletedOrder) => sum + o.daysToComplete, 0) / Math.max(completedOrders.filter((o: CompletedOrder) => o.totalAmount <= 50).length, 1) }
+        { type: 'Custom Cakes', avgDays: customStats.count > 0 ? customStats.sum / customStats.count : 0 },
+        { type: 'Standard Cakes', avgDays: standardStats.count > 0 ? standardStats.sum / standardStats.count : 0 }
       ];
 
       setChartData(avgByType);
