@@ -16,10 +16,6 @@ export default defineConfig({
       "react-day-picker@8.10.1": "react-day-picker",
       "lucide-react@0.487.0": "lucide-react",
       "input-otp@1.4.2": "input-otp",
-      "figma:asset/208dd57666cc04d301e0ec0f70d0f9c9a2c8b203.png": path.resolve(
-        __dirname,
-        "./src/assets/208dd57666cc04d301e0ec0f70d0f9c9a2c8b203.png",
-      ),
       "embla-carousel-react@8.6.0": "embla-carousel-react",
       "cmdk@1.1.1": "cmdk",
       "class-variance-authority@0.7.1": "class-variance-authority",
