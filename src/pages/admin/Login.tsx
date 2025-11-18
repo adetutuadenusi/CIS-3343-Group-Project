@@ -58,14 +58,26 @@ export default function Login({ onBackToPublic }: LoginProps) {
       });
 
       if (error) {
-        throw new Error(error.message);
+        throw new Error(error.message || JSON.stringify(error));
       }
       showToast("success", "Welcome back!", "Login Successful");
     } catch (error) {
       console.error("Login error:", error);
-      const message =
-        error instanceof Error ? error.message : "Network error. Please try again.";
-      showToast("error", message, "Login Failed");
+
+      // Detect common network/CORS failures and provide actionable instruction
+      const rawMessage = error instanceof Error ? error.message : String(error);
+      if (/failed to fetch|networkerror|network error|Failed to fetch/i.test(rawMessage)) {
+        // Provide the current origin so the developer can add it to Supabase allowed origins
+        const origin = window.location.origin;
+        showToast(
+          "error",
+          `Network request failed. If you're accessing the dev server from another machine, add this origin to your Supabase project's allowed origins and redirect URLs: ${origin}`,
+          "Network Error",
+        );
+      } else {
+        const message = rawMessage || "Network error. Please try again.";
+        showToast("error", message, "Login Failed");
+      }
     } finally {
       setIsLoading(false);
     }
