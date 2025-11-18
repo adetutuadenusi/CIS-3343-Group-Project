@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Phone, Mail, Cake, Sparkles, ChevronRight } from 'lucide-react';
+import { Phone, Mail, Cake, Sparkles } from 'lucide-react';
 import { 
   standardCakes, 
   cakeFlavors, 
@@ -13,30 +13,22 @@ import {
 type FilterCategory = 'standard-cakes' | 'cake-flavors' | 'fillings' | 'icing-types' | 'icing-colors' | 'decorations';
 
 const filterOptions = [
-  { id: 'standard-cakes' as FilterCategory, label: 'Standard Cakes', icon: '🎂' },
-  { id: 'cake-flavors' as FilterCategory, label: 'Cake Flavors', icon: '🍰' },
-  { id: 'fillings' as FilterCategory, label: 'Fillings', icon: '🍫' },
-  { id: 'icing-types' as FilterCategory, label: 'Icing Types', icon: '🧁' },
-  { id: 'icing-colors' as FilterCategory, label: 'Icing Colors', icon: '🎨' },
-  { id: 'decorations' as FilterCategory, label: 'Decorations', icon: '✨' }
+  { id: 'standard-cakes' as FilterCategory, label: 'Standard Cakes' },
+  { id: 'cake-flavors' as FilterCategory, label: 'Cake Flavors' },
+  { id: 'fillings' as FilterCategory, label: 'Fillings' },
+  { id: 'icing-types' as FilterCategory, label: 'Icing Types' },
+  { id: 'icing-colors' as FilterCategory, label: 'Icing Colors' },
+  { id: 'decorations' as FilterCategory, label: 'Decorations' }
 ];
 
 function MenuHero() {
   return (
     <section 
-      className="relative text-white py-24 overflow-hidden"
+      className="relative text-white py-32 overflow-hidden"
       style={{ 
         background: 'linear-gradient(135deg, #C44569 0%, #8B3A5E 50%, #6B2D4F 100%)',
       }}
     >
-      {/* Decorative Elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 left-10 text-9xl">🎂</div>
-        <div className="absolute bottom-10 right-10 text-9xl">🍰</div>
-        <div className="absolute top-1/2 left-1/4 text-6xl">✨</div>
-        <div className="absolute top-1/3 right-1/4 text-6xl">🌸</div>
-      </div>
-
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -47,44 +39,37 @@ function MenuHero() {
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full mb-6"
+            transition={{ delay: 0.2, type: "spring", stiffness: 150 }}
+            className="inline-flex items-center justify-center w-32 h-32 bg-white/20 backdrop-blur-sm rounded-full mb-8"
           >
-            <Sparkles size={40} className="text-white" />
+            <Sparkles size={64} className="text-white" strokeWidth={1.5} />
           </motion.div>
 
           <h1 
-            className="text-5xl md:text-7xl font-bold mb-6"
+            className="text-6xl md:text-7xl font-bold mb-6"
             style={{ fontFamily: 'Playfair Display', lineHeight: 1.2 }}
           >
             Our Menu
           </h1>
           <p 
-            className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto"
+            className="text-2xl md:text-3xl mb-10 max-w-3xl mx-auto"
             style={{ fontFamily: 'Poppins', opacity: 0.95, fontWeight: 300 }}
           >
-            Explore our signature collection of European-style custom cakes, crafted with love and tradition
+            Explore our signature collection of European-style custom cakes
           </p>
           
           <motion.div 
-            className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-white/15 backdrop-blur-md rounded-full border border-white/30"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
+            style={{ fontFamily: 'Poppins' }}
           >
-            <div className="flex -space-x-2">
-              <div className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center text-sm">🎂</div>
-              <div className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center text-sm">🍰</div>
-              <div className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center text-sm">🧁</div>
-            </div>
-            <span style={{ fontFamily: 'Open Sans', fontSize: '14px' }}>
-              14 Signature Cakes • 6 Flavors • 15 Fillings • 37 Colors
-            </span>
+            14 Signature Cakes • 6 Flavors • 15 Fillings • 37 Colors
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Bottom Wave */}
       <div className="absolute bottom-0 left-0 right-0">
         <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-16">
           <path d="M0,0 C300,80 600,80 900,40 L1200,80 L1200,120 L0,120 Z" fill="white" opacity="0.3"/>
@@ -105,33 +90,27 @@ function FilterNavigation({ activeFilter, onFilterChange }: {
       style={{ borderBottom: '2px solid #E8D5C4' }}
     >
       <div className="container mx-auto px-4">
-        <div className="flex overflow-x-auto py-4 gap-2 scrollbar-hide">
+        <div className="flex overflow-x-auto py-4 gap-3 scrollbar-hide">
           {filterOptions.map((option) => (
             <motion.button
               key={option.id}
               onClick={() => onFilterChange(option.id)}
-              className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold whitespace-nowrap transition-all"
+              className="px-8 py-3 rounded-full font-semibold whitespace-nowrap transition-all"
               style={{
                 fontFamily: 'Poppins',
+                fontSize: '15px',
                 background: activeFilter === option.id 
                   ? 'linear-gradient(135deg, #C44569 0%, #8B3A5E 100%)'
                   : '#F8EBD7',
                 color: activeFilter === option.id ? 'white' : '#2D2D2D',
                 boxShadow: activeFilter === option.id 
                   ? '0 4px 12px rgba(196, 69, 105, 0.4)'
-                  : '0 2px 4px rgba(0,0,0,0.1)',
+                  : '0 2px 4px rgba(0,0,0,0.05)',
               }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="text-xl">{option.icon}</span>
-              <span>{option.label}</span>
-              {activeFilter === option.id && (
-                <motion.div
-                  layoutId="activeIndicator"
-                  className="w-2 h-2 bg-white rounded-full"
-                />
-              )}
+              {option.label}
             </motion.button>
           ))}
         </div>
@@ -161,7 +140,7 @@ function StandardCakesGrid() {
       >
         <div className="text-center mb-12">
           <h2 
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="text-5xl font-bold mb-4"
             style={{ fontFamily: 'Playfair Display', color: '#2D2D2D' }}
           >
             Our Signature Cakes
@@ -184,21 +163,21 @@ function StandardCakesGrid() {
               className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
               whileHover={{ y: -8 }}
             >
-              {/* Image Placeholder */}
+              {/* Larger Image Placeholder */}
               <div 
-                className="relative w-full h-56 overflow-hidden"
+                className="relative w-full h-72 overflow-hidden"
                 style={{ background: getCategoryGradient(cake.category || '') }}
               >
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-8xl opacity-40">
+                  <div className="text-9xl opacity-40">
                     {cake.category === 'Chocolate' ? '🍫' : cake.category === 'Fruity' ? '🍓' : '🎂'}
                   </div>
                 </div>
                 <div className="absolute top-4 right-4">
                   <span 
-                    className="px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md"
+                    className="px-4 py-2 rounded-full text-xs font-bold backdrop-blur-md"
                     style={{
-                      background: 'rgba(255, 255, 255, 0.9)',
+                      background: 'rgba(255, 255, 255, 0.95)',
                       color: '#C44569',
                       fontFamily: 'Poppins',
                       boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
@@ -210,27 +189,27 @@ function StandardCakesGrid() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
 
-              {/* Content */}
-              <div className="p-6">
+              {/* Compact Content */}
+              <div className="p-5">
                 <h3 
-                  className="text-xl font-bold mb-3 group-hover:text-[#C44569] transition-colors"
+                  className="text-xl font-bold mb-2 group-hover:text-[#C44569] transition-colors"
                   style={{ fontFamily: 'Poppins', color: '#2D2D2D' }}
                 >
                   {cake.name}
                 </h3>
 
                 <p 
-                  className="text-sm mb-4 line-clamp-2"
-                  style={{ color: '#6B6B6B', fontFamily: 'Open Sans', lineHeight: 1.6 }}
+                  className="text-sm mb-3 line-clamp-2"
+                  style={{ color: '#6B6B6B', fontFamily: 'Open Sans', lineHeight: 1.5 }}
                 >
                   {cake.description}
                 </p>
 
                 <div 
-                  className="p-3 rounded-lg mb-4"
+                  className="p-3 rounded-lg mb-3"
                   style={{ background: '#F8EBD7' }}
                 >
-                  <p className="text-xs font-semibold mb-2" style={{ color: '#2D2D2D', fontFamily: 'Poppins' }}>
+                  <p className="text-xs font-semibold mb-1" style={{ color: '#2D2D2D', fontFamily: 'Poppins' }}>
                     Includes:
                   </p>
                   {cake.layers.slice(0, 2).map((layer, i) => (
@@ -245,22 +224,19 @@ function StandardCakesGrid() {
                   )}
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p 
-                      className="text-2xl font-bold"
-                      style={{ color: '#C44569', fontFamily: 'Poppins' }}
-                    >
-                      ${cake.basePrice}
-                    </p>
-                    <p 
-                      className="text-xs"
-                      style={{ color: '#9B9B9B', fontFamily: 'Open Sans' }}
-                    >
-                      starting price
-                    </p>
-                  </div>
-                  <ChevronRight className="text-[#C44569] opacity-0 group-hover:opacity-100 transition-opacity" size={24} />
+                <div>
+                  <p 
+                    className="text-2xl font-bold"
+                    style={{ color: '#C44569', fontFamily: 'Poppins' }}
+                  >
+                    ${cake.basePrice}
+                  </p>
+                  <p 
+                    className="text-xs"
+                    style={{ color: '#9B9B9B', fontFamily: 'Open Sans' }}
+                  >
+                    starting price
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -281,7 +257,7 @@ function CakeFlavorsGrid() {
       >
         <div className="text-center mb-12">
           <h2 
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="text-5xl font-bold mb-4"
             style={{ fontFamily: 'Playfair Display', color: '#2D2D2D' }}
           >
             Cake Flavors
@@ -301,37 +277,22 @@ function CakeFlavorsGrid() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1, duration: 0.4 }}
-              className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all"
+              className="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all"
               whileHover={{ y: -5 }}
             >
-              {/* Image Placeholder */}
               <div 
-                className="w-full h-48 rounded-xl mb-6 flex items-center justify-center"
-                style={{ 
-                  background: 'linear-gradient(135deg, #FFE5E5 0%, #FFF5F5 100%)',
-                }}
+                className="w-full h-56 rounded-xl mb-5 flex items-center justify-center"
+                style={{ background: 'linear-gradient(135deg, #FFE5E5 0%, #FFF5F5 100%)' }}
               >
-                <div className="text-7xl opacity-60">🎂</div>
+                <div className="text-8xl opacity-50">🎂</div>
               </div>
 
               <h3 
-                className="text-2xl font-bold mb-3 text-center group-hover:text-[#C44569] transition-colors"
+                className="text-2xl font-bold text-center group-hover:text-[#C44569] transition-colors"
                 style={{ fontFamily: 'Poppins', color: '#2D2D2D' }}
               >
                 {flavor.name}
               </h3>
-
-              <div className="flex justify-center">
-                <div 
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
-                  style={{ background: '#F8EBD7' }}
-                >
-                  <span style={{ color: '#22C55E', fontSize: '18px' }}>✓</span>
-                  <span style={{ color: '#C44569', fontFamily: 'Poppins', fontWeight: 600, fontSize: '14px' }}>
-                    Available
-                  </span>
-                </div>
-              </div>
             </motion.div>
           ))}
         </div>
@@ -350,7 +311,7 @@ function FillingsGrid() {
       >
         <div className="text-center mb-12">
           <h2 
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="text-5xl font-bold mb-4"
             style={{ fontFamily: 'Playfair Display', color: '#2D2D2D' }}
           >
             Filling Options
@@ -370,27 +331,29 @@ function FillingsGrid() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05, duration: 0.3 }}
-              className="group bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all"
-              whileHover={{ y: -5, scale: 1.02 }}
+              className="group bg-white rounded-2xl p-5 shadow-md hover:shadow-xl transition-all"
+              whileHover={{ y: -5 }}
             >
-              {/* Image Placeholder */}
               <div 
-                className="w-full h-40 rounded-xl mb-4 flex items-center justify-center"
+                className="w-full h-48 rounded-xl mb-4 flex items-center justify-center"
                 style={{ background: 'linear-gradient(135deg, #F5E5D5 0%, #FFF5ED 100%)' }}
               >
-                <div className="text-6xl opacity-50">🍫</div>
+                <div className="text-7xl opacity-50">🍫</div>
               </div>
 
               <h3 
-                className="text-lg font-bold text-center mb-2 group-hover:text-[#C44569] transition-colors"
-                style={{ fontFamily: 'Poppins', color: '#2D2D2D', minHeight: '56px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                className="text-lg font-bold text-center group-hover:text-[#C44569] transition-colors"
+                style={{ 
+                  fontFamily: 'Poppins', 
+                  color: '#2D2D2D',
+                  minHeight: '56px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
               >
                 {filling.name}
               </h3>
-
-              <div className="flex justify-center">
-                <span style={{ color: '#22C55E', fontSize: '24px' }}>✓</span>
-              </div>
             </motion.div>
           ))}
         </div>
@@ -409,7 +372,7 @@ function IcingTypesGrid() {
       >
         <div className="text-center mb-12">
           <h2 
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="text-5xl font-bold mb-4"
             style={{ fontFamily: 'Playfair Display', color: '#2D2D2D' }}
           >
             Icing Types
@@ -429,35 +392,22 @@ function IcingTypesGrid() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1, duration: 0.4 }}
-              className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all"
+              className="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all"
               whileHover={{ y: -5 }}
             >
-              {/* Image Placeholder */}
               <div 
-                className="w-full h-48 rounded-xl mb-6 flex items-center justify-center"
+                className="w-full h-56 rounded-xl mb-5 flex items-center justify-center"
                 style={{ background: 'linear-gradient(135deg, #F3E5FF 0%, #FAF0FF 100%)' }}
               >
-                <div className="text-7xl opacity-60">🧁</div>
+                <div className="text-8xl opacity-50">🧁</div>
               </div>
 
               <h3 
-                className="text-2xl font-bold mb-3 text-center group-hover:text-[#C44569] transition-colors"
+                className="text-2xl font-bold text-center group-hover:text-[#C44569] transition-colors"
                 style={{ fontFamily: 'Poppins', color: '#2D2D2D' }}
               >
                 {icing.name}
               </h3>
-
-              <div className="flex justify-center">
-                <div 
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
-                  style={{ background: '#F8EBD7' }}
-                >
-                  <span style={{ color: '#22C55E', fontSize: '18px' }}>✓</span>
-                  <span style={{ color: '#C44569', fontFamily: 'Poppins', fontWeight: 600, fontSize: '14px' }}>
-                    Available
-                  </span>
-                </div>
-              </div>
             </motion.div>
           ))}
         </div>
@@ -476,29 +426,20 @@ function IcingColorsGrid() {
       >
         <div className="text-center mb-12">
           <h2 
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="text-5xl font-bold mb-4"
             style={{ fontFamily: 'Playfair Display', color: '#2D2D2D' }}
           >
             Icing & Writing Colors
           </h2>
           <p 
-            className="text-lg max-w-2xl mx-auto mb-4"
+            className="text-lg max-w-2xl mx-auto"
             style={{ color: '#6B6B6B', fontFamily: 'Open Sans' }}
           >
             Choose from {icingColors.length} beautiful colors for your icing and custom writing
           </p>
-          <div 
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full"
-            style={{ background: '#F8EBD7' }}
-          >
-            <span className="text-2xl">🎨</span>
-            <span style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#C44569' }}>
-              All colors include HEX codes for precise matching
-            </span>
-          </div>
         </div>
 
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-4">
+        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-4">
           {icingColors.map((color, index) => (
             <motion.div
               key={color.id}
@@ -508,21 +449,19 @@ function IcingColorsGrid() {
               className="group"
               whileHover={{ scale: 1.1 }}
             >
-              <div className="bg-white rounded-2xl p-3 shadow-md hover:shadow-xl transition-all">
-                {/* Color Swatch */}
+              <div className="bg-white rounded-xl p-2 shadow-md hover:shadow-xl transition-all">
                 <div 
-                  className="w-full aspect-square rounded-xl mb-3 border-4 border-white shadow-lg cursor-pointer"
+                  className="w-full aspect-square rounded-lg mb-2 border-2 border-white shadow-md cursor-pointer"
                   style={{ 
                     backgroundColor: color.hex,
-                    boxShadow: `0 4px 12px ${color.hex}40`
+                    boxShadow: `0 4px 8px ${color.hex}30`
                   }}
                   title={`${color.name} - ${color.hex}`}
                 />
 
-                {/* Color Info */}
                 <div className="text-center">
                   <p 
-                    className="text-xs font-bold mb-1 line-clamp-2"
+                    className="text-xs font-semibold line-clamp-2"
                     style={{ 
                       fontFamily: 'Poppins',
                       color: '#2D2D2D',
@@ -532,7 +471,7 @@ function IcingColorsGrid() {
                     {color.name}
                   </p>
                   <p 
-                    className="text-xs font-mono"
+                    className="text-xs font-mono mt-1"
                     style={{ color: '#9B9B9B' }}
                   >
                     {color.hex}
@@ -585,7 +524,7 @@ function DecorationsGrid() {
       >
         <div className="text-center mb-12">
           <h2 
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="text-5xl font-bold mb-4"
             style={{ fontFamily: 'Playfair Display', color: '#2D2D2D' }}
           >
             Decoration Options
@@ -606,13 +545,9 @@ function DecorationsGrid() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.03, duration: 0.3 }}
               className="group bg-white rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all"
-              whileHover={{ 
-                y: -8,
-                scale: 1.05
-              }}
+              whileHover={{ y: -8, scale: 1.05 }}
             >
               <div className="text-center">
-                {/* Large Icon */}
                 <motion.div 
                   className="text-7xl mb-4"
                   whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.2 }}
@@ -622,7 +557,7 @@ function DecorationsGrid() {
                 </motion.div>
 
                 <h3 
-                  className="text-sm font-bold mb-3 group-hover:text-[#C44569] transition-colors"
+                  className="text-sm font-bold group-hover:text-[#C44569] transition-colors"
                   style={{ 
                     fontFamily: 'Poppins',
                     color: '#2D2D2D',
@@ -634,21 +569,6 @@ function DecorationsGrid() {
                 >
                   {deco.name}
                 </h3>
-
-                <div 
-                  className="inline-flex items-center gap-1 px-3 py-1 rounded-full"
-                  style={{ background: 'rgba(196, 69, 105, 0.1)' }}
-                >
-                  <span style={{ color: '#22C55E', fontSize: '14px' }}>✓</span>
-                  <span style={{ 
-                    color: '#C44569', 
-                    fontFamily: 'Poppins', 
-                    fontWeight: 600, 
-                    fontSize: '12px' 
-                  }}>
-                    Available
-                  </span>
-                </div>
               </div>
             </motion.div>
           ))}
@@ -666,15 +586,6 @@ function ContactCTA() {
         background: 'linear-gradient(135deg, #C44569 0%, #8B3A5E 50%, #6B2D4F 100%)',
       }}
     >
-      {/* Decorative Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute" style={{ 
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          width: '100%',
-          height: '100%',
-        }}/>
-      </div>
-
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -683,26 +594,21 @@ function ContactCTA() {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          {/* Icon */}
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
             whileInView={{ scale: 1, rotate: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="inline-flex items-center justify-center w-24 h-24 bg-white/20 backdrop-blur-md rounded-full mb-8 border-4 border-white/30"
+            className="inline-flex items-center justify-center w-28 h-28 bg-white/20 backdrop-blur-md rounded-full mb-8 border-4 border-white/30"
           >
-            <Cake size={48} strokeWidth={2} />
+            <Cake size={56} strokeWidth={2} />
           </motion.div>
 
           <h2 
-            className="text-4xl md:text-6xl font-bold mb-6"
+            className="text-5xl md:text-6xl font-bold mb-6"
             style={{ fontFamily: 'Playfair Display', lineHeight: 1.2 }}
           >
-            Ready to Order Your
-            <br />
-            <span className="bg-white/20 px-6 py-2 rounded-2xl inline-block mt-2">
-              Perfect Cake?
-            </span>
+            Ready to Order Your Perfect Cake?
           </h2>
 
           <p 
@@ -714,11 +620,9 @@ function ContactCTA() {
               lineHeight: 1.6
             }}
           >
-            Call or email us today to discuss your custom cake. Our team will help you create 
-            the perfect dessert for your special occasion.
+            Call or email us today to discuss your custom cake
           </p>
 
-          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <motion.a 
               href="tel:713-555-2253"
@@ -757,7 +661,6 @@ function ContactCTA() {
             </motion.a>
           </div>
 
-          {/* Business Info */}
           <div 
             className="flex flex-col md:flex-row items-center justify-center gap-8 text-sm pt-8 border-t border-white/20"
             style={{ fontFamily: 'Open Sans', opacity: 0.9 }}
