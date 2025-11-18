@@ -111,16 +111,16 @@ export default function Menu() {
       case 'cake-flavors':
         items = cakeFlavors.map(flavor => {
           const descriptions: { [key: string]: string } = {
-            'Vanilla': 'Timeless vanilla cake with rich, aromatic flavor that serves as the perfect canvas for any celebration.',
-            'Almond': 'Sophisticated almond cake with a delicate nutty essence that adds elegance to every bite.',
-            'Yellow': 'Classic buttery yellow cake, moist and tender with a traditional homestyle taste.',
-            "Devil's Food Chocolate": 'Decadent dark chocolate cake with intense cocoa flavor and velvety texture.',
-            'Chocolate': 'Rich, indulgent chocolate cake that delivers pure cocoa satisfaction in every layer.',
-            'Strawberry': 'Light and fruity strawberry cake bursting with fresh berry flavor and natural sweetness.'
+            'Vanilla': 'Timeless vanilla with rich, aromatic flavor perfect for any celebration.',
+            'Almond': 'Sophisticated almond cake with delicate nutty essence and elegance.',
+            'Yellow': 'Classic buttery yellow cake, moist and tender with homestyle taste.',
+            "Devil's Food Chocolate": 'Decadent dark chocolate with intense cocoa flavor and velvety texture.',
+            'Chocolate': 'Rich, indulgent chocolate delivering pure cocoa satisfaction.',
+            'Strawberry': 'Light and fruity with fresh berry flavor and natural sweetness.'
           };
           return {
             title: flavor.name,
-            description: descriptions[flavor.name] || `Premium ${flavor.name.toLowerCase()} cake flavor, expertly crafted for exceptional taste.`,
+            description: descriptions[flavor.name] || `Premium ${flavor.name.toLowerCase()} cake flavor crafted for exceptional taste.`,
             imagePlaceholder: 'linear-gradient(135deg, #F8EBD7 0%, #FAF5F0 100%)'
           };
         });
@@ -129,21 +129,21 @@ export default function Menu() {
       case 'fillings':
         items = fillingFlavors.map(filling => {
           const descriptions: { [key: string]: string } = {
-            'White Buttercream': 'Silky smooth classic buttercream with a light vanilla essence, perfect for any cake design.',
-            'Chocolate Buttercream': 'Luxuriously rich chocolate buttercream that melts in your mouth with deep cocoa flavor.',
-            'Almond Buttercream': 'Delicate almond-infused buttercream with a sophisticated nutty sweetness.',
-            'Cream Cheese': 'Tangy and creamy cream cheese filling that adds the perfect balance of richness.',
-            'Lemon Curd': 'Bright and zesty lemon curd filling with the perfect sweet-tart balance.',
-            'Strawberry': 'Fresh strawberry filling made with real fruit for vibrant berry flavor.',
-            'Raspberry': 'Tart and sweet raspberry filling that brings a burst of summer to every bite.',
-            'Rum-Strawberry': 'Elevated strawberry filling with a subtle rum infusion for adult celebrations.',
-            'Pecan Praline': 'Buttery praline filling studded with toasted pecans for Southern charm.',
-            'Chocolate Mousse': 'Light and airy chocolate mousse filling with an elegant, melt-in-your-mouth texture.',
-            'Lemon Mousse': 'Delicate lemon mousse that combines citrus brightness with cloud-like softness.',
-            'Strawberry Mousse': 'Ethereal strawberry mousse filling with fresh fruit flavor and silky smoothness.',
-            'Raspberry Mousse': 'Velvety raspberry mousse with intense berry flavor and luxurious texture.',
-            'White Chocolate Mousse': 'Creamy white chocolate mousse filling that adds pure indulgence to any cake.',
-            'Mango Mousse': 'Tropical mango mousse with exotic fruit flavor and heavenly lightness.'
+            'White Buttercream': 'Silky smooth classic buttercream with light vanilla essence.',
+            'Chocolate Buttercream': 'Luxuriously rich with deep cocoa flavor that melts in your mouth.',
+            'Almond Buttercream': 'Delicate almond-infused with sophisticated nutty sweetness.',
+            'Cream Cheese': 'Tangy and creamy with the perfect balance of richness.',
+            'Lemon Curd': 'Bright and zesty with the perfect sweet-tart balance.',
+            'Strawberry': 'Fresh filling made with real fruit for vibrant berry flavor.',
+            'Raspberry': 'Tart and sweet bringing a burst of summer to every bite.',
+            'Rum-Strawberry': 'Elevated strawberry with subtle rum infusion for adult celebrations.',
+            'Pecan Praline': 'Buttery praline studded with toasted pecans for Southern charm.',
+            'Chocolate Mousse': 'Light and airy with an elegant, melt-in-your-mouth texture.',
+            'Lemon Mousse': 'Delicate mousse combining citrus brightness with cloud-like softness.',
+            'Strawberry Mousse': 'Ethereal filling with fresh fruit flavor and silky smoothness.',
+            'Raspberry Mousse': 'Velvety mousse with intense berry flavor and luxurious texture.',
+            'White Chocolate Mousse': 'Creamy filling that adds pure indulgence to any cake.',
+            'Mango Mousse': 'Tropical mousse with exotic fruit flavor and heavenly lightness.'
           };
           return {
             title: filling.name,
@@ -156,7 +156,7 @@ export default function Menu() {
       case 'icing-colors':
         items = icingColors.map(color => ({
           title: color.name,
-          description: `Vibrant ${color.name.toLowerCase()} color for stunning icing designs and personalized decorative writing.`,
+          description: `Beautiful ${color.name.toLowerCase()} for stunning icing designs and custom writing.`,
           colorHex: color.hex
         }));
         break;
@@ -164,12 +164,12 @@ export default function Menu() {
       case 'icing-flavors':
         items = icingFlavors.map(icing => {
           const descriptions: { [key: string]: string } = {
-            'White Buttercream': 'Classic smooth buttercream icing with vanilla notes, ideal for elegant decorating.',
-            'Chocolate Buttercream': 'Rich chocolate buttercream icing that pairs beautifully with any cake flavor.',
-            'Almond Buttercream': 'Refined almond buttercream icing with subtle nutty sweetness and silky texture.',
-            'White Chocolate Buttercream': 'Luxurious white chocolate buttercream with creamy sweetness and smooth finish.',
-            'Cream Cheese': 'Tangy cream cheese icing that adds sophisticated flavor and perfect spreadability.',
-            'Chocolate Ganache': 'Glossy, decadent chocolate ganache for an ultra-premium finish and intense chocolate flavor.'
+            'White Buttercream': 'Classic smooth buttercream with vanilla notes, ideal for decorating.',
+            'Chocolate Buttercream': 'Rich chocolate icing that pairs beautifully with any flavor.',
+            'Almond Buttercream': 'Refined almond icing with subtle nutty sweetness and silky texture.',
+            'White Chocolate Buttercream': 'Luxurious icing with creamy sweetness and smooth finish.',
+            'Cream Cheese': 'Tangy icing that adds sophisticated flavor and perfect spreadability.',
+            'Chocolate Ganache': 'Glossy, decadent ganache for ultra-premium finish and intense flavor.'
           };
           return {
             title: icing.name,
@@ -182,35 +182,35 @@ export default function Menu() {
       case 'decorations':
         items = decorations.map(deco => {
           const descriptions: { [key: string]: string } = {
-            'Buttercream Flowers': 'Hand-piped buttercream flowers crafted with artistry to add elegant beauty to your cake.',
-            'Fondant Decorations': 'Custom fondant designs sculpted to perfection for stunning three-dimensional artistry.',
-            'Silk Flowers (Iris)': 'Delicate silk iris flowers that bring sophisticated floral elegance to any celebration.',
-            'Silk Flowers (Rose)': 'Timeless silk roses that add romantic charm and classic beauty to your cake.',
-            'Silk Flowers (Daisy)': 'Cheerful silk daisies perfect for bright, joyful celebrations and garden-themed cakes.',
-            'Silk Flowers (Lily)': 'Elegant silk lilies that bring graceful sophistication to your cake design.',
-            'Silk Butterflies': 'Whimsical silk butterflies that add enchanting movement and magical charm.',
-            'Edible Sugar-Based Photos': 'Custom edible photo prints that personalize your cake with cherished memories.',
-            'Toys (Trains)': 'Miniature train decorations perfect for delighting young locomotive enthusiasts.',
-            'Toys (Dinosaurs)': 'Playful dinosaur toys that bring prehistoric adventure to birthday celebrations.',
-            'Toys (Race Cars)': 'Speedy race car decorations for little drivers and racing-themed parties.',
+            'Buttercream Flowers': 'Hand-piped flowers crafted with artistry for elegant beauty.',
+            'Fondant Decorations': 'Custom designs sculpted to perfection for stunning artistry.',
+            'Silk Flowers (Iris)': 'Delicate iris flowers bringing sophisticated floral elegance.',
+            'Silk Flowers (Rose)': 'Timeless roses adding romantic charm and classic beauty.',
+            'Silk Flowers (Daisy)': 'Cheerful daisies perfect for bright, joyful celebrations.',
+            'Silk Flowers (Lily)': 'Elegant lilies bringing graceful sophistication to your design.',
+            'Silk Butterflies': 'Whimsical butterflies adding enchanting movement and charm.',
+            'Edible Sugar-Based Photos': 'Custom edible prints personalizing your cake with cherished memories.',
+            'Toys (Trains)': 'Miniature trains perfect for delighting young locomotive enthusiasts.',
+            'Toys (Dinosaurs)': 'Playful dinosaurs bringing prehistoric adventure to birthdays.',
+            'Toys (Race Cars)': 'Speedy race cars for little drivers and racing-themed parties.',
             'Plastic Decorations (Sports Equipment)': 'Sport-themed picks celebrating athletic achievements and team spirit.',
-            'Plastic Decorations (Graduation Caps)': 'Graduation cap decorations honoring academic milestones and achievements.',
-            'Plastic Decorations (Baby Items)': 'Sweet baby-themed decorations perfect for showers and welcoming celebrations.',
-            'Paper Parasols': 'Colorful paper parasols that add tropical flair and festive atmosphere.',
+            'Plastic Decorations (Graduation Caps)': 'Graduation caps honoring academic milestones and achievements.',
+            'Plastic Decorations (Baby Items)': 'Sweet baby-themed pieces perfect for showers and celebrations.',
+            'Paper Parasols': 'Colorful parasols adding tropical flair and festive atmosphere.',
             'Plastic Pics (Flamingos)': 'Fun flamingo picks bringing tropical vibes and playful pink accents.',
-            'Plastic Pics (Mermaids)': 'Enchanting mermaid decorations for magical under-the-sea themed celebrations.',
-            'Plastic Pics (Seashells)': 'Ocean-inspired seashell picks perfect for beach-themed parties and coastal celebrations.',
-            'Flags': 'Decorative flags in various colors and styles to celebrate special occasions.',
-            'Ribbons (Multiple Colors)': 'Elegant ribbon accents available in every color to perfectly match your theme.',
-            'Plastic Trees': 'Miniature tree decorations ideal for nature-themed cakes and woodland celebrations.',
-            'Plastic Animals': 'Adorable animal figures perfect for safari parties and zoo-themed celebrations.',
-            'Plastic Camping Sets': 'Camping-themed decorations for outdoor adventure enthusiasts and nature lovers.',
-            'Rock Candy': 'Sparkling rock candy crystals that add texture, color, and sweet crunch.',
-            'Plastic Star Explosion Insert': 'Dramatic star burst decoration that creates stunning visual impact and celebration.'
+            'Plastic Pics (Mermaids)': 'Enchanting mermaids for magical under-the-sea themed parties.',
+            'Plastic Pics (Seashells)': 'Ocean-inspired picks perfect for beach and coastal celebrations.',
+            'Flags': 'Decorative flags in various colors and styles for special occasions.',
+            'Ribbons (Multiple Colors)': 'Elegant ribbon accents in every color to match your theme.',
+            'Plastic Trees': 'Miniature trees ideal for nature-themed and woodland celebrations.',
+            'Plastic Animals': 'Adorable animal figures perfect for safari and zoo-themed parties.',
+            'Plastic Camping Sets': 'Camping-themed pieces for outdoor adventure enthusiasts.',
+            'Rock Candy': 'Sparkling crystals adding texture, color, and sweet crunch.',
+            'Plastic Star Explosion Insert': 'Dramatic star burst creating stunning visual impact.'
           };
           return {
             title: deco.name,
-            description: descriptions[deco.name] || `${deco.name} decorations to make your cake uniquely memorable.`,
+            description: descriptions[deco.name] || `${deco.name} to make your cake uniquely memorable.`,
             imagePlaceholder: 'linear-gradient(135deg, #FFF9E5 0%, #FFFEF5 100%)'
           };
         });
