@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RefreshCw, HelpCircle } from 'lucide-react';
+import { RefreshCw, HelpCircle, Clock } from 'lucide-react';
 import { Button } from '../ui/button';
 
 interface DashboardFooterProps {
@@ -36,11 +36,14 @@ export function DashboardFooter({ onRefresh }: DashboardFooterProps) {
     <footer style={{
       position: 'sticky',
       bottom: 0,
+      width: '100%',
+      height: '56px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      padding: '16px 20px',
-      background: 'white',
+      padding: '0 24px',
+      background: 'rgba(255, 255, 255, 0.95)',
+      backdropFilter: 'blur(8px)',
       borderTop: '1px solid #E5E7EB',
       zIndex: 10
     }}>
@@ -48,87 +51,83 @@ export function DashboardFooter({ onRefresh }: DashboardFooterProps) {
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '6px'
+        gap: '8px'
       }}>
+        <Clock size={14} color="#6B7280" strokeWidth={2} />
         <span style={{
           fontFamily: 'Open Sans, sans-serif',
           fontSize: '13px',
+          fontWeight: 500,
           color: '#6B7280'
         }}>
-          Last updated:
-        </span>
-        <span style={{
-          fontFamily: 'Open Sans, sans-serif',
-          fontSize: '13px',
-          fontWeight: 600,
-          color: '#1F2937'
-        }}>
-          {formatTime(lastUpdated)}
+          Last updated: {formatTime(lastUpdated)}
         </span>
       </div>
 
       {/* Center - Refresh Button */}
-      <Button
+      <button
         onClick={handleRefresh}
         disabled={isRefreshing}
-        variant="outline"
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '8px',
+          gap: '6px',
           padding: '8px 16px',
           height: '36px',
-          border: `1px solid ${!isRefreshing && isRefreshHovered ? '#C44569' : '#E5E7EB'}`,
-          borderRadius: '6px',
-          background: 'white',
+          border: `1px solid ${!isRefreshing && isRefreshHovered ? '#C44569' : '#D1D5DB'}`,
+          borderRadius: '8px',
+          background: !isRefreshing && isRefreshHovered ? '#E5E7EB' : '#F3F4F6',
           fontFamily: 'Poppins, sans-serif',
           fontSize: '13px',
           fontWeight: 500,
-          color: !isRefreshing && isRefreshHovered ? '#C44569' : '#4B5563',
-          cursor: isRefreshing ? 'wait' : 'pointer',
-          transition: 'all 200ms ease-out',
+          color: '#374151',
+          cursor: isRefreshing ? 'not-allowed' : 'pointer',
+          transition: 'all 200ms ease',
           opacity: isRefreshing ? 0.6 : 1
         }}
         onMouseEnter={() => setIsRefreshHovered(true)}
         onMouseLeave={() => setIsRefreshHovered(false)}
-        onFocus={() => setIsRefreshHovered(true)}
-        onBlur={() => setIsRefreshHovered(false)}
         aria-label="Refresh dashboard data"
       >
         <RefreshCw 
-          size={16} 
+          size={14} 
           strokeWidth={2}
           style={{
-            animation: isRefreshing ? 'spin 1s linear infinite' : 'none'
+            animation: isRefreshing ? 'spin 1s linear infinite' : 'none',
+            transform: isRefreshing ? 'none' : isRefreshHovered ? 'rotate(180deg)' : 'none',
+            transition: 'transform 300ms ease'
           }}
           aria-hidden="true"
         />
-        Refresh Data
-      </Button>
+        Refresh
+      </button>
 
-      {/* Right - Help Link */}
-      <a
-        href="/help"
+      {/* Right - Help Button */}
+      <button
+        onClick={() => window.open('/help', '_blank')}
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '8px',
+          gap: '6px',
+          padding: '8px 16px',
+          height: '36px',
+          border: '1px solid #D1D5DB',
+          borderRadius: '8px',
+          background: isHelpHovered ? '#E5E7EB' : '#F3F4F6',
           fontFamily: 'Poppins, sans-serif',
           fontSize: '13px',
           fontWeight: 500,
-          color: '#C44569',
-          textDecoration: isHelpHovered ? 'underline' : 'none',
-          transition: 'text-decoration 150ms ease-out'
+          color: '#374151',
+          cursor: 'pointer',
+          transition: 'all 200ms ease'
         }}
         onMouseEnter={() => setIsHelpHovered(true)}
         onMouseLeave={() => setIsHelpHovered(false)}
-        onFocus={() => setIsHelpHovered(true)}
-        onBlur={() => setIsHelpHovered(false)}
         aria-label="Get help and support"
       >
-        <HelpCircle size={16} strokeWidth={2} aria-hidden="true" />
-        Help & Support
-      </a>
+        <HelpCircle size={14} strokeWidth={2} aria-hidden="true" />
+        Help
+      </button>
 
       {/* CSS for RefreshCw spin animation */}
       <style>{`

@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { LucideIcon, TrendingUp, TrendingDown, ChevronRight } from 'lucide-react';
+import { LucideIcon, TrendingUp, TrendingDown, Minus, ChevronRight } from 'lucide-react';
 
 interface KPICardProps {
   title: string;
@@ -14,6 +14,7 @@ interface KPICardProps {
 export function KPICard({ title, value, change, icon: Icon, color, index = 0, onClick }: KPICardProps) {
   const hasPositiveTrend = change && change.startsWith('+');
   const hasNegativeTrend = change && change.startsWith('-');
+  const hasNeutralTrend = change && !hasPositiveTrend && !hasNegativeTrend;
 
   return (
     <motion.div
@@ -97,11 +98,12 @@ export function KPICard({ title, value, change, icon: Icon, color, index = 0, on
               }}>
                 {hasPositiveTrend && <TrendingUp size={14} color="#10B981" />}
                 {hasNegativeTrend && <TrendingDown size={14} color="#EF4444" />}
+                {hasNeutralTrend && <Minus size={14} color="#6B7280" />}
                 <span style={{
                   fontFamily: 'Open Sans, sans-serif',
                   fontSize: '13px',
                   fontWeight: 600,
-                  color: hasPositiveTrend ? '#10B981' : '#EF4444'
+                  color: hasPositiveTrend ? '#10B981' : hasNegativeTrend ? '#EF4444' : '#6B7280'
                 }}>
                   {change}
                 </span>
